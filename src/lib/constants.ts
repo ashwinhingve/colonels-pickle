@@ -1,15 +1,46 @@
 // Application Constants
 
-export const SITE_NAME = "TAPTIFS";
-export const SITE_DESCRIPTION = "Premium Quality Food & Spices";
+export const SITE_NAME = "Colonel's Pickle";
+export const SITE_DESCRIPTION = "Maa Ka Pyaar, Ghar Ka Achar — authentic homemade pickles, cold press oils & natural products.";
+
+// Brand
+export const BRAND = {
+  name: "Colonel's Pickle",
+  nameFull: "Colonel's Pickle® by Ridhwika Agro Organics",
+  tagline: "Maa Ka Pyaar, Ghar Ka Achar",
+  taglineHindi: "माँ का प्यार, घर का अचार",
+  fssai: "12223026002188",
+  address: {
+    line1: "Plot A-207, Block A, Vardhman Nagar",
+    line2: "Gali No. 24, Ajmer Road",
+    city: "Jaipur",
+    state: "Rajasthan",
+    pin: "302019",
+  },
+  phones: ["9717243306", "9416845689", "9350406289"],
+  social: {
+    beacons: "https://beacons.ai/colonelspickle",
+    gmaps: "https://maps.app.goo.gl/FCraoQErzuMnHLBz9",
+  },
+  certifications: ["FSSAI", "Udhyam", "BNI"],
+  usp: [
+    "No Artificial Preservatives",
+    "No Artificial Colours or Flavours",
+    "24 Exotic Whole Spices",
+    "Kachi Ghani Cold Press Mustard Oil",
+    "Rock Salt & Black Salt Only",
+    "Afghani Hing (₹35,000/kg)",
+    "Traditional Mother's Recipe",
+    "FSSAI Certified",
+  ],
+} as const;
 
 // Product Categories
 export const PRODUCT_CATEGORIES = [
-  "Spices",
-  "Blends",
-  "Seasonings",
-  "Herbs",
-  "Gift Sets",
+  "Achaar",
+  "Cold Press Oils",
+  "Gulkand",
+  "Masale & More",
 ] as const;
 
 // Order Status
@@ -34,12 +65,13 @@ export const PRODUCTS_PER_PAGE = 12;
 export const RECIPES_PER_PAGE = 9;
 
 // Currency
-export const CURRENCY = "USD";
-export const CURRENCY_SYMBOL = "$";
+export const CURRENCY = "INR";
+export const CURRENCY_SYMBOL = "₹";
 
 // Shipping
-export const FREE_SHIPPING_THRESHOLD = 50;
-export const STANDARD_SHIPPING_COST = 5.99;
+export const FREE_DELIVERY_THRESHOLD = 499;
+export const FREE_SHIPPING_THRESHOLD = 499;
+export const STANDARD_SHIPPING_COST = 49;
 
 // Product Review
 export const MAX_REVIEW_LENGTH = 500;
@@ -55,11 +87,15 @@ export const IMAGE_SIZES = {
 
 // Social Media Links
 export const SOCIAL_LINKS = {
-  FACEBOOK: "https://facebook.com/taptifs",
-  INSTAGRAM: "https://instagram.com/taptifs",
-  TWITTER: "https://twitter.com/taptifs",
+  FACEBOOK: "https://beacons.ai/colonelspickle",
+  INSTAGRAM: "https://beacons.ai/colonelspickle",
+  TWITTER: "https://beacons.ai/colonelspickle",
 };
 
 // Contact Info
-export const CONTACT_EMAIL = "info@taptifs.com";
-export const CONTACT_PHONE = "+91-93292 16544";
+export const CONTACT_EMAIL = "colonelspickle@gmail.com";
+export const CONTACT_PHONE = "+91-9717243306";
+
+// Admin & storage
+export const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "colonelspickle@gmail.com";
+export const CART_STORAGE_KEY = "cp-cart-storage";

@@ -1,12 +1,13 @@
 {
-  "name": "taptifs",
-  "version": "0.1.0",
+  "name": "colonels-pickle",
+  "version": "1.0.0",
+  "description": "Colonel's Pickle — Maa Ka Pyaar, Ghar Ka Achar",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@auth/core": "^0.34.3",
@@ -53,6 +54,8 @@
     "@types/node": "^24.10.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.19",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.39.1",
     "eslint-config-next": "^16.0.1",

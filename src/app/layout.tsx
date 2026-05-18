@@ -7,16 +7,16 @@ import SessionProvider from "@/components/providers/SessionProvider";
 import { connectDB } from "@/lib/mongodb";
 import MarketingSettings from "@/models/MarketingSettings";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://taptifs.in';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Tapti Food & Spices | The Taste of Purity | 100% Adulteration-Free Products",
-    template: "%s | Tapti Food & Spices",
+    default: "Colonel's Pickle® — Maa Ka Pyaar, Ghar Ka Achar | Homemade Pickles Jaipur",
+    template: "%s | Colonel's Pickle",
   },
-  description: "Experience 'The Taste of Purity' with Tapti Food & Spices. 100% adulteration-free products sourced directly from our farms and trusted farmers. Shop authentic Indian spices, organic oils, pure desi ghee, premium teas, natural sweeteners, and traditional masalas. Available on Amazon, Flipkart, and Meesho. FSSAI Licensed: 21423150001550",
-  keywords: ["tapti food and spices", "taptifs", "spices", "food", "seasonings", "organic spices", "desi ghee", "cooking oil", "masala", "haldi", "mirchi", "chai", "jaggery", "saffron", "pure products", "adulteration-free", "farm-sourced", "Multai", "Betul", "Bhopal", "Madhya Pradesh"],
+  description: "Authentic homemade pickles by Lt Col Praveen Kumar Sharma's mother. No preservatives, 24 whole spices, cold press mustard oil. FSSAI certified. Pan India delivery from Jaipur.",
+  keywords: ["colonels pickle", "homemade pickle", "achaar", "ghar ka achar", "organic gulkand", "cold press mustard oil", "kachi ghani oil", "Rajasthani pickle", "no preservatives pickle", "FSSAI pickle", "Jaipur pickle", "Ridhwika Agro Organics", "buy pickle online India"],
   alternates: {
     canonical: SITE_URL,
   },
@@ -26,25 +26,25 @@ export const metadata: Metadata = {
     apple: "/images/logo.jpg",
   },
   openGraph: {
-    title: "Tapti Food & Spices | The Taste of Purity",
-    description: "100% adulteration-free food products - authentic Indian spices, organic oils, pure ghee, premium teas, and natural sweeteners sourced directly from farms",
+    title: "Colonel's Pickle® — Maa Ka Pyaar, Ghar Ka Achar",
+    description: "Authentic homemade pickles, gulkand & cold press oils. No preservatives, 24 whole spices, mother's recipe. FSSAI certified. Pan India delivery from Jaipur.",
     images: [
       {
         url: "/images/logo.jpg",
         width: 1200,
         height: 630,
-        alt: "Tapti Food & Spices — The Taste of Purity",
+        alt: "Colonel's Pickle — Maa Ka Pyaar, Ghar Ka Achar",
       },
     ],
-    siteName: "Tapti Food & Spices (TAPTIFS)",
+    siteName: "Colonel's Pickle by Ridhwika Agro Organics",
     type: "website",
     locale: "en_IN",
     url: SITE_URL,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tapti Food & Spices | The Taste of Purity",
-    description: "100% adulteration-free food products — authentic Indian spices, organic oils, pure ghee, premium teas, natural sweeteners sourced directly from farms.",
+    title: "Colonel's Pickle® — Maa Ka Pyaar, Ghar Ka Achar",
+    description: "Authentic homemade pickles, gulkand & cold press oils. No preservatives, 24 whole spices, FSSAI certified. Pan India delivery from Jaipur.",
     images: ["/images/logo.jpg"],
   },
   robots: {
@@ -64,8 +64,8 @@ const orgJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "@id": `${SITE_URL}/#organization`,
-  "name": "Tapti Food & Spices",
-  "alternateName": "TAPTIFS",
+  "name": "Colonel's Pickle",
+  "alternateName": "Colonel's Pickle by Ridhwika Agro Organics",
   "url": SITE_URL,
   "logo": {
     "@type": "ImageObject",
@@ -73,18 +73,20 @@ const orgJsonLd = {
     "width": 512,
     "height": 512,
   },
-  "description": "100% adulteration-free food products — authentic Indian spices, organic oils, pure desi ghee, premium teas, natural sweeteners.",
+  "description": "Authentic homemade pickles, gulkand and cold press oils — no preservatives, 24 whole spices, cold press mustard oil. FSSAI certified, Jaipur.",
   "address": {
     "@type": "PostalAddress",
-    "addressLocality": "Multai",
-    "addressRegion": "Madhya Pradesh",
+    "streetAddress": "Plot A-207, Block A, Vardhman Nagar, Gali No. 24, Ajmer Road",
+    "addressLocality": "Jaipur",
+    "addressRegion": "Rajasthan",
+    "postalCode": "302019",
     "addressCountry": "IN",
   },
   "hasCredential": {
     "@type": "EducationalOccupationalCredential",
     "name": "FSSAI License",
     "credentialCategory": "Food Safety License",
-    "identifier": "21423150001550",
+    "identifier": "12223026002188",
   },
 };
 
@@ -93,8 +95,8 @@ const websiteJsonLd = {
   "@type": "WebSite",
   "@id": `${SITE_URL}/#website`,
   "url": SITE_URL,
-  "name": "Tapti Food & Spices",
-  "description": "Premium adulteration-free Indian food products",
+  "name": "Colonel's Pickle",
+  "description": "Authentic homemade pickles, gulkand & cold press oils — Maa Ka Pyaar, Ghar Ka Achar",
   "publisher": {
     "@id": `${SITE_URL}/#organization`,
   },
