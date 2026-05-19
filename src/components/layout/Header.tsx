@@ -2,96 +2,108 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import { useSession, signOut } from "next-auth/react";
-import { Button } from "@/components/ui/button";
 import { Navigation } from "./Navigation";
 import { MobileMenu } from "./MobileMenu";
 import { useCartStore } from "@/store/useCartStore";
-import { Search, User, ShoppingCart, Menu, X, LogOut, LayoutDashboard, Package } from "lucide-react";
+import { BRAND } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+import {
+  User,
+  ShoppingCart,
+  Menu,
+  LogOut,
+  LayoutDashboard,
+  Package,
+} from "lucide-react";
+
+const emptySubscribe = () => () => {};
+
+/** False during SSR / first paint, true once hydrated — no setState-in-effect. */
+function useHydrated() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+}
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  const mounted = useHydrated();
   const totalItems = useCartStore((state) => state.getTotalItems());
+  const openCart = useCartStore((state) => state.openCart);
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    setMounted(true);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (showUserMenu && !target.closest('.user-menu-container')) {
+      if (showUserMenu && !target.closest(".user-menu-container")) {
         setShowUserMenu(false);
       }
     };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showUserMenu]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
-      <div className="container mx-auto flex h-20 items-center justify-between px-4">
-        {/* Logo and Brand */}
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full bg-cp-cream transition-shadow duration-300",
+        scrolled && "shadow-md backdrop-blur-sm"
+      )}
+    >
+      <div className="container mx-auto flex h-[70px] items-center justify-between px-4">
+        {/* Logo / wordmark */}
         <Link
           href="/"
-          className="flex items-center space-x-3 group transition-opacity hover:opacity-80"
-          aria-label="Tapti Food & Spices - Home"
+          className="flex items-center gap-3"
+          aria-label={`${BRAND.name} — Home`}
         >
-          <div className="relative h-12 w-12 md:h-16 md:w-16 shrink-0">
-            <Image
-              src="/images/logo.jpg"
-              alt="Tapti Food & Spices Logo"
-              fill
-              className="object-contain rounded-full"
-              priority
-            />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-amber-600 to-red-700 bg-clip-text text-transparent leading-tight">
-              Tapti Food &amp; Spices
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cp-crimson text-xl text-white">
+            🫙
+          </span>
+          <span className="flex flex-col leading-none">
+            <span className="font-display text-xl font-extrabold text-cp-crimson">
+              {BRAND.name}
             </span>
-            <span className="text-xs md:text-sm font-semibold text-muted-foreground hidden lg:pl-6 sm:block">
-              शुद्धता का वादा - The Taste of Purity
+            <span className="mt-1 font-hindi text-[9px] font-bold uppercase tracking-widest text-cp-brown">
+              {BRAND.tagline}
             </span>
-          </div>
+          </span>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop nav */}
         <nav className="hidden lg:flex lg:items-center" aria-label="Main navigation">
           <Navigation />
         </nav>
 
-        {/* Right Side Actions */}
-        <div className="flex items-center space-x-2 md:space-x-3">
-          {/* Search Icon */}
-          {/* <Button
-            variant="ghost"
-            size="icon"
-            className="hidden md:flex hover:bg-amber-50 hover:text-amber-700 transition-colors"
-            aria-label="Search"
-          >
-            <Search className="h-5 w-5" />
-          </Button> */}
-
-          {/* User Account */}
-          {mounted && status === 'authenticated' && session?.user ? (
-            <div className="relative user-menu-container">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="hover:bg-amber-50 hover:text-amber-700 transition-colors"
+        {/* Right side actions */}
+        <div className="flex items-center gap-2 md:gap-3">
+          {/* User account */}
+          {mounted && status === "authenticated" && session?.user ? (
+            <div className="user-menu-container relative">
+              <button
+                type="button"
                 aria-label="User account"
                 onClick={() => setShowUserMenu(!showUserMenu)}
+                className="flex h-10 w-10 items-center justify-center rounded-full text-cp-text transition-colors hover:bg-cp-cream-dark hover:text-cp-crimson"
               >
                 {session.user.image ? (
                   <Image
                     src={session.user.image}
-                    alt={session.user.name || 'User'}
+                    alt={session.user.name || "User"}
                     width={28}
                     height={28}
                     className="rounded-full"
@@ -99,34 +111,33 @@ export function Header() {
                 ) : (
                   <User className="h-5 w-5" />
                 )}
-              </Button>
+              </button>
 
               {showUserMenu && (
-                <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50">
-                  <div className="px-4 py-3 bg-gradient-to-r from-amber-50 to-red-50 border-b border-gray-200">
-                    <p className="text-sm font-semibold text-gray-900 truncate">
-                      {session.user.name || 'User'}
+                <div className="absolute right-0 z-50 mt-2 w-64 overflow-hidden rounded-lg border border-cp-border bg-white shadow-xl">
+                  <div className="border-b border-cp-border bg-cp-cream px-4 py-3">
+                    <p className="truncate font-sans text-sm font-semibold text-cp-text">
+                      {session.user.name || "User"}
                     </p>
-                    <p className="text-xs text-gray-600 truncate">
+                    <p className="truncate font-sans text-xs text-cp-text-muted">
                       {session.user.email}
                     </p>
-                    <p className="text-xs text-gray-500 mt-1">
-                      ID: {session.user.id}
-                    </p>
-                    <span className={`inline-block mt-1 px-2 py-0.5 text-xs font-semibold rounded-full ${
-                      session.user.role === 'admin'
-                        ? 'bg-red-100 text-red-800'
-                        : 'bg-blue-100 text-blue-800'
-                    }`}>
-                      {session.user.role === 'admin' ? 'Admin' : 'Customer'}
+                    <span
+                      className={cn(
+                        "mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-semibold",
+                        session.user.role === "admin"
+                          ? "bg-cp-crimson-light text-cp-crimson"
+                          : "bg-cp-green-light text-cp-green"
+                      )}
+                    >
+                      {session.user.role === "admin" ? "Admin" : "Customer"}
                     </span>
                   </div>
-
                   <div className="py-2">
-                    {session.user.role === 'admin' && (
+                    {session.user.role === "admin" && (
                       <Link
                         href="/admin/dashboard"
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 transition-colors"
+                        className="flex items-center gap-3 px-4 py-2 font-sans text-sm text-cp-text transition-colors hover:bg-cp-cream"
                         onClick={() => setShowUserMenu(false)}
                       >
                         <LayoutDashboard className="h-4 w-4" />
@@ -135,19 +146,18 @@ export function Header() {
                     )}
                     <Link
                       href="/orders"
-                      className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 transition-colors"
+                      className="flex items-center gap-3 px-4 py-2 font-sans text-sm text-cp-text transition-colors hover:bg-cp-cream"
                       onClick={() => setShowUserMenu(false)}
                     >
                       <ShoppingCart className="h-4 w-4" />
                       My Orders
                     </Link>
-
                     <button
                       onClick={() => {
                         setShowUserMenu(false);
-                        signOut({ callbackUrl: '/' });
+                        signOut({ callbackUrl: "/" });
                       }}
-                      className="flex items-center gap-3 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                      className="flex w-full items-center gap-3 px-4 py-2 font-sans text-sm text-cp-crimson transition-colors hover:bg-cp-crimson-light"
                     >
                       <LogOut className="h-4 w-4" />
                       Sign Out
@@ -157,69 +167,70 @@ export function Header() {
               )}
             </div>
           ) : (
-            <Link href="/login">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="hover:bg-amber-50 hover:text-amber-700 transition-colors"
-                aria-label="User account"
-              >
-                <User className="h-5 w-5" />
-              </Button>
-            </Link>
-          )}
-
-          {/* My Orders - visible when logged in */}
-          {mounted && status === 'authenticated' && (
-            <Link href="/orders">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="hidden sm:flex hover:bg-amber-50 hover:text-amber-700 transition-colors"
-                aria-label="My Orders"
-              >
-                <Package className="h-5 w-5" />
-              </Button>
-            </Link>
-          )}
-
-          {/* Shopping Cart */}
-          <Link href="/cart">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative hover:bg-amber-50 hover:text-amber-700 transition-colors"
-              aria-label={`Shopping cart${mounted && totalItems > 0 ? ` with ${totalItems} items` : ''}`}
+            <Link
+              href="/login"
+              aria-label="User account"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-cp-text transition-colors hover:bg-cp-cream-dark hover:text-cp-crimson"
             >
-              <ShoppingCart className="h-5 w-5" />
-              {mounted && totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-gradient-to-r from-amber-600 to-red-700 text-xs text-white flex items-center justify-center font-bold shadow-md">
-                  {totalItems}
-                </span>
-              )}
-            </Button>
+              <User className="h-5 w-5" />
+            </Link>
+          )}
+
+          {mounted && status === "authenticated" && (
+            <Link
+              href="/orders"
+              aria-label="My Orders"
+              className="hidden h-10 w-10 items-center justify-center rounded-full text-cp-text transition-colors hover:bg-cp-cream-dark hover:text-cp-crimson sm:flex"
+            >
+              <Package className="h-5 w-5" />
+            </Link>
+          )}
+
+          {/* Cart — opens drawer */}
+          <button
+            type="button"
+            onClick={openCart}
+            aria-label={`Shopping cart${
+              mounted && totalItems > 0 ? ` with ${totalItems} items` : ""
+            }`}
+            className="relative flex h-10 w-10 items-center justify-center rounded-full text-cp-text transition-colors hover:bg-cp-cream-dark hover:text-cp-crimson"
+          >
+            <ShoppingCart className="h-5 w-5" />
+            {mounted && totalItems > 0 && (
+              <span
+                key={totalItems}
+                className="absolute -right-1 -top-1 flex h-5 w-5 animate-cart-bounce items-center justify-center rounded-full bg-cp-crimson text-[11px] font-extrabold text-white"
+              >
+                {totalItems}
+              </span>
+            )}
+          </button>
+
+          {/* Order Now CTA */}
+          <Link
+            href="/products"
+            className="hidden rounded-lg bg-gradient-to-br from-cp-saffron to-cp-saffron-bright px-5 py-2.5 font-sans text-sm font-bold uppercase tracking-wide text-white transition-transform hover:-translate-y-px md:inline-block"
+          >
+            Order Now
           </Link>
 
-          {/* Mobile Menu Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden hover:bg-amber-50 hover:text-amber-700 transition-colors"
+          {/* Mobile menu toggle */}
+          <button
+            type="button"
+            className="flex h-10 w-10 items-center justify-center rounded-full text-cp-text transition-colors hover:bg-cp-cream-dark hover:text-cp-crimson lg:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </Button>
+            <Menu className="h-6 w-6" />
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+      />
     </header>
   );
 }

@@ -3,30 +3,39 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-
-const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/products", label: "Shop" },
-  { href: "/orders", label: "My Orders" },
-  { href: "/wholesale", label: "Wholesale" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-];
+import { NAV_ITEMS } from "./Navigation";
 
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+const MOBILE_ITEMS = [...NAV_ITEMS, { href: "/orders", label: "My Orders" }];
+
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const pathname = usePathname();
 
-  if (!isOpen) return null;
-
   return (
-    <div className="md:hidden border-t bg-background">
-      <nav className="container mx-auto flex flex-col space-y-4 px-4 py-6">
-        {navItems.map((item) => {
+    <>
+      <div
+        aria-hidden="true"
+        onClick={onClose}
+        className={cn(
+          "fixed inset-0 z-[55] bg-black/40 transition-opacity duration-300 lg:hidden",
+          isOpen ? "opacity-100" : "pointer-events-none opacity-0"
+        )}
+      />
+      <nav
+        aria-label="Mobile navigation"
+        className={cn(
+          "fixed right-0 top-0 z-[56] flex h-screen w-[80vw] max-w-[320px] flex-col gap-1.5 bg-cp-cream px-6 py-8 shadow-2xl transition-transform duration-300 lg:hidden",
+          isOpen ? "translate-x-0" : "translate-x-full"
+        )}
+      >
+        <span className="mb-4 font-display text-xl font-extrabold text-cp-crimson">
+          Menu
+        </span>
+        {MOBILE_ITEMS.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link
@@ -34,17 +43,24 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               href={item.href}
               onClick={onClose}
               className={cn(
-                "text-base font-medium transition-colors hover:text-primary",
+                "rounded-md px-3 py-2 font-hindi text-base font-medium transition-colors",
                 isActive
-                  ? "text-foreground"
-                  : "text-foreground/60"
+                  ? "bg-cp-crimson-light text-cp-crimson"
+                  : "text-cp-text hover:bg-cp-cream-dark"
               )}
             >
               {item.label}
             </Link>
           );
         })}
+        <Link
+          href="/products"
+          onClick={onClose}
+          className="mt-5 rounded-lg bg-gradient-to-br from-cp-saffron to-cp-saffron-bright px-5 py-3 text-center font-sans text-sm font-bold uppercase tracking-wide text-white"
+        >
+          Order Now
+        </Link>
       </nav>
-    </div>
+    </>
   );
 }

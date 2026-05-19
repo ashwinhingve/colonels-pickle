@@ -1,3 +1,4 @@
+
 # Colonel's Pickle — Development SOP
 
 Complete step-by-step process for building the Colonel's Pickle website on top of the TAPTIFS codebase.

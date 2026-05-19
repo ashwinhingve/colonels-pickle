@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic';
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { AnnouncementBanner } from "@/components/home/AnnouncementBanner";
+// AnnouncementBar now mounted globally in the root layout
 import { HeroSlider } from "@/components/home/HeroSlider";
 import { ShopByCategory } from "@/components/home/ShopByCategory";
 import { VideoStyleShowcase } from "@/components/home/VideoStyleShowcase";
@@ -85,8 +85,7 @@ export default async function Home() {
 
   return (
     <main>
-      {/* Announcement Banner */}
-      <AnnouncementBanner />
+      {/* Announcement bar lives in the root layout */}
 
       {/* Hero Slider */}
       <HeroSlider slides={heroSlides} />

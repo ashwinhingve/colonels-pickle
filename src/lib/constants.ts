@@ -99,3 +99,13 @@ export const CONTACT_PHONE = "+91-9717243306";
 // Admin & storage
 export const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "colonelspickle@gmail.com";
 export const CART_STORAGE_KEY = "cp-cart-storage";
+
+// Announcement bar (marquee) items
+export const ANNOUNCEMENTS = [
+  "🌿 No Artificial Preservatives",
+  "⭐ FSSAI Certified",
+  "🫙 15+ Authentic Varieties",
+  "🚚 Pan India Delivery",
+  "💰 Free Delivery on Orders ₹499+",
+  "📞 +91 9717243306",
+] as const;

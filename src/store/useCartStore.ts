@@ -33,6 +33,10 @@ export interface AppliedDiscount {
 interface CartStore {
   items: CartItem[];
   discount: AppliedDiscount | null;
+  isOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
+  toggleCart: () => void;
   addItem: (product: CartProduct | ProductData | any, quantity?: number) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
@@ -67,6 +71,11 @@ export const useCartStore = create<CartStore>()(
     (set, get) => ({
       items: [],
       discount: null,
+      isOpen: false,
+
+      openCart: () => set({ isOpen: true }),
+      closeCart: () => set({ isOpen: false }),
+      toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
 
       addItem: (product, quantity = 1) => {
         const normalized = normalizeProduct(product);
@@ -157,6 +166,7 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: 'cp-cart-storage',
+      partialize: (state) => ({ items: state.items, discount: state.discount }),
     }
   )
 );

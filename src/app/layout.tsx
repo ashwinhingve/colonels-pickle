@@ -3,6 +3,8 @@ import Script from "next/script";
 import "@/styles/globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
+import { CartDrawer } from "@/components/cart/CartDrawer";
 import SessionProvider from "@/components/providers/SessionProvider";
 import { connectDB } from "@/lib/mongodb";
 import MarketingSettings from "@/models/MarketingSettings";
@@ -214,11 +216,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           </noscript>
         )}
         <SessionProvider>
+          <AnnouncementBar />
           <div className="flex min-h-screen flex-col">
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
+          <CartDrawer />
         </SessionProvider>
       </body>
     </html>
