@@ -1,438 +1,215 @@
-"use client"
+import type { Metadata } from "next";
+import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
+import { SectionHeader } from "@/components/common/SectionHeader";
+import { BRAND, CONTACT_EMAIL } from "@/lib/constants";
 
-import React, { useState, useEffect } from "react"
-import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection"
-import { CountUpStat } from "@/components/shared/CountUpStat"
-import { Timeline } from "@/components/shared/Timeline"
-import { TeamMemberCard } from "@/components/shared/TeamMemberCard"
-import type { TeamMember } from "@/components/shared/TeamMemberCard"
-import { CertificationBadge } from "@/components/shared/CertificationBadge"
-import { ClientsPartners } from "@/components/shared/ClientsPartners"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import {
-  Heart,
-  Leaf,
-  Shield,
-  Users,
-  TrendingUp,
-  Award,
-  Target,
-  Lightbulb,
-  CheckCircle,
-  Package,
-  Globe,
-  Sparkles,
-} from "lucide-react"
+export const metadata: Metadata = {
+  title: "Our Story — Born from a Mother's Kitchen",
+  description:
+    "The story behind Colonel's Pickle — a heartfelt initiative by Lt Col Praveen Kumar Sharma's family. FSSAI certified, no preservatives, made in Jaipur.",
+};
 
-const FALLBACK_TEAM: TeamMember[] = [
-  {
-    name: "Mr. Akhilesh Deshmukh",
-    role: "Founder & Proprietor",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
-    bio: "B.Com (Economics), MBA (Business Analyst). Expertise in finance, business strategy, supply chain & quality management. Leads the overall growth, innovation, and vision of the company.",
-    linkedin: "https://linkedin.com",
-    email: "taptiagrofood@gmail.com",
-  },
-  {
-    name: "Mr. Bhavesh Deshmukh",
-    role: "Product Partnership & Marketing Head",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
-    bio: "B.Com, LLB. Expertise in business partnerships, sales & offline distribution. Handles product collaborations, retail sales & marketing strategies.",
-    linkedin: "https://linkedin.com",
-    email: "taptiagrofood@gmail.com",
-  },
-  {
-    name: "Mr. Ayush Deshmukh",
-    role: "Co-Founder & Procurement Head",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
-    bio: "B.Sc. Agriculture. Expertise in farming, agri-markets, vendor management. Manages raw material procurement, farmer connect & product quality.",
-    linkedin: "https://linkedin.com",
-    email: "taptiagrofood@gmail.com",
-  },
-  {
-    name: "Mr. Dipanshu Deshmukh",
-    role: "Sales & Market Expansion Head",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop",
-    bio: "B.Sc. Agriculture. Expertise in sales, customer relations, market expansion. Focuses on retail growth, distribution channels & regional markets.",
-    linkedin: "https://linkedin.com",
-    email: "taptiagrofood@gmail.com",
-  },
-  {
-    name: "Ms. Pravina Sakre",
-    role: "Social Media & Creative Marketing Lead",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
-    bio: "B.Tech. Expertise in social media, branding, packaging design & eCommerce. Drives online presence, digital campaigns & creative strategies.",
-    linkedin: "https://linkedin.com",
-    email: "taptiagrofood@gmail.com",
-  },
-]
+const PROMISES = [
+  { icon: "🌿", title: "No Preservatives", desc: "No artificial preservatives, flavours or colours — ever.", color: "#166534" },
+  { icon: "🫙", title: "Kachi Ghani Oil", desc: "Cold-pressed wooden ghani mustard oil only.", color: "#92400E" },
+  { icon: "💎", title: "Afghani Hing", desc: "Premium asafoetida sourced from Central Asia at ₹35,000/kg.", color: "#B45309" },
+  { icon: "🧂", title: "Rock & Black Salt", desc: "No iodized table salt used in any product.", color: "#1E40AF" },
+  { icon: "🌶️", title: "24 Whole Spices", desc: "Sun-dried, roasted and ground fresh at our facility.", color: "#B91C1C" },
+  { icon: "⭐", title: "FSSAI Certified", desc: `Certified by Food Safety and Standards Authority of India (${BRAND.fssai}).`, color: "#166534" },
+];
+
+const CERTS = [
+  { icon: "✅", name: "FSSAI", detail: "Food Safety and Standards Authority of India", sub: `License: ${BRAND.fssai}` },
+  { icon: "🏛️", name: "Udhyam", detail: "Udyam Registration", sub: "Registered MSME enterprise" },
+  { icon: "🤝", name: "BNI", detail: "BNI Member — Vishwakarma Chapter, Jaipur", sub: "Proud member of Business Network International" },
+];
+
+const fullAddress = `${BRAND.address.line1}, ${BRAND.address.line2}, ${BRAND.address.city}, ${BRAND.address.state} - ${BRAND.address.pin}`;
 
 export default function AboutPage() {
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(FALLBACK_TEAM)
-
-  useEffect(() => {
-    fetch('/api/team')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.members && data.members.length > 0) {
-          // Map DB fields to TeamMemberCard format
-          setTeamMembers(
-            data.members.map((m: any) => ({
-              name: m.name,
-              role: m.designation,
-              image: m.photo || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
-              bio: m.bio || '',
-              linkedin: m.linkedin || '',
-              twitter: m.twitter || '',
-              email: m.email || '',
-            }))
-          )
-        }
-      })
-      .catch(() => {
-        // Keep fallback on error
-      })
-  }, [])
-
-  const timelineItems = [
-    {
-      year: "2019",
-      title: "The Beginning",
-      description: "TAPTIFS was founded with a mission to make premium superfoods accessible to everyone. Started with a small team and big dreams.",
-      icon: <Sparkles className="w-8 h-8 text-white" />,
-    },
-    {
-      year: "2020",
-      title: "First Milestone",
-      description: "Reached 10,000 happy customers and expanded our product line to include organic spices and seeds from around the world.",
-      icon: <Users className="w-8 h-8 text-white" />,
-    },
-    {
-      year: "2021",
-      title: "Quality Certified",
-      description: "Received ISO 22000 certification and FSSAI approval, ensuring the highest quality standards for all our products.",
-      icon: <Award className="w-8 h-8 text-white" />,
-    },
-    {
-      year: "2022",
-      title: "Going Global",
-      description: "Expanded operations to serve customers across 50+ cities in India with plans for international expansion.",
-      icon: <Globe className="w-8 h-8 text-white" />,
-    },
-    {
-      year: "2023",
-      title: "Innovation Hub",
-      description: "Launched our research facility to develop new superfood blends and innovative healthy snack options.",
-      icon: <Lightbulb className="w-8 h-8 text-white" />,
-    },
-    {
-      year: "2024",
-      title: "Sustainability Focus",
-      description: "Committed to 100% sustainable packaging and partnered with local farmers to support organic farming practices.",
-      icon: <Leaf className="w-8 h-8 text-white" />,
-    },
-  ]
-
-  const certifications = [
-    {
-      name: "FSSAI Licensed",
-      description: "Licensed by Food Safety and Standards Authority of India (License No. 21425150001179) for quality assurance and food safety.",
-      icon: <CheckCircle className="w-12 h-12 text-white" />,
-    },
-    {
-      name: "GST Registered",
-      description: "Registered under GST (No. 23GGLPD7346M1ZZ) ensuring transparency and compliance with Indian tax regulations.",
-      icon: <Shield className="w-12 h-12 text-white" />,
-    },
-    {
-      name: "Organic Certified",
-      description: "Working with certified organic suppliers like Almighty Organics Pvt. Ltd. to ensure 100% organic authenticity.",
-      icon: <Leaf className="w-12 h-12 text-white" />,
-    },
-    {
-      name: "Quality Assured",
-      description: "Hygienic processing and premium packaging with certified organic raw materials from trusted partners.",
-      icon: <Package className="w-12 h-12 text-white" />,
-    },
-  ]
-
   return (
-    <main>
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-amber-50 via-white to-red-50 py-20 md:py-32">
-        <div className="container mx-auto px-4">
-          <AnimatedSection direction="up" className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gray-900">
-              Our
-              <span className="block bg-gradient-to-r from-amber-600 to-red-700 bg-clip-text text-transparent">
-                Story
-              </span>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-700 mb-8">
-              A trusted food brand committed to delivering pure, authentic, and high-quality products.
-              Sourced directly from our farms and trusted farmers, hygienically packed, and delivered with care.
-              Now available on Amazon, Flipkart, Meesho, and expanding to retail stores across India.
-            </p>
-          </AnimatedSection>
+    <>
+      {/* 1. Hero */}
+      <section
+        className="relative flex min-h-[50vh] items-center justify-center overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, #7F1D1D 0%, #B91C1C 50%, #78350F 100%)",
+        }}
+      >
+        <RajasthaniPattern variant="medallion" opacity={0.06} color="#ffffff" />
+        <div className="relative z-10 mx-auto max-w-3xl px-4 py-20 text-center">
+          <p className="font-hindi text-xs font-bold uppercase tracking-widest text-[#FCD34D]">
+            The Story Behind Every Jar
+          </p>
+          <h1 className="mt-4 font-display text-4xl font-extrabold text-white md:text-5xl">
+            Born from a Mother&apos;s Kitchen
+          </h1>
+          <p className="mt-4 font-serif text-lg italic text-white/80">
+            A heartfelt initiative by Lt Col Praveen Kumar Sharma&apos;s family
+          </p>
         </div>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1440 80"
+          preserveAspectRatio="none"
+          className="absolute bottom-0 left-0 block h-[60px] w-full"
+        >
+          <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#FDF8F0" />
+        </svg>
       </section>
 
-      {/* Mission & Vision */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            <AnimatedSection direction="left">
-              <div className="bg-gradient-to-br from-amber-50 to-white rounded-2xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300 h-full group">
-                <div className="w-20 h-20 bg-gradient-to-br from-amber-500 to-red-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Target className="w-10 h-10 text-white" />
-                </div>
-                <h2 className="text-3xl font-bold text-gray-800 mb-4">Our Mission</h2>
-                <p className="text-lg text-gray-600 leading-relaxed">
-                  To deliver pure, natural, and healthy food products to every home—combining taste, health, and authenticity. We source directly from our own farms and trusted farmers, ensuring 100% adulteration-free products that bring traditional taste with modern trust.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection direction="right">
-              <div className="bg-gradient-to-br from-red-50 to-white rounded-2xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300 h-full group">
-                <div className="w-20 h-20 bg-gradient-to-br from-amber-500 to-red-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Lightbulb className="w-10 h-10 text-white" />
-                </div>
-                <h2 className="text-3xl font-bold text-gray-800 mb-4">Our Vision</h2>
-                <p className="text-lg text-gray-600 leading-relaxed">
-                  "The Taste of Purity" - To become a household name synonymous with pure, authentic, and high-quality food products. We are committed to expanding from online marketplaces to retail stores, making premium quality food accessible to every Indian household.
-                </p>
-              </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <AnimatedSection className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-2 text-gray-800">
-              Our Impact
-            </h2>
-            <div className="w-24 h-1 bg-red-600 mx-auto mt-4"></div>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <CountUpStat
-              end={6}
-              suffix="+"
-              label="Years of Excellence"
-              icon={<Award className="w-12 h-12" />}
-            />
-            <CountUpStat
-              end={50000}
-              suffix="+"
-              label="Happy Customers"
-              icon={<Users className="w-12 h-12" />}
-            />
-            <CountUpStat
-              end={100}
-              suffix="+"
-              label="Premium Products"
-              icon={<Package className="w-12 h-12" />}
-            />
-            <CountUpStat
-              end={50}
-              suffix="+"
-              label="Cities Served"
-              icon={<Globe className="w-12 h-12" />}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Our Journey Timeline */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-2 text-gray-800">
-              Our Journey
-            </h2>
-            <div className="w-24 h-1 bg-red-600 mx-auto mt-4"></div>
-            <p className="text-gray-600 mt-6 max-w-2xl mx-auto">
-              From humble beginnings to becoming a trusted name in superfoods
-            </p>
-          </AnimatedSection>
-
-          <Timeline items={timelineItems} />
-        </div>
-      </section>
-
-      {/* Core Values */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-amber-50 via-white to-red-50">
-        <div className="container mx-auto px-4">
-          <AnimatedSection className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-2 text-gray-800">
-              Our Values
-            </h2>
-            <div className="w-24 h-1 bg-red-600 mx-auto mt-4"></div>
-          </AnimatedSection>
-
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <StaggerItem>
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105 text-center h-full">
-                <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <Heart className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-3">Customer First</h3>
-                <p className="text-gray-600">
-                  Every decision we make starts with our customers' health and satisfaction in mind.
-                </p>
-              </div>
-            </StaggerItem>
-
-            <StaggerItem>
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105 text-center h-full">
-                <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <Shield className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-3">Quality Assurance</h3>
-                <p className="text-gray-600">
-                  We never compromise on quality. Every product is rigorously tested and certified.
-                </p>
-              </div>
-            </StaggerItem>
-
-            <StaggerItem>
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105 text-center h-full">
-                <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <Leaf className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-3">Sustainability</h3>
-                <p className="text-gray-600">
-                  Committed to eco-friendly practices and supporting sustainable farming communities.
-                </p>
-              </div>
-            </StaggerItem>
-
-            <StaggerItem>
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105 text-center h-full">
-                <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <TrendingUp className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-3">Innovation</h3>
-                <p className="text-gray-600">
-                  Constantly researching and developing new products to meet evolving health needs.
-                </p>
-              </div>
-            </StaggerItem>
-
-            <StaggerItem>
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105 text-center h-full">
-                <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <Users className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-3">Community</h3>
-                <p className="text-gray-600">
-                  Building a community of health-conscious individuals supporting each other's wellness journey.
-                </p>
-              </div>
-            </StaggerItem>
-
-            <StaggerItem>
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105 text-center h-full">
-                <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <CheckCircle className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-3">Transparency</h3>
-                <p className="text-gray-600">
-                  Complete transparency in sourcing, pricing, and production processes.
-                </p>
-              </div>
-            </StaggerItem>
-          </StaggerContainer>
-        </div>
-      </section>
-
-      {/* Meet Our Team */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <AnimatedSection className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-2 text-gray-800">
-              Meet Our Team
-            </h2>
-            <div className="w-24 h-1 bg-red-600 mx-auto mt-4"></div>
-            <p className="text-gray-600 mt-6 max-w-2xl mx-auto">
-              The passionate people behind TAPTIFS, dedicated to bringing you the finest superfoods
-            </p>
-          </AnimatedSection>
-
+      {/* 2. Story narrative */}
+      <section className="bg-cp-cream py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2">
           <div
-            className={`grid grid-cols-1 md:grid-cols-2 gap-8 ${
-              teamMembers.length <= 3
-                ? 'lg:grid-cols-3'
-                : teamMembers.length === 4
-                ? 'lg:grid-cols-4'
-                : 'lg:grid-cols-5'
-            }`}
+            className="relative rounded-2xl p-10"
+            style={{ backgroundColor: "#1C1917" }}
           >
-            {teamMembers.map((member, index) => (
-              <AnimatedSection key={index} delay={index * 0.1} direction="up">
-                <TeamMemberCard member={member} />
-              </AnimatedSection>
+            <span
+              className="absolute left-0 top-0 h-12 w-12 rounded-tl-2xl border-l-2 border-t-2"
+              style={{ borderColor: "#D97706" }}
+            />
+            <span
+              className="absolute bottom-0 right-0 h-12 w-12 rounded-br-2xl border-b-2 border-r-2"
+              style={{ borderColor: "#B91C1C" }}
+            />
+            <span className="text-[80px]">🎖️</span>
+            <p className="mt-4 font-display text-xl font-bold text-[#FCD34D]">
+              Lt Col Praveen Kumar Sharma
+            </p>
+            <p className="mt-1 font-sans text-sm text-white/70">
+              CPE ITARSI | OIC AOC PROOF DET
+            </p>
+            <div className="mt-6 rounded-xl border border-white/15 bg-white/8 p-6">
+              <p className="font-serif text-lg italic leading-relaxed text-white/85">
+                &ldquo;Quality is non-negotiable when you&apos;re feeding
+                families. That&apos;s why we put the same love in every jar that
+                Maa puts in every meal.&rdquo;
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-crimson">
+              Our Founder&apos;s Vision
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-extrabold text-cp-text md:text-4xl">
+              Maa Ka Pyaar, Ghar Ka Achar
+            </h2>
+            <p className="mt-5 font-serif text-[15px] leading-relaxed text-cp-text-muted">
+              Every jar of Colonel&apos;s Pickle carries the love of Urmila Devi
+              Roshan Lal — an Army Officer&apos;s mother from Haryana. When Lt
+              Col Praveen Kumar Sharma witnessed soldiers and people far from
+              home missing the authentic taste of Ghar Ka Achar, he turned to
+              his mother&apos;s time-tested recipes.
+            </p>
+            <p className="mt-4 font-serif text-[15px] leading-relaxed text-cp-text-muted">
+              What started as a heartfelt gesture to feed homesick soldiers has
+              grown into Ridhwika Agro Organics — a venture that creates
+              employment for local women while delivering purity, tradition, and
+              the irreplaceable taste of Maa Ka Pyaar in every jar.
+            </p>
+            <p className="mt-4 font-serif text-[15px] leading-relaxed text-cp-text-muted">
+              Today Colonel&apos;s Pickle ships pan-India from Jaipur,
+              Rajasthan. Every product is FSSAI certified, prepared without
+              artificial preservatives, and made from the same premium
+              ingredients used in their home kitchen — Afghani hing at
+              ₹35,000/kg, wooden cold-press mustard oil, and 24 whole spices
+              dried and ground fresh.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Our Promise */}
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-4">
+          <SectionHeader
+            eyebrow="WHY CHOOSE COLONEL'S PICKLE"
+            title="Our Promise to You"
+          />
+          <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {PROMISES.map((p) => (
+              <div
+                key={p.title}
+                className="rounded-2xl border border-cp-border bg-cp-cream p-6"
+                style={{ borderBottom: `3px solid ${p.color}` }}
+              >
+                <span className="text-4xl">{p.icon}</span>
+                <h3 className="mt-3 font-display text-lg font-bold text-cp-text">
+                  {p.title}
+                </h3>
+                <p className="mt-1 font-serif text-sm leading-relaxed text-cp-text-muted">
+                  {p.desc}
+                </p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Clients & Partners */}
-      <ClientsPartners />
-
-      {/* Certifications */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <AnimatedSection className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-2 text-gray-800">
-              Quality Certifications
-            </h2>
-            <div className="w-24 h-1 bg-red-600 mx-auto mt-4"></div>
-            <p className="text-gray-600 mt-6 max-w-2xl mx-auto">
-              Certified excellence you can trust
-            </p>
-          </AnimatedSection>
-
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {certifications.map((cert, index) => (
-              <StaggerItem key={index}>
-                <CertificationBadge certification={cert} />
-              </StaggerItem>
+      {/* 4. Certifications */}
+      <section className="bg-cp-cream py-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <SectionHeader
+            eyebrow="CERTIFIED & REGISTERED"
+            title="Trusted by Standards"
+          />
+          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+            {CERTS.map((c) => (
+              <div
+                key={c.name}
+                className="rounded-2xl border border-cp-border bg-white p-8 text-center"
+              >
+                <span className="text-4xl">{c.icon}</span>
+                <h3 className="mt-3 font-display text-xl font-extrabold text-cp-crimson">
+                  {c.name}
+                </h3>
+                <p className="mt-2 font-sans text-sm font-semibold text-cp-text">
+                  {c.detail}
+                </p>
+                <p className="mt-1 font-serif text-sm text-cp-text-muted">
+                  {c.sub}
+                </p>
+              </div>
             ))}
-          </StaggerContainer>
+          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-amber-50 via-white to-red-50">
-        <div className="container mx-auto px-4">
-          <AnimatedSection direction="up" className="text-center max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">
-              Ready to Start Your Health Journey?
-            </h2>
-            <p className="text-xl text-gray-700 mb-8">
-              Join thousands of satisfied customers who have transformed their lives with TAPTIFS superfoods
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/products">
-                <Button size="lg" className="bg-gradient-to-r from-amber-600 to-red-700 hover:from-amber-700 hover:to-red-800 text-white px-10 py-6 text-lg shadow-xl hover:shadow-2xl">
-                  Shop Products
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button size="lg" variant="outline" className="border-2 border-amber-600 text-amber-700 hover:bg-amber-600 hover:text-white px-10 py-6 text-lg">
-                  Contact Us
-                </Button>
-              </Link>
-            </div>
-          </AnimatedSection>
+      {/* 5. Contact CTA */}
+      <section className="bg-cp-crimson py-16">
+        <div className="mx-auto max-w-4xl px-4 text-center text-white">
+          <h2 className="font-display text-3xl font-extrabold md:text-4xl">
+            Get in Touch
+          </h2>
+          <div className="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-2 font-sans text-lg font-bold">
+            {BRAND.phones.map((p) => (
+              <a key={p} href={`tel:+91${p}`} className="hover:text-[#FCD34D]">
+                +91 {p}
+              </a>
+            ))}
+          </div>
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="mt-4 inline-block font-sans text-sm text-white/90 hover:text-[#FCD34D]"
+          >
+            {CONTACT_EMAIL}
+          </a>
+          <p className="mx-auto mt-3 max-w-xl font-serif text-sm text-white/80">
+            {fullAddress}
+          </p>
+          <a
+            href="https://wa.me/919350406289"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-block rounded-lg bg-[#25D366] px-7 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white transition-transform hover:-translate-y-px"
+          >
+            WhatsApp Us
+          </a>
         </div>
       </section>
-    </main>
-  )
+    </>
+  );
 }
