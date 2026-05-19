@@ -1,0 +1,78 @@
+import { SectionHeader } from "@/components/common/SectionHeader";
+
+const INGREDIENTS = [
+  {
+    icon: "🌿",
+    title: "Afghani Hing",
+    sub: "Premium Asafoetida",
+    note: "~₹35,000/kg · World's finest",
+    color: "#166534",
+  },
+  {
+    icon: "🫙",
+    title: "Kachi Ghani Mustard Oil",
+    sub: "Cold Pressed Wooden Press",
+    note: "~₹300/litre · Pure & unrefined",
+    color: "#92400E",
+  },
+  {
+    icon: "🌶️",
+    title: "24 Exotic Whole Spices",
+    sub: "Sun-dried, Roasted & Ground",
+    note: "From across India & Central Asia",
+    color: "#B91C1C",
+  },
+  {
+    icon: "🧂",
+    title: "Rock Salt & Black Salt",
+    sub: "Sendha & Kala Namak",
+    note: "No iodized table salt, ever",
+    color: "#1E40AF",
+  },
+];
+
+export function PremiumIngredients() {
+  return (
+    <section className="bg-white py-20">
+      <div className="mx-auto max-w-7xl px-4">
+        <SectionHeader
+          eyebrow="WHAT MAKES US DIFFERENT"
+          title="Premium Ingredients, No Compromises"
+          subtitle="We source the finest — and refuse every cheap substitute the industry quietly relies on."
+        />
+
+        <div className="mt-12 grid grid-cols-2 gap-5 lg:grid-cols-4">
+          {INGREDIENTS.map((item) => (
+            <div
+              key={item.title}
+              style={
+                {
+                  "--ing": item.color,
+                  "--ing-soft": `${item.color}33`,
+                  background: `linear-gradient(135deg, ${item.color}0D 0%, #FFFFFF 70%)`,
+                } as React.CSSProperties
+              }
+              className="rounded-2xl border-2 border-[color:var(--ing-soft)] p-6 transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-[color:var(--ing)]"
+            >
+              <span className="text-4xl">{item.icon}</span>
+              <h3 className="mt-4 font-display text-base font-bold text-cp-text">
+                {item.title}
+              </h3>
+              <p className="mt-1 font-sans text-sm text-cp-text-muted">
+                {item.sub}
+              </p>
+              <p
+                className="mt-3 font-sans text-xs font-semibold"
+                style={{ color: item.color }}
+              >
+                {item.note}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default PremiumIngredients;
