@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { signIn, useSession } from "next-auth/react"
+import { getSession, signIn, useSession } from "next-auth/react"
 import { AnimatedSection } from "@/components/shared/AnimatedSection"
 import { Button } from "@/components/ui/button"
 import { Mail, ArrowLeft, Phone } from "lucide-react"
@@ -33,19 +33,36 @@ export default function LoginPage() {
   const [mobileOtp, setMobileOtp] = useState("")
   const [mobileCooldown, setMobileCooldown] = useState(0)
 
+  const getRedirectPath = (role?: string | null) => {
+    const redirect = searchParams.get("redirect")
+
+    if (redirect) {
+      try {
+        const target = new URL(redirect, window.location.origin)
+        const isSameOrigin = target.origin === window.location.origin
+        const isLoginPath = target.pathname === "/login"
+
+        if (isSameOrigin && !isLoginPath) {
+          return `${target.pathname}${target.search}${target.hash}`
+        }
+      } catch {
+        // Ignore malformed redirect values and fall back by role.
+      }
+    }
+
+    return role === "admin" ? "/admin/dashboard" : "/orders"
+  }
+
+  const completeSignIn = async () => {
+    const updatedSession = await getSession()
+    router.replace(getRedirectPath(updatedSession?.user?.role))
+    router.refresh()
+  }
+
   // Handle redirection when user is already logged in or just logged in
   useEffect(() => {
     if (status === 'authenticated' && session?.user) {
-      const redirect = searchParams.get("redirect")
-      if (redirect && redirect !== '/login') {
-        router.push(redirect)
-      } else {
-        if (session.user.role === 'admin') {
-          router.push('/admin/dashboard')
-        } else {
-          router.push('/orders')
-        }
-      }
+      router.replace(getRedirectPath(session.user.role))
     }
   }, [status, session, router, searchParams])
 
@@ -72,7 +89,9 @@ export default function LoginPage() {
     setIsLoading(true)
     setError("")
     try {
-      const result = await signIn("google", { redirect: false })
+      const result = await signIn("google", {
+        callbackUrl: getRedirectPath(session?.user?.role),
+      })
       if (result?.error) {
         setError("Failed to sign in with Google. Please try again.")
         setIsLoading(false)
@@ -112,8 +131,18 @@ export default function LoginPage() {
     if (!emailOtp || emailOtp.length !== 6) { setError("Please enter the 6-digit code."); return }
     setIsLoading(true); setError("")
     try {
-      const result = await signIn("email-otp", { redirect: false, email, otp: emailOtp })
-      if (result?.error) { setError(result.error); setIsLoading(false) }
+      const result = await signIn("email-otp", {
+        redirect: false,
+        callbackUrl: getRedirectPath(session?.user?.role),
+        email,
+        otp: emailOtp,
+      })
+      if (result?.error) {
+        setError(result.error)
+        setIsLoading(false)
+        return
+      }
+      await completeSignIn()
     } catch {
       setError("An error occurred. Please try again.")
       setIsLoading(false)
@@ -149,8 +178,18 @@ export default function LoginPage() {
     if (!mobileOtp || mobileOtp.length !== 6) { setError("Please enter the 6-digit code."); return }
     setIsLoading(true); setError("")
     try {
-      const result = await signIn("mobile-otp", { redirect: false, phone, otp: mobileOtp })
-      if (result?.error) { setError(result.error); setIsLoading(false) }
+      const result = await signIn("mobile-otp", {
+        redirect: false,
+        callbackUrl: getRedirectPath(session?.user?.role),
+        phone,
+        otp: mobileOtp,
+      })
+      if (result?.error) {
+        setError(result.error)
+        setIsLoading(false)
+        return
+      }
+      await completeSignIn()
     } catch {
       setError("An error occurred. Please try again.")
       setIsLoading(false)

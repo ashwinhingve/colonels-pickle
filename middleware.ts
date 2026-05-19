@@ -22,6 +22,8 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith(route)
   );
 
+  const requestedPath = `${request.nextUrl.pathname}${request.nextUrl.search}`;
+
   // Check for NextAuth session token
   const token = await getToken({
     req: request,
@@ -33,7 +35,7 @@ export async function middleware(request: NextRequest) {
     if (!token) {
       // Not authenticated - redirect to login
       const url = new URL("/login", request.url);
-      url.searchParams.set("redirect", request.nextUrl.pathname);
+      url.searchParams.set("redirect", requestedPath);
       return NextResponse.redirect(url);
     }
 
@@ -48,7 +50,7 @@ export async function middleware(request: NextRequest) {
   // If route is protected and no token exists, redirect to login
   if (isProtectedRoute && !token) {
     const url = new URL("/login", request.url);
-    url.searchParams.set("redirect", request.nextUrl.pathname);
+    url.searchParams.set("redirect", requestedPath);
     return NextResponse.redirect(url);
   }
 

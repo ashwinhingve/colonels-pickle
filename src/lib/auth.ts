@@ -340,19 +340,33 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // Handle relative URLs (starts with /)
-      if (url.startsWith("/")) {
-        return `${baseUrl}${url}`;
-      }
+      const safeRedirect = (target: string) => {
+        const baseUrlObj = new URL(baseUrl);
+        const targetUrl = new URL(target, baseUrl);
+
+        if (targetUrl.origin !== baseUrlObj.origin || targetUrl.pathname === '/login') {
+          return null;
+        }
+
+        return targetUrl.href;
+      };
 
       // Parse the URL to check its origin
       try {
-        const urlObj = new URL(url);
+        const urlObj = new URL(url, baseUrl);
         const baseUrlObj = new URL(baseUrl);
 
         // Allow same origin URLs
         if (urlObj.origin === baseUrlObj.origin) {
-          return url;
+          if (urlObj.pathname === '/login') {
+            const redirectParam = urlObj.searchParams.get('redirect') || urlObj.searchParams.get('callbackUrl');
+            if (redirectParam) {
+              const resolvedRedirect = safeRedirect(redirectParam);
+              if (resolvedRedirect) return resolvedRedirect;
+            }
+          }
+
+          return urlObj.href;
         }
 
         // Check if URL has a callbackUrl parameter and extract it
@@ -372,8 +386,7 @@ export const authOptions: NextAuthOptions = {
         console.error('Redirect callback error:', error);
       }
 
-      // Default to login page for role-based redirection handling
-      return `${baseUrl}/login`;
+      return baseUrl;
     },
   },
   pages: {
