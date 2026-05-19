@@ -1,25 +1,45 @@
-import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
-import connectDB from '@/lib/mongodb/connection';
-import Product from '@/models/Product';
-import ProductImageGallery from '@/components/products/ProductImageGallery';
-import ProductInfo from '@/components/products/ProductInfo';
-import ProductDetailsTabs from '@/components/products/ProductDetailsTabs';
-import { ProductCard } from '@/components/products/ProductCard';
-import Breadcrumbs from '@/components/shared/Breadcrumbs';
+import { notFound } from "next/navigation";
+import { Metadata } from "next";
+import Link from "next/link";
+import connectDB from "@/lib/mongodb/connection";
+import Product from "@/models/Product";
+import { ProductCard } from "@/components/products/ProductCard";
+import { ProductPurchase } from "@/components/products/ProductPurchase";
+import { ProductAccordion } from "@/components/products/ProductAccordion";
+import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
+import { SectionHeader } from "@/components/common/SectionHeader";
+import { getProductTheme } from "@/lib/productTheme";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://taptifs.in';
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://colonelspickle.in";
+
+const CATEGORY_LABELS: Record<string, string> = {
+  achaar: "Achaar Collection",
+  masala: "Achaar Masale",
+  oils: "Cold Press Oils",
+};
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ review?: string }>;
 }
 
 function safeJsonLd(data: object): string {
   return JSON.stringify(data)
-    .replace(/</g, '\\u003c')
-    .replace(/>/g, '\\u003e')
-    .replace(/&/g, '\\u0026');
+    .replace(/</g, "\\u003c")
+    .replace(/>/g, "\\u003e")
+    .replace(/&/g, "\\u0026");
+}
+
+export async function generateStaticParams() {
+  try {
+    await connectDB();
+    const products = await Product.find({ isActive: true })
+      .select("slug")
+      .lean();
+    return products.map((p: any) => ({ slug: p.slug }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({
@@ -27,158 +47,105 @@ export async function generateMetadata({
 }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
   await connectDB();
-  const product = await Product.findOne({
-    slug,
-    isActive: true,
-  }).lean() as any;
+  const product = (await Product.findOne({ slug, isActive: true }).lean()) as any;
 
-  if (!product) {
-    return { title: 'Product Not Found' };
-  }
+  if (!product) return { title: "Product Not Found" };
 
-  const title = product.seo?.metaTitle || `${product.name} | Tapti Food & Spices`;
+  const title = product.seo?.metaTitle || `${product.name} | Colonel's Pickle`;
   const description = product.seo?.metaDescription || product.description;
-  const ogImage = product.seo?.ogImage || product.images?.[0]?.url || `${SITE_URL}/images/logo.jpg`;
   const canonicalUrl = `${SITE_URL}/products/${product.slug}`;
 
   return {
     title,
     description,
-    keywords: product.seo?.keywords?.length ? product.seo.keywords : (product.tags || []),
-    alternates: {
-      canonical: canonicalUrl,
-    },
+    keywords: product.seo?.keywords?.length
+      ? product.seo.keywords
+      : product.tags || [],
+    alternates: { canonical: canonicalUrl },
     openGraph: {
       title: product.seo?.metaTitle || product.name,
       description,
-      type: 'website',
+      type: "website",
       url: canonicalUrl,
-      siteName: 'Tapti Food & Spices',
-      locale: 'en_IN',
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: product.seo?.metaTitle || product.name,
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: product.seo?.metaTitle || product.name,
-      description,
-      images: [ogImage],
+      siteName: "Colonel's Pickle",
+      locale: "en_IN",
     },
   };
 }
 
-export default async function ProductDetailPage({ params, searchParams }: ProductPageProps) {
+export default async function ProductDetailPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const { review } = await searchParams;
   await connectDB();
 
-  const product = await Product.findOne({
-    slug,
-    isActive: true,
-  })
-    .select('-__v')
-    .lean() as any;
+  const productDoc = (await Product.findOne({ slug, isActive: true })
+    .select("-__v")
+    .lean()) as any;
 
-  if (!product) {
-    notFound();
-  }
+  if (!productDoc) notFound();
 
-  // Fetch related products
-  const relatedProducts = await Product.find({
-    category: product.category,
+  const relatedDocs = await Product.find({
+    category: productDoc.category,
     isActive: true,
-    _id: { $ne: product._id },
+    _id: { $ne: productDoc._id },
   })
-    .select('name slug price originalPrice images averageRating totalReviews category stock isFeatured isActive sku tags')
     .limit(4)
     .lean();
 
-  // Serialize data
-  const serializedProduct = JSON.parse(JSON.stringify(product));
-  const serializedRelated = JSON.parse(JSON.stringify(relatedProducts));
+  const product = JSON.parse(JSON.stringify(productDoc));
+  const related = JSON.parse(JSON.stringify(relatedDocs));
+  const theme = getProductTheme(product.slug);
+  const categoryLabel =
+    CATEGORY_LABELS[product.category] || product.category;
+  const canonicalUrl = `${SITE_URL}/products/${product.slug}`;
 
-  const canonicalUrl = `${SITE_URL}/products/${serializedProduct.slug}`;
-
-  // Product JSON-LD — enables price, availability, and star ratings in Google SERPs
   const productJsonLd: Record<string, any> = {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": serializedProduct.name,
-    "description": serializedProduct.description,
-    "image": (serializedProduct.images || []).map((img: any) => img.url).filter(Boolean),
-    "sku": serializedProduct.sku,
-    "brand": {
-      "@type": "Brand",
-      "name": "Tapti Food & Spices",
-    },
-    "offers": {
+    name: product.name,
+    description: product.description,
+    sku: product.sku,
+    brand: { "@type": "Brand", name: "Colonel's Pickle" },
+    offers: {
       "@type": "Offer",
-      "url": canonicalUrl,
-      "priceCurrency": "INR",
-      "price": serializedProduct.price,
-      "availability": serializedProduct.stock > 0
-        ? "https://schema.org/InStock"
-        : "https://schema.org/OutOfStock",
-      "itemCondition": "https://schema.org/NewCondition",
-      "seller": {
-        "@type": "Organization",
-        "name": "Tapti Food & Spices",
-      },
+      url: canonicalUrl,
+      priceCurrency: "INR",
+      price: product.price,
+      availability:
+        product.stock > 0
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+      itemCondition: "https://schema.org/NewCondition",
     },
   };
 
-  // Only add aggregateRating when actual reviews exist — Google requires this
-  if (serializedProduct.averageRating > 0 && serializedProduct.totalReviews > 0) {
-    productJsonLd["aggregateRating"] = {
-      "@type": "AggregateRating",
-      "ratingValue": serializedProduct.averageRating,
-      "reviewCount": serializedProduct.totalReviews,
-      "bestRating": 5,
-      "worstRating": 1,
-    };
-  }
-
-  // BreadcrumbList JSON-LD — shows breadcrumb path in SERPs
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "itemListElement": [
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
       {
         "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": SITE_URL,
+        position: 2,
+        name: "Products",
+        item: `${SITE_URL}/products`,
       },
       {
         "@type": "ListItem",
-        "position": 2,
-        "name": "Products",
-        "item": `${SITE_URL}/products`,
+        position: 3,
+        name: categoryLabel,
+        item: `${SITE_URL}/products?category=${product.category}`,
       },
       {
         "@type": "ListItem",
-        "position": 3,
-        "name": serializedProduct.category,
-        "item": `${SITE_URL}/products?category=${encodeURIComponent(serializedProduct.category)}`,
-      },
-      {
-        "@type": "ListItem",
-        "position": 4,
-        "name": serializedProduct.name,
-        "item": canonicalUrl,
+        position: 4,
+        name: product.name,
+        item: canonicalUrl,
       },
     ],
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-red-50 py-8">
-      {/* JSON-LD Structured Data */}
+    <div className="bg-cp-cream py-10">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(productJsonLd) }}
@@ -188,47 +155,73 @@ export default async function ProductDetailPage({ params, searchParams }: Produc
         dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
       />
 
-      <div className="container mx-auto px-4">
-        {/* Breadcrumbs */}
-        <Breadcrumbs
-          items={[
-            { label: 'Home', href: '/' },
-            { label: 'Products', href: '/products' },
-            { label: product.category, href: `/products?category=${product.category}` },
-            { label: product.name, href: '#' },
-          ]}
-        />
+      <div className="mx-auto max-w-6xl px-4">
+        {/* Breadcrumb */}
+        <nav className="font-sans text-sm text-cp-text-muted">
+          <Link href="/" className="hover:text-cp-crimson">
+            Home
+          </Link>
+          <span className="mx-2">›</span>
+          <Link href="/products" className="hover:text-cp-crimson">
+            Products
+          </Link>
+          <span className="mx-2">›</span>
+          <Link
+            href={`/products?category=${product.category}`}
+            className="hover:text-cp-crimson"
+          >
+            {categoryLabel}
+          </Link>
+          <span className="mx-2">›</span>
+          <span className="text-cp-text">{product.name}</span>
+        </nav>
 
-        {/* Main Product Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mt-6">
-          {/* Left: Image Gallery */}
-          <ProductImageGallery
-            images={serializedProduct.images}
-            productName={serializedProduct.name}
-            videoUrl={serializedProduct.videoUrl}
-          />
+        {/* Main */}
+        <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-2">
+          {/* Left: colored image block */}
+          <div
+            className="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl"
+            style={{
+              background: `linear-gradient(145deg, ${theme.themeColor}, ${theme.themeColor}CC)`,
+            }}
+          >
+            <RajasthaniPattern
+              variant="medallion"
+              opacity={0.08}
+              color="#ffffff"
+            />
+            <div className="relative z-10 px-8 text-center">
+              <div className="text-[88px]">{theme.icon}</div>
+              <p className="mt-4 font-display text-2xl font-extrabold text-white">
+                {product.name}
+              </p>
+              {theme.nameHindi ? (
+                <p className="mt-1 font-sans text-base text-white/80">
+                  {theme.nameHindi}
+                </p>
+              ) : null}
+            </div>
+          </div>
 
-          {/* Right: Product Info */}
-          <ProductInfo product={serializedProduct} autoOpenReview={review === '1'} />
+          {/* Right: details */}
+          <div>
+            <ProductPurchase product={product} theme={theme} />
+            <div className="mt-8">
+              <ProductAccordion product={product} />
+            </div>
+          </div>
         </div>
 
-        {/* Product Details Tabs */}
-        <div className="mt-12">
-          <ProductDetailsTabs
-            longDescription={serializedProduct.longDescription}
-            specifications={serializedProduct.specifications}
-          />
-        </div>
-
-        {/* Related Products */}
-        {serializedRelated.length > 0 && (
-          <div className="mt-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6 bg-gradient-to-r from-amber-600 to-red-700 bg-clip-text text-transparent">
-              Related Products
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {serializedRelated.map((relatedProduct: any) => (
-                <ProductCard key={relatedProduct._id || relatedProduct.id} product={relatedProduct} />
+        {/* You May Also Like */}
+        {related.length > 0 && (
+          <div className="mt-20">
+            <SectionHeader
+              eyebrow="FROM THE SAME RANGE"
+              title="You May Also Like"
+            />
+            <div className="mt-10 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
+              {related.map((r: any) => (
+                <ProductCard key={r._id} product={r} />
               ))}
             </div>
           </div>

@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
 
     // Pagination
     const page = parseInt(searchParams.get('page') || '1', 10);
-    const limit = Math.min(parseInt(searchParams.get('limit') || '20', 10), 50); // Max 50 items
+    const limit = Math.min(parseInt(searchParams.get('limit') || '20', 10), 100); // Max 100 items
 
     // Filters
     const category = searchParams.get('category');
@@ -32,6 +32,7 @@ export async function GET(req: NextRequest) {
     const rawSortBy = searchParams.get('sortBy') || 'createdAt';
     const sortBy = ALLOWED_SORT_FIELDS.includes(rawSortBy) ? rawSortBy : 'createdAt';
     const sortOrder = searchParams.get('sortOrder') === 'asc' ? 1 : -1;
+    const sortParam = searchParams.get('sort'); // price_asc | price_desc | name_asc | featured
 
     await connectDB();
 
@@ -86,6 +87,24 @@ export async function GET(req: NextRequest) {
     const sort: any = {};
     if (search) {
       sort.score = { $meta: 'textScore' }; // Sort by relevance when searching
+    } else if (sortParam) {
+      switch (sortParam) {
+        case 'price_asc':
+          sort.price = 1;
+          break;
+        case 'price_desc':
+          sort.price = -1;
+          break;
+        case 'name_asc':
+          sort.name = 1;
+          break;
+        case 'featured':
+          sort.isFeatured = -1;
+          sort.createdAt = -1;
+          break;
+        default:
+          sort[sortBy] = sortOrder;
+      }
     } else {
       sort[sortBy] = sortOrder;
     }
