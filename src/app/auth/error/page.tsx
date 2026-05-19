@@ -65,7 +65,7 @@ function ErrorContent() {
   const errorInfo = getErrorMessage(error);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-red-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-cp-cream px-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
         <div className="text-center mb-6">
           <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
@@ -100,7 +100,7 @@ function ErrorContent() {
         <div className="space-y-3">
           <Link
             href="/login"
-            className="block w-full bg-gradient-to-r from-amber-600 to-red-700 text-white py-3 px-4 rounded-lg hover:from-amber-700 hover:to-red-800 font-medium text-center transition-all"
+            className="block w-full bg-cp-crimson text-white py-3 px-4 rounded-lg hover:bg-cp-crimson-dark font-medium text-center transition-all"
           >
             Try Again
           </Link>
@@ -115,7 +115,7 @@ function ErrorContent() {
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
             Need help?{' '}
-            <Link href="/contact" className="text-amber-600 hover:text-amber-700 font-medium">
+            <Link href="/contact" className="text-cp-crimson hover:text-cp-crimson-dark font-medium">
               Contact Support
             </Link>
           </p>

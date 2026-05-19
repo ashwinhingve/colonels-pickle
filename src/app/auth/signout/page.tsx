@@ -23,12 +23,12 @@ export default function SignOutPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-red-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-cp-cream px-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
         <div className="text-center mb-6">
           <div className="mx-auto w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-4">
             <svg
-              className="w-8 h-8 text-amber-600"
+              className="w-8 h-8 text-cp-crimson"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -53,7 +53,7 @@ export default function SignOutPage() {
           <button
             onClick={handleSignOut}
             disabled={signingOut}
-            className="w-full bg-gradient-to-r from-amber-600 to-red-700 text-white py-3 px-4 rounded-lg hover:from-amber-700 hover:to-red-800 font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-cp-crimson text-white py-3 px-4 rounded-lg hover:bg-cp-crimson-dark font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {signingOut ? (
               <span className="flex items-center justify-center gap-2">

@@ -300,7 +300,7 @@ export default function OrdersTable({
               <button
                 type="button"
                 onClick={applyFilters}
-                className="px-4 py-2 bg-gradient-to-r from-amber-600 to-red-700 text-white text-sm font-medium rounded-lg hover:from-amber-700 hover:to-red-800"
+                className="px-4 py-2 bg-cp-crimson text-white text-sm font-medium rounded-lg hover:bg-cp-crimson-dark"
               >
                 Apply Filters
               </button>
@@ -349,7 +349,7 @@ export default function OrdersTable({
               </tr>
             ) : (
               orders.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-50">
+                <tr key={order.id} className="hover:bg-cp-crimson-light">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">
                       {order.orderNumber}

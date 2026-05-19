@@ -32,14 +32,14 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <header className="bg-white border-b border-cp-border sticky top-0 z-50">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Left side: Mobile menu button + Title */}
           <div className="flex items-center">
             <button
               type="button"
-              className="lg:hidden -ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-amber-500"
+              className="lg:hidden -ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cp-crimson"
               onClick={() => setShowMobileMenu(!showMobileMenu)}
             >
               <span className="sr-only">Open sidebar</span>
@@ -55,23 +55,23 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
             {/* Notifications */}
             <button
               type="button"
-              className="relative rounded-full p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="relative rounded-full p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-cp-crimson"
             >
               <span className="sr-only">View notifications</span>
               <Bell className="h-5 w-5" />
               {/* Notification badge */}
-              <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
+              <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-cp-crimson ring-2 ring-white" />
             </button>
 
             {/* User menu */}
             <div className="relative">
               <button
                 type="button"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-cp-crimson"
                 onClick={() => setShowUserMenu(!showUserMenu)}
               >
                 {/* User avatar */}
-                <div className="h-8 w-8 rounded-full bg-gradient-to-r from-amber-600 to-red-700 flex items-center justify-center text-white font-semibold">
+                <div className="h-8 w-8 rounded-full bg-cp-crimson flex items-center justify-center text-white font-semibold">
                   {user.name?.charAt(0).toUpperCase() || 'A'}
                 </div>
 
@@ -125,7 +125,7 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
                       <div className="my-2 border-t border-gray-100" />
 
                       <button
-                        className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-red-600 hover:bg-red-50"
+                        className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-cp-crimson hover:bg-cp-crimson-light"
                         onClick={handleSignOut}
                       >
                         <LogOut className="h-4 w-4" />

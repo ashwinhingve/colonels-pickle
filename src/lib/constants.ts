@@ -127,3 +127,9 @@ export const MIN_ORDER = {
   jar100g: 6,
   jar250g: 2,
 } as const;
+
+// External links
+export const WHATSAPP_URL = "https://wa.me/919350406289";
+export const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/FCraoQErzuMnHLBz9";
+export const INSTAGRAM_URL = "https://instagram.com/colonels.pickle";
+export const BEACONS_URL = "https://beacons.ai/colonelspickle";

@@ -159,9 +159,9 @@ export default function LoginPage() {
   // ── Loading state ────────────────────────────────────────────────────────────
   if (status === 'loading' || (status === 'authenticated' && isLoading)) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-red-50 py-12 md:py-20 flex items-center justify-center">
+      <div className="min-h-screen bg-cp-cream py-12 md:py-20 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-amber-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-cp-crimson border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-600">Redirecting...</p>
         </div>
       </div>
@@ -169,20 +169,21 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-red-50 py-12 md:py-20">
+    <div className="min-h-screen bg-cp-cream py-12 md:py-20">
       <div className="container mx-auto px-4">
         <AnimatedSection direction="up" className="max-w-md mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center mb-4">
-              <LogIn className="w-12 h-12 text-amber-600" />
+              <LogIn className="w-12 h-12 text-cp-crimson" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-amber-600 to-red-700 bg-clip-text text-transparent">
-                Welcome to Tapti
-              </span>
+            <h1 className="font-display text-4xl md:text-5xl font-extrabold text-cp-crimson mb-1">
+              Colonel&apos;s Pickle
             </h1>
-            <p className="text-gray-600 text-lg">Sign in to continue</p>
+            <p className="font-hindi text-base text-cp-brown mb-2">
+              माँ का प्यार, घर का अचार
+            </p>
+            <p className="text-cp-text-muted text-lg">Sign in to continue</p>
           </div>
 
           {/* Card */}
@@ -195,7 +196,7 @@ export default function LoginPage() {
                   onClick={() => handleTabChange(tab)}
                   className={`flex-1 py-3 text-sm font-semibold transition-colors ${
                     activeTab === tab
-                      ? "text-amber-600 border-b-2 border-amber-600 bg-amber-50/50"
+                      ? "text-cp-crimson border-b-2 border-cp-crimson bg-cp-crimson-light"
                       : "text-gray-500 hover:text-gray-700"
                   }`}
                 >
@@ -262,14 +263,14 @@ export default function LoginPage() {
                         onChange={(e) => setEmail(e.target.value)}
                         onKeyDown={(e) => e.key === "Enter" && handleSendEmailOtp()}
                         placeholder="you@example.com"
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-amber-500 focus:outline-none text-gray-900 text-base"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-cp-crimson focus:ring-cp-crimson focus:outline-none text-gray-900 text-base"
                         disabled={isLoading}
                       />
                     </div>
                     <Button
                       onClick={handleSendEmailOtp}
                       disabled={isLoading || !email}
-                      className="w-full bg-amber-600 hover:bg-amber-700 text-white py-6 text-lg font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-3"
+                      className="w-full bg-cp-crimson hover:bg-cp-crimson-dark text-white py-6 text-lg font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-3"
                     >
                       {isLoading ? (
                         <div className="flex items-center gap-3">
@@ -303,7 +304,7 @@ export default function LoginPage() {
                         onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ""))}
                         onKeyDown={(e) => e.key === "Enter" && handleVerifyEmailOtp()}
                         placeholder="000000"
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-amber-500 focus:outline-none text-gray-900 text-center text-2xl tracking-[0.3em] font-mono"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-cp-crimson focus:ring-cp-crimson focus:outline-none text-gray-900 text-center text-2xl tracking-[0.3em] font-mono"
                         disabled={isLoading}
                         autoFocus
                       />
@@ -311,7 +312,7 @@ export default function LoginPage() {
                     <Button
                       onClick={handleVerifyEmailOtp}
                       disabled={isLoading || emailOtp.length !== 6}
-                      className="w-full bg-amber-600 hover:bg-amber-700 text-white py-6 text-lg font-semibold shadow-lg transition-all duration-300"
+                      className="w-full bg-cp-crimson hover:bg-cp-crimson-dark text-white py-6 text-lg font-semibold shadow-lg transition-all duration-300"
                     >
                       {isLoading ? (
                         <div className="flex items-center gap-3">
@@ -323,7 +324,7 @@ export default function LoginPage() {
                     <div className="flex items-center justify-between text-sm">
                       <button
                         onClick={() => { setEmailOtpStep("input"); setEmailOtp(""); setError("") }}
-                        className="text-amber-600 hover:text-amber-700 font-medium flex items-center gap-1"
+                        className="text-cp-crimson hover:text-cp-crimson-dark font-medium flex items-center gap-1"
                       >
                         <ArrowLeft className="w-4 h-4" />
                         Change email
@@ -331,7 +332,7 @@ export default function LoginPage() {
                       <button
                         onClick={() => { if (emailCooldown > 0) return; setEmailOtp(""); setError(""); handleSendEmailOtp() }}
                         disabled={emailCooldown > 0}
-                        className={`font-medium ${emailCooldown > 0 ? "text-gray-400 cursor-not-allowed" : "text-amber-600 hover:text-amber-700"}`}
+                        className={`font-medium ${emailCooldown > 0 ? "text-gray-400 cursor-not-allowed" : "text-cp-crimson hover:text-cp-crimson-dark"}`}
                       >
                         {emailCooldown > 0 ? `Resend in ${emailCooldown}s` : "Resend OTP"}
                       </button>
@@ -359,7 +360,7 @@ export default function LoginPage() {
                           onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
                           onKeyDown={(e) => e.key === "Enter" && handleSendMobileOtp()}
                           placeholder="98765 43210"
-                          className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-r-lg focus:border-amber-500 focus:ring-amber-500 focus:outline-none text-gray-900 text-base"
+                          className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-r-lg focus:border-cp-crimson focus:ring-cp-crimson focus:outline-none text-gray-900 text-base"
                           disabled={isLoading}
                         />
                       </div>
@@ -367,7 +368,7 @@ export default function LoginPage() {
                     <Button
                       onClick={handleSendMobileOtp}
                       disabled={isLoading || phone.length !== 10}
-                      className="w-full bg-amber-600 hover:bg-amber-700 text-white py-6 text-lg font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-3"
+                      className="w-full bg-cp-crimson hover:bg-cp-crimson-dark text-white py-6 text-lg font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-3"
                     >
                       {isLoading ? (
                         <div className="flex items-center gap-3">
@@ -401,7 +402,7 @@ export default function LoginPage() {
                         onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ""))}
                         onKeyDown={(e) => e.key === "Enter" && handleVerifyMobileOtp()}
                         placeholder="000000"
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-amber-500 focus:outline-none text-gray-900 text-center text-2xl tracking-[0.3em] font-mono"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-cp-crimson focus:ring-cp-crimson focus:outline-none text-gray-900 text-center text-2xl tracking-[0.3em] font-mono"
                         disabled={isLoading}
                         autoFocus
                       />
@@ -409,7 +410,7 @@ export default function LoginPage() {
                     <Button
                       onClick={handleVerifyMobileOtp}
                       disabled={isLoading || mobileOtp.length !== 6}
-                      className="w-full bg-amber-600 hover:bg-amber-700 text-white py-6 text-lg font-semibold shadow-lg transition-all duration-300"
+                      className="w-full bg-cp-crimson hover:bg-cp-crimson-dark text-white py-6 text-lg font-semibold shadow-lg transition-all duration-300"
                     >
                       {isLoading ? (
                         <div className="flex items-center gap-3">
@@ -421,7 +422,7 @@ export default function LoginPage() {
                     <div className="flex items-center justify-between text-sm">
                       <button
                         onClick={() => { setMobileOtpStep("input"); setMobileOtp(""); setError("") }}
-                        className="text-amber-600 hover:text-amber-700 font-medium flex items-center gap-1"
+                        className="text-cp-crimson hover:text-cp-crimson-dark font-medium flex items-center gap-1"
                       >
                         <ArrowLeft className="w-4 h-4" />
                         Change number
@@ -429,7 +430,7 @@ export default function LoginPage() {
                       <button
                         onClick={() => { if (mobileCooldown > 0) return; setMobileOtp(""); setError(""); handleSendMobileOtp() }}
                         disabled={mobileCooldown > 0}
-                        className={`font-medium ${mobileCooldown > 0 ? "text-gray-400 cursor-not-allowed" : "text-amber-600 hover:text-amber-700"}`}
+                        className={`font-medium ${mobileCooldown > 0 ? "text-gray-400 cursor-not-allowed" : "text-cp-crimson hover:text-cp-crimson-dark"}`}
                       >
                         {mobileCooldown > 0 ? `Resend in ${mobileCooldown}s` : "Resend OTP"}
                       </button>
@@ -438,7 +439,7 @@ export default function LoginPage() {
                 )}
 
                 {/* Info Section */}
-                <div className="mt-8 p-4 bg-gradient-to-r from-amber-50 to-red-50 rounded-lg border border-amber-200">
+                <div className="mt-8 p-4 bg-cp-cream-dark rounded-lg border border-cp-border">
                   <p className="text-sm text-center text-gray-700">
                     By signing in, you agree to our Terms of Service and Privacy Policy
                   </p>

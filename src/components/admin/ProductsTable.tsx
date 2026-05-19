@@ -154,7 +154,7 @@ export default function ProductsTable({
           </form>
 
           <Link href="/admin/products/new">
-            <Button className="bg-gradient-to-r from-amber-600 to-red-700 hover:from-amber-700 hover:to-red-800">
+            <Button className="bg-cp-crimson hover:bg-cp-crimson-dark">
               <Plus className="w-4 h-4 mr-2" />
               Add Product
             </Button>
@@ -265,7 +265,7 @@ export default function ProductsTable({
                 const StockIcon = stockStatus.icon;
 
                 return (
-                  <tr key={product._id} className="hover:bg-gray-50">
+                  <tr key={product._id} className="hover:bg-cp-crimson-light">
                     <td className="px-4 py-4">
                       <div className="flex items-center gap-3">
                         <div className="relative w-12 h-12 flex-shrink-0 bg-gray-100 rounded overflow-hidden">
@@ -366,7 +366,7 @@ export default function ProductsTable({
                           variant="outline"
                           onClick={() => handleDelete(product._id, product.name)}
                           disabled={isDeleting === product._id}
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          className="text-cp-crimson hover:text-cp-crimson-dark hover:bg-cp-crimson-light"
                         >
                           {isDeleting === product._id ? (
                             <div className="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />

@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://taptifs.in';
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -10,12 +11,12 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: [
           '/admin',
-          '/admin/',
-          '/api/',
-          '/auth/',
+          '/api',
+          '/account',
           '/checkout',
           '/cart',
           '/orders',
+          '/auth',
         ],
       },
     ],

@@ -2,16 +2,32 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-8">
-      <h2 className="text-6xl font-bold mb-4">404</h2>
-      <h3 className="text-2xl font-semibold mb-2">Page Not Found</h3>
-      <p className="text-gray-600 mb-6">Could not find the requested resource</p>
-      <Link
-        href="/"
-        className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-      >
-        Return Home
-      </Link>
+    <div className="flex min-h-[70vh] flex-col items-center justify-center bg-cp-cream px-4 text-center">
+      <span className="text-[80px]">🫙</span>
+      <h1 className="mt-2 font-display text-7xl font-extrabold text-cp-crimson">
+        404
+      </h1>
+      <h2 className="mt-2 font-display text-2xl font-bold text-cp-text">
+        Page not found
+      </h2>
+      <p className="mt-3 max-w-md font-serif text-cp-text-muted">
+        Looks like this jar is empty. The page you&apos;re after doesn&apos;t
+        exist or has moved.
+      </p>
+      <div className="mt-8 flex flex-wrap justify-center gap-4">
+        <Link
+          href="/products"
+          className="rounded-lg bg-cp-crimson px-6 py-3 font-sans text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-cp-crimson-dark"
+        >
+          Back to Shop
+        </Link>
+        <Link
+          href="/"
+          className="rounded-lg border-2 border-cp-crimson px-6 py-3 font-sans text-sm font-bold uppercase tracking-wide text-cp-crimson transition-colors hover:bg-cp-crimson hover:text-white"
+        >
+          Go Home
+        </Link>
+      </div>
     </div>
   );
 }

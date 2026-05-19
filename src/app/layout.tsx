@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { CartDrawer } from "@/components/cart/CartDrawer";
+import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import SessionProvider from "@/components/providers/SessionProvider";
 import { connectDB } from "@/lib/mongodb";
 import MarketingSettings from "@/models/MarketingSettings";
@@ -223,6 +224,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <Footer />
           </div>
           <CartDrawer />
+          <WhatsAppFloat />
         </SessionProvider>
       </body>
     </html>

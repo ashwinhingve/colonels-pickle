@@ -92,14 +92,19 @@ export default function AdminSidebar() {
   return (
     <aside className="hidden lg:flex lg:flex-shrink-0">
       <div className="flex flex-col w-64">
-        <div className="flex flex-col flex-grow bg-white border-r border-gray-200 pt-5 pb-4 overflow-y-auto">
+        <div className="flex flex-col flex-grow bg-cp-crimson border-r border-cp-crimson-dark pt-5 pb-4 overflow-y-auto">
           {/* Brand */}
           <div className="flex items-center flex-shrink-0 px-6 mb-6">
             <div>
-              <h2 className="text-xl font-bold bg-gradient-to-r from-amber-600 to-red-700 bg-clip-text text-transparent">
-                Admin Panel
-              </h2>
-              <p className="text-sm text-gray-500">Tapti Food & Spices</p>
+              <div className="flex items-center gap-2">
+                <h2 className="font-display text-xl font-extrabold text-white">
+                  Colonel&apos;s Pickle
+                </h2>
+                <span className="rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white">
+                  Admin
+                </span>
+              </div>
+              <p className="mt-1 text-sm text-white/70">By Ridhwika Agro Organics</p>
             </div>
           </div>
 
@@ -117,15 +122,15 @@ export default function AdminSidebar() {
                     group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-150
                     ${
                       isActive
-                        ? 'bg-gradient-to-r from-amber-50 to-red-50 text-amber-700 border-l-4 border-amber-600'
-                        : 'text-gray-700 hover:bg-gray-50 hover:text-amber-700 border-l-4 border-transparent'
+                        ? 'bg-white text-cp-crimson border-l-4 border-white'
+                        : 'text-white/85 hover:bg-white/15 hover:text-white border-l-4 border-transparent'
                     }
                   `}
                 >
                   <Icon
                     className={`
                       mr-3 h-5 w-5 flex-shrink-0 transition-colors
-                      ${isActive ? 'text-amber-600' : 'text-gray-400 group-hover:text-amber-600'}
+                      ${isActive ? 'text-cp-crimson' : 'text-white/70 group-hover:text-white'}
                     `}
                   />
                   {item.label}
@@ -135,8 +140,8 @@ export default function AdminSidebar() {
           </nav>
 
           {/* Footer */}
-          <div className="px-6 py-4 border-t border-gray-200">
-            <p className="text-xs text-gray-500">
+          <div className="px-6 py-4 border-t border-white/20">
+            <p className="text-xs text-white/60">
               Admin access only. All actions are logged.
             </p>
           </div>

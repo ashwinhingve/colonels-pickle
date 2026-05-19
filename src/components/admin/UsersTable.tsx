@@ -185,7 +185,7 @@ export default function UsersTable({
               <button
                 type="button"
                 onClick={applyFilters}
-                className="px-4 py-2 bg-gradient-to-r from-amber-600 to-red-700 text-white text-sm font-medium rounded-lg hover:from-amber-700 hover:to-red-800"
+                className="px-4 py-2 bg-cp-crimson text-white text-sm font-medium rounded-lg hover:bg-cp-crimson-dark"
               >
                 Apply Filters
               </button>
@@ -231,7 +231,7 @@ export default function UsersTable({
               </tr>
             ) : (
               users.map((user) => (
-                <tr key={user.id} className="hover:bg-gray-50">
+                <tr key={user.id} className="hover:bg-cp-crimson-light">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-3">
                       {user.image ? (
@@ -241,7 +241,7 @@ export default function UsersTable({
                           className="w-10 h-10 rounded-full"
                         />
                       ) : (
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-amber-600 to-red-700 flex items-center justify-center text-white font-semibold">
+                        <div className="w-10 h-10 rounded-full bg-cp-crimson flex items-center justify-center text-white font-semibold">
                           {user.name.charAt(0).toUpperCase()}
                         </div>
                       )}

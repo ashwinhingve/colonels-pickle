@@ -1,11 +1,11 @@
 import { MetadataRoute } from 'next';
 import connectDB from '@/lib/mongodb/connection';
 import Product from '@/models/Product';
-import Category from '@/models/Category';
 
 export const revalidate = 86400; // refresh sitemap every 24 hours
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://taptifs.in';
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
 
 const staticPages: MetadataRoute.Sitemap = [
   {
@@ -21,19 +21,19 @@ const staticPages: MetadataRoute.Sitemap = [
     priority: 0.9,
   },
   {
-    url: `${SITE_URL}/wholesale`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.7,
-  },
-  {
     url: `${SITE_URL}/about`,
     lastModified: new Date(),
     changeFrequency: 'monthly',
-    priority: 0.7,
+    priority: 0.6,
   },
   {
     url: `${SITE_URL}/contact`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.6,
+  },
+  {
+    url: `${SITE_URL}/wholesale`,
     lastModified: new Date(),
     changeFrequency: 'monthly',
     priority: 0.6,
@@ -44,31 +44,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     await connectDB();
 
-    const [products, categories] = await Promise.all([
-      Product.find({ isActive: true })
-        .select('slug updatedAt')
-        .sort({ updatedAt: -1 })
-        .lean(),
-      Category.find({ isActive: true })
-        .select('name updatedAt')
-        .lean(),
-    ]);
+    const products = await Product.find({ isActive: true })
+      .select('slug updatedAt')
+      .sort({ updatedAt: -1 })
+      .lean();
 
-    const productUrls: MetadataRoute.Sitemap = (products as any[]).map((product) => ({
-      url: `${SITE_URL}/products/${product.slug}`,
-      lastModified: product.updatedAt ? new Date(product.updatedAt) : new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    }));
+    const productUrls: MetadataRoute.Sitemap = (products as any[]).map(
+      (product) => ({
+        url: `${SITE_URL}/products/${product.slug}`,
+        lastModified: product.updatedAt
+          ? new Date(product.updatedAt)
+          : new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+      })
+    );
 
-    const categoryUrls: MetadataRoute.Sitemap = (categories as any[]).map((cat) => ({
-      url: `${SITE_URL}/products?category=${encodeURIComponent(cat.name)}`,
-      lastModified: cat.updatedAt ? new Date(cat.updatedAt) : new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.6,
-    }));
-
-    return [...staticPages, ...productUrls, ...categoryUrls];
+    return [...staticPages, ...productUrls];
   } catch (error) {
     console.error('Sitemap generation error:', error);
     return staticPages;
