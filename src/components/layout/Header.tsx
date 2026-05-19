@@ -68,19 +68,19 @@ export function Header() {
         {/* Logo / wordmark */}
         <Link
           href="/"
-          className="flex items-center gap-3"
+          className="flex flex-col items-start leading-none"
           aria-label={`${BRAND.name} — Home`}
         >
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cp-crimson text-xl text-white">
-            🫙
-          </span>
-          <span className="flex flex-col leading-none">
-            <span className="font-display text-xl font-extrabold text-cp-crimson">
-              {BRAND.name}
-            </span>
-            <span className="mt-1 font-hindi text-[9px] font-bold uppercase tracking-widest text-cp-brown">
-              {BRAND.tagline}
-            </span>
+          <Image
+            src="/logo.png"
+            alt="Colonel's Pickle by Ridhwika Agro Organics"
+            width={56}
+            height={56}
+            className="object-contain"
+            priority
+          />
+          <span className="mt-1 font-hindi text-[9px] font-bold uppercase tracking-widest text-cp-brown">
+            {BRAND.tagline}
           </span>
         </Link>
 

@@ -104,8 +104,8 @@ export default function ProductImageGallery({
               }}
               className={`relative aspect-square rounded-lg overflow-hidden transition-all ${
                 selectedIndex === index && !showVideo
-                  ? 'ring-2 ring-amber-600 shadow-lg scale-105'
-                  : 'ring-1 ring-gray-200 hover:ring-amber-400'
+                  ? 'ring-2 ring-cp-crimson shadow-lg scale-105'
+                  : 'ring-1 ring-gray-200 hover:ring-cp-crimson/60'
               }`}
             >
               <Image
@@ -124,8 +124,8 @@ export default function ProductImageGallery({
               onClick={() => setShowVideo(true)}
               className={`relative aspect-square rounded-lg overflow-hidden transition-all ${
                 showVideo
-                  ? 'ring-2 ring-amber-600 shadow-lg scale-105'
-                  : 'ring-1 ring-gray-200 hover:ring-amber-400'
+                  ? 'ring-2 ring-cp-crimson shadow-lg scale-105'
+                  : 'ring-1 ring-gray-200 hover:ring-cp-crimson/60'
               }`}
             >
               <div className="w-full h-full bg-gray-900 flex flex-col items-center justify-center">
@@ -173,7 +173,7 @@ export default function ProductImageGallery({
                   }}
                   className={`w-3 h-3 rounded-full transition-all ${
                     selectedIndex === index
-                      ? 'bg-amber-500 w-8'
+                      ? 'bg-cp-crimson w-8'
                       : 'bg-white bg-opacity-50 hover:bg-opacity-75'
                   }`}
                 />

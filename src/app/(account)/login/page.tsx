@@ -5,8 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { signIn, useSession } from "next-auth/react"
 import { AnimatedSection } from "@/components/shared/AnimatedSection"
 import { Button } from "@/components/ui/button"
-import { LogIn, Mail, ArrowLeft, Phone } from "lucide-react"
+import { Mail, ArrowLeft, Phone } from "lucide-react"
 import { motion } from "framer-motion"
+import Image from "next/image"
 
 type Tab = "google" | "email" | "mobile"
 type OtpStep = "input" | "otp"
@@ -174,12 +175,13 @@ export default function LoginPage() {
         <AnimatedSection direction="up" className="max-w-md mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="flex items-center justify-center mb-4">
-              <LogIn className="w-12 h-12 text-cp-crimson" />
-            </div>
-            <h1 className="font-display text-4xl md:text-5xl font-extrabold text-cp-crimson mb-1">
-              Colonel&apos;s Pickle
-            </h1>
+            <Image
+              src="/logo.png"
+              alt="Colonel's Pickle by Ridhwika Agro Organics"
+              width={80}
+              height={80}
+              className="object-contain mx-auto mb-3"
+            />
             <p className="font-hindi text-base text-cp-brown mb-2">
               माँ का प्यार, घर का अचार
             </p>

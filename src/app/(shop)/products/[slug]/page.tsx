@@ -6,6 +6,7 @@ import Product from "@/models/Product";
 import { ProductCard } from "@/components/products/ProductCard";
 import { ProductPurchase } from "@/components/products/ProductPurchase";
 import { ProductAccordion } from "@/components/products/ProductAccordion";
+import ProductImageGallery from "@/components/products/ProductImageGallery";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { getProductTheme } from "@/lib/productTheme";
@@ -178,30 +179,38 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
         {/* Main */}
         <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-2">
-          {/* Left: colored image block */}
-          <div
-            className="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl"
-            style={{
-              background: `linear-gradient(145deg, ${theme.themeColor}, ${theme.themeColor}CC)`,
-            }}
-          >
-            <RajasthaniPattern
-              variant="medallion"
-              opacity={0.08}
-              color="#ffffff"
+          {/* Left: real images, or colored fallback block */}
+          {Array.isArray(product.images) && product.images.length > 0 ? (
+            <ProductImageGallery
+              images={product.images}
+              productName={product.name}
+              videoUrl={product.videoUrl}
             />
-            <div className="relative z-10 px-8 text-center">
-              <div className="text-[88px]">{theme.icon}</div>
-              <p className="mt-4 font-display text-2xl font-extrabold text-white">
-                {product.name}
-              </p>
-              {theme.nameHindi ? (
-                <p className="mt-1 font-sans text-base text-white/80">
-                  {theme.nameHindi}
+          ) : (
+            <div
+              className="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl"
+              style={{
+                background: `linear-gradient(145deg, ${theme.themeColor}, ${theme.themeColor}CC)`,
+              }}
+            >
+              <RajasthaniPattern
+                variant="medallion"
+                opacity={0.08}
+                color="#ffffff"
+              />
+              <div className="relative z-10 px-8 text-center">
+                <div className="text-[88px]">{theme.icon}</div>
+                <p className="mt-4 font-display text-2xl font-extrabold text-white">
+                  {product.name}
                 </p>
-              ) : null}
+                {theme.nameHindi ? (
+                  <p className="mt-1 font-sans text-base text-white/80">
+                    {theme.nameHindi}
+                  </p>
+                ) : null}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Right: details */}
           <div>

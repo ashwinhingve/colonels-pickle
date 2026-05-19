@@ -1,8 +1,16 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function NotFound() {
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center bg-cp-cream px-4 text-center">
+      <Image
+        src="/logo.png"
+        alt="Colonel's Pickle by Ridhwika Agro Organics"
+        width={72}
+        height={72}
+        className="object-contain mb-4"
+      />
       <span className="text-[80px]">🫙</span>
       <h1 className="mt-2 font-display text-7xl font-extrabold text-cp-crimson">
         404

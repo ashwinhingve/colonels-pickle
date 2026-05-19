@@ -102,7 +102,7 @@ export const CONTACT_EMAIL = "ridhwika.agro.organics@gmail.com";
 export const CONTACT_PHONE = "+91-9717243306";
 
 // Admin & storage
-export const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "colonelspickle@gmail.com";
+export const ADMIN_EMAIL = "ashwin.hingave123@gmail.com";
 export const CART_STORAGE_KEY = "cp-cart-storage";
 
 // Announcement bar (marquee) items

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -30,6 +31,11 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem);
 
   const theme = getProductTheme(product?.slug);
+
+  const primaryImg =
+    Array.isArray(product?.images) && product.images.length > 0
+      ? product.images[0]
+      : null;
 
   const variants: CardVariant[] = useMemo(() => {
     const active = Array.isArray(product?.variants)
@@ -107,12 +113,25 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
             </Badge>
           ) : null}
 
-          <span
-            className="relative z-[1] select-none text-[58px]"
-            style={{ filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.22))" }}
-          >
-            {theme.icon}
-          </span>
+          {primaryImg ? (
+            <>
+              <Image
+                src={primaryImg.url}
+                alt={`${product?.name ?? "Product"} - Colonel's Pickle`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
+              <div className="absolute inset-x-0 bottom-0 z-[1] h-16 bg-gradient-to-t from-black/40 to-transparent" />
+            </>
+          ) : (
+            <span
+              className="relative z-[1] select-none text-[58px]"
+              style={{ filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.22))" }}
+            >
+              {theme.icon}
+            </span>
+          )}
 
           <Badge
             variant="no-preservatives"

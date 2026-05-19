@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Instagram, MessageCircle, MapPin, Mail, Phone } from "lucide-react";
 import { BRAND, CONTACT_EMAIL } from "@/lib/constants";
 
@@ -29,13 +30,14 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cp-crimson text-lg">
-                🫙
-              </span>
-              <span className="font-display text-2xl font-extrabold text-cp-saffron-muted">
-                {BRAND.name}
-              </span>
+            <Link href="/" className="inline-flex items-center">
+              <Image
+                src="/logo.png"
+                alt="Colonel's Pickle by Ridhwika Agro Organics"
+                width={80}
+                height={80}
+                className="object-contain"
+              />
             </Link>
             <p className="mt-3 font-serif text-sm leading-relaxed text-white/60">
               {BRAND.taglineHindi} — {BRAND.tagline}. Authentic homemade pickles,

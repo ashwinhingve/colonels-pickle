@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { BRAND, CONTACT_EMAIL } from "@/lib/constants";
 
@@ -16,12 +17,13 @@ export default function ContactPage() {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 lg:grid-cols-2">
         {/* LEFT — info */}
         <div className="rounded-2xl border border-cp-border bg-white p-8">
-          <p className="font-display text-2xl font-extrabold text-cp-crimson">
-            {BRAND.name}
-          </p>
-          <p className="mt-1 font-sans text-xs font-bold uppercase tracking-widest text-cp-brown">
-            By Ridhwika Agro Organics
-          </p>
+          <Image
+            src="/logo.png"
+            alt="Colonel's Pickle by Ridhwika Agro Organics"
+            width={100}
+            height={100}
+            className="object-contain"
+          />
 
           <hr className="my-6 border-cp-border" />
 
