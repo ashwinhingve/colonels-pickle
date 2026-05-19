@@ -16,6 +16,26 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+interface MenuButtonProps {
+  onClick: () => void;
+  active?: boolean;
+  children: React.ReactNode;
+}
+
+function MenuButton({ onClick, active, children }: MenuButtonProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`p-2 rounded hover:bg-gray-100 transition-colors ${
+        active ? 'bg-amber-100 text-amber-700' : 'text-gray-700'
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
 interface RichTextEditorProps {
   content: string;
   onChange: (content: string) => void;
@@ -63,26 +83,6 @@ export default function RichTextEditor({
       editor.chain().focus().setLink({ href: url }).run();
     }
   };
-
-  const MenuButton = ({
-    onClick,
-    active,
-    children,
-  }: {
-    onClick: () => void;
-    active?: boolean;
-    children: React.ReactNode;
-  }) => (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`p-2 rounded hover:bg-gray-100 transition-colors ${
-        active ? 'bg-amber-100 text-amber-700' : 'text-gray-700'
-      }`}
-    >
-      {children}
-    </button>
-  );
 
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden">

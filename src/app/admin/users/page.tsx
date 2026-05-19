@@ -11,6 +11,8 @@ interface SearchParams {
   sortBy?: string;
 }
 
+function daysAgo(n: number): Date { return new Date(Date.now() - n * 86400000); }
+
 export default async function AdminUsersPage({
   searchParams,
 }: {
@@ -115,7 +117,7 @@ export default async function AdminUsersPage({
   ]);
 
   // Get recent signups (last 30 days)
-  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+  const thirtyDaysAgo = daysAgo(30);
   const recentSignups = await User.countDocuments({
     createdAt: { $gte: thirtyDaysAgo },
   });

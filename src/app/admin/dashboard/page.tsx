@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { requireAdmin } from '@/lib/auth-helpers';
 import { connectDB } from '@/lib/mongodb';
 import Order from '@/models/Order';
@@ -190,7 +191,7 @@ export default async function AdminDashboard() {
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Dashboard Overview</h1>
         <p className="text-sm text-gray-500 mt-1">
-          Welcome back! Here's what's happening with your store today.
+          Welcome back! Here&apos;s what&apos;s happening with your store today.
         </p>
       </div>
 
@@ -242,7 +243,7 @@ export default async function AdminDashboard() {
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <a
+          <Link
             href="/admin/orders?status=pending"
             className="flex items-center gap-3 p-4 rounded-lg border-2 border-gray-200 hover:border-amber-500 hover:bg-amber-50 transition-all"
           >
@@ -250,7 +251,7 @@ export default async function AdminDashboard() {
               <p className="text-sm font-medium text-gray-900">Process Pending Orders</p>
               <p className="text-xs text-gray-500 mt-1">{pendingOrders} orders waiting</p>
             </div>
-          </a>
+          </Link>
 
           <a
             href="/admin/payments?status=failed"

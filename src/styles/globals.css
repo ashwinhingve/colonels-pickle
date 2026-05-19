@@ -206,6 +206,19 @@ h5, h6 {
   animation: float-fast 4s ease-in-out infinite;
 }
 
+/* Staggered animation delays for the hero collage cards */
+.animation-delay-500 {
+  animation-delay: 0.5s;
+}
+
+.animation-delay-1000 {
+  animation-delay: 1s;
+}
+
+.animation-delay-1500 {
+  animation-delay: 1.5s;
+}
+
 /* Slow bounce animation for WhatsApp button */
 @keyframes bounce-slow {
   0%, 100% {

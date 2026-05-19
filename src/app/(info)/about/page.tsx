@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { BRAND, CONTACT_EMAIL } from "@/lib/constants";
@@ -74,13 +75,22 @@ export default function AboutPage() {
               className="absolute bottom-0 right-0 h-12 w-12 rounded-br-2xl border-b-2 border-r-2"
               style={{ borderColor: "#B91C1C" }}
             />
-            <span className="text-[80px]">🎖️</span>
-            <p className="mt-4 font-display text-xl font-bold text-[#FCD34D]">
-              Lt Col Praveen Kumar Sharma
-            </p>
-            <p className="mt-1 font-sans text-sm text-white/70">
-              CPE ITARSI | OIC AOC PROOF DET
-            </p>
+            <div className="text-center">
+              <Image
+                src="/logo.png"
+                width={100}
+                height={100}
+                className="object-contain mx-auto"
+                alt="Colonel's Pickle"
+              />
+              <div className="w-16 h-[2px] bg-cp-crimson mx-auto my-3" />
+              <p className="font-display font-bold text-[18px] text-[#FCD34D]">
+                Lt Col Praveen Kumar Sharma
+              </p>
+              <p className="mt-1 font-hindi text-[12px] text-white/60">
+                Lt Col, Indian Army · CPE ITARSI
+              </p>
+            </div>
             <div className="mt-6 rounded-xl border border-white/15 bg-white/8 p-6">
               <p className="font-serif text-lg italic leading-relaxed text-white/85">
                 &ldquo;Quality is non-negotiable when you&apos;re feeding

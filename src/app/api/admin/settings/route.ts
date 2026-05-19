@@ -24,7 +24,7 @@ export async function GET() {
           enabled: true,
           announcements: [
             { text: 'Free Shipping Above ₹499', emoji: '🚚', isActive: true },
-            { text: 'Boost Your Daily Nutrition with TAPTIFS', emoji: '✨', isActive: true },
+            { text: 'Boost Your Daily Nutrition with COLONEL\'S PICKLE', emoji: '✨', isActive: true },
           ],
         },
         heroSlider: { slides: [] },

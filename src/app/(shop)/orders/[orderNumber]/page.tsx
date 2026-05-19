@@ -11,6 +11,10 @@ import { ArrowLeft, Download, Package, Truck } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
+function daysSince(date: string | Date): number {
+  return Math.floor((Date.now() - new Date(date).getTime()) / 86400000);
+}
+
 interface PageProps {
   params: Promise<{
     orderNumber: string;
@@ -129,9 +133,7 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
   // Check if order is eligible for return/refund
   const isDelivered = orderData.orderStatus === 'delivered';
   const deliveryDate = (shipment as any)?.deliveredAt || o.updatedAt;
-  const daysSinceDelivery = deliveryDate
-    ? Math.floor((Date.now() - new Date(deliveryDate).getTime()) / (1000 * 60 * 60 * 24))
-    : 999;
+  const daysSinceDelivery = deliveryDate ? daysSince(deliveryDate) : 999;
   const canReturn = isDelivered && daysSinceDelivery <= 7;
 
   return (
@@ -410,10 +412,10 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
                 </p>
                 <div className="space-y-2">
                   <a
-                    href="mailto:support@taptifs.com"
+                    href="mailto:support@colonelspickle.in"
                     className="block text-sm font-medium text-amber-600 hover:text-amber-700"
                   >
-                    📧 support@taptifs.com
+                    📧 support@colonelspickle.in
                   </a>
                   <a
                     href="tel:+919329216544"

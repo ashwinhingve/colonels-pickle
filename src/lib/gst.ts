@@ -1,5 +1,5 @@
 /**
- * GST Utility — Tapti Food & Spices
+ * GST Utility — Colonel's Pickle by Ridhwika Agro Organics
  *
  * Seller state: Madhya Pradesh (GSTIN: 23GGLPD7346M1ZZ)
  * Intra-state sale (customer in MP) → CGST + SGST (split equally)

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 
 const FACT_TILES = [
@@ -31,19 +32,43 @@ export function OurStory() {
             style={{ borderColor: "#B91C1C" }}
           />
 
-          <span className="text-[72px]">🎖️</span>
-          <p className="mt-4 font-display text-2xl font-bold text-[#FCD34D]">
-            Lt Col Praveen Kumar Sharma
-          </p>
-          <p className="mt-1 font-sans text-sm text-white/70">
-            Lt Col, Indian Army · CPE ITARSI
-          </p>
+          <div className="text-center">
+            <Image
+              src="/logo.png"
+              width={100}
+              height={100}
+              className="object-contain mx-auto"
+              alt="Colonel's Pickle"
+            />
+            <div className="w-16 h-[2px] bg-cp-crimson mx-auto my-3" />
+            <p className="font-display font-bold text-[18px] text-[#FCD34D]">
+              Lt Col Praveen Kumar Sharma
+            </p>
+            <p className="mt-1 font-hindi text-[12px] text-white/60">
+              Lt Col, Indian Army · CPE ITARSI
+            </p>
+          </div>
 
           <div className="mt-6 rounded-xl border border-white/15 bg-white/8 p-6">
             <p className="font-serif text-lg italic leading-relaxed text-white/85">
               &ldquo;Quality is non-negotiable when you&apos;re feeding
               families.&rdquo;
             </p>
+          </div>
+
+          <div className="flex gap-4 mt-4 justify-center">
+            <div className="text-center">
+              <p className="font-display font-bold text-xl text-[#FCD34D]">22+</p>
+              <p className="text-white/50 font-hindi text-[10px]">Products</p>
+            </div>
+            <div className="text-center">
+              <p className="font-display font-bold text-xl text-[#FCD34D]">Pan India</p>
+              <p className="text-white/50 font-hindi text-[10px]">Delivery</p>
+            </div>
+            <div className="text-center">
+              <p className="font-display font-bold text-xl text-[#FCD34D]">FSSAI</p>
+              <p className="text-white/50 font-hindi text-[10px]">Certified</p>
+            </div>
           </div>
         </div>
 

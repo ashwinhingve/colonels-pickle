@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 
 const STATS = [
@@ -16,34 +17,13 @@ export function HeroSection() {
           "linear-gradient(135deg, #7F1D1D 0%, #B91C1C 50%, #78350F 100%)",
       }}
     >
-      {/* Full-bleed background video — poster paints instantly, video fades in.
-          If video is blocked/stalls the poster stays; if both fail, the
-          section gradient above shows. Muted + playsInline ⇒ mobile autoplay. */}
-      <video
-        aria-hidden="true"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        poster="/hero/hero-poster.jpg"
-        className="absolute inset-0 z-0 h-full w-full object-cover"
-      >
-        <source src="/hero/hero-making.mp4" type="video/mp4" />
-      </video>
+      <RajasthaniPattern variant="medallion" opacity={0.06} color="#ffffff" />
 
-      {/* Legibility scrim */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/80 via-black/55 to-cp-crimson/35" />
-
-      {/* Faint brand texture over the scrim */}
-      <div className="absolute inset-0 z-[1]">
-        <RajasthaniPattern variant="medallion" opacity={0.05} color="#ffffff" />
-      </div>
-
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-24">
-        <div className="animate-fade-up max-w-2xl">
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-4 py-20 lg:grid-cols-2">
+        {/* LEFT — unchanged content */}
+        <div className="animate-fade-up">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/12 px-4 py-1.5 font-sans text-sm font-medium text-white backdrop-blur">
-            🏅 Army Officer&apos;s Mother&apos;s Homemade Pickles
+            🏅 Born in an Army Officer&apos;s Mother&apos;s Kitchen
           </span>
 
           <h1 className="mt-6 font-hindi text-[2.85rem] font-bold leading-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)] sm:text-[4rem]">
@@ -54,10 +34,6 @@ export function HeroSection() {
 
           <p className="mt-3 font-display text-[1.2rem] italic text-white/80">
             Maa Ka Pyaar, Ghar Ka Achar
-          </p>
-
-          <p className="mt-5 font-display text-[1.45rem] font-semibold italic leading-snug text-[#FCD34D] drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)] sm:text-[1.7rem]">
-            You don&apos;t buy product, you buy experience.
           </p>
 
           <p className="mt-5 max-w-xl font-serif text-[15.5px] leading-relaxed text-white/80">
@@ -82,27 +58,83 @@ export function HeroSection() {
             </Link>
           </div>
 
-          <div className="mt-10 flex flex-wrap items-center gap-8">
+          <div className="mt-10 flex gap-10">
             {STATS.map((s) => (
               <div key={s.label}>
-                <div className="font-display text-3xl font-extrabold text-[#FCD34D] drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
+                <div className="font-display text-4xl font-black text-[#FCD34D]">
                   {s.value}
                 </div>
-                <div className="mt-1 font-sans text-xs uppercase tracking-wide text-white/75">
+                <div className="font-hindi text-xs text-white/60 uppercase tracking-widest mt-1">
                   {s.label}
                 </div>
               </div>
             ))}
-
-            <div className="flex flex-wrap gap-3">
-              <span className="rounded-full border border-white/25 bg-white/15 px-3 py-1.5 font-sans text-xs font-semibold text-white backdrop-blur">
-                🌿 100% Natural
-              </span>
-              <span className="rounded-full border border-white/25 bg-white/15 px-3 py-1.5 font-sans text-xs font-semibold text-white backdrop-blur">
-                FSSAI ✓ Certified
-              </span>
-            </div>
           </div>
+        </div>
+
+        {/* RIGHT — floating artisan collage (real brand photos, self-hosted) */}
+        <div className="relative hidden h-[500px] lg:block">
+          {/* crimson glow behind collage */}
+          <div
+            className="pointer-events-none absolute inset-0 z-0"
+            style={{
+              background:
+                "radial-gradient(ellipse at center, rgba(185,28,28,0.2) 0%, transparent 70%)",
+            }}
+          />
+
+          {/* Card A — primary, largest */}
+          <div className="animate-float absolute right-[20px] top-[40px] z-[3] h-[300px] w-[260px] rotate-[2deg] overflow-hidden rounded-2xl border-[3px] border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.3)] transition-[transform,box-shadow] duration-300 hover:scale-[1.03] hover:shadow-[0_28px_72px_rgba(0,0,0,0.42)]">
+            <Image
+              src="/hero/hero-poster.jpg"
+              alt="Stuffed red chilli achar arranged in a spiral — Colonel's Pickle"
+              fill
+              sizes="260px"
+              className="object-cover"
+              priority
+            />
+          </div>
+
+          {/* Card B — top-left, medium */}
+          <div className="animate-float animation-delay-500 absolute left-[20px] top-0 z-[2] h-[200px] w-[180px] -rotate-[3deg] overflow-hidden rounded-2xl border-[3px] border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.25)] transition-[transform,box-shadow] duration-300 hover:scale-[1.03] hover:shadow-[0_22px_52px_rgba(0,0,0,0.34)]">
+            <Image
+              src="/hero/collage-b.jpg"
+              alt="Hand-mixing whole spices and chillies in a steel thali"
+              fill
+              sizes="180px"
+              className="object-cover"
+            />
+          </div>
+
+          {/* Card C — bottom-left, medium */}
+          <div className="animate-float animation-delay-1000 absolute bottom-[60px] left-0 z-[2] h-[180px] w-[200px] rotate-[1.5deg] overflow-hidden rounded-2xl border-[3px] border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.25)] transition-[transform,box-shadow] duration-300 hover:scale-[1.03] hover:shadow-[0_22px_52px_rgba(0,0,0,0.34)]">
+            <Image
+              src="/hero/collage-c.jpg"
+              alt="Masala-coated mango pieces — homemade achar in the making"
+              fill
+              sizes="200px"
+              className="object-cover"
+            />
+          </div>
+
+          {/* Card D — bottom-right, small accent */}
+          <div className="animate-float animation-delay-1500 absolute bottom-[20px] right-[60px] z-[1] h-[160px] w-[150px] -rotate-[2deg] overflow-hidden rounded-2xl border-[3px] border-white/20 shadow-[0_12px_30px_rgba(0,0,0,0.2)] transition-[transform,box-shadow] duration-300 hover:scale-[1.03] hover:shadow-[0_18px_42px_rgba(0,0,0,0.3)]">
+            <Image
+              src="/hero/collage-d.jpg"
+              alt="Fresh green mangoes soaking — raw ingredients"
+              fill
+              sizes="150px"
+              className="object-cover"
+            />
+          </div>
+
+          {/* Floating badges on the collage */}
+          <span className="absolute right-[-12px] top-[-12px] z-10 rounded-full bg-white px-3 py-1.5 font-hindi text-xs font-bold text-cp-green shadow-lg">
+            🌿 100% Natural
+          </span>
+          <span className="absolute bottom-[40px] left-[-12px] z-10 rounded-full bg-white px-3 py-1.5 font-hindi text-xs font-bold text-cp-crimson shadow-lg">
+            FSSAI ✓
+          </span>
         </div>
       </div>
 

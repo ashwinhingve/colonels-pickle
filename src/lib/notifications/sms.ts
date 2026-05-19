@@ -61,38 +61,38 @@ class SMSService {
   }
 
   private async sendOtp(phone: string, otp: string): Promise<SMSResult> {
-    const message = `${otp} is your Tapti Spices verification code. Valid for 5 minutes. Do not share this with anyone.`;
+    const message = `${otp} is your Colonel's Pickle verification code. Valid for 5 minutes. Do not share this with anyone.`;
     return this.sendSMS(phone, message);
   }
 
   async sendOrderConfirmationSMS(phone: string, orderNumber: string, amount: number): Promise<SMSResult> {
-    const message = `Your order ${orderNumber} has been confirmed! Amount: Rs.${amount.toFixed(2)}. Track at ${process.env.NEXT_PUBLIC_APP_URL}/orders - Tapti Spices`;
+    const message = `Your order ${orderNumber} has been confirmed! Amount: Rs.${amount.toFixed(2)}. Track at ${process.env.NEXT_PUBLIC_APP_URL}/orders - Colonel's Pickle`;
     return this.sendSMS(phone, message);
   }
 
   async sendShipmentSMS(phone: string, orderNumber: string, trackingNumber: string): Promise<SMSResult> {
-    const message = `Your order ${orderNumber} has been shipped! Tracking: ${trackingNumber}. Track at ${process.env.NEXT_PUBLIC_APP_URL}/orders - Tapti Spices`;
+    const message = `Your order ${orderNumber} has been shipped! Tracking: ${trackingNumber}. Track at ${process.env.NEXT_PUBLIC_APP_URL}/orders - Colonel's Pickle`;
     return this.sendSMS(phone, message);
   }
 
   async sendDeliverySMS(phone: string, orderNumber: string): Promise<SMSResult> {
-    const message = `Your order ${orderNumber} has been delivered! Thank you for shopping with Tapti Spices.`;
+    const message = `Your order ${orderNumber} has been delivered! Thank you for shopping with Colonel's Pickle.`;
     return this.sendSMS(phone, message);
   }
 
   async sendPaymentFailedSMS(phone: string, orderNumber: string): Promise<SMSResult> {
-    const message = `Payment failed for order ${orderNumber}. Please retry at ${process.env.NEXT_PUBLIC_APP_URL}/orders - Tapti Spices`;
+    const message = `Payment failed for order ${orderNumber}. Please retry at ${process.env.NEXT_PUBLIC_APP_URL}/orders - Colonel's Pickle`;
     return this.sendSMS(phone, message);
   }
 
   async sendOrderCancelledSMS(phone: string, orderNumber: string, refundAmount?: number): Promise<SMSResult> {
     const refundText = refundAmount ? ` Refund of Rs.${refundAmount.toFixed(2)} will be processed in 5-7 days.` : '';
-    const message = `Your order ${orderNumber} has been cancelled.${refundText} - Tapti Spices`;
+    const message = `Your order ${orderNumber} has been cancelled.${refundText} - Colonel's Pickle`;
     return this.sendSMS(phone, message);
   }
 
   async sendOutForDeliverySMS(phone: string, orderNumber: string): Promise<SMSResult> {
-    const message = `Your order ${orderNumber} is out for delivery and will reach you soon! - Tapti Spices`;
+    const message = `Your order ${orderNumber} is out for delivery and will reach you soon! - Colonel's Pickle`;
     return this.sendSMS(phone, message);
   }
 
@@ -101,12 +101,12 @@ class SMSService {
   }
 
   async sendReturnRequestSMS(phone: string, orderNumber: string): Promise<SMSResult> {
-    const message = `Return request for order ${orderNumber} received. We'll review within 2-3 business days. - Tapti Spices`;
+    const message = `Return request for order ${orderNumber} received. We'll review within 2-3 business days. - Colonel's Pickle`;
     return this.sendSMS(phone, message);
   }
 
   async sendFeedbackRequestSMS(phone: string, orderNumber: string, reviewUrl: string): Promise<SMSResult> {
-    const message = `Thank you for your Tapti order ${orderNumber}! Share your experience: ${reviewUrl} - Tapti Spices`;
+    const message = `Thank you for your Colonel's Pickle order ${orderNumber}! Share your experience: ${reviewUrl} - Colonel's Pickle`;
     return this.sendSMS(phone, message);
   }
 
@@ -119,38 +119,38 @@ class SMSService {
 
   async notifyAdminOrderConfirmed(orderNumber: string, customerName: string, amount: number, paymentMethod: string): Promise<SMSResult> {
     const method = paymentMethod === 'cod' ? 'COD' : 'Online';
-    const message = `[TAPTI] Order ${orderNumber} confirmed. Customer: ${customerName}. Amount: Rs.${amount.toFixed(2)}. Method: ${method}.`;
+    const message = `[COLONEL'S PICKLE] Order ${orderNumber} confirmed. Customer: ${customerName}. Amount: Rs.${amount.toFixed(2)}. Method: ${method}.`;
     return this.sendAdminSMS(message);
   }
 
   async notifyAdminPaymentFailed(orderNumber: string, customerName: string, amount: number): Promise<SMSResult> {
-    const message = `[TAPTI] Payment FAILED for order ${orderNumber}. Customer: ${customerName}. Amount: Rs.${amount.toFixed(2)}.`;
+    const message = `[COLONEL'S PICKLE] Payment FAILED for order ${orderNumber}. Customer: ${customerName}. Amount: Rs.${amount.toFixed(2)}.`;
     return this.sendAdminSMS(message);
   }
 
   async notifyAdminShipmentCreated(orderNumber: string, trackingNumber: string, customerName: string): Promise<SMSResult> {
-    const message = `[TAPTI] Order ${orderNumber} shipped. Tracking: ${trackingNumber}. Customer: ${customerName}.`;
+    const message = `[COLONEL'S PICKLE] Order ${orderNumber} shipped. Tracking: ${trackingNumber}. Customer: ${customerName}.`;
     return this.sendAdminSMS(message);
   }
 
   async notifyAdminOutForDelivery(orderNumber: string, customerName: string): Promise<SMSResult> {
-    const message = `[TAPTI] Order ${orderNumber} out for delivery. Customer: ${customerName}.`;
+    const message = `[COLONEL'S PICKLE] Order ${orderNumber} out for delivery. Customer: ${customerName}.`;
     return this.sendAdminSMS(message);
   }
 
   async notifyAdminOrderDelivered(orderNumber: string, customerName: string): Promise<SMSResult> {
-    const message = `[TAPTI] Order ${orderNumber} DELIVERED. Customer: ${customerName}.`;
+    const message = `[COLONEL'S PICKLE] Order ${orderNumber} DELIVERED. Customer: ${customerName}.`;
     return this.sendAdminSMS(message);
   }
 
   async notifyAdminOrderCancelled(orderNumber: string, customerName: string, refundAmount?: number): Promise<SMSResult> {
     const refundText = refundAmount ? ` Refund: Rs.${refundAmount.toFixed(2)}.` : '';
-    const message = `[TAPTI] Order ${orderNumber} CANCELLED. Customer: ${customerName}.${refundText}`;
+    const message = `[COLONEL'S PICKLE] Order ${orderNumber} CANCELLED. Customer: ${customerName}.${refundText}`;
     return this.sendAdminSMS(message);
   }
 
   async notifyAdminReturnRequest(orderNumber: string, customerName: string): Promise<SMSResult> {
-    const message = `[TAPTI] Return request for order ${orderNumber}. Customer: ${customerName}.`;
+    const message = `[COLONEL'S PICKLE] Return request for order ${orderNumber}. Customer: ${customerName}.`;
     return this.sendAdminSMS(message);
   }
 }

@@ -28,8 +28,8 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    // Email to admin - ALWAYS send to info@taptifs.com
-    const adminEmail = process.env.ADMIN_EMAIL || "info@taptifs.com"
+    // Email to admin - ALWAYS send to info@colonelspickle.in
+    const adminEmail = process.env.ADMIN_EMAIL || "info@colonelspickle.in"
     const adminMailOptions = {
       from: process.env.SMTP_FROM || process.env.SMTP_USER,
       to: adminEmail,
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
             </div>
           ` : ''}
           <p style="color: #9ca3af; font-size: 12px; margin-top: 30px;">
-            This inquiry was sent from the TAPTIFS wholesale page.
+            This inquiry was sent from the COLONEL'S PICKLE wholesale page.
           </p>
         </div>
       `,
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
     // Send emails (only if SMTP is configured)
     if (process.env.SMTP_USER && process.env.SMTP_PASS) {
       try {
-        // Always send to admin (info@taptifs.com)
+        // Always send to admin (info@colonelspickle.in)
         console.log(`Sending wholesale inquiry to: ${adminEmail}`)
         await transporter.sendMail(adminMailOptions)
         console.log(`✓ Wholesale inquiry sent successfully to ${adminEmail}`)
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
           const customerMailOptions = {
             from: process.env.SMTP_FROM || process.env.SMTP_USER,
             to: email,
-            subject: "Thank you for your Wholesale Inquiry - TAPTIFS",
+            subject: "Thank you for your Wholesale Inquiry - COLONEL'S PICKLE",
             html: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
                 <h2 style="color: #d97706;">Thank You for Your Wholesale Inquiry!</h2>
@@ -96,8 +96,8 @@ export async function POST(request: NextRequest) {
                   <li>Delivery schedules</li>
                   <li>Payment terms</li>
                 </ul>
-                <p>If you have any urgent questions, please don't hesitate to contact us at info@taptifs.com.</p>
-                <p>Best regards,<br>The TAPTIFS Wholesale Team</p>
+                <p>If you have any urgent questions, please don't hesitate to contact us at info@colonelspickle.in.</p>
+                <p>Best regards,<br>The COLONEL'S PICKLE Wholesale Team</p>
               </div>
             `,
           }

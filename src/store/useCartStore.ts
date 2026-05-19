@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { ProductData } from '@/data/products';
 
 // Cart product supports both DB objects (with _id) and static data (with id)
 interface CartProduct {
@@ -37,7 +36,7 @@ interface CartStore {
   openCart: () => void;
   closeCart: () => void;
   toggleCart: () => void;
-  addItem: (product: CartProduct | ProductData | any, quantity?: number) => void;
+  addItem: (product: CartProduct | any, quantity?: number) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;

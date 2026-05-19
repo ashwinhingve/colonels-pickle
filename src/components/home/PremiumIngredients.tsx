@@ -7,6 +7,7 @@ const INGREDIENTS = [
     sub: "Premium Asafoetida",
     note: "~₹35,000/kg · World's finest",
     color: "#166534",
+    tint: "#DCFCE7",
   },
   {
     icon: "🫙",
@@ -14,6 +15,7 @@ const INGREDIENTS = [
     sub: "Cold Pressed Wooden Press",
     note: "~₹300/litre · Pure & unrefined",
     color: "#92400E",
+    tint: "#FEF3C7",
   },
   {
     icon: "🌶️",
@@ -21,6 +23,7 @@ const INGREDIENTS = [
     sub: "Sun-dried, Roasted & Ground",
     note: "From across India & Central Asia",
     color: "#B91C1C",
+    tint: "#FEE2E2",
   },
   {
     icon: "🧂",
@@ -28,6 +31,7 @@ const INGREDIENTS = [
     sub: "Sendha & Kala Namak",
     note: "No iodized table salt, ever",
     color: "#1E40AF",
+    tint: "#DBEAFE",
   },
 ];
 
@@ -54,8 +58,13 @@ export function PremiumIngredients() {
               }
               className="rounded-2xl border-2 border-[color:var(--ing-soft)] p-6 transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-[color:var(--ing)]"
             >
-              <span className="text-4xl">{item.icon}</span>
-              <h3 className="mt-4 font-display text-base font-bold text-cp-text">
+              <div
+                className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"
+                style={{ backgroundColor: item.tint }}
+              >
+                <span className="text-4xl">{item.icon}</span>
+              </div>
+              <h3 className="font-display text-base font-bold text-cp-text">
                 {item.title}
               </h3>
               <p className="mt-1 font-sans text-sm text-cp-text-muted">
