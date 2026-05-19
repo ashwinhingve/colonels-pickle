@@ -29,7 +29,7 @@ interface SeedProduct {
   name: string;
   slug: string;
   subtitle: string;
-  category: 'achaar' | 'masala' | 'oils';
+  category: 'achaar' | 'masala' | 'oils' | 'organic';
   isFeatured: boolean;
   noPreservatives: boolean;
   variants: SeedVariant[];
@@ -40,6 +40,7 @@ const categoriesData = [
   { name: 'Achaar Collection', slug: 'achaar', order: 1, isActive: true },
   { name: 'Achaar Masale', slug: 'masala', order: 2, isActive: true },
   { name: 'Cold Press Oils', slug: 'oils', order: 3, isActive: true },
+  { name: 'Organic & More', slug: 'organic', order: 4, isActive: true },
 ];
 
 const JAR_V = (a: number, b: number, c: number, d: number): SeedVariant[] => [
@@ -195,6 +196,28 @@ const seedData: SeedProduct[] = [
     ],
     ingredients:
       "Ginger Powder (Saunth), Cinnamon (Dalchini), Cardamom (Elaichi), Fennel Seeds (Saunf), Clove (Laung), Black Pepper (Kali Mirch), Black Cardamom (Kali Elaichi), Nutmeg (Jaifal). Traditional Mother's Recipe.",
+  },
+
+  // ── ORGANIC & MORE ──
+  {
+    name: 'Organic Gulkand', slug: 'organic-gulkand', subtitle: 'Homemade Rose Petal Preserve',
+    category: 'organic', isFeatured: true, noPreservatives: true,
+    variants: [
+      { weight: '250g', price: 199 },
+      { weight: '500g', price: 379 },
+    ],
+    ingredients:
+      "Fresh Rose Petals (Gulab Pankhuri), Organic Sugar / Mishri, Honey, Cardamom (Elaichi). Sun-cooked the traditional way, no artificial colours or preservatives.",
+  },
+  {
+    name: 'Organic Rice Chips', slug: 'organic-rice-chips', subtitle: 'Crunchy Rice Snack — Achari Mango & Cream & Onion',
+    category: 'organic', isFeatured: false, noPreservatives: true,
+    variants: [
+      { weight: '60g', price: 49 },
+      { weight: '120g', price: 89 },
+    ],
+    ingredients:
+      "Organic Rice, Edible Vegetable Oil, Iodized Salt, Spices & Condiments (Achari Mango / Cream & Onion seasoning). No artificial preservatives.",
   },
 ];
 

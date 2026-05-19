@@ -103,7 +103,7 @@ src/
 ### Must Change
 - [ ] `package.json` name: `taptifs` → `colonels-pickle`
 - [ ] All `tapti-*` localStorage keys → `cp-*`  
-- [ ] `taptiagrofood@gmail.com` → actual admin email in `src/lib/auth.ts`
+- [ ] `ashwin.hingave123@gmail.com` → actual admin email in `src/lib/auth.ts`
 - [ ] Zustand store: `tapti-cart-storage` → `cp-cart-storage`
 - [ ] Site metadata: title, description, OG tags
 - [ ] `constants.ts`: brand name, tagline, contact info, address
@@ -372,7 +372,7 @@ export const CART_STORAGE_KEY = 'cp-cart-storage'
 In the NextAuth config, update the admin role check:
 ```typescript
 // Change this line:
-if (user.email === 'taptiagrofood@gmail.com') role = 'admin'
+if (user.email === 'ashwin.hingave123@gmail.com') role = 'admin'
 // To:
 if (user.email === process.env.ADMIN_EMAIL) role = 'admin'
 ```

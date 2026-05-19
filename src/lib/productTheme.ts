@@ -36,6 +36,10 @@ export const PRODUCT_THEME_MAP: Record<string, ProductTheme> = {
   "bharwa-bhajiya": { themeColor: "#365314", nameHindi: "भरवां भजिया", icon: "🫛" },
   "adrak-haldi-nimbu": { themeColor: "#713F12", nameHindi: "अदरक हल्दी नींबू", icon: "🌿", badge: "New", badgeColor: "#166534" },
 
+  // ── Organic & More ──
+  "organic-gulkand": { themeColor: "#9D174D", nameHindi: "गुलकंद", icon: "🌹", badge: "Organic", badgeColor: "#166534" },
+  "organic-rice-chips": { themeColor: "#92400E", nameHindi: "राइस चिप्स", icon: "🍘", badge: "Snack", badgeColor: "#B45309" },
+
   // ── Masala (pouches) ──
   "bharwa-lal-mirch-masala": { themeColor: "#7F1D1D", nameHindi: "भरवां लाल मिर्च अचार मसाला", icon: "🌶️" },
   "tikhi-hari-mirch-masala": { themeColor: "#14532D", nameHindi: "तीखी हरी मिर्च अचार मसाला", icon: "🌿" },

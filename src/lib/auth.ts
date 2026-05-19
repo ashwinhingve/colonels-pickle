@@ -17,7 +17,10 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
 }
 
 // Admin email whitelist - only these emails get admin role
-const ADMIN_EMAILS = [(process.env.ADMIN_EMAIL || 'ashwin.hingave123@gmail.com').toLowerCase()];
+const ADMIN_EMAILS = (process.env.ADMIN_EMAIL || 'ashwin.hingave123@gmail.com,ridhwika.agro.organics@gmail.com')
+  .split(',')
+  .map((e) => e.trim().toLowerCase())
+  .filter(Boolean);
 
 export const authOptions: NextAuthOptions = {
   providers: [

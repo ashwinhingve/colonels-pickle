@@ -18,6 +18,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   achaar: "Achaar Collection",
   masala: "Achaar Masale",
   oils: "Cold Press Oils",
+  organic: "Organic & More",
 };
 
 interface ProductPageProps {
