@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 
 const STATS = [
@@ -71,35 +72,24 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* RIGHT — floating jar card */}
+        {/* RIGHT — hero food image */}
         <div className="relative flex justify-center">
-          <div className="animate-float relative w-[280px] rounded-2xl bg-white/95 shadow-2xl">
-            <div className="h-3 rounded-t-2xl bg-gradient-to-r from-cp-saffron to-cp-saffron-bright" />
-            <div className="flex flex-col items-center px-6 py-8 text-center">
-              <span className="text-[64px]">🫙</span>
-              <p className="mt-4 font-display text-lg font-extrabold text-cp-crimson">
-                Colonel&apos;s Pickle®
-              </p>
-              <p className="mt-1 font-sans text-xs font-bold uppercase tracking-widest text-cp-brown">
-                Chhuhara Adrak
-              </p>
-              <p className="mt-1 font-display text-sm italic text-cp-text-muted">
-                Ghar Ka Achar
-              </p>
-              <span className="mt-3 rounded-full bg-[rgba(22,101,52,0.88)] px-3 py-1 font-sans text-[10px] font-semibold text-white">
-                No Preservatives ✓
-              </span>
-              <p className="mt-4 font-sans text-2xl font-extrabold text-cp-crimson">
-                From ₹149
-              </p>
-              <p className="font-sans text-[11px] text-cp-text-muted">100g</p>
-            </div>
+          <div className="animate-float relative aspect-[4/5] w-full max-w-[420px] overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/20">
+            <Image
+              src="https://images.unsplash.com/photo-1599909946443-e9bd98d7ef62?w=1200&q=80"
+              alt="Jar of homemade Colonel's Pickle achar with whole spices"
+              fill
+              priority
+              sizes="(max-width: 1024px) 80vw, 420px"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-cp-crimson/40" />
           </div>
 
-          <span className="absolute -right-2 top-6 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 font-sans text-xs font-semibold text-white backdrop-blur">
+          <span className="absolute -right-2 top-6 z-10 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 font-sans text-xs font-semibold text-white backdrop-blur">
             🌿 100% Natural
           </span>
-          <span className="absolute -left-2 bottom-8 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 font-sans text-xs font-semibold text-white backdrop-blur">
+          <span className="absolute -left-2 bottom-8 z-10 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 font-sans text-xs font-semibold text-white backdrop-blur">
             FSSAI ✓ Certified
           </span>
         </div>

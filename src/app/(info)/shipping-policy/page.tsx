@@ -58,6 +58,15 @@ export default function ShippingPolicyPage() {
               </div>
             </AnimatedSection>
 
+            {/* Shipping Summary */}
+            <AnimatedSection direction="up">
+              <div className="bg-gradient-to-br from-amber-50 to-red-50 rounded-2xl p-8 border border-amber-100">
+                <p className="text-gray-700 leading-relaxed">
+                  We ship pan-India via our logistics partners. Estimated delivery: 3–7 business days. Free delivery on orders above ₹499. Jaipur local deliveries: Free on orders above ₹1500. Minimum order quantity: 6 jars of 100g or 2 jars of 250g of any variety.
+                </p>
+              </div>
+            </AnimatedSection>
+
             {/* Delivery Timeline */}
             <AnimatedSection direction="up">
               <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
@@ -171,13 +180,13 @@ export default function ShippingPolicyPage() {
                   Our customer support team is happy to help with any shipping-related queries.
                 </p>
                 <div className="flex flex-wrap gap-6">
-                  <a href="mailto:support@taptifs.com" className="flex items-center gap-2 text-white hover:text-amber-200 transition">
+                  <a href="mailto:ridhwika.agro.organics@gmail.com" className="flex items-center gap-2 text-white hover:text-amber-200 transition">
                     <Mail className="w-5 h-5" />
-                    support@taptifs.com
+                    ridhwika.agro.organics@gmail.com
                   </a>
-                  <a href="tel:+919329216544" className="flex items-center gap-2 text-white hover:text-amber-200 transition">
+                  <a href="tel:+919350406289" className="flex items-center gap-2 text-white hover:text-amber-200 transition">
                     <Phone className="w-5 h-5" />
-                    +91 93292 16544
+                    +91 93504 06289
                   </a>
                 </div>
               </div>

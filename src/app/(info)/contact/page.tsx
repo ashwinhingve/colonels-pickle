@@ -94,6 +94,26 @@ export default function ContactPage() {
         {/* RIGHT — form */}
         <ContactForm />
       </div>
+
+      <div className="mx-auto mt-12 max-w-6xl px-4">
+        <h2 className="mb-4 text-center font-display text-2xl font-extrabold text-cp-crimson md:text-3xl">
+          Visit Us
+        </h2>
+        <div
+          className="w-full overflow-hidden rounded-xl border border-cp-border"
+          style={{ height: "400px" }}
+        >
+          <iframe
+            title="Colonel's Pickle by Ridhwika Agro Organics location"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.2240668159716!2d75.735727!3d26.896383099999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db5b37d033a3b%3A0x552b635ade1c64ea!2sColonel's%20Pickle%20by%20Ridhwika%20Agro%20Organics!5e0!3m2!1sen!2sin!4v1779167668683!5m2!1sen!2sin"
+            className="h-full w-full"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+      </div>
     </section>
   );
 }

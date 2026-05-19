@@ -112,7 +112,10 @@ export const ANNOUNCEMENTS = [
   "🫙 15+ Authentic Varieties",
   "🚚 Pan India Delivery",
   "💰 Free Delivery on Orders ₹499+",
-  "📞 +91 9717243306",
+  "📞 +91 9350406289",
+  "🏠 Jaipur Local Free Delivery Above ₹1500",
+  "📦 Min Order: 6×100g or 2×250g Jars",
+  "🏅 Udhyam & BNI Registered",
 ] as const;
 
 // Promotional offers

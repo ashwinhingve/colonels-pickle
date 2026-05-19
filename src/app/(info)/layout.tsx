@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Information - TAPTIFS",
+  title: "Information — Colonel's Pickle",
 };
 
 export default function InfoLayout({

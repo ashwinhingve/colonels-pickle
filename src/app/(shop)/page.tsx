@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic";
 import type { Metadata } from "next";
 import { HeroSection } from "@/components/home/HeroSection";
 import { TrustBar } from "@/components/home/TrustBar";
+import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { FeaturedProducts } from "@/components/home/FeaturedProducts";
 import { OurStory } from "@/components/home/OurStory";
 import { PremiumIngredients } from "@/components/home/PremiumIngredients";
@@ -21,6 +22,7 @@ export default function HomePage() {
     <>
       <HeroSection />
       <TrustBar />
+      <CategoryGrid />
       <FeaturedProducts />
       <OurStory />
       <PremiumIngredients />

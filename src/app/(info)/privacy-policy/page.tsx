@@ -37,7 +37,7 @@ export default function PrivacyPolicyPage() {
             {/* Introduction */}
             <div className="bg-gradient-to-br from-amber-50 to-white rounded-2xl p-8 shadow-lg">
               <p className="text-gray-700 leading-relaxed">
-                Tapti Food & Spices (TAPTIFS™) respects customer privacy and is committed to protecting personal information shared with us.
+                Colonel&apos;s Pickle by Ridhwika Agro Organics respects customer privacy and is committed to protecting personal information shared with us.
               </p>
             </div>
 
@@ -133,13 +133,13 @@ export default function PrivacyPolicyPage() {
                   We use trusted, secure, and PCI-DSS compliant payment gateways.
                 </p>
                 <p className="leading-relaxed">
-                  Tapti Food & Spices does not store or process any debit card, credit card, UPI, or net-banking details.
+                  Colonel&apos;s Pickle by Ridhwika Agro Organics does not store or process any debit card, credit card, UPI, or net-banking details.
                 </p>
                 <p className="leading-relaxed">
                   All payment transactions are encrypted and handled directly by the payment gateway provider.
                 </p>
                 <p className="leading-relaxed">
-                  Tapti Food & Spices shall not be liable for any technical or operational issues arising from the payment gateway or banking institutions.
+                  Colonel&apos;s Pickle by Ridhwika Agro Organics shall not be liable for any technical or operational issues arising from the payment gateway or banking institutions.
                 </p>
               </div>
             </div>
@@ -169,11 +169,11 @@ export default function PrivacyPolicyPage() {
                 <div className="flex-1">
                   <h2 className="text-2xl font-bold text-gray-800 mb-4">Contact Information</h2>
                   <div className="space-y-2 text-gray-700">
-                    <p><strong>Tapti Food & Spices (TAPTIFS™)</strong></p>
-                    <p>📍 Goula, Tehsil Multai, District Betul, Madhya Pradesh – 460557</p>
-                    <p>📧 Email: taptiagrofood@gmail.com</p>
-                    <p>📞 Phone: +91-9770355137</p>
-                    <p>🌐 Website: www.taptifs.com</p>
+                    <p><strong>Colonel&apos;s Pickle by Ridhwika Agro Organics</strong></p>
+                    <p>📍 Plot A-207, Block A, Vardhman Nagar, Gali No. 24, Ajmer Road, Jaipur, Rajasthan - 302019</p>
+                    <p>📧 Email: ridhwika.agro.organics@gmail.com</p>
+                    <p>📞 Phone: +91 9717243306, +91 9416845689, +91 9350406289</p>
+                    <p>🌐 Website: colonelspickle.in</p>
                   </div>
                 </div>
               </div>

@@ -1,10 +1,10 @@
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 
 const FACT_TILES = [
-  { icon: "👩‍🍳", label: "Women Empowerment" },
-  { icon: "🏅", label: "FSSAI Certified" },
-  { icon: "🌿", label: "Zero Chemicals" },
-  { icon: "📍", label: "Jaipur, Rajasthan" },
+  { icon: "👩‍🍳", label: "Women Empowerment", sub: "Creating local employment" },
+  { icon: "🏅", label: "FSSAI Certified", sub: "License: 12223026002188" },
+  { icon: "🌿", label: "Zero Chemicals", sub: "No preservatives or artificial colours" },
+  { icon: "📍", label: "Jaipur, Rajasthan", sub: "Ajmer Road, Vardhman Nagar" },
 ];
 
 export function OurStory() {
@@ -36,7 +36,7 @@ export function OurStory() {
             Lt Col Praveen Kumar Sharma
           </p>
           <p className="mt-1 font-sans text-sm text-white/70">
-            Indian Army Officer (Retd.) · Founder
+            Lt Col, Indian Army · CPE ITARSI
           </p>
 
           <div className="mt-6 rounded-xl border border-white/15 bg-white/8 p-6">
@@ -74,12 +74,17 @@ export function OurStory() {
             {FACT_TILES.map((tile) => (
               <div
                 key={tile.label}
-                className="flex items-center gap-3 rounded-xl border border-white/12 bg-white/8 px-4 py-3"
+                className="flex items-start gap-3 rounded-xl border border-white/12 bg-white/8 px-4 py-3"
               >
                 <span className="text-xl">{tile.icon}</span>
-                <span className="font-sans text-sm font-medium text-white/85">
-                  {tile.label}
-                </span>
+                <div>
+                  <p className="font-sans text-sm font-semibold text-white/90">
+                    {tile.label}
+                  </p>
+                  <p className="mt-0.5 font-sans text-xs text-white/60">
+                    {tile.sub}
+                  </p>
+                </div>
               </div>
             ))}
           </div>

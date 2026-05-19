@@ -1,47 +1,47 @@
 import type { Metadata } from 'next';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://taptifs.in';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
 
 export const metadata: Metadata = {
-  title: 'Shop All Products | Tapti Food & Spices',
+  title: "Shop All Products | Colonel's Pickle",
   description:
-    'Browse 100% adulteration-free Indian spices, organic cooking oils, pure desi ghee, premium teas, natural sweeteners, and traditional masalas from Tapti Food & Spices. FSSAI certified. Fast delivery across India.',
+    'Browse authentic homemade pickles, traditional masalas and cold-press oils — made with 24 whole spices and zero artificial preservatives. FSSAI certified. Pan-India delivery from Jaipur.',
   keywords: [
-    'buy spices online India',
-    'organic spices online',
-    'pure desi ghee buy',
-    'cooking oil online',
+    'buy pickle online India',
+    'homemade achar online',
+    'preservative-free pickle',
+    'cold press mustard oil online',
     'buy masala online',
-    'TAPTIFS shop',
-    'adulteration-free food products',
-    'Tapti Food and Spices products',
-    'natural sweeteners India',
-    'premium Indian spices',
+    "Colonel's Pickle shop",
+    'authentic Rajasthani achar',
+    'Ridhwika Agro Organics products',
+    'traditional Indian pickle',
+    'FSSAI certified pickle',
   ],
   alternates: {
     canonical: `${SITE_URL}/products`,
   },
   openGraph: {
-    title: 'Shop All Products | Tapti Food & Spices',
+    title: "Shop All Products | Colonel's Pickle",
     description:
-      'Browse adulteration-free Indian spices, organic oils, pure ghee, premium teas and natural sweeteners. FSSAI certified. Fast delivery across India.',
+      'Authentic homemade pickles, masalas and cold-press oils. No artificial preservatives. FSSAI certified. Pan-India delivery from Jaipur.',
     url: `${SITE_URL}/products`,
     type: 'website',
-    siteName: 'Tapti Food & Spices (TAPTIFS)',
+    siteName: "Colonel's Pickle",
     images: [
       {
         url: '/images/logo.jpg',
         width: 1200,
         height: 630,
-        alt: 'Tapti Food & Spices — Shop All Products',
+        alt: "Colonel's Pickle — Shop All Products",
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Shop All Products | Tapti Food & Spices',
+    title: "Shop All Products | Colonel's Pickle",
     description:
-      'Browse adulteration-free Indian spices, organic oils, pure ghee, premium teas and natural sweeteners.',
+      'Authentic homemade pickles, masalas and cold-press oils. No artificial preservatives.',
     images: ['/images/logo.jpg'],
   },
 };

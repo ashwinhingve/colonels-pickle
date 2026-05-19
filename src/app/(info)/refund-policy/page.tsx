@@ -37,7 +37,10 @@ export default function ReturnPolicyPage() {
             {/* Introduction */}
             <div className="bg-gradient-to-br from-amber-50 to-white rounded-2xl p-8 shadow-lg">
               <p className="text-gray-700 leading-relaxed">
-                Tapti Food & Spices is committed to providing high-quality, hygienically packed food products. Due to the nature of consumable goods, please read this policy carefully before placing an order.
+                Colonel&apos;s Pickle by Ridhwika Agro Organics is committed to providing high-quality, hygienically packed food products. Due to the nature of consumable goods, please read this policy carefully before placing an order.
+              </p>
+              <p className="text-gray-700 leading-relaxed mt-4">
+                Pickles, oils, and masala products are consumable goods. We do not accept returns once the seal is broken. In case of damaged or wrong product received, please WhatsApp us a photo within 48 hours of delivery at +91 9350406289. We will arrange a replacement or full refund at our discretion.
               </p>
             </div>
 
@@ -78,8 +81,8 @@ export default function ReturnPolicyPage() {
                     Customers may contact us via:
                   </p>
                   <div className="space-y-2 text-gray-700 mb-4">
-                    <p>📞 Helpline: +91-9770355137</p>
-                    <p>📧 Email: taptiagrofood@gmail.com</p>
+                    <p>📞 Helpline: +91 9350406289</p>
+                    <p>📧 Email: ridhwika.agro.organics@gmail.com</p>
                   </div>
 
                   <div className="bg-amber-50 rounded-lg p-6 border-l-4 border-amber-500">
@@ -142,7 +145,7 @@ export default function ReturnPolicyPage() {
                   • Shipping charges are <strong>non-refundable</strong>
                 </p>
                 <p className="leading-relaxed">
-                  • In case of an error from Tapti Food & Spices, shipping costs will be borne by the company
+                  • In case of an error from Colonel&apos;s Pickle by Ridhwika Agro Organics, shipping costs will be borne by the company
                 </p>
               </div>
             </div>
@@ -151,7 +154,7 @@ export default function ReturnPolicyPage() {
             <div className="space-y-4">
               <h2 className="text-2xl font-bold text-gray-800">Company Rights</h2>
               <p className="text-gray-700 leading-relaxed">
-                Tapti Food & Spices reserves the right to:
+                Colonel&apos;s Pickle by Ridhwika Agro Organics reserves the right to:
               </p>
               <ul className="space-y-2 text-gray-700">
                 <li>• Reject claims without valid proof</li>
@@ -168,11 +171,11 @@ export default function ReturnPolicyPage() {
                 <div className="flex-1">
                   <h2 className="text-2xl font-bold text-gray-800 mb-4">Contact Information</h2>
                   <div className="space-y-2 text-gray-700">
-                    <p><strong>Tapti Food & Spices (TAPTIFS™)</strong></p>
-                    <p>📍 Goula, Tehsil Multai, District Betul, Madhya Pradesh – 460557</p>
-                    <p>📧 Email: taptiagrofood@gmail.com</p>
-                    <p>📞 Phone: +91-9770355137</p>
-                    <p>🌐 Website: www.taptifs.com</p>
+                    <p><strong>Colonel&apos;s Pickle by Ridhwika Agro Organics</strong></p>
+                    <p>📍 Plot A-207, Block A, Vardhman Nagar, Gali No. 24, Ajmer Road, Jaipur, Rajasthan - 302019</p>
+                    <p>📧 Email: ridhwika.agro.organics@gmail.com</p>
+                    <p>📞 Phone: +91 9717243306, +91 9416845689, +91 9350406289</p>
+                    <p>🌐 Website: colonelspickle.in</p>
                   </div>
                 </div>
               </div>
