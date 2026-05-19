@@ -263,7 +263,7 @@ export default async function AdminDashboard() {
             </div>
           </a>
 
-          <a
+          <Link
             href="/admin/products?filter=low-stock"
             className="flex items-center gap-3 p-4 rounded-lg border-2 border-gray-200 hover:border-yellow-500 hover:bg-yellow-50 transition-all"
           >
@@ -271,7 +271,7 @@ export default async function AdminDashboard() {
               <p className="text-sm font-medium text-gray-900">Low Stock Alerts</p>
               <p className="text-xs text-gray-500 mt-1">{lowStockCount} products low</p>
             </div>
-          </a>
+          </Link>
 
           <a
             href="/admin/system"

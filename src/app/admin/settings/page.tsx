@@ -27,8 +27,8 @@ export default async function AdminSettingsPage() {
 
   const bannerData = {
     enabled: settings.announcementBanner?.enabled ?? true,
-    announcements: (settings.announcementBanner?.announcements || []).map((a: any) => ({
-      id: a._id?.toString() || Math.random().toString(36).slice(2),
+    announcements: (settings.announcementBanner?.announcements || []).map((a: any, i: number) => ({
+      id: a._id?.toString() || `ann-${i}`,
       text: a.text,
       emoji: a.emoji || '',
       isActive: a.isActive ?? true,

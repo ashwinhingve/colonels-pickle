@@ -25,9 +25,15 @@ export async function middleware(request: NextRequest) {
   const requestedPath = `${request.nextUrl.pathname}${request.nextUrl.search}`;
 
   // Check for NextAuth session token
+  // `secureCookie` MUST mirror `useSecureCookies` in src/lib/auth.ts
+  // (NODE_ENV === 'production'). Without it, getToken looks for the wrong
+  // cookie name on HTTPS/Vercel (`next-auth.session-token` instead of
+  // `__Secure-next-auth.session-token`), returns null for logged-in users,
+  // and every protected/admin route bounces back to /login in production.
   const token = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
+    secureCookie: process.env.NODE_ENV === "production",
   });
 
   // Admin route protection: require authentication AND admin role

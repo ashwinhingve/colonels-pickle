@@ -632,7 +632,7 @@ export default function App() {
         <p className="eyebrow">OUR ACHAAR COLLECTION</p>
         <h2 className="section-heading f-display">Signature Homemade Pickles</h2>
         <p className="f-serif" style={{ color: "#78716C", fontSize: 15, marginTop: 14, lineHeight: 1.7 }}>
-          Each jar crafted in small batches with a mother's love,<br/>
+          Each jar crafted in small batches with a mother&apos;s love,<br/>
           24 premium whole spices &amp; zero artificial preservatives.
         </p>
       </div>

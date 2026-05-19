@@ -86,12 +86,12 @@ export default function OrderActions({
         </button>
       )}
 
-      <a
+      <Link
         href="/orders"
         className="block w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 font-medium text-center"
       >
         View All Orders
-      </a>
+      </Link>
 
       {/* Cancel Modal */}
       {showCancelModal && (
