@@ -18,6 +18,11 @@ export const BRAND = {
     pin: "302019",
   },
   phones: ["9717243306", "9416845689", "9350406289"],
+  email: "ridhwika.agro.organics@gmail.com",
+  instagram: {
+    handle: "@colonels.pickle",
+    url: "https://instagram.com/colonels.pickle",
+  },
   social: {
     beacons: "https://beacons.ai/colonelspickle",
     gmaps: "https://maps.app.goo.gl/FCraoQErzuMnHLBz9",
@@ -93,7 +98,7 @@ export const SOCIAL_LINKS = {
 };
 
 // Contact Info
-export const CONTACT_EMAIL = "colonelspickle@gmail.com";
+export const CONTACT_EMAIL = "ridhwika.agro.organics@gmail.com";
 export const CONTACT_PHONE = "+91-9717243306";
 
 // Admin & storage
@@ -109,3 +114,16 @@ export const ANNOUNCEMENTS = [
   "💰 Free Delivery on Orders ₹499+",
   "📞 +91 9717243306",
 ] as const;
+
+// Promotional offers
+export const OFFERS = {
+  bulk1kg: "Buy 1kg Get 15% Discount",
+  bulk5kg: "Buy 5kg Get 20% Discount",
+  jaipurFreeDelivery: "Free delivery in Jaipur on orders above ₹1500",
+} as const;
+
+// Minimum order quantities (units) by jar size
+export const MIN_ORDER = {
+  jar100g: 6,
+  jar250g: 2,
+} as const;

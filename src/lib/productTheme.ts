@@ -18,24 +18,31 @@ export const DEFAULT_THEME: ProductTheme = {
 };
 
 export const PRODUCT_THEME_MAP: Record<string, ProductTheme> = {
+  // ── Achaar (jars) ──
+  "adrak-ka-achar": { themeColor: "#78350F", nameHindi: "अदरक का अचार", icon: "🫚" },
   "chhuhara-adrak": { themeColor: "#7C2D12", nameHindi: "छुहारा अदरक", icon: "🫚", badge: "Bestseller", badgeColor: "#B45309" },
-  "adrak-haldi-nimbu": { themeColor: "#713F12", nameHindi: "अदरक हल्दी नींबू", icon: "🫚", badge: "New", badgeColor: "#166534" },
-  "organic-gulkand": { themeColor: "#831843", nameHindi: "ऑर्गेनिक गुलकंद", icon: "🌹", badge: "Organic", badgeColor: "#9D174D" },
-  "dry-masala-aam": { themeColor: "#78350F", nameHindi: "सूखा मसाला आम", icon: "🥭", badge: "Seasonal", badgeColor: "#B45309" },
-  "lehsun-ka-achar": { themeColor: "#991B1B", nameHindi: "लहसुन का अचार", icon: "🧄" },
+  "mixed-khatta-meetha": { themeColor: "#365314", nameHindi: "मिक्स खट्टा मीठा", icon: "🥗" },
   "nimbu-chatpata": { themeColor: "#713F12", nameHindi: "नींबू चटपटा", icon: "🍋" },
-  "kaccha-mango": { themeColor: "#14532D", nameHindi: "कच्चा मैंगो अचार", icon: "🥭", badge: "Summer Special", badgeColor: "#166534" },
-  "bharwa-mirch": { themeColor: "#7F1D1D", nameHindi: "भरवां मिर्च", icon: "🌶️", badge: "🌶 Spicy", badgeColor: "#B91C1C" },
-  "kair-ka-achar": { themeColor: "#451A03", nameHindi: "कैर का अचार", icon: "🫐", badge: "Rare", badgeColor: "#B45309" },
+  "khatta-meetha-nimbu": { themeColor: "#78350F", nameHindi: "खट्टा मीठा नींबू", icon: "🍋" },
+  "bharwa-lal-mirch": { themeColor: "#7F1D1D", nameHindi: "भरवां लाल मिर्च", icon: "🌶️", badge: "🌶 Spicy", badgeColor: "#B91C1C" },
+  "aam-ka-achar": { themeColor: "#14532D", nameHindi: "आम का अचार", icon: "🥭", badge: "Summer Special", badgeColor: "#166534" },
+  "dry-masala-aam": { themeColor: "#78350F", nameHindi: "ड्राई मसाला आम", icon: "🥭", badge: "Seasonal", badgeColor: "#B45309" },
+  "amla-ka-achar": { themeColor: "#365314", nameHindi: "आंवला का अचार", icon: "🫐", badge: "Immunity Boost", badgeColor: "#166534" },
+  "mixed-chatpata": { themeColor: "#713F12", nameHindi: "मिक्स चटपटा", icon: "🥗" },
   "kathal-ka-achar": { themeColor: "#365314", nameHindi: "कटहल का अचार", icon: "🟢" },
-  "khatta-meetha-nimbu": { themeColor: "#713F12", nameHindi: "खट्टा मीठा नींबू", icon: "🍋" },
-  "cold-press-mustard-oil": { themeColor: "#78350F", nameHindi: "कोल्ड प्रेस सरसों तेल", icon: "🫗", badge: "Pure", badgeColor: "#B45309" },
-  "cold-press-peanut-oil": { themeColor: "#92400E", nameHindi: "कोल्ड प्रेस मूंगफली तेल", icon: "🥜" },
-  "cold-press-sesame-oil": { themeColor: "#451A03", nameHindi: "कोल्ड प्रेस तिल तेल", icon: "🫗" },
-  "cold-press-coconut-oil": { themeColor: "#14532D", nameHindi: "कोल्ड प्रेस नारियल तेल", icon: "🥥" },
-  "special-tea-masala": { themeColor: "#1C1917", nameHindi: "स्पेशल चाय मसाला", icon: "🍵" },
-  "organic-baked-rice-chips": { themeColor: "#365314", nameHindi: "ऑर्गेनिक बेक्ड राइस चिप्स", icon: "🍘", badge: "Healthy", badgeColor: "#166534" },
-  "achaar-ke-masale": { themeColor: "#B91C1C", nameHindi: "अचार के मसाले", icon: "🥄" },
+  "lasoda-achar": { themeColor: "#451A03", nameHindi: "लसोड़ा (गुंदा) अचार", icon: "🫐", badge: "Rare", badgeColor: "#B45309" },
+  "tikhi-mirchi": { themeColor: "#14532D", nameHindi: "तीखी मिर्ची", icon: "🌶️", badge: "🌶 Very Spicy", badgeColor: "#B91C1C" },
+  "lehsun-ka-achar": { themeColor: "#991B1B", nameHindi: "लहसुन का अचार", icon: "🧄" },
+  "bharwa-bhajiya": { themeColor: "#365314", nameHindi: "भरवां भजिया", icon: "🌶️" },
+  "adrak-haldi-nimbu": { themeColor: "#713F12", nameHindi: "अदरक हल्दी नींबू", icon: "🫚", badge: "New", badgeColor: "#166534" },
+
+  // ── Masala (pouches) ──
+  "bharwa-lal-mirch-masala": { themeColor: "#7F1D1D", nameHindi: "भरवां लाल मिर्च अचार मसाला", icon: "🥄" },
+  "tikhi-hari-mirch-masala": { themeColor: "#14532D", nameHindi: "तीखी हरी मिर्च अचार मसाला", icon: "🥄" },
+  "kathal-ka-masala": { themeColor: "#365314", nameHindi: "कटहल का अचार मसाला", icon: "🥄" },
+  "aam-ka-masala": { themeColor: "#78350F", nameHindi: "आम का अचार मसाला", icon: "🥄" },
+  "lehsun-ka-masala": { themeColor: "#991B1B", nameHindi: "लहसुन का अचार मसाला", icon: "🥄" },
+  "chai-ka-masala": { themeColor: "#1C1917", nameHindi: "चाय का मसाला", icon: "🍵" },
 };
 
 export function getProductTheme(slug?: string): ProductTheme {
