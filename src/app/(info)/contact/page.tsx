@@ -3,10 +3,39 @@ import Image from "next/image";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { BRAND, CONTACT_EMAIL } from "@/lib/constants";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+
 export const metadata: Metadata = {
-  title: "Contact Us",
+  title: "Contact Us | Colonel's Pickle",
   description:
     "Get in touch with Colonel's Pickle — phone, email, WhatsApp, or send an order inquiry. Pan India delivery from Jaipur.",
+  alternates: {
+    canonical: `${SITE_URL}/contact`,
+  },
+  openGraph: {
+    title: "Contact Us | Colonel's Pickle",
+    description:
+      "Reach out to Colonel's Pickle via phone, email, WhatsApp, or visit us in Jaipur. We'd love to hear from you!",
+    url: `${SITE_URL}/contact`,
+    type: 'website',
+    siteName: "Colonel's Pickle",
+    locale: 'en_IN',
+    images: [
+      {
+        url: `${SITE_URL}/logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "Colonel's Pickle — Contact Us",
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Contact Us | Colonel's Pickle",
+    description:
+      "Get in touch with Colonel's Pickle via phone, email, or WhatsApp. We're here to help!",
+    images: [`${SITE_URL}/logo.png`],
+  },
 };
 
 const fullAddress = `${BRAND.address.line1}, ${BRAND.address.line2}, ${BRAND.address.city}, ${BRAND.address.state} - ${BRAND.address.pin}`;

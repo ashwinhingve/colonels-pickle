@@ -31,6 +31,9 @@ export interface ISiteSettings extends Document {
   heroSlider: {
     slides: IHeroSlide[];
   };
+  inventory?: {
+    lowStockThreshold: number;
+  };
   updatedAt: Date;
   createdAt: Date;
 }
@@ -72,6 +75,13 @@ const SiteSettingsSchema = new Schema<ISiteSettings>(
           order: { type: Number, default: 0 },
         },
       ],
+    },
+    inventory: {
+      lowStockThreshold: {
+        type: Number,
+        default: 10,
+        min: 0,
+      },
     },
   },
   {

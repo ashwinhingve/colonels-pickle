@@ -7,10 +7,39 @@ import Faq from "@/models/Faq";
 
 export const dynamic = "force-dynamic";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+
 export const metadata: Metadata = {
   title: "FAQ — Frequently Asked Questions | Colonel's Pickle",
   description:
     "Answers to common questions about Colonel's Pickle products, shipping, payment, returns, and wholesale. FSSAI certified, no artificial preservatives.",
+  alternates: {
+    canonical: `${SITE_URL}/faq`,
+  },
+  openGraph: {
+    title: "FAQ — Frequently Asked Questions | Colonel's Pickle",
+    description:
+      "Find answers to all your questions about Colonel's Pickle products, ingredients, shipping, returns, and wholesale. FSSAI certified.",
+    url: `${SITE_URL}/faq`,
+    type: 'website',
+    siteName: "Colonel's Pickle",
+    locale: 'en_IN',
+    images: [
+      {
+        url: `${SITE_URL}/logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "Colonel's Pickle — FAQ",
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "FAQ — Frequently Asked Questions | Colonel's Pickle",
+    description:
+      "Find answers to all your questions about Colonel's Pickle products, shipping, and more.",
+    images: [`${SITE_URL}/logo.png`],
+  },
 };
 
 // ──── Fallback Inline FAQs (used if database has no active FAQs) ────

@@ -12,6 +12,8 @@ import {
   Download,
   X,
   RefreshCw,
+  Trash2,
+  CheckCheck,
 } from 'lucide-react';
 
 interface Order {
@@ -129,6 +131,13 @@ export default function OrdersTable({
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncResult, setSyncResult] = useState<string | null>(null);
 
+  // Bulk selection state
+  const [selectedOrders, setSelectedOrders] = useState<Set<string>>(new Set());
+  const [bulkAction, setBulkAction] = useState<'status' | 'cancel' | null>(null);
+  const [bulkStatus, setBulkStatus] = useState('');
+  const [isProcessingBulk, setIsProcessingBulk] = useState(false);
+  const [bulkMessage, setBulkMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
   const handleSyncPayments = async () => {
     setIsSyncing(true);
     setSyncResult(null);
@@ -148,6 +157,103 @@ export default function OrdersTable({
     } finally {
       setIsSyncing(false);
       setTimeout(() => setSyncResult(null), 6000);
+    }
+  };
+
+  const handleSelectOrder = (orderId: string) => {
+    const newSelected = new Set(selectedOrders);
+    if (newSelected.has(orderId)) {
+      newSelected.delete(orderId);
+    } else {
+      newSelected.add(orderId);
+    }
+    setSelectedOrders(newSelected);
+  };
+
+  const handleSelectAll = () => {
+    if (selectedOrders.size === orders.length) {
+      setSelectedOrders(new Set());
+    } else {
+      setSelectedOrders(new Set(orders.map((o) => o.id)));
+    }
+  };
+
+  const handleExportCSV = async () => {
+    try {
+      const params = new URLSearchParams();
+      if (filters.search) params.set('search', filters.search);
+      if (filters.status) params.set('status', filters.status);
+      if (filters.paymentStatus) params.set('paymentStatus', filters.paymentStatus);
+      if (filters.dateFrom) params.set('dateFrom', filters.dateFrom);
+      if (filters.dateTo) params.set('dateTo', filters.dateTo);
+
+      const url = `/api/admin/orders/export?${params.toString()}`;
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error('Failed to export');
+      }
+
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = `orders-${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(downloadUrl);
+      document.body.removeChild(a);
+    } catch (err: any) {
+      alert('Failed to export: ' + err.message);
+    }
+  };
+
+  const handleBulkAction = async () => {
+    if (selectedOrders.size === 0) {
+      setBulkMessage({ type: 'error', text: 'No orders selected' });
+      return;
+    }
+
+    if (!bulkAction || (bulkAction === 'status' && !bulkStatus)) {
+      setBulkMessage({ type: 'error', text: 'Please select an action' });
+      return;
+    }
+
+    setIsProcessingBulk(true);
+    setBulkMessage(null);
+
+    try {
+      const res = await fetch('/api/admin/orders/bulk', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderIds: Array.from(selectedOrders),
+          action: bulkAction,
+          status: bulkAction === 'status' ? bulkStatus : undefined,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setBulkMessage({
+          type: 'success',
+          text: `${data.summary.success} orders updated successfully`,
+        });
+        setSelectedOrders(new Set());
+        setBulkAction(null);
+        setBulkStatus('');
+        setTimeout(() => {
+          router.refresh();
+          setBulkMessage(null);
+        }, 2000);
+      } else {
+        setBulkMessage({ type: 'error', text: data.error || 'Action failed' });
+      }
+    } catch (err: any) {
+      setBulkMessage({ type: 'error', text: 'Error: ' + err.message });
+    } finally {
+      setIsProcessingBulk(false);
     }
   };
 
@@ -190,6 +296,16 @@ export default function OrdersTable({
           >
             <RefreshCw className={`w-4 h-4 ${isSyncing ? 'animate-spin' : ''}`} />
             {isSyncing ? 'Syncing...' : 'Sync'}
+          </button>
+
+          {/* Export CSV Button */}
+          <button
+            type="button"
+            onClick={handleExportCSV}
+            className="inline-flex items-center gap-2 px-4 py-2 border border-blue-500 bg-blue-50 text-blue-700 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors"
+          >
+            <Download className="w-4 h-4" />
+            Export CSV
           </button>
 
           {/* Filter Button */}
@@ -309,11 +425,91 @@ export default function OrdersTable({
         )}
       </div>
 
+      {/* Bulk Action Bar */}
+      {selectedOrders.size > 0 && (
+        <div className="p-4 bg-amber-50 border-b border-amber-200 space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="text-sm font-medium text-amber-900">
+              {selectedOrders.size} order{selectedOrders.size !== 1 ? 's' : ''} selected
+            </div>
+
+            {bulkMessage && (
+              <div
+                className={`text-sm font-medium ${
+                  bulkMessage.type === 'success'
+                    ? 'text-green-700 bg-green-100 px-3 py-1 rounded'
+                    : 'text-red-700 bg-red-100 px-3 py-1 rounded'
+                }`}
+              >
+                {bulkMessage.text}
+              </div>
+            )}
+
+            <button
+              type="button"
+              onClick={() => setSelectedOrders(new Set())}
+              className="text-sm text-amber-700 hover:text-amber-900"
+            >
+              Clear
+            </button>
+          </div>
+
+          <div className="flex items-center gap-3 flex-wrap">
+            <select
+              value={bulkAction || ''}
+              onChange={(e) => {
+                setBulkAction(e.target.value as 'status' | 'cancel' | null || null);
+                setBulkStatus('');
+              }}
+              className="px-3 py-2 border border-amber-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+            >
+              <option value="">Select Action</option>
+              <option value="status">Change Status</option>
+              <option value="cancel">Cancel Orders</option>
+            </select>
+
+            {bulkAction === 'status' && (
+              <select
+                value={bulkStatus}
+                onChange={(e) => setBulkStatus(e.target.value)}
+                className="px-3 py-2 border border-amber-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+              >
+                <option value="">Select Status</option>
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="processing">Processing</option>
+                <option value="shipped">Shipped</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            )}
+
+            <button
+              type="button"
+              onClick={handleBulkAction}
+              disabled={isProcessingBulk || !bulkAction || (bulkAction === 'status' && !bulkStatus)}
+              className="ml-auto inline-flex items-center gap-2 px-4 py-2 bg-cp-crimson text-white text-sm font-medium rounded-lg hover:bg-cp-crimson-dark disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <CheckCheck className="w-4 h-4" />
+              {isProcessingBulk ? 'Processing...' : 'Apply'}
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
+              <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                <input
+                  type="checkbox"
+                  checked={selectedOrders.size > 0 && selectedOrders.size === orders.length}
+                  onChange={handleSelectAll}
+                  className="rounded border-gray-300 cursor-pointer"
+                />
+              </th>
               <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                 Order
               </th>
@@ -343,13 +539,21 @@ export default function OrdersTable({
           <tbody className="divide-y divide-gray-200">
             {orders.length === 0 ? (
               <tr>
-                <td colSpan={8} className="px-6 py-8 text-center text-sm text-gray-500">
+                <td colSpan={9} className="px-6 py-8 text-center text-sm text-gray-500">
                   No orders found
                 </td>
               </tr>
             ) : (
               orders.map((order) => (
                 <tr key={order.id} className="hover:bg-cp-crimson-light">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <input
+                      type="checkbox"
+                      checked={selectedOrders.has(order.id)}
+                      onChange={() => handleSelectOrder(order.id)}
+                      className="rounded border-gray-300 cursor-pointer"
+                    />
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">
                       {order.orderNumber}

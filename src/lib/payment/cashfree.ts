@@ -31,6 +31,26 @@ interface PaymentVerificationResult {
   gatewayResponse?: any;
 }
 
+interface RefundResult {
+  success: boolean;
+  refundId?: string;
+  status?: string;
+  gatewayResponse?: any;
+}
+
+interface RefundStatusResult {
+  success: boolean;
+  status?: string;
+  amount?: number;
+  gatewayResponse?: any;
+}
+
+interface RefundsListResult {
+  success: boolean;
+  refunds?: any[];
+  gatewayResponse?: any;
+}
+
 class CashfreeService {
   private config: CashfreeConfig | null = null;
   private configError: string | null = null;
@@ -209,6 +229,99 @@ class CashfreeService {
       case 'VOID': return 'failed';
       case 'ACTIVE': return 'pending';
       default: return 'failed';
+    }
+  }
+
+  /**
+   * Initiate a refund for a paid order via Cashfree gateway
+   * @param orderId - Cashfree order ID (our order number)
+   * @param refundAmount - Amount to refund in INR
+   * @param refundId - Unique refund ID for idempotency
+   * @param refundNote - Optional note for the refund
+   */
+  async refundOrder(params: {
+    orderId: string;
+    refundAmount: number;
+    refundId: string;
+    refundNote?: string;
+  }): Promise<RefundResult> {
+    this.ensureConfigured();
+
+    try {
+      const request = {
+        refund_amount: params.refundAmount,
+        refund_id: params.refundId,
+        refund_note: params.refundNote || 'Refund initiated by admin',
+      };
+
+      const response = await this.cashfree!.PGOrderCreateRefund(params.orderId, request);
+      const data = response.data as any;
+
+      if (!data?.refund_id) {
+        throw new Error('No refund_id returned from Cashfree');
+      }
+
+      return {
+        success: true,
+        refundId: data.refund_id,
+        status: data.refund_status || 'PENDING',
+        gatewayResponse: data,
+      };
+    } catch (error: any) {
+      console.error('Error initiating Cashfree refund:', error?.response?.data || error);
+      const message = error?.response?.data?.message || error.message || 'Failed to initiate refund';
+      throw new Error(message);
+    }
+  }
+
+  /**
+   * Fetch refund status from Cashfree
+   * @param orderId - Cashfree order ID (our order number)
+   * @param refundId - Merchant's refund ID
+   */
+  async getRefund(
+    orderId: string,
+    refundId: string
+  ): Promise<RefundStatusResult> {
+    this.ensureConfigured();
+
+    try {
+      const response = await this.cashfree!.PGOrderFetchRefund(orderId, refundId);
+      const data = response.data as any;
+
+      return {
+        success: true,
+        status: data.refund_status || 'UNKNOWN',
+        amount: data.refund_amount,
+        gatewayResponse: data,
+      };
+    } catch (error: any) {
+      console.error('Error fetching Cashfree refund:', error?.response?.data || error);
+      return { success: false };
+    }
+  }
+
+  /**
+   * Fetch all refunds for an order
+   * @param orderId - Cashfree order ID (our order number)
+   */
+  async getRefunds(
+    orderId: string
+  ): Promise<RefundsListResult> {
+    this.ensureConfigured();
+
+    try {
+      const response = await this.cashfree!.PGOrderFetchRefunds(orderId);
+      const data = response.data as any;
+
+      return {
+        success: true,
+        refunds: Array.isArray(data) ? data : [],
+        gatewayResponse: data,
+      };
+    } catch (error: any) {
+      console.error('Error fetching Cashfree refunds:', error?.response?.data || error);
+      return { success: false, refunds: [] };
     }
   }
 

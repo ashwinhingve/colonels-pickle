@@ -7,9 +7,38 @@ import PageContent from "@/models/PageContent"
 
 export const dynamic = "force-dynamic"
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+
 export const metadata: Metadata = {
   title: "Shipping Policy | Colonel's Pickle",
   description: "Shipping Policy for Colonel's Pickle. Fast, reliable delivery across India.",
+  alternates: {
+    canonical: `${SITE_URL}/shipping-policy`,
+  },
+  openGraph: {
+    title: "Shipping Policy | Colonel's Pickle",
+    description:
+      "Learn about Colonel's Pickle shipping options, costs, and delivery timelines across India.",
+    url: `${SITE_URL}/shipping-policy`,
+    type: 'website',
+    siteName: "Colonel's Pickle",
+    locale: 'en_IN',
+    images: [
+      {
+        url: `${SITE_URL}/logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "Colonel's Pickle — Shipping Policy",
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Shipping Policy | Colonel's Pickle",
+    description:
+      "Learn about Colonel's Pickle shipping options, costs, and delivery timelines across India.",
+    images: [`${SITE_URL}/logo.png`],
+  },
 }
 
 // Default hardcoded content - fallback if no published DB record

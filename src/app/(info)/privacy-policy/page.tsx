@@ -7,9 +7,38 @@ import PageContent from "@/models/PageContent"
 
 export const dynamic = "force-dynamic"
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+
 export const metadata: Metadata = {
   title: "Privacy Policy | Colonel's Pickle",
-  description: "Privacy Policy for Colonel's Pickle. Learn how we protect your data.",
+  description: "Privacy Policy for Colonel's Pickle. Learn how we protect your data and personal information.",
+  alternates: {
+    canonical: `${SITE_URL}/privacy-policy`,
+  },
+  openGraph: {
+    title: "Privacy Policy | Colonel's Pickle",
+    description:
+      "Learn how Colonel's Pickle protects your personal information and data privacy.",
+    url: `${SITE_URL}/privacy-policy`,
+    type: 'website',
+    siteName: "Colonel's Pickle",
+    locale: 'en_IN',
+    images: [
+      {
+        url: `${SITE_URL}/logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "Colonel's Pickle — Privacy Policy",
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Privacy Policy | Colonel's Pickle",
+    description:
+      "Learn how Colonel's Pickle protects your personal information and data privacy.",
+    images: [`${SITE_URL}/logo.png`],
+  },
 }
 
 // Default hardcoded content - fallback if no published DB record

@@ -4,10 +4,84 @@ import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { BRAND, CONTACT_EMAIL } from "@/lib/constants";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${SITE_URL}/#organization`,
+  name: "Colonel's Pickle",
+  alternateName: "Colonel's Pickle® by Ridhwika Agro Organics",
+  description:
+    'Authentic homemade pickles, gulkand and cold press oils — no preservatives, 24 whole spices, FSSAI certified, Jaipur.',
+  url: SITE_URL,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${SITE_URL}/logo.png`,
+    width: 512,
+    height: 512,
+  },
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Plot A-207, Block A, Vardhman Nagar, Gali No. 24, Ajmer Road',
+    addressLocality: 'Jaipur',
+    addressRegion: 'Rajasthan',
+    postalCode: '302019',
+    addressCountry: 'IN',
+  },
+  email: 'colonelspickle@proton.me',
+  telephone: '+91-9717243306',
+  priceRange: '₹250-₹1500',
+  hasCredential: {
+    '@type': 'EducationalOccupationalCredential',
+    name: 'FSSAI License',
+    credentialCategory: 'Food Safety License',
+    identifier: BRAND.fssai,
+  },
+  sameAs: [
+    'https://instagram.com/colonels.pickle',
+    'https://beacons.ai/colonelspickle',
+  ],
+};
+
+function safeJsonLd(data: object): string {
+  return JSON.stringify(data)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026');
+}
+
 export const metadata: Metadata = {
   title: "Our Story — Born from a Mother's Kitchen",
   description:
     "The story behind Colonel's Pickle — a heartfelt initiative by Lt Col Praveen Kumar Sharma's family. FSSAI certified, no preservatives, made in Jaipur.",
+  alternates: {
+    canonical: `${SITE_URL}/about`,
+  },
+  openGraph: {
+    title: "Our Story — Born from a Mother's Kitchen",
+    description:
+      'The story behind Colonel\'s Pickle — authentic homemade pickles made from Urmila Devi\'s time-tested recipes. FSSAI certified, no preservatives.',
+    url: `${SITE_URL}/about`,
+    type: 'website',
+    siteName: "Colonel's Pickle",
+    locale: 'en_IN',
+    images: [
+      {
+        url: `${SITE_URL}/logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "Colonel's Pickle — Our Story",
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Our Story — Born from a Mother's Kitchen",
+    description:
+      "The story behind Colonel's Pickle — authentic homemade pickles from a mother's kitchen.",
+    images: [`${SITE_URL}/logo.png`],
+  },
 };
 
 const PROMISES = [
@@ -30,6 +104,10 @@ const fullAddress = `${BRAND.address.line1}, ${BRAND.address.line2}, ${BRAND.add
 export default function AboutPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(organizationJsonLd) }}
+      />
       {/* 1. Hero */}
       <section
         className="relative flex min-h-[50vh] items-center justify-center overflow-hidden"

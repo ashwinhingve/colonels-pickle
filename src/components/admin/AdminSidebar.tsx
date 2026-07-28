@@ -17,6 +17,8 @@ import {
   BarChart2,
   Star,
   FileText,
+  AlertTriangle,
+  TrendingUp,
 } from 'lucide-react';
 
 interface NavItem {
@@ -30,6 +32,11 @@ const navigation: NavItem[] = [
     label: 'Dashboard',
     href: '/admin/dashboard',
     icon: LayoutDashboard,
+  },
+  {
+    label: 'Analytics',
+    href: '/admin/analytics',
+    icon: TrendingUp,
   },
   {
     label: 'Orders',
@@ -50,6 +57,11 @@ const navigation: NavItem[] = [
     label: 'Products',
     href: '/admin/products',
     icon: Package,
+  },
+  {
+    label: 'Inventory',
+    href: '/admin/inventory',
+    icon: AlertTriangle,
   },
   {
     label: 'Categories',

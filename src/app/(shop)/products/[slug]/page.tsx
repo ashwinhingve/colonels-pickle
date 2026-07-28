@@ -57,6 +57,12 @@ export async function generateMetadata({
   const description = product.seo?.metaDescription || product.description;
   const canonicalUrl = `${SITE_URL}/products/${product.slug}`;
 
+  // Determine OG image: prefer seo.ogImage, fallback to first product image, then logo
+  const ogImageUrl =
+    product.seo?.ogImage ||
+    product.images?.[0]?.url ||
+    `${SITE_URL}/logo.png`;
+
   return {
     title,
     description,
@@ -71,6 +77,20 @@ export async function generateMetadata({
       url: canonicalUrl,
       siteName: "Colonel's Pickle",
       locale: "en_IN",
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: product.name,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: product.seo?.metaTitle || product.name,
+      description,
+      images: [ogImageUrl],
     },
   };
 }
@@ -106,6 +126,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     name: product.name,
     description: product.description,
     sku: product.sku,
+    image: product.images?.[0]?.url || `${SITE_URL}/logo.png`,
     brand: { "@type": "Brand", name: "Colonel's Pickle" },
     offers: {
       "@type": "Offer",
@@ -119,6 +140,15 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
       itemCondition: "https://schema.org/NewCondition",
     },
   };
+
+  // Add aggregateRating if there are reviews
+  if (product.totalReviews && product.totalReviews > 0) {
+    productJsonLd.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: Math.min(product.averageRating || 0, 5),
+      reviewCount: product.totalReviews,
+    };
+  }
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",

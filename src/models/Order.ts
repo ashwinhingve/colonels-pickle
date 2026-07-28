@@ -45,6 +45,8 @@ export interface IOrder extends Document {
   refundedAt?: Date;
   refundAmount?: number;
   refundReason?: string;
+  refundId?: string;
+  refundStatus?: 'none' | 'initiated' | 'processed' | 'failed';
   cancelReason?: string;
   shipmentCreationFailed?: boolean;
   shipmentFailureReason?: string;
@@ -188,6 +190,14 @@ const OrderSchema = new Schema<IOrder>(
     },
     refundReason: {
       type: String,
+    },
+    refundId: {
+      type: String,
+    },
+    refundStatus: {
+      type: String,
+      enum: ['none', 'initiated', 'processed', 'failed'],
+      default: 'none',
     },
     cancelReason: {
       type: String,

@@ -100,6 +100,7 @@ export default async function AdminUsersPage({
         id: user._id.toString(),
         name: user.name || 'N/A',
         email: user.email,
+        phoneNumber: user.phoneNumber || '',
         role: user.role || 'client',
         image: user.image || null,
         orderCount,

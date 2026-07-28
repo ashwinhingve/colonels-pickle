@@ -11,12 +11,15 @@ import {
   ChevronRight,
   Shield,
   User,
+  X,
+  Loader2,
 } from 'lucide-react';
 
 interface UserData {
   id: string;
   name: string;
   email: string;
+  phoneNumber: string | null;
   role: string;
   image: string | null;
   orderCount: number;
@@ -48,6 +51,25 @@ export default function UsersTable({
   const [showFilters, setShowFilters] = useState(false);
   const [localSearch, setLocalSearch] = useState(filters.search);
   const [localFilters, setLocalFilters] = useState(filters);
+
+  // Notification state
+  const [notification, setNotification] = useState<{
+    type: 'success' | 'error';
+    message: string;
+  } | null>(null);
+
+  // Edit modal state
+  const [editingUser, setEditingUser] = useState<UserData | null>(null);
+  const [editFormData, setEditFormData] = useState<{
+    name: string;
+    phoneNumber: string;
+    role: string;
+  }>({ name: '', phoneNumber: '', role: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Current user ID (from URL/session) - set to null initially, client won't know their own ID
+  // The API will handle preventing self-role-change
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   const updateURL = (newFilters: Partial<Filters>, page = 1) => {
     const params = new URLSearchParams();
@@ -89,6 +111,122 @@ export default function UsersTable({
 
   const hasActiveFilters = filters.role || filters.search || filters.sortBy !== 'createdAt';
 
+  // Notification helpers
+  const showNotification = (type: 'success' | 'error', message: string) => {
+    setNotification({ type, message });
+    setTimeout(() => setNotification(null), 4000);
+  };
+
+  // Open edit modal
+  const openEditModal = (user: UserData) => {
+    setEditingUser(user);
+    setEditFormData({
+      name: user.name,
+      phoneNumber: user.phoneNumber || '',
+      role: user.role,
+    });
+  };
+
+  // Close edit modal
+  const closeEditModal = () => {
+    setEditingUser(null);
+    setEditFormData({ name: '', phoneNumber: '', role: '' });
+  };
+
+  // Handle edit form submission
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingUser) return;
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(`/api/admin/users/${editingUser.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editFormData),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        showNotification('error', error.error || 'Failed to update user');
+        setIsSubmitting(false);
+        return;
+      }
+
+      showNotification('success', 'User updated successfully');
+      closeEditModal();
+
+      // Refresh the page to get updated data
+      router.refresh();
+    } catch (error) {
+      console.error('Error updating user:', error);
+      showNotification('error', 'An error occurred while updating the user');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Handle role change from dropdown
+  const handleRoleChange = async (userId: string, newRole: string, currentRole: string) => {
+    if (newRole === currentRole) return;
+
+    try {
+      const response = await fetch(`/api/admin/users/${userId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role: newRole }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        showNotification('error', error.error || 'Failed to change role');
+        return;
+      }
+
+      showNotification('success', `Role changed to ${newRole} successfully`);
+      router.refresh();
+    } catch (error) {
+      console.error('Error changing role:', error);
+      showNotification('error', 'An error occurred while changing the role');
+    }
+  };
+
+  // Handle CSV export
+  const handleExport = async () => {
+    try {
+      const response = await fetch('/api/admin/users/export');
+      if (!response.ok) {
+        showNotification('error', 'Failed to export users');
+        return;
+      }
+
+      // Get filename from Content-Disposition header
+      const contentDisposition = response.headers.get('Content-Disposition');
+      let filename = 'users.csv';
+      if (contentDisposition) {
+        const match = contentDisposition.match(/filename="?([^"]+)"?/);
+        if (match) filename = match[1];
+      }
+
+      // Download the file
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      showNotification('success', 'Users exported successfully');
+    } catch (error) {
+      console.error('Error exporting users:', error);
+      showNotification('error', 'An error occurred while exporting users');
+    }
+  };
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('en-IN', {
@@ -99,9 +237,29 @@ export default function UsersTable({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-      {/* Search and Filter Bar */}
-      <div className="p-4 border-b border-gray-200 space-y-4">
+    <>
+      {/* Notification Banner */}
+      {notification && (
+        <div
+          className={`mb-4 p-4 rounded-lg flex items-center justify-between ${
+            notification.type === 'success'
+              ? 'bg-green-50 border border-green-200 text-green-800'
+              : 'bg-red-50 border border-red-200 text-red-800'
+          }`}
+        >
+          <span className="text-sm font-medium">{notification.message}</span>
+          <button
+            onClick={() => setNotification(null)}
+            className="text-current hover:opacity-70"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+        {/* Search and Filter Bar */}
+        <div className="p-4 border-b border-gray-200 space-y-4">
         <div className="flex items-center gap-4">
           {/* Search */}
           <form onSubmit={handleSearch} className="flex-1">
@@ -134,6 +292,28 @@ export default function UsersTable({
                 Active
               </span>
             )}
+          </button>
+
+          {/* Export Button */}
+          <button
+            type="button"
+            onClick={handleExport}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-amber-500"
+          >
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+            Export CSV
           </button>
         </div>
 
@@ -257,20 +437,18 @@ export default function UsersTable({
                     <div className="text-sm text-gray-900">{user.email}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full ${
+                    <select
+                      value={user.role}
+                      onChange={(e) => handleRoleChange(user.id, e.target.value, user.role)}
+                      className={`px-3 py-1 text-xs font-medium rounded-full border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500 ${
                         user.role === 'admin'
                           ? 'bg-purple-100 text-purple-700'
                           : 'bg-gray-100 text-gray-700'
                       }`}
                     >
-                      {user.role === 'admin' ? (
-                        <Shield className="w-3 h-3" />
-                      ) : (
-                        <User className="w-3 h-3" />
-                      )}
-                      {user.role}
-                    </span>
+                      <option value="client">Client</option>
+                      <option value="admin">Admin</option>
+                    </select>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">
@@ -288,10 +466,11 @@ export default function UsersTable({
                   <td className="px-6 py-4 whitespace-nowrap text-right">
                     <button
                       type="button"
+                      onClick={() => openEditModal(user)}
                       className="inline-flex items-center gap-1 text-sm font-medium text-amber-600 hover:text-amber-700"
                     >
                       <Eye className="w-4 h-4" />
-                      View
+                      Edit
                     </button>
                   </td>
                 </tr>
@@ -331,6 +510,96 @@ export default function UsersTable({
           </div>
         </div>
       )}
-    </div>
+      </div>
+
+      {/* Edit User Modal */}
+      {editingUser && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-900">Edit User</h2>
+              <button
+                onClick={closeEditModal}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <form onSubmit={handleEditSubmit} className="p-6 space-y-4">
+              {/* Name Field */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  value={editFormData.name}
+                  onChange={(e) =>
+                    setEditFormData({ ...editFormData, name: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  required
+                />
+              </div>
+
+              {/* Phone Number Field */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  value={editFormData.phoneNumber}
+                  onChange={(e) =>
+                    setEditFormData({ ...editFormData, phoneNumber: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+              </div>
+
+              {/* Role Field */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Role
+                </label>
+                <select
+                  value={editFormData.role}
+                  onChange={(e) =>
+                    setEditFormData({ ...editFormData, role: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                >
+                  <option value="client">Client</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+
+              {/* Modal Actions */}
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
+                <button
+                  type="button"
+                  onClick={closeEditModal}
+                  disabled={isSubmitting}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-cp-crimson text-white text-sm font-medium rounded-lg hover:bg-cp-crimson-dark disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
+                  {isSubmitting ? 'Saving...' : 'Save Changes'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
