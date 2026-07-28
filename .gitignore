@@ -38,3 +38,9 @@ next-env.d.ts
 .vercel
 .worktrees/
 *.bak
+
+# claude code local runtime
+.claude/scheduled_tasks.lock
+
+# playwright mcp screenshots
+.playwright-mcp/

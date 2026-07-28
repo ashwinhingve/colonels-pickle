@@ -33,7 +33,7 @@ function generateSKU(category: string, productName: string): string {
     .substring(0, 3)
     .toUpperCase();
   const timestamp = Date.now().toString(36).toUpperCase().substring(7);
-  return `TAPTI-${categoryPrefix}-${namePrefix}-${timestamp}`;
+  return `CP-${categoryPrefix}-${namePrefix}-${timestamp}`;
 }
 
 function getYouTubeEmbedUrl(url: string): string {
@@ -223,7 +223,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                   type="text"
                   value={formData.sku}
                   onChange={(e) => updateField('sku', e.target.value.toUpperCase())}
-                  placeholder="TAPTI-ORG-CHI-ABC123"
+                  placeholder="CP-ORG-CHI-ABC123"
                   required
                 />
               </div>

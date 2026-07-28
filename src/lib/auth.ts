@@ -16,11 +16,16 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   console.warn('Google OAuth credentials are not configured. Google sign-in will not work.');
 }
 
-// Admin email whitelist - only these emails get admin role
-const ADMIN_EMAILS = (process.env.ADMIN_EMAIL || 'ashwin.hingave123@gmail.com,ridhwika.agro.organics@gmail.com')
+// Admin email whitelist - only these emails get admin role.
+// Driven entirely by the ADMIN_EMAIL env var (comma-separated). No hardcoded default.
+const ADMIN_EMAILS = (process.env.ADMIN_EMAIL || '')
   .split(',')
   .map((e) => e.trim().toLowerCase())
   .filter(Boolean);
+
+if (ADMIN_EMAILS.length === 0) {
+  console.warn('[auth] ADMIN_EMAIL is not set — no accounts will be granted the admin role.');
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [

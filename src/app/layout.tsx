@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     description: "Authentic homemade pickles, gulkand & cold press oils. No preservatives, 24 whole spices, mother's recipe. FSSAI certified. Pan India delivery from Jaipur.",
     images: [
       {
-        url: "/images/logo.jpg",
+        url: "/logo.png",
         width: 1200,
         height: 630,
         alt: "Colonel's Pickle — Maa Ka Pyaar, Ghar Ka Achar",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Colonel's Pickle® — Maa Ka Pyaar, Ghar Ka Achar",
     description: "Authentic homemade pickles, gulkand & cold press oils. No preservatives, 24 whole spices, FSSAI certified. Pan India delivery from Jaipur.",
-    images: ["/images/logo.jpg"],
+    images: ["/logo.png"],
   },
   robots: {
     index: true,
@@ -72,7 +72,7 @@ const orgJsonLd = {
   "url": SITE_URL,
   "logo": {
     "@type": "ImageObject",
-    "url": `${SITE_URL}/images/logo.jpg`,
+    "url": `${SITE_URL}/logo.png`,
     "width": 512,
     "height": 512,
   },

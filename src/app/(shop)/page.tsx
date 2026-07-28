@@ -8,7 +8,9 @@ import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { FeaturedProducts } from "@/components/home/FeaturedProducts";
 import { OurStory } from "@/components/home/OurStory";
 import { PremiumIngredients } from "@/components/home/PremiumIngredients";
+import { ProcessSection } from "@/components/home/ProcessSection";
 import { CTABanner } from "@/components/home/CTABanner";
+import { WholesaleTeaser } from "@/components/home/WholesaleTeaser";
 
 export const metadata: Metadata = {
   title: "Colonel's Pickle® — Maa Ka Pyaar, Ghar Ka Achar",
@@ -22,11 +24,13 @@ export default function HomePage() {
     <>
       <HeroSection />
       <TrustBar />
-      <CategoryGrid />
       <FeaturedProducts />
-      <OurStory />
+      <CategoryGrid />
       <PremiumIngredients />
+      <ProcessSection />
+      <OurStory />
       <CTABanner />
+      <WholesaleTeaser />
     </>
   );
 }

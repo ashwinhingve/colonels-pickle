@@ -86,7 +86,7 @@ export default function ProductionSlidesPage() {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('folder', 'tapti/production');
+      formData.append('folder', 'cp/production');
 
       const res = await fetch('/api/admin/products/upload-image', {
         method: 'POST',

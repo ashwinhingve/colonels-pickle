@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: "Colonel's Pickle",
     images: [
       {
-        url: '/images/logo.jpg',
+        url: '/logo.png',
         width: 1200,
         height: 630,
         alt: "Colonel's Pickle — Shop All Products",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "Shop All Products | Colonel's Pickle",
     description:
       'Authentic homemade pickles, masalas and cold-press oils. No artificial preservatives.',
-    images: ['/images/logo.jpg'],
+    images: ['/logo.png'],
   },
 };
 

@@ -36,13 +36,15 @@ class DelhiveryService implements IShippingProvider {
       this.config = {
         apiKey: process.env.DELHIVERY_API_KEY.trim(),
         baseUrl: (process.env.DELHIVERY_BASE_URL || 'https://track.delhivery.com').trim(),
-        returnPincode: process.env.DELHIVERY_RETURN_PINCODE || '400001',
-        returnAddress: process.env.DELHIVERY_RETURN_ADDRESS || '',
-        returnCity: process.env.DELHIVERY_RETURN_CITY || 'Mumbai',
-        returnState: process.env.DELHIVERY_RETURN_STATE || 'Maharashtra',
+        returnPincode: process.env.DELHIVERY_RETURN_PINCODE || '302019',
+        returnAddress:
+          process.env.DELHIVERY_RETURN_ADDRESS ||
+          'Plot A-207, Block A, Vardhman Nagar, Gali No. 24, Ajmer Road',
+        returnCity: process.env.DELHIVERY_RETURN_CITY || 'Jaipur',
+        returnState: process.env.DELHIVERY_RETURN_STATE || 'Rajasthan',
         returnCountry: process.env.DELHIVERY_RETURN_COUNTRY || 'India',
         returnName: process.env.DELHIVERY_RETURN_NAME || 'Colonel\'s Pickle',
-        returnPhone: process.env.DELHIVERY_RETURN_PHONE || '9876543210',
+        returnPhone: process.env.DELHIVERY_RETURN_PHONE || '9717243306',
       };
 
       console.log('Delhivery service initialized successfully');
