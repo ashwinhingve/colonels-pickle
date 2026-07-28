@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Package } from 'lucide-react';
 
 interface OrderItem {
@@ -28,9 +29,11 @@ export default function OrderItemsDisplay({ items }: OrderItemsDisplayProps) {
             {/* Product Image */}
             <div className="flex-shrink-0">
               {item.image ? (
-                <img
+                <Image
                   src={item.image}
                   alt={item.productName}
+                  width={80}
+                  height={80}
                   className="w-20 h-20 object-cover rounded-lg border-2 border-gray-200"
                 />
               ) : (

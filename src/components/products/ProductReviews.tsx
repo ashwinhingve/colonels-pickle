@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { Star, ImagePlus, X, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -91,21 +91,7 @@ export default function ProductReviews({ productId, autoOpenReview }: ProductRev
   const [formError, setFormError] = useState<string | null>(null);
   const [formSuccess, setFormSuccess] = useState(false);
 
-  useEffect(() => {
-    fetchReviews();
-  }, [productId]);
-
-  // Auto-open form when arriving via review link (?review=1)
-  useEffect(() => {
-    if (autoOpenReview && session && !loading) {
-      setShowForm(true);
-      setTimeout(() => {
-        formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 300);
-    }
-  }, [autoOpenReview, session, loading]);
-
-  async function fetchReviews() {
+  const fetchReviews = useCallback(async () => {
     try {
       const res = await fetch(`/api/products/${productId}/reviews`);
       const data = await res.json();
@@ -118,7 +104,21 @@ export default function ProductReviews({ productId, autoOpenReview }: ProductRev
     } finally {
       setLoading(false);
     }
-  }
+  }, [productId]);
+
+  useEffect(() => {
+    fetchReviews();
+  }, [fetchReviews]);
+
+  // Auto-open form when arriving via review link (?review=1)
+  useEffect(() => {
+    if (autoOpenReview && session && !loading) {
+      setShowForm(true);
+      setTimeout(() => {
+        formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+  }, [autoOpenReview, session, loading]);
 
   async function handleImageSelect(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files || []);

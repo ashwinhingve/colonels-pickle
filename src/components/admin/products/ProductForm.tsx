@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import ImageUploader from './ImageUploader';
@@ -801,11 +802,12 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 placeholder="https://res.cloudinary.com/..."
               />
               {formData.seo?.ogImage && (
-                <img
+                <Image
                   src={formData.seo.ogImage}
                   alt="OG image preview"
+                  width={100}
+                  height={80}
                   className="mt-2 h-20 rounded border border-gray-200 object-cover"
-                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                 />
               )}
             </div>

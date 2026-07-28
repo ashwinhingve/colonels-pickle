@@ -18,11 +18,11 @@ const CATEGORIES = [
     href: "/products?category=masala",
   },
   {
-    title: "Cold Press Oils",
-    subtitle: "4 pure oils",
-    icon: "🫙",
+    title: "Gulkand & More",
+    subtitle: "Rose preserve & snacks",
+    icon: "🌹",
     bg: "#78350F",
-    href: "/products?category=oils",
+    href: "/products?category=organic",
   },
   {
     title: "Wholesale Orders",

@@ -6,14 +6,15 @@ import { BRAND, CONTACT_EMAIL } from "@/lib/constants";
 const PRODUCT_LINKS = [
   { href: "/products", label: "All Products" },
   { href: "/products?category=achaar", label: "Achaar Collection" },
-  { href: "/products?category=cold-press-oils", label: "Cold Press Oils" },
-  { href: "/products?category=gulkand", label: "Gulkand & Preserves" },
+  { href: "/products?category=masala", label: "Achaar Masale" },
+  { href: "/products?category=organic", label: "Gulkand & Preserves" },
   { href: "/wholesale", label: "Wholesale Orders" },
 ];
 
 const COMPANY_LINKS = [
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact Us" },
+  { href: "/faq", label: "FAQ" },
   { href: "/privacy-policy", label: "Privacy Policy" },
   { href: "/terms-and-conditions", label: "Terms & Conditions" },
   { href: "/refund-policy", label: "Refund Policy" },

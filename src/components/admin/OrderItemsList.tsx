@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface OrderItem {
   productId: string;
   productName: string;
@@ -26,9 +28,11 @@ export default function OrderItemsList({ items }: OrderItemsListProps) {
             {/* Product Image */}
             <div className="flex-shrink-0">
               {item.image ? (
-                <img
+                <Image
                   src={item.image}
                   alt={item.productName}
+                  width={80}
+                  height={80}
                   className="w-20 h-20 object-cover rounded-lg border border-gray-200"
                 />
               ) : (

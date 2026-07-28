@@ -18,7 +18,7 @@ export const BRAND = {
     pin: "302019",
   },
   phones: ["9717243306", "9416845689", "9350406289"],
-  email: "ridhwika.agro.organics@gmail.com",
+  email: "colonelspickle@proton.me",
   instagram: {
     handle: "@colonels.pickle",
     url: "https://instagram.com/colonels.pickle",
@@ -98,7 +98,7 @@ export const SOCIAL_LINKS = {
 };
 
 // Contact Info
-export const CONTACT_EMAIL = "ridhwika.agro.organics@gmail.com";
+export const CONTACT_EMAIL = "colonelspickle@proton.me";
 export const CONTACT_PHONE = "+91-9717243306";
 
 // Admin & storage — env-driven (first address in ADMIN_EMAIL); business email as safe fallback

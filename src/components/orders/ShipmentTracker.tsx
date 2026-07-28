@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface Scan {
   status: string;
@@ -33,7 +33,7 @@ export default function ShipmentTracker({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchTracking = async () => {
+  const fetchTracking = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -52,7 +52,7 @@ export default function ShipmentTracker({
     } finally {
       setLoading(false);
     }
-  };
+  }, [waybill]);
 
   useEffect(() => {
     fetchTracking();
@@ -61,7 +61,7 @@ export default function ShipmentTracker({
       const interval = setInterval(fetchTracking, refreshInterval);
       return () => clearInterval(interval);
     }
-  }, [waybill, autoRefresh, refreshInterval]);
+  }, [waybill, autoRefresh, refreshInterval, fetchTracking]);
 
   const getStatusColor = (status: string) => {
     const lowerStatus = status.toLowerCase();

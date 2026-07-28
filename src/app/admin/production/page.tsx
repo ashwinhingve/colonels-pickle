@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import {
   Plus,
   Trash2,
@@ -408,9 +409,11 @@ export default function ProductionSlidesPage() {
               )}
               {form.src && form.type === 'image' && (
                 <div className="mt-2">
-                  <img
+                  <Image
                     src={form.src}
                     alt="Preview"
+                    width={200}
+                    height={128}
                     className="h-32 rounded-lg object-cover"
                   />
                 </div>
@@ -521,9 +524,11 @@ export default function ProductionSlidesPage() {
                 {/* Thumbnail */}
                 <div className="w-24 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                   {slide.type === 'image' ? (
-                    <img
+                    <Image
                       src={slide.src}
                       alt={slide.title}
+                      width={96}
+                      height={64}
                       className="w-full h-full object-cover"
                     />
                   ) : (

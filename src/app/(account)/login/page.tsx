@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { getSession, signIn, useSession } from "next-auth/react"
 import { AnimatedSection } from "@/components/shared/AnimatedSection"
@@ -33,7 +33,7 @@ export default function LoginPage() {
   const [mobileOtp, setMobileOtp] = useState("")
   const [mobileCooldown, setMobileCooldown] = useState(0)
 
-  const getRedirectPath = (role?: string | null) => {
+  const getRedirectPath = useCallback((role?: string | null) => {
     const redirect = searchParams.get("redirect")
 
     if (redirect) {
@@ -51,7 +51,7 @@ export default function LoginPage() {
     }
 
     return role === "admin" ? "/admin/dashboard" : "/orders"
-  }
+  }, [searchParams])
 
   const completeSignIn = async () => {
     const updatedSession = await getSession()
@@ -64,7 +64,7 @@ export default function LoginPage() {
     if (status === 'authenticated' && session?.user) {
       router.replace(getRedirectPath(session.user.role))
     }
-  }, [status, session, router, searchParams])
+  }, [status, session, router, getRedirectPath])
 
   // Cooldown timers
   useEffect(() => {

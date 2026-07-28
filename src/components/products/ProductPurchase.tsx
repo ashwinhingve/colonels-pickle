@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/common/Badge";
 import { useCartStore } from "@/store/useCartStore";
+import { WishlistButton } from "@/components/account/WishlistButton";
 import { BRAND } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import type { ProductTheme } from "@/lib/productTheme";
@@ -124,6 +125,15 @@ export function ProductPurchase({ product, theme }: ProductPurchaseProps) {
         >
           Buy Now
         </button>
+        {product?._id ? (
+          <WishlistButton
+            productId={product._id}
+            variant="button"
+            showLabel
+            className="w-full justify-center py-3.5 text-sm font-bold uppercase tracking-wide"
+            ariaLabel="Save to wishlist"
+          />
+        ) : null}
       </div>
 
       <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-sans text-xs text-cp-text-muted">

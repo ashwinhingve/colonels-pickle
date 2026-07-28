@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, use, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, AlertCircle, CheckCircle, Loader2 } from 'lucide-react';
 import Link from 'next/link';
@@ -38,15 +39,7 @@ export default function ReturnRequestPage({
     { productId: string; quantity: number; returnReason?: string }[]
   >([]);
 
-  useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/login?redirect=/orders/' + orderNumber + '/return');
-    } else if (status === 'authenticated') {
-      fetchOrderDetails();
-    }
-  }, [status]);
-
-  async function fetchOrderDetails() {
+  const fetchOrderDetails = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await fetch(`/api/orders/${orderNumber}`);
@@ -70,7 +63,15 @@ export default function ReturnRequestPage({
     } finally {
       setIsLoading(false);
     }
-  }
+  }, [orderNumber]);
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/login?redirect=/orders/' + orderNumber + '/return');
+    } else if (status === 'authenticated') {
+      fetchOrderDetails();
+    }
+  }, [status, fetchOrderDetails, orderNumber, router]);
 
   const handleItemToggle = (productId: string, quantity: number) => {
     const exists = selectedItems.find((item) => item.productId === productId);
@@ -264,9 +265,11 @@ export default function ReturnRequestPage({
                         className="w-5 h-5 text-amber-600 rounded focus:ring-amber-500"
                       />
                       {item.image && (
-                        <img
+                        <Image
                           src={item.image}
                           alt={item.productName}
+                          width={64}
+                          height={64}
                           className="w-16 h-16 object-cover rounded-lg"
                         />
                       )}

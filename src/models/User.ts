@@ -24,10 +24,9 @@ const UserSchema = new Schema<IUser>(
   {
     email: {
       type: String,
-      unique: true,
-      sparse: true,
       lowercase: true,
       trim: true,
+      // unique + sparse index declared explicitly below (avoids duplicate-index warning)
     },
     password: {
       type: String,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -55,15 +55,7 @@ export default function OrdersPage() {
     totalOrders: 0,
   });
 
-  useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/login?redirect=/orders');
-    } else if (status === 'authenticated') {
-      fetchOrders();
-    }
-  }, [status]);
-
-  async function fetchOrders(page = 1) {
+  const fetchOrders = useCallback(async (page = 1) => {
     setIsLoading(true);
     try {
       const params = new URLSearchParams();
@@ -92,13 +84,21 @@ export default function OrdersPage() {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, [filter, searchQuery, dateFrom, dateTo]);
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/login?redirect=/orders');
+    } else if (status === 'authenticated') {
+      fetchOrders();
+    }
+  }, [status, router, fetchOrders]);
 
   useEffect(() => {
     if (status === 'authenticated') {
       fetchOrders(1);
     }
-  }, [filter, searchQuery, dateFrom, dateTo]);
+  }, [filter, searchQuery, dateFrom, dateTo, status, fetchOrders]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

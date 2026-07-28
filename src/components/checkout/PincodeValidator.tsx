@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface PincodeValidatorProps {
   value: string;
@@ -18,50 +18,50 @@ export default function PincodeValidator({
   const [estimatedDays, setEstimatedDays] = useState<number | undefined>();
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const checkServiceability = async () => {
-      // Reset states
-      setServiceable(null);
-      setEstimatedDays(undefined);
-      setError(null);
+  const checkServiceability = useCallback(async () => {
+    // Reset states
+    setServiceable(null);
+    setEstimatedDays(undefined);
+    setError(null);
 
-      // Validate PIN code format
-      const cleanPincode = value.replace(/\D/g, '');
-      if (cleanPincode.length !== 6) {
-        if (value.length > 0) {
-          setError('PIN code must be 6 digits');
-          onValidationChange?.(false);
-        }
-        return;
-      }
-
-      // Check serviceability with API
-      setChecking(true);
-
-      try {
-        const response = await fetch(
-          `/api/shipping/check-serviceability?pincode=${cleanPincode}`
-        );
-        const data = await response.json();
-
-        if (data.serviceable) {
-          setServiceable(true);
-          setEstimatedDays(data.estimatedDays);
-          onValidationChange?.(true, data.estimatedDays);
-        } else {
-          setServiceable(false);
-          setError(data.error || 'Delivery not available to this PIN code');
-          onValidationChange?.(false);
-        }
-      } catch (err) {
-        console.error('Error checking serviceability:', err);
-        setError('Failed to verify PIN code');
+    // Validate PIN code format
+    const cleanPincode = value.replace(/\D/g, '');
+    if (cleanPincode.length !== 6) {
+      if (value.length > 0) {
+        setError('PIN code must be 6 digits');
         onValidationChange?.(false);
-      } finally {
-        setChecking(false);
       }
-    };
+      return;
+    }
 
+    // Check serviceability with API
+    setChecking(true);
+
+    try {
+      const response = await fetch(
+        `/api/shipping/check-serviceability?pincode=${cleanPincode}`
+      );
+      const data = await response.json();
+
+      if (data.serviceable) {
+        setServiceable(true);
+        setEstimatedDays(data.estimatedDays);
+        onValidationChange?.(true, data.estimatedDays);
+      } else {
+        setServiceable(false);
+        setError(data.error || 'Delivery not available to this PIN code');
+        onValidationChange?.(false);
+      }
+    } catch (err) {
+      console.error('Error checking serviceability:', err);
+      setError('Failed to verify PIN code');
+      onValidationChange?.(false);
+    } finally {
+      setChecking(false);
+    }
+  }, [value, onValidationChange]);
+
+  useEffect(() => {
     // Debounce the API call
     const timeoutId = setTimeout(() => {
       if (value) {
@@ -70,7 +70,7 @@ export default function PincodeValidator({
     }, 500);
 
     return () => clearTimeout(timeoutId);
-  }, [value]);
+  }, [value, checkServiceability]);
 
   if (!value || value.length === 0) {
     return null;
