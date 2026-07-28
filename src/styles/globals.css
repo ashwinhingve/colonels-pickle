@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Mukta:wght@300;400;500;600;700&display=swap');
+/* Google Fonts moved to a preconnected <link> in the root layout <head>
+   for parallel, earlier-discovered loading (avoids the render-blocking
+   CSS @import chain). Font-family fallbacks in tailwind.config keep the
+   UI intact if the stylesheet is slow/unreachable. */
 @import "tailwindcss";
 
 @plugin "@tailwindcss/typography";
