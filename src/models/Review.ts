@@ -11,6 +11,10 @@ export interface IReview extends Document {
   isApproved: boolean;
   helpfulCount: number;
   images?: string[];
+  adminReply?: string;
+  adminReplyAt?: Date;
+  adminId?: mongoose.Types.ObjectId;
+  rejectionReason?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -58,6 +62,21 @@ const ReviewSchema = new Schema<IReview>(
     images: {
       type: [String],
       default: [],
+    },
+    adminReply: {
+      type: String,
+      trim: true,
+    },
+    adminReplyAt: {
+      type: Date,
+    },
+    adminId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    rejectionReason: {
+      type: String,
+      trim: true,
     },
   },
   {

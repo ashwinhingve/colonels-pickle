@@ -51,6 +51,8 @@ export async function GET(
       isVerifiedPurchase: r.isVerifiedPurchase,
       helpfulCount: r.helpfulCount,
       images: r.images || [],
+      adminReply: r.adminReply || undefined,
+      adminReplyAt: r.adminReplyAt ? r.adminReplyAt.toISOString() : undefined,
       createdAt: r.createdAt.toISOString(),
     }));
 
@@ -132,7 +134,7 @@ export async function POST(
       productId,
     });
 
-    // Create review (auto-approved for now)
+    // Create review: auto-approve verified purchases, others start pending
     const review = await Review.create({
       productId,
       userId: session.user.id,
@@ -140,7 +142,7 @@ export async function POST(
       title: title?.trim() || '',
       comment: comment.trim(),
       isVerifiedPurchase: !!hasPurchased,
-      isApproved: true,
+      isApproved: !!hasPurchased,
       images: reviewImages,
     });
 

@@ -15,6 +15,8 @@ interface Review {
   isVerifiedPurchase: boolean;
   helpfulCount: number;
   images: string[];
+  adminReply?: string;
+  adminReplyAt?: string;
   createdAt: string;
 }
 
@@ -495,6 +497,16 @@ export default function ProductReviews({ productId, autoOpenReview }: ProductRev
                 </div>
               </div>
               <p className="text-sm text-gray-700 mt-2">{review.comment}</p>
+
+              {/* Admin Reply */}
+              {review.adminReply && (
+                <div className="mt-3 bg-cp-cream border border-cp-saffron rounded-lg p-3">
+                  <p className="text-xs font-semibold text-cp-crimson mb-1">
+                    Response from Colonel&apos;s Pickle
+                  </p>
+                  <p className="text-sm text-gray-700">{review.adminReply}</p>
+                </div>
+              )}
 
               {/* Review images */}
               {review.images && review.images.length > 0 && (

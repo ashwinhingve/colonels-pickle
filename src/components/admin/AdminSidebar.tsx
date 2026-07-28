@@ -15,6 +15,8 @@ import {
   UserCheck,
   TicketPercent,
   BarChart2,
+  Star,
+  FileText,
 } from 'lucide-react';
 
 interface NavItem {
@@ -70,6 +72,11 @@ const navigation: NavItem[] = [
     icon: TicketPercent,
   },
   {
+    label: 'Reviews',
+    href: '/admin/reviews',
+    icon: Star,
+  },
+  {
     label: 'Users',
     href: '/admin/users',
     icon: Users,
@@ -78,6 +85,11 @@ const navigation: NavItem[] = [
     label: 'Site Settings',
     href: '/admin/settings',
     icon: Settings,
+  },
+  {
+    label: 'Content',
+    href: '/admin/content',
+    icon: FileText,
   },
   {
     label: 'Marketing',

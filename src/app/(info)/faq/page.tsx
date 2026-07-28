@@ -2,12 +2,18 @@ import type { Metadata } from "next";
 import { FAQAccordion, type FAQItem } from "@/components/shared/FAQAccordion";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { BRAND, WHATSAPP_URL, FREE_DELIVERY_THRESHOLD } from "@/lib/constants";
+import { connectDB } from "@/lib/mongodb";
+import Faq from "@/models/Faq";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "FAQ — Frequently Asked Questions | Colonel's Pickle",
   description:
     "Answers to common questions about Colonel's Pickle products, shipping, payment, returns, and wholesale. FSSAI certified, no artificial preservatives.",
 };
+
+// ──── Fallback Inline FAQs (used if database has no active FAQs) ────
 
 const FAQ_PRODUCTS: FAQItem[] = [
   {
@@ -200,7 +206,72 @@ const generateFAQSchema = () => {
   };
 };
 
-export default function FAQPage() {
+async function fetchDbFaqs() {
+  try {
+    await connectDB();
+    const faqs = await Faq.find({ isActive: true })
+      .sort({ category: 1, order: 1 })
+      .lean();
+    return faqs;
+  } catch (error) {
+    console.error('Error fetching FAQs from DB:', error);
+    return null;
+  }
+}
+
+export default async function FAQPage() {
+  // Fetch FAQs from database; fallback to inline arrays if none found
+  const dbFaqs = await fetchDbFaqs();
+
+  let faqs: FAQItem[] = [];
+
+  if (dbFaqs && dbFaqs.length > 0) {
+    // Group database FAQs by category
+    const categorizedFaqs = dbFaqs.reduce(
+      (acc: Record<string, FAQItem[]>, faq: any) => {
+        if (!acc[faq.category]) acc[faq.category] = [];
+        acc[faq.category].push({
+          question: faq.question,
+          answer: faq.answer,
+        });
+        return acc;
+      },
+      {}
+    );
+
+    // Convert to flat array (schema expects flat array with sections)
+    faqs = dbFaqs.map((faq: any) => ({
+      question: faq.question,
+      answer: faq.answer,
+    }));
+  } else {
+    // Use fallback inline FAQs
+    faqs = ALL_FAQS;
+  }
+
+  // Group FAQs by category for section rendering
+  const faqsByCategory = (dbFaqs || ALL_FAQS).reduce(
+    (acc: Record<string, FAQItem[]>, faq: any) => {
+      const cat = faq.category || 'General';
+      if (!acc[cat]) acc[cat] = [];
+      acc[cat].push({
+        question: faq.question,
+        answer: faq.answer,
+      });
+      return acc;
+    },
+    {}
+  );
+
+  const categories = [
+    { key: 'PRODUCTS & INGREDIENTS', label: 'Know Your Pickle' },
+    { key: 'ORDERS & PAYMENT', label: 'Placing Your Order' },
+    { key: 'SHIPPING & DELIVERY', label: 'Getting Your Pickles to You' },
+    { key: 'RETURNS & REPLACEMENTS', label: 'Peace of Mind Guaranteed' },
+    { key: 'WHOLESALE & B2B', label: 'Partner With Us' },
+    { key: 'GENERAL', label: 'About Us & Support' },
+  ];
+
   return (
     <>
       {/* JSON-LD Structured Data */}
@@ -222,97 +293,32 @@ export default function FAQPage() {
         </div>
       </section>
 
-      {/* 2. Products & Ingredients */}
-      <section className="bg-white py-16 md:py-20">
-        <div className="mx-auto max-w-4xl px-4">
-          <div className="mb-10">
-            <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-crimson">
-              PRODUCTS & INGREDIENTS
-            </p>
-            <h3 className="mt-2 font-display text-2xl font-extrabold text-cp-text md:text-3xl">
-              Know Your Pickle
-            </h3>
-          </div>
-          <FAQAccordion items={FAQ_PRODUCTS} />
-        </div>
-      </section>
+      {/* Dynamic Sections */}
+      {categories.map((cat, idx) => {
+        const categoryFaqs = faqsByCategory[cat.key] || [];
+        if (categoryFaqs.length === 0) return null;
 
-      {/* 3. Orders & Payment */}
-      <section className="bg-cp-cream py-16 md:py-20">
-        <div className="mx-auto max-w-4xl px-4">
-          <div className="mb-10">
-            <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-crimson">
-              ORDERS & PAYMENT
-            </p>
-            <h3 className="mt-2 font-display text-2xl font-extrabold text-cp-text md:text-3xl">
-              Placing Your Order
-            </h3>
-          </div>
-          <FAQAccordion items={FAQ_ORDERS} />
-        </div>
-      </section>
+        const bgColor = idx % 2 === 0 ? 'bg-white' : 'bg-cp-cream';
+        const eyebrowText = cat.key.replace(/ & /g, ' & ').toUpperCase();
 
-      {/* 4. Shipping & Delivery */}
-      <section className="bg-white py-16 md:py-20">
-        <div className="mx-auto max-w-4xl px-4">
-          <div className="mb-10">
-            <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-crimson">
-              SHIPPING & DELIVERY
-            </p>
-            <h3 className="mt-2 font-display text-2xl font-extrabold text-cp-text md:text-3xl">
-              Getting Your Pickles to You
-            </h3>
-          </div>
-          <FAQAccordion items={FAQ_SHIPPING} />
-        </div>
-      </section>
+        return (
+          <section key={cat.key} className={`${bgColor} py-16 md:py-20`}>
+            <div className="mx-auto max-w-4xl px-4">
+              <div className="mb-10">
+                <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-crimson">
+                  {eyebrowText}
+                </p>
+                <h3 className="mt-2 font-display text-2xl font-extrabold text-cp-text md:text-3xl">
+                  {cat.label}
+                </h3>
+              </div>
+              <FAQAccordion items={categoryFaqs} />
+            </div>
+          </section>
+        );
+      })}
 
-      {/* 5. Returns */}
-      <section className="bg-cp-cream py-16 md:py-20">
-        <div className="mx-auto max-w-4xl px-4">
-          <div className="mb-10">
-            <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-crimson">
-              RETURNS & REPLACEMENTS
-            </p>
-            <h3 className="mt-2 font-display text-2xl font-extrabold text-cp-text md:text-3xl">
-              Peace of Mind Guaranteed
-            </h3>
-          </div>
-          <FAQAccordion items={FAQ_RETURNS} />
-        </div>
-      </section>
-
-      {/* 6. Wholesale */}
-      <section className="bg-white py-16 md:py-20">
-        <div className="mx-auto max-w-4xl px-4">
-          <div className="mb-10">
-            <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-crimson">
-              WHOLESALE & B2B
-            </p>
-            <h3 className="mt-2 font-display text-2xl font-extrabold text-cp-text md:text-3xl">
-              Partner With Us
-            </h3>
-          </div>
-          <FAQAccordion items={FAQ_WHOLESALE} />
-        </div>
-      </section>
-
-      {/* 7. Other & Contact */}
-      <section className="bg-cp-cream py-16 md:py-20">
-        <div className="mx-auto max-w-4xl px-4">
-          <div className="mb-10">
-            <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-crimson">
-              GENERAL
-            </p>
-            <h3 className="mt-2 font-display text-2xl font-extrabold text-cp-text md:text-3xl">
-              About Us & Support
-            </h3>
-          </div>
-          <FAQAccordion items={FAQ_OTHER} />
-        </div>
-      </section>
-
-      {/* 8. CTA Section */}
+      {/* CTA Section */}
       <section className="bg-cp-crimson py-16 md:py-20">
         <div className="mx-auto max-w-4xl px-4 text-center text-white">
           <h3 className="font-display text-2xl font-extrabold md:text-3xl">

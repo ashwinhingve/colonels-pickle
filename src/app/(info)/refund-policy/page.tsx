@@ -1,10 +1,19 @@
-"use client"
-
 import React from "react"
+import { Metadata } from "next"
 import { AnimatedSection } from "@/components/shared/AnimatedSection"
 import { RefreshCcw, AlertCircle, PackageCheck, Phone, Mail, Camera } from "lucide-react"
+import { connectDB } from "@/lib/mongodb"
+import PageContent from "@/models/PageContent"
 
-export default function ReturnPolicyPage() {
+export const dynamic = "force-dynamic"
+
+export const metadata: Metadata = {
+  title: "Refund & Return Policy | Colonel's Pickle",
+  description: "Refund and Return Policy for Colonel's Pickle. Learn about our hassle-free replacements.",
+}
+
+// Default hardcoded content - fallback if no published DB record
+function DefaultContent() {
   return (
     <main>
       {/* Hero Section */}
@@ -183,6 +192,58 @@ export default function ReturnPolicyPage() {
           </AnimatedSection>
         </div>
       </section>
-    </main>
-  )
+      </main>
+    )
+  }
+
+async function fetchPageContent(): Promise<any> {
+  try {
+    await connectDB()
+    const page = await PageContent.findOne({
+      slug: 'refund-policy',
+      isPublished: true,
+    }).lean()
+    return page
+  } catch (error) {
+    console.error('Error fetching refund policy content:', error)
+    return null
+  }
+}
+
+export default async function ReturnPolicyPage() {
+  const pageContent = await fetchPageContent()
+
+  if (pageContent?.isPublished) {
+    return (
+      <main>
+        <section className="relative overflow-hidden bg-gradient-to-br from-amber-50 via-white to-red-50 py-20 md:py-32">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-4xl mx-auto">
+              <div className="w-20 h-20 bg-gradient-to-br from-amber-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <RefreshCcw className="w-10 h-10 text-white" />
+              </div>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gray-900">
+                {pageContent.title}
+              </h1>
+              {pageContent.subtitle && (
+                <p className="text-xl md:text-2xl text-gray-700 mb-4">{pageContent.subtitle}</p>
+              )}
+              <p className="text-base text-gray-600">Last Updated: {pageContent.lastUpdated}</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 md:py-24 bg-white">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <div
+              className="prose prose-sm max-w-none"
+              dangerouslySetInnerHTML={{ __html: pageContent.bodyHtml }}
+            />
+          </div>
+        </section>
+      </main>
+    )
+  }
+
+  return <DefaultContent />
 }
