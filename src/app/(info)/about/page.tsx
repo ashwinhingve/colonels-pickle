@@ -54,7 +54,7 @@ function safeJsonLd(data: object): string {
 export const metadata: Metadata = {
   title: "Our Story — Born from a Mother's Kitchen",
   description:
-    "The story behind Colonel's Pickle — a heartfelt initiative by Lt Col Praveen Kumar Sharma's family. FSSAI certified, no preservatives, made in Jaipur.",
+    "The story behind Colonel's Pickle — a heartfelt initiative by Col Praveen Kumar Sharma's family. FSSAI certified, no preservatives, made in Jaipur.",
   alternates: {
     canonical: `${SITE_URL}/about`,
   },
@@ -125,7 +125,7 @@ export default function AboutPage() {
             Born from a Mother&apos;s Kitchen
           </h1>
           <p className="mt-4 font-serif text-lg italic text-white/80">
-            A heartfelt initiative by Lt Col Praveen Kumar Sharma&apos;s family
+            A heartfelt initiative by Col Praveen Kumar Sharma&apos;s family
           </p>
         </div>
         <svg
@@ -163,10 +163,10 @@ export default function AboutPage() {
               />
               <div className="w-16 h-[2px] bg-cp-crimson mx-auto my-3" />
               <p className="font-display font-bold text-[18px] text-[#FCD34D]">
-                Lt Col Praveen Kumar Sharma
+                Col Praveen Kumar Sharma
               </p>
               <p className="mt-1 font-hindi text-[12px] text-white/60">
-                Lt Col, Indian Army · CPE ITARSI
+                Col, Indian Army · CPE ITARSI
               </p>
             </div>
             <div className="mt-6 rounded-xl border border-white/15 bg-white/8 p-6">

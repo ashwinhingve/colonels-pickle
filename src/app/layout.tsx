@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     default: "Colonel's Pickle® — Maa Ka Pyaar, Ghar Ka Achar | Homemade Pickles Jaipur",
     template: "%s | Colonel's Pickle",
   },
-  description: "Authentic homemade pickles by Lt Col Praveen Kumar Sharma's mother. No preservatives, 24 whole spices, cold press mustard oil. FSSAI certified. Pan India delivery from Jaipur.",
+  description: "Authentic homemade pickles by Col Praveen Kumar Sharma's mother. No preservatives, 24 whole spices, cold press mustard oil. FSSAI certified. Pan India delivery from Jaipur.",
   keywords: ["colonels pickle", "homemade pickle", "achaar", "ghar ka achar", "organic gulkand", "cold press mustard oil", "kachi ghani oil", "Rajasthani pickle", "no preservatives pickle", "FSSAI pickle", "Jaipur pickle", "Ridhwika Agro Organics", "buy pickle online India"],
   alternates: {
     canonical: SITE_URL,

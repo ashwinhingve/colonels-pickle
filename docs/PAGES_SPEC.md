@@ -17,7 +17,7 @@ Complete spec for every page. Build in the order listed.
 
 // Meta:
 title: "Colonel's Pickle® — Maa Ka Pyaar, Ghar Ka Achar | Homemade Pickles Jaipur"
-description: "Authentic homemade pickles by Lt Col Praveen Kumar Sharma's mother. No preservatives, 24 whole spices, cold press mustard oil. FSSAI certified. Pan India delivery from Jaipur."
+description: "Authentic homemade pickles by Col Praveen Kumar Sharma's mother. No preservatives, 24 whole spices, cold press mustard oil. FSSAI certified. Pan India delivery from Jaipur."
 ogImage: "/og-colonels-pickle.jpg"
 ```
 
@@ -91,7 +91,7 @@ LEFT:
 RIGHT:
   Eyebrow: "THE STORY BEHIND EVERY JAR"
   H2: "Born from a" italic-saffron "Mother's Kitchen"
-  Para 1: About Urmila Devi, Lt Col Praveen Kumar Sharma, soldiers missing home
+  Para 1: About Urmila Devi, Col Praveen Kumar Sharma, soldiers missing home
   Para 2: Ridhwika Agro Organics, women employment, Maa Ka Pyaar
   4 fact tiles grid: Women Empowerment | FSSAI | Zero Chemicals | Jaipur Location
 ```
@@ -283,7 +283,7 @@ Sections:
   1. Hero (dark): "A Mother's Love, In Every Jar" — full width crimson hero
   
   2. Story Narrative:
-     Large editorial text about Lt Col Praveen Kumar Sharma
+     Large editorial text about Col Praveen Kumar Sharma
      His mother Urmila Devi Roshan Lal
      Starting the venture for soldiers away from home
      Growing into Ridhwika Agro Organics

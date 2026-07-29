@@ -42,10 +42,10 @@ export function OurStory() {
             />
             <div className="w-16 h-[2px] bg-cp-crimson mx-auto my-3" />
             <p className="font-display font-bold text-[18px] text-[#FCD34D]">
-              Lt Col Praveen Kumar Sharma
+              Col Praveen Kumar Sharma
             </p>
             <p className="mt-1 font-hindi text-[12px] text-white/60">
-              Lt Col, Indian Army · CPE ITARSI
+              Col, Indian Army · CPE ITARSI
             </p>
           </div>
 
@@ -85,7 +85,7 @@ export function OurStory() {
           <p className="mt-5 font-serif text-[15px] leading-relaxed text-white/72">
             It began with Urmila Devi&apos;s kitchen — where every jar of achar
             was made the slow way, with sun-dried spices and cold-pressed
-            mustard oil. Her son, Lt Col Praveen Kumar Sharma, watched soldiers
+            mustard oil. Her son, Col Praveen Kumar Sharma, watched soldiers
             far from home miss exactly this taste: the comfort of ghar ka achar.
           </p>
           <p className="mt-4 font-serif text-[15px] leading-relaxed text-white/72">
