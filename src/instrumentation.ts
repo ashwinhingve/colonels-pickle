@@ -16,7 +16,7 @@ export async function register() {
   // Guard: only run on Node.js runtime (not edge runtime)
   if (process.env.NEXT_RUNTIME === 'edge') {
     return;
-  }
+  } 
 
   // Dynamic import to avoid bundling env-validation in client
   const { validateEnv, formatValidationReport } = await import(
