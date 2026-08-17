@@ -48,7 +48,7 @@ const FAQ_PRODUCTS: FAQItem[] = [
   {
     question: "What makes Colonel's Pickle different from other brands?",
     answer:
-      "Colonel's Pickle stands apart through our unwavering commitment to purity and tradition. We use absolutely NO artificial preservatives, colours, or flavours—ever. Our recipes are based on time-honoured family traditions passed down through generations. Every jar contains 24 whole spices sourced carefully, Kachi Ghani (wooden cold-press) mustard oil, rock salt, black salt, and premium Afghani asafoetida (hing) sourced at ₹35,000/kg. Every batch is FSSAI certified (License: 12223026002188) and prepared with the same love that goes into home cooking.",
+      "Colonel's Pickle stands apart through our unwavering commitment to purity and tradition. We use absolutely NO artificial preservatives, colours, flavours or vinegar—ever. Our recipes are based on time-honoured family traditions passed down through generations. Every jar contains 24 whole spices sourced carefully, Kachi Ghani (wooden cold-press) mustard oil, rock salt, black salt, and premium Afghani asafoetida (hing) sourced at ₹35,000/kg. Every batch is FSSAI licensed (License: 12226026000060) and prepared with the same love that goes into home cooking.",
   },
   {
     question: "Are the pickles completely free of artificial preservatives?",
@@ -78,7 +78,7 @@ const FAQ_PRODUCTS: FAQItem[] = [
   {
     question: "What is Afghani Hing (asafoetida) and why is it in your products?",
     answer:
-      "Afghani asafoetida (hing) is the finest quality hing available in the world, sourced from the mountains of Afghanistan. It imparts a distinctive, authentic flavour to Indian pickles and aids digestion. Our hing is sourced at premium rates (₹35,000/kg) to ensure the highest quality. It is a key ingredient in authentic Indian cooking and a hallmark of Colonel's Pickle's commitment to quality.",
+      "Afghani asafoetida (hing) is the finest quality hing available in the world, sourced from the mountains of Afghanistan. It imparts a distinctive, authentic flavour to Indian pickles and aids digestion. Our hing is sourced at premium rates (₹30,000/kg) to ensure the highest quality. It is a key ingredient in authentic Indian cooking and a hallmark of Colonel's Pickle's commitment to quality.",
   },
 ];
 
@@ -118,7 +118,7 @@ const FAQ_SHIPPING: FAQItem[] = [
   },
   {
     question: "What is the shipping cost?",
-    answer: `FREE shipping on orders above ₹${FREE_DELIVERY_THRESHOLD} (pan-India). For orders below ₹${FREE_DELIVERY_THRESHOLD}, a standard shipping charge of ₹49 applies. Additionally, customers in Jaipur get FREE delivery on orders above ₹1500, which supports our local community.`,
+    answer: `FREE shipping on orders above ₹${FREE_DELIVERY_THRESHOLD} (pan-India). For orders below ₹${FREE_DELIVERY_THRESHOLD}, a standard shipping charge of ₹49 applies. Our larger pack sizes make it easy to reach free delivery — a single 1kg jar or a couple of 500g jars will usually get you there.`,
   },
   {
     question: "How will I know my order has been shipped?",
@@ -195,12 +195,12 @@ const FAQ_OTHER: FAQItem[] = [
   {
     question: "Do you have a physical store in Jaipur?",
     answer:
-      "Yes! We're located in Jaipur at Plot A-207, Block A, Vardhman Nagar, Gali No. 24, Ajmer Road. Local customers are welcome to visit and meet our team. We offer free delivery on Jaipur orders above ₹1500. For directions, check Google Maps: https://maps.app.goo.gl/FCraoQErzuMnHLBz9",
+      "Yes! We're located in Jaipur at Plot A-207, Block A, Vardhman Nagar, Gali No. 24, Ajmer Road. Local customers are welcome to visit and meet our team. We offer free delivery, pan-India, on orders above ₹999. For directions, check Google Maps: https://maps.app.goo.gl/FCraoQErzuMnHLBz9",
   },
   {
     question: "Are there any certifications besides FSSAI?",
     answer:
-      "Yes! Colonel's Pickle is certified and registered with: (1) FSSAI (Food Safety & Standards Authority of India), (2) Udhyam Registration (Udyam Register for MSME enterprises), and (3) BNI (Business Network International—Vishwakarma Chapter, Jaipur). These certifications affirm our commitment to quality, legality, and ethical business practices.",
+      "Yes! Colonel's Pickle (Ridhwika Agro Organics) is fully licensed and registered with the Government of India: (1) FSSAI State License No. 12226026000060, (2) Udyam / MSME Registration UDYAM-RJ-17-0307560, (3) a Registered Trademark (No. 6202243, Class 29), and (4) GST Registration 08BFKPD8446R1ZM. These registrations affirm our commitment to quality, legality, and ethical business practices.",
   },
   {
     question: "Can I follow Colonel's Pickle on social media?",

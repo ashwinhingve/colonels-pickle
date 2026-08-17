@@ -37,7 +37,7 @@ const CATEGORIES = [
   shelfLife: "18 months from date of packing",
   storage: "Store in a dry, cool & clean place. Do not use wet spoon/utensils/bare hands.",
   certifications: ["FSSAI"],
-  fssaiNumber: "12223026002188",
+  fssaiNumber: "12226026000060",
   noPreservatives: true,
   noArtificialColor: true,
   noArtificialFlavour: true,

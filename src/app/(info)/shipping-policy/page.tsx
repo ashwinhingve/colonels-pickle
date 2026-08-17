@@ -100,7 +100,7 @@ function DefaultContent() {
             <AnimatedSection direction="up">
               <div className="bg-gradient-to-br from-amber-50 to-red-50 rounded-2xl p-8 border border-amber-100">
                 <p className="text-gray-700 leading-relaxed">
-                  We ship pan-India via our logistics partners. Estimated delivery: 3–7 business days. Free delivery on orders above ₹499. Jaipur local deliveries: Free on orders above ₹1500. Minimum order quantity: 6 jars of 100g or 2 jars of 250g of any variety.
+                  We ship pan-India via our logistics partners. Estimated delivery: 3–7 business days. Free delivery on all orders above ₹999. For orders below ₹999, a flat ₹49 shipping charge applies. Minimum order quantity: 6 jars of 100g or 2 jars of 250g of any variety.
                 </p>
               </div>
             </AnimatedSection>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Mail, Phone } from "lucide-react";
-import { BRAND, CONTACT_EMAIL } from "@/lib/constants";
+import { BRAND, CONTACT_EMAIL, REGISTRATIONS } from "@/lib/constants";
 
 const PRODUCT_LINKS = [
   { href: "/products", label: "All Products" },
@@ -43,7 +43,7 @@ export function Footer() {
                 className="object-contain"
               />
             </Link>
-            <p className="font-display mt-1 text-xl font-bold" style={{ color: "#FCD34D" }}>
+            <p className="font-display mt-1 text-xl font-bold" style={{ color: "#E4B94B" }}>
               Colonel&apos;s Pickle&reg;
             </p>
             <p className="font-hindi mt-1 text-sm text-white/60">
@@ -159,27 +159,35 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Certifications */}
-        <div className="mt-10 flex flex-wrap gap-3 border-t border-white/10 pt-8">
-          {BRAND.certifications.map((cert) => (
-            <span
-              key={cert}
-              className="rounded-full border border-white/20 px-3 py-1 text-xs font-medium text-white/70"
-            >
-              {cert} Certified
-            </span>
-          ))}
-          <span className="rounded-full border border-white/20 px-3 py-1 text-xs font-medium text-white/70">
-            FSSAI No: {BRAND.fssai}
-          </span>
+        {/* Verified & Registered */}
+        <div className="mt-10 border-t border-white/10 pt-8">
+          <p className="mb-4 font-sans text-xs font-bold uppercase tracking-widest text-cp-saffron-muted">
+            Verified &amp; Registered · Govt. of India
+          </p>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {REGISTRATIONS.map((r) => (
+              <div
+                key={r.key}
+                className="rounded-lg border border-white/15 bg-white/[0.04] px-3 py-2.5"
+              >
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-white/85">
+                  <span aria-hidden>{r.icon}</span>
+                  {r.label}
+                </div>
+                <p className="mt-1 break-all font-mono text-[11px] text-white/55">
+                  {r.number}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Bottom bar */}
         <div className="font-hindi mt-8 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-8 text-xs text-white/35 md:flex-row">
           <p>
-            &copy; 2025 Colonel&apos;s Pickle&reg; by Ridhwika Agro Organics. All rights reserved.
+            &copy; 2026 Colonel&apos;s Pickle&reg; by Ridhwika Agro Organics. All rights reserved.
           </p>
-          <p>FSSAI: 12223026002188</p>
+          <p>FSSAI: {BRAND.fssai}</p>
           <p>Crafted with a mother&apos;s love &middot; Pan India Delivery</p>
         </div>
       </div>

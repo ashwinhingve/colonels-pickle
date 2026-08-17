@@ -4,7 +4,7 @@ const TRUST_ITEMS = [
   { icon: "⭐", title: "FSSAI Certified", sub: "Safe & trusted" },
   { icon: "🧂", title: "Rock & Black Salt", sub: "No table salt used" },
   { icon: "🌿", title: "24 Whole Spices", sub: "Sun-dried & freshly ground" },
-  { icon: "💎", title: "Afghani Hing", sub: "Premium ₹35,000/kg" },
+  { icon: "💎", title: "Afghani Hing", sub: "Premium ₹30,000/kg" },
 ];
 
 export function TrustBar() {

@@ -23,7 +23,7 @@ export async function GET() {
         announcementBanner: {
           enabled: true,
           announcements: [
-            { text: 'Free Shipping Above ₹499', emoji: '🚚', isActive: true },
+            { text: 'Free Shipping Above ₹999', emoji: '🚚', isActive: true },
             { text: 'Boost Your Daily Nutrition with COLONEL\'S PICKLE', emoji: '✨', isActive: true },
           ],
         },

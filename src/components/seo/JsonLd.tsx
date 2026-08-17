@@ -129,7 +129,7 @@ export function buildOrganizationSchema(
       '@type': 'EducationalOccupationalCredential',
       name: 'FSSAI License',
       credentialCategory: 'Food Safety License',
-      identifier: '12223026002188',
+      identifier: '12226026000060',
     },
     sameAs: [
       'https://instagram.com/colonels.pickle',

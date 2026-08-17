@@ -15,7 +15,7 @@ const BENEFITS = [
   { icon: "📅", title: "Monthly Credit Basis", desc: "Stock now, pay later — flexible monthly credit." },
   { icon: "🚚", title: "Free Transportation", desc: "Delivery cost borne entirely by us." },
   { icon: "📦", title: "Bulk Order Discounts", desc: `${OFFERS.bulk1kg}; ${OFFERS.bulk5kg}.` },
-  { icon: "🏙️", title: "Jaipur Local", desc: OFFERS.jaipurFreeDelivery },
+  { icon: "🚚", title: "Free Delivery", desc: OFFERS.freeDelivery },
 ];
 
 export default function WholesalePage() {

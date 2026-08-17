@@ -51,7 +51,7 @@ export function ProductPurchase({ product, theme }: ProductPurchaseProps) {
         {theme.badge ? (
           <Badge
             variant="product-badge"
-            style={{ backgroundColor: theme.badgeColor || "#B91C1C" }}
+            style={{ backgroundColor: theme.badgeColor || "#4B5D2A" }}
           >
             {theme.badge}
           </Badge>

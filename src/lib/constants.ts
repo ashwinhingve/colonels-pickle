@@ -9,7 +9,7 @@ export const BRAND = {
   nameFull: "Colonel's Pickle® by Ridhwika Agro Organics",
   tagline: "Maa Ka Pyaar, Ghar Ka Achar",
   taglineHindi: "माँ का प्यार, घर का अचार",
-  fssai: "12223026002188",
+  fssai: "12226026000060",
   address: {
     line1: "Plot A-207, Block A, Vardhman Nagar",
     line2: "Gali No. 24, Ajmer Road",
@@ -27,18 +27,58 @@ export const BRAND = {
     beacons: "https://beacons.ai/colonelspickle",
     gmaps: "https://maps.app.goo.gl/FCraoQErzuMnHLBz9",
   },
-  certifications: ["FSSAI", "Udhyam", "BNI"],
+  certifications: ["FSSAI", "Udyam", "Trademark", "GST"],
   usp: [
     "No Artificial Preservatives",
     "No Artificial Colours or Flavours",
     "24 Exotic Whole Spices",
     "Kachi Ghani Cold Press Mustard Oil",
     "Rock Salt & Black Salt Only",
-    "Afghani Hing (₹35,000/kg)",
+    "Afghani Hing (₹30,000/kg)",
     "Traditional Mother's Recipe",
     "FSSAI Certified",
   ],
 } as const;
+
+/**
+ * Official government registrations — verified against the client's certificate PDFs.
+ * Displayed in the footer + the homepage "Verified Authentic" trust section so
+ * customers can independently confirm the brand's legitimacy.
+ */
+export const REGISTRATIONS = [
+  {
+    key: "fssai",
+    icon: "🛡️",
+    label: "FSSAI Licensed",
+    fullName: "Food Safety & Standards Authority of India",
+    number: "12226026000060",
+    detail: "State License · valid till 12 Jan 2027",
+  },
+  {
+    key: "udyam",
+    icon: "🏛️",
+    label: "Udyam Registered",
+    fullName: "Ministry of MSME · Udyam Registration",
+    number: "UDYAM-RJ-17-0307560",
+    detail: "Registered Micro Enterprise (Manufacturing)",
+  },
+  {
+    key: "trademark",
+    icon: "®️",
+    label: "Trademark Registered",
+    fullName: "Trade Marks Registry, Govt. of India",
+    number: "6202243",
+    detail: "Registered Trademark · Class 29 (Pickles)",
+  },
+  {
+    key: "gst",
+    icon: "🧾",
+    label: "GST Registered",
+    fullName: "Goods & Services Tax · Govt. of India",
+    number: "08BFKPD8446R1ZM",
+    detail: "GSTIN · Rajasthan",
+  },
+] as const;
 
 // Product Categories
 export const PRODUCT_CATEGORIES = [
@@ -73,9 +113,9 @@ export const RECIPES_PER_PAGE = 9;
 export const CURRENCY = "INR";
 export const CURRENCY_SYMBOL = "₹";
 
-// Shipping
-export const FREE_DELIVERY_THRESHOLD = 499;
-export const FREE_SHIPPING_THRESHOLD = 499;
+// Shipping — single sitewide free-delivery threshold (pan-India)
+export const FREE_DELIVERY_THRESHOLD = 999;
+export const FREE_SHIPPING_THRESHOLD = 999;
 export const STANDARD_SHIPPING_COST = 49;
 
 // Product Review
@@ -108,22 +148,21 @@ export const CART_STORAGE_KEY = "cp-cart-storage";
 
 // Announcement bar (marquee) items
 export const ANNOUNCEMENTS = [
-  "🌿 No Artificial Preservatives",
-  "⭐ FSSAI Certified",
+  "🌿 No Artificial Preservatives · No Chemicals · No Vinegar",
+  "🛡️ FSSAI Licensed · Udyam · Trademark® · GST Registered",
   "🫙 15+ Authentic Varieties",
-  "🚚 Pan India Delivery",
-  "💰 Free Delivery on Orders ₹499+",
+  "🚚 Free Delivery on Orders ₹999+ · Pan India",
   "📞 +91 9350406289",
-  "🏠 Jaipur Local Free Delivery Above ₹1500",
+  "🌶️ Afghani · Tajikistani · Uzbeki Hing",
   "📦 Min Order: 6×100g or 2×250g Jars",
-  "🏅 Udhyam & BNI Registered",
+  "🎖️ Made with pride by the mother of an Indian Army Colonel",
 ] as const;
 
 // Promotional offers
 export const OFFERS = {
   bulk1kg: "Buy 1kg Get 15% Discount",
   bulk5kg: "Buy 5kg Get 20% Discount",
-  jaipurFreeDelivery: "Free delivery in Jaipur on orders above ₹1500",
+  freeDelivery: "Free delivery, pan-India, on orders above ₹999",
 } as const;
 
 // Minimum order quantities (units) by jar size

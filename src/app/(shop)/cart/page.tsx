@@ -6,6 +6,7 @@ import Image from "next/image"
 import { useSession } from "next-auth/react"
 import { useCartStore, cartItemKey } from "@/store/useCartStore"
 import type { AppliedDiscount } from "@/store/useCartStore"
+import { FREE_DELIVERY_THRESHOLD, STANDARD_SHIPPING_COST } from "@/lib/constants"
 import { Button } from "@/components/ui/button"
 import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection"
 import {
@@ -29,7 +30,7 @@ export default function CartPage() {
 
   const totalPrice = getTotalPrice()
   const totalItems = getTotalItems()
-  const shipping = totalPrice >= 500 ? 0 : 30
+  const shipping = totalPrice >= FREE_DELIVERY_THRESHOLD ? 0 : STANDARD_SHIPPING_COST
   const discountAmt = getDiscountAmount()
   // Prices are GST-inclusive (MRP) — no separate tax added
   const finalTotal = Math.max(0, totalPrice + shipping - discountAmt)
@@ -420,16 +421,16 @@ export default function CartPage() {
                       <Package className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
                       <div className="text-sm">
                         <p className="font-semibold text-amber-900 mb-1">
-                          Add ₹{(500 - totalPrice).toLocaleString()} more for FREE shipping!
+                          Add ₹{(FREE_DELIVERY_THRESHOLD - totalPrice).toLocaleString()} more for FREE shipping!
                         </p>
-                        <p className="text-amber-700">Orders above ₹500 get free delivery</p>
+                        <p className="text-amber-700">Orders above ₹{FREE_DELIVERY_THRESHOLD.toLocaleString()} get free delivery</p>
                       </div>
                     </div>
                   </div>
                 )}
 
                 <Link href="/checkout">
-                  <Button className="w-full bg-gradient-to-r from-amber-600 to-red-700 hover:from-amber-700 hover:to-red-800 text-white py-6 text-lg font-semibold shadow-lg hover:shadow-xl mb-4">
+                  <Button className="w-full bg-gradient-to-r from-cp-olive to-cp-terracotta hover:from-cp-olive-dark hover:to-cp-terracotta-deep text-white py-6 text-lg font-semibold shadow-lg hover:shadow-xl mb-4">
                     Proceed to Checkout
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>

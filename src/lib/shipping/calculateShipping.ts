@@ -1,3 +1,5 @@
+import { FREE_DELIVERY_THRESHOLD } from "@/lib/constants";
+
 export interface ShippingTier {
   name: 'free' | 'standard' | 'express';
   cost: number;
@@ -34,10 +36,9 @@ interface ValueTier {
 }
 
 const VALUE_TIERS: ValueTier[] = [
-  { min: 0, max: 299, baseCost: 30, name: 'standard' },
-  { min: 300, max: 499, baseCost: 20, name: 'standard' },
-  { min: 500, max: 999, baseCost: 0, name: 'free' },
-  { min: 1000, max: Infinity, baseCost: 0, name: 'free' }
+  { min: 0, max: 300, baseCost: 30, name: 'standard' },
+  { min: 300, max: FREE_DELIVERY_THRESHOLD, baseCost: 20, name: 'standard' },
+  { min: FREE_DELIVERY_THRESHOLD, max: Infinity, baseCost: 0, name: 'free' }
 ];
 
 /**
@@ -120,7 +121,7 @@ function calculateDistanceCharge(postalCode: string): number {
  * Get free shipping threshold
  */
 export function getFreeShippingThreshold(): number {
-  return 500;
+  return FREE_DELIVERY_THRESHOLD;
 }
 
 /**

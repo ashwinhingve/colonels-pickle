@@ -7,46 +7,74 @@
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/forms";
 
-/* ── Colonel's Pickle design tokens (Tailwind v4) ── */
+/* ── Colonel's Pickle design tokens (Tailwind v4) — "Olive Heritage" palette ──
+   The legacy names (cp-crimson / cp-saffron / cp-cream) are REPOINTED to the new
+   olive / terracotta / beige values so the whole site reskins with no per-file churn.
+   New code should prefer the honest aliases: cp-olive*, cp-terracotta*, cp-beige*, cp-gold. */
 @theme {
-  /* Crimson — brand primary */
-  --color-cp-crimson: #B91C1C;
-  --color-cp-crimson-dark: #7F1D1D;
-  --color-cp-crimson-deep: #450A0A;
-  --color-cp-crimson-light: #FEE2E2;
-  --color-cp-crimson-muted: #FECACA;
+  /* Primary — deep olive (repointed from crimson) */
+  --color-cp-crimson: #4B5D2A;
+  --color-cp-crimson-dark: #3A4A1F;
+  --color-cp-crimson-deep: #2E3818;
+  --color-cp-crimson-light: #E8EBD9;
+  --color-cp-crimson-muted: #D3DAB8;
 
-  /* Saffron — heritage accent */
-  --color-cp-saffron: #D97706;
-  --color-cp-saffron-bright: #F59E0B;
-  --color-cp-saffron-deep: #B45309;
-  --color-cp-saffron-light: #FEF3C7;
-  --color-cp-saffron-muted: #FDE68A;
+  /* Accent — terracotta (repointed from saffron) */
+  --color-cp-saffron: #C05621;
+  --color-cp-saffron-bright: #DD7230;
+  --color-cp-saffron-deep: #9C4420;
+  --color-cp-saffron-light: #FBE5D6;
+  --color-cp-saffron-muted: #F0C9A8;
 
-  /* Earth brown — Ridhwika identity */
-  --color-cp-brown: #92400E;
-  --color-cp-brown-dark: #78350F;
-  --color-cp-brown-deep: #451A03;
-  --color-cp-brown-light: #FEF9C7;
+  /* Earth brown — Ridhwika identity (warm walnut, complements olive) */
+  --color-cp-brown: #7C4A1E;
+  --color-cp-brown-dark: #5F3717;
+  --color-cp-brown-deep: #3D230E;
+  --color-cp-brown-light: #F3E6CE;
 
-  /* Cream backgrounds */
-  --color-cp-cream: #FDF8F0;
-  --color-cp-cream-dark: #F5ECD8;
-  --color-cp-cream-muted: #FFF7ED;
+  /* Warm beige / cream backgrounds (repointed from cream) */
+  --color-cp-cream: #F5EBDA;
+  --color-cp-cream-dark: #EADFC8;
+  --color-cp-cream-muted: #FBF4E7;
 
-  /* Semantic green */
+  /* Semantic organic green (kept for "no preservatives" badge) */
   --color-cp-green: #166534;
   --color-cp-green-dark: #14532D;
   --color-cp-green-light: #DCFCE7;
 
-  /* Text */
-  --color-cp-text: #1C1917;
-  --color-cp-text-muted: #78716C;
-  --color-cp-text-light: #A8A29E;
+  /* Text — warm near-black on beige */
+  --color-cp-text: #2A2417;
+  --color-cp-text-muted: #6B6455;
+  --color-cp-text-light: #9C9382;
 
-  /* Borders */
-  --color-cp-border: #E7E5E4;
-  --color-cp-border-dark: #D6D3D1;
+  /* Borders — warm */
+  --color-cp-border: #E4D9C4;
+  --color-cp-border-dark: #D6C9AE;
+
+  /* ── Honest aliases (prefer these in new/updated components) ── */
+  /* Olive — primary */
+  --color-cp-olive: #4B5D2A;
+  --color-cp-olive-dark: #3A4A1F;
+  --color-cp-olive-deep: #2E3818;
+  --color-cp-olive-bright: #6B7F3A;
+  --color-cp-olive-light: #E8EBD9;
+  --color-cp-olive-muted: #D3DAB8;
+
+  /* Terracotta — accent */
+  --color-cp-terracotta: #C05621;
+  --color-cp-terracotta-bright: #DD7230;
+  --color-cp-terracotta-deep: #9C4420;
+  --color-cp-terracotta-light: #FBE5D6;
+  --color-cp-terracotta-muted: #F0C9A8;
+
+  /* Beige — backgrounds */
+  --color-cp-beige: #F5EBDA;
+  --color-cp-beige-dark: #EADFC8;
+  --color-cp-beige-muted: #FBF4E7;
+
+  /* Gold — premium accent (use sparingly) */
+  --color-cp-gold: #D4A017;
+  --color-cp-gold-light: #E4B94B;
 
   /* Fonts */
   --font-display: 'Playfair Display', Georgia, serif;
@@ -133,7 +161,7 @@ body {
 
 /* Accessibility: visible keyboard focus ring (brand crimson) */
 :where(a, button, input, select, textarea, [tabindex]):focus-visible {
-  outline: 2px solid var(--color-cp-crimson, #B91C1C);
+  outline: 2px solid var(--color-cp-crimson, #4B5D2A);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -268,23 +296,33 @@ h5, h6 {
   --font-lora: 'Lora';
   --font-mukta: 'Mukta';
 
-  --cp-crimson: #B91C1C;
-  --cp-crimson-dark: #7F1D1D;
-  --cp-crimson-deep: #450A0A;
-  --cp-crimson-light: #FEE2E2;
-  --cp-saffron: #D97706;
-  --cp-saffron-bright: #F59E0B;
-  --cp-saffron-light: #FEF3C7;
-  --cp-brown: #92400E;
-  --cp-brown-dark: #78350F;
-  --cp-cream: #FDF8F0;
-  --cp-cream-dark: #F5ECD8;
+  --cp-crimson: #4B5D2A;
+  --cp-crimson-dark: #3A4A1F;
+  --cp-crimson-deep: #2E3818;
+  --cp-crimson-light: #E8EBD9;
+  --cp-saffron: #C05621;
+  --cp-saffron-bright: #DD7230;
+  --cp-saffron-light: #FBE5D6;
+  --cp-brown: #7C4A1E;
+  --cp-brown-dark: #5F3717;
+  --cp-cream: #F5EBDA;
+  --cp-cream-dark: #EADFC8;
   --cp-green: #166534;
   --cp-green-light: #DCFCE7;
-  --cp-text: #1C1917;
-  --cp-text-muted: #78716C;
-  --cp-text-light: #A8A29E;
-  --cp-border: #E7E5E4;
+  --cp-text: #2A2417;
+  --cp-text-muted: #6B6455;
+  --cp-text-light: #9C9382;
+  --cp-border: #E4D9C4;
+
+  /* Olive Heritage aliases (plain vars) */
+  --cp-olive: #4B5D2A;
+  --cp-olive-dark: #3A4A1F;
+  --cp-olive-deep: #2E3818;
+  --cp-terracotta: #C05621;
+  --cp-terracotta-bright: #DD7230;
+  --cp-beige: #F5EBDA;
+  --cp-gold: #D4A017;
+  --cp-gold-light: #E4B94B;
 }
 
 html {

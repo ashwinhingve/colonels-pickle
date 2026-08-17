@@ -25,6 +25,20 @@ interface CardVariant {
   originalPrice?: number;
 }
 
+/** Parse a weight/volume label (e.g. "500g", "1kg", "250ml", "1L") into a base quantity. */
+function parseUnitQty(label: string): { qty: number; unit: "g" | "ml" } | null {
+  if (!label) return null;
+  const m = String(label).trim().match(/([\d.]+)\s*(kg|g|ml|ltr|litre|l)\b/i);
+  if (!m) return null;
+  const n = parseFloat(m[1]);
+  if (!isFinite(n) || n <= 0) return null;
+  const u = m[2].toLowerCase();
+  if (u === "kg") return { qty: n * 1000, unit: "g" };
+  if (u === "g") return { qty: n, unit: "g" };
+  if (u === "ml") return { qty: n, unit: "ml" };
+  return { qty: n * 1000, unit: "ml" }; // l / ltr / litre
+}
+
 export function ProductCard({ product, addToCart }: ProductCardProps) {
   const [selectedVariant, setSelectedVariant] = useState(0);
   const [added, setAdded] = useState(false);
@@ -62,6 +76,31 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
 
   const safeIndex = Math.min(selectedVariant, variants.length - 1);
   const current = variants[safeIndex];
+
+  // Value framing: per-100 unit price + which variant is cheapest per unit.
+  const unitInfo = useMemo(() => {
+    const p = parseUnitQty(current?.label);
+    if (!p || !current?.price) return null;
+    const per100 = (Number(current.price) / p.qty) * 100;
+    return `≈ ₹${Math.round(per100).toLocaleString("en-IN")} / 100${p.unit}`;
+  }, [current]);
+
+  const bestValueIndex = useMemo(() => {
+    let best = -1;
+    let bestPer = Infinity;
+    variants.forEach((v, i) => {
+      const p = parseUnitQty(v.label);
+      if (!p || !v.price) return;
+      const per = Number(v.price) / p.qty;
+      if (per < bestPer - 1e-9) {
+        bestPer = per;
+        best = i;
+      }
+    });
+    return best;
+  }, [variants]);
+
+  const isBestValue = variants.length > 1 && safeIndex === bestValueIndex;
 
   const badgeLabel: string | undefined =
     theme.badge ||
@@ -107,7 +146,7 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
             <Badge
               variant="product-badge"
               className="absolute left-[10px] top-[10px] z-[2]"
-              style={{ backgroundColor: theme.badgeColor || "#B91C1C" }}
+              style={{ backgroundColor: theme.badgeColor || "#4B5D2A" }}
             >
               {badgeLabel}
             </Badge>
@@ -132,6 +171,12 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
               {theme.icon}
             </span>
           )}
+
+          {isBestValue ? (
+            <span className="absolute right-[10px] top-[10px] z-[2] rounded-full bg-cp-gold px-2.5 py-1 font-sans text-[10px] font-bold uppercase tracking-wide text-cp-text shadow-md">
+              ★ Best Value
+            </span>
+          ) : null}
 
           <Badge
             variant="no-preservatives"
@@ -180,6 +225,9 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
             </div>
             <div className="mt-px font-sans text-[10.5px] text-cp-text-muted">
               for {current.label}
+              {unitInfo ? (
+                <span className="text-cp-text-light"> · {unitInfo}</span>
+              ) : null}
             </div>
           </div>
           <button

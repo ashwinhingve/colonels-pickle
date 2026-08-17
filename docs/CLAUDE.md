@@ -10,11 +10,11 @@ This file provides complete context to Claude Code for building the Colonel's Pi
 **Brand:** Colonel's Pickle® — Homemade Organic Pickles, Oils & Natural Products  
 **Sub-brand:** Ridhwika Agro Organics (RAO) — the manufacturing entity  
 **Tagline:** *"Maa Ka Pyaar, Ghar Ka Achar"* (माँ का प्यार, घर का अचार)  
-**Owner:** Urmila Devi Roshan Lal (managed by Col Praveen Kumar Sharma)  
+**Owner:** Proprietor, Ridhwika Agro Organics — the family of an Indian Army Colonel. NOTE: the Colonel's personal name must never appear on the website; refer to him only as "Indian Army Colonel".  
 **Location:** Plot A-207, Block A, Vardhman Nagar, Gali 24, Ajmer Road, Jaipur, Rajasthan – 302019  
 **Contact:** 9717243306, 9416845689, 9350406289  
-**FSSAI:** 12223026002188  
-**Certifications:** FSSAI, Udhyam Registration, BNI Affiliation
+**FSSAI:** 12226026000060 (valid till 12 Jan 2027)  
+**Registrations:** FSSAI 12226026000060 · Udyam UDYAM-RJ-17-0307560 · Trademark 6202243 (Class 29) · GST 08BFKPD8446R1ZM
 
 **This project is built by cloning the TAPTIFS codebase (`github.com/ashwinhingve/taptifs`) and completely redesigning the frontend while reusing the entire backend.**
 

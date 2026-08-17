@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { SectionHeader } from "@/components/common/SectionHeader";
-import { BRAND, CONTACT_EMAIL } from "@/lib/constants";
+import { BRAND, CONTACT_EMAIL, REGISTRATIONS } from "@/lib/constants";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
 
@@ -54,7 +54,7 @@ function safeJsonLd(data: object): string {
 export const metadata: Metadata = {
   title: "Our Story — Born from a Mother's Kitchen",
   description:
-    "The story behind Colonel's Pickle — a heartfelt initiative by Col Praveen Kumar Sharma's family. FSSAI certified, no preservatives, made in Jaipur.",
+    "The story behind Colonel's Pickle — a heartfelt initiative by the family of an Indian Army Colonel. FSSAI licensed, no preservatives, no vinegar, made in Jaipur.",
   alternates: {
     canonical: `${SITE_URL}/about`,
   },
@@ -85,19 +85,14 @@ export const metadata: Metadata = {
 };
 
 const PROMISES = [
-  { icon: "🌿", title: "No Preservatives", desc: "No artificial preservatives, flavours or colours — ever.", color: "#166534" },
-  { icon: "🫙", title: "Kachi Ghani Oil", desc: "Cold-pressed wooden ghani mustard oil only.", color: "#92400E" },
-  { icon: "💎", title: "Afghani Hing", desc: "Premium asafoetida sourced from Central Asia at ₹35,000/kg.", color: "#B45309" },
-  { icon: "🧂", title: "Rock & Black Salt", desc: "No iodized table salt used in any product.", color: "#1E40AF" },
-  { icon: "🌶️", title: "24 Whole Spices", desc: "Sun-dried, roasted and ground fresh at our facility.", color: "#B91C1C" },
-  { icon: "⭐", title: "FSSAI Certified", desc: `Certified by Food Safety and Standards Authority of India (${BRAND.fssai}).`, color: "#166534" },
+  { icon: "🌿", title: "No Preservatives", desc: "No artificial preservatives, colours, flavours or vinegar — ever.", color: "#166534" },
+  { icon: "🫙", title: "Kachi Ghani Oil", desc: "Cold-pressed wooden ghani mustard oil only.", color: "#7C4A1E" },
+  { icon: "💎", title: "Afghani Hing", desc: "Premium asafoetida sourced from Central Asia at ₹30,000/kg.", color: "#9C4420" },
+  { icon: "🧂", title: "Rock & Black Salt", desc: "No iodized table salt used in any product.", color: "#6B7F3A" },
+  { icon: "🌶️", title: "24 Whole Spices", desc: "Sun-dried, roasted and ground fresh at our facility.", color: "#C05621" },
+  { icon: "🛡️", title: "FSSAI Licensed", desc: `Licensed by the Food Safety and Standards Authority of India (${BRAND.fssai}).`, color: "#4B5D2A" },
 ];
 
-const CERTS = [
-  { icon: "✅", name: "FSSAI", detail: "Food Safety and Standards Authority of India", sub: `License: ${BRAND.fssai}` },
-  { icon: "🏛️", name: "Udhyam", detail: "Udyam Registration", sub: "Registered MSME enterprise" },
-  { icon: "🤝", name: "BNI", detail: "BNI Member — Vishwakarma Chapter, Jaipur", sub: "Proud member of Business Network International" },
-];
 
 const fullAddress = `${BRAND.address.line1}, ${BRAND.address.line2}, ${BRAND.address.city}, ${BRAND.address.state} - ${BRAND.address.pin}`;
 
@@ -113,19 +108,19 @@ export default function AboutPage() {
         className="relative flex min-h-[50vh] items-center justify-center overflow-hidden"
         style={{
           background:
-            "linear-gradient(135deg, #7F1D1D 0%, #B91C1C 50%, #78350F 100%)",
+            "linear-gradient(135deg, #3A4A1F 0%, #4B5D2A 55%, #2E3818 100%)",
         }}
       >
-        <RajasthaniPattern variant="medallion" opacity={0.06} color="#ffffff" />
+        <RajasthaniPattern variant="medallion" opacity={0.05} color="#F5EBDA" />
         <div className="relative z-10 mx-auto max-w-3xl px-4 py-20 text-center">
-          <p className="font-hindi text-xs font-bold uppercase tracking-widest text-[#FCD34D]">
+          <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-gold-light">
             The Story Behind Every Jar
           </p>
-          <h1 className="mt-4 font-display text-4xl font-extrabold text-white md:text-5xl">
+          <h1 className="mt-4 font-display text-4xl font-extrabold text-cp-beige md:text-5xl">
             Born from a Mother&apos;s Kitchen
           </h1>
-          <p className="mt-4 font-serif text-lg italic text-white/80">
-            A heartfelt initiative by Col Praveen Kumar Sharma&apos;s family
+          <p className="mt-4 font-serif text-lg italic text-cp-beige/80">
+            A heartfelt initiative by the family of an Indian Army Colonel
           </p>
         </div>
         <svg
@@ -134,7 +129,7 @@ export default function AboutPage() {
           preserveAspectRatio="none"
           className="absolute bottom-0 left-0 block h-[60px] w-full"
         >
-          <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#FDF8F0" />
+          <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#F5EBDA" />
         </svg>
       </section>
 
@@ -143,68 +138,116 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2">
           <div
             className="relative rounded-2xl p-10"
-            style={{ backgroundColor: "#1C1917" }}
+            style={{ backgroundColor: "#2A2417" }}
           >
             <span
               className="absolute left-0 top-0 h-12 w-12 rounded-tl-2xl border-l-2 border-t-2"
-              style={{ borderColor: "#D97706" }}
+              style={{ borderColor: "#D4A017" }}
             />
             <span
               className="absolute bottom-0 right-0 h-12 w-12 rounded-br-2xl border-b-2 border-r-2"
-              style={{ borderColor: "#B91C1C" }}
+              style={{ borderColor: "#C05621" }}
             />
             <div className="text-center">
               <Image
                 src="/logo.png"
                 width={100}
                 height={100}
-                className="object-contain mx-auto"
+                className="mx-auto object-contain"
                 alt="Colonel's Pickle"
               />
-              <div className="w-16 h-[2px] bg-cp-crimson mx-auto my-3" />
-              <p className="font-display font-bold text-[18px] text-[#FCD34D]">
-                Col Praveen Kumar Sharma
+              <div className="mx-auto my-3 h-[2px] w-16 bg-cp-terracotta" />
+              <p className="font-display text-[18px] font-bold text-cp-gold-light">
+                An Indian Army Colonel
               </p>
-              <p className="mt-1 font-hindi text-[12px] text-white/60">
-                Col, Indian Army · CPE ITARSI
+              <p className="mt-1 font-hindi text-[12px] text-cp-beige/60">
+                Battle Casualty · War-Wounded Soldier
               </p>
             </div>
-            <div className="mt-6 rounded-xl border border-white/15 bg-white/8 p-6">
-              <p className="font-serif text-lg italic leading-relaxed text-white/85">
-                &ldquo;Quality is non-negotiable when you&apos;re feeding
-                families. That&apos;s why we put the same love in every jar that
-                Maa puts in every meal.&rdquo;
+            <div className="mt-6 rounded-xl border border-white/15 bg-white/[0.06] p-6">
+              <p className="font-serif text-lg italic leading-relaxed text-cp-beige/85">
+                &ldquo;In every jar of Colonel&apos;s Pickle lives the courage of
+                a soldier, the warmth of an Army home, and the irreplaceable
+                touch of a mother&apos;s love.&rdquo;
               </p>
             </div>
           </div>
 
           <div>
-            <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-crimson">
-              Our Founder&apos;s Vision
+            <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-terracotta">
+              Born from Valor, Seasoned with Honour
             </p>
             <h2 className="mt-3 font-display text-3xl font-extrabold text-cp-text md:text-4xl">
-              Maa Ka Pyaar, Ghar Ka Achar
+              A Legacy of Service &amp; Flavour
             </h2>
             <p className="mt-5 font-serif text-[15px] leading-relaxed text-cp-text-muted">
-              Every jar of Colonel&apos;s Pickle carries the love of Urmila Devi
-              Roshan Lal — an Army Officer&apos;s mother from Haryana. When Lt
-              Col Praveen Kumar Sharma witnessed soldiers and people far from
-              home missing the authentic taste of Ghar Ka Achar, he turned to
-              his mother&apos;s time-tested recipes.
+              Service to the nation runs deep in the roots of Ridhwika Agro
+              Organics. The family&apos;s proud military legacy was built by the
+              father, a retired Indian Army Officer — and today three family
+              members continue to wear the uniform: an Indian Army Colonel, his
+              wife (a serving Army Officer), and his younger brother (also a
+              serving Army Officer).
             </p>
             <p className="mt-4 font-serif text-[15px] leading-relaxed text-cp-text-muted">
-              What started as a heartfelt gesture to feed homesick soldiers has
-              grown into Ridhwika Agro Organics — a venture that creates
-              employment for local women while delivering purity, tradition, and
-              the irreplaceable taste of Maa Ka Pyaar in every jar.
+              During a high-risk ammunition-disposal operation in Assam, the
+              Colonel was severely injured, becoming a Battle Casualty and
+              War-Wounded Soldier. Through a gruelling three-month hospital
+              recovery on bland food, he realised a profound truth: true healing
+              doesn&apos;t come from medicine alone — it comes from the
+              comforting, soul-nourishing flavours of home.
             </p>
-            <p className="mt-4 font-serif text-[15px] leading-relaxed text-cp-text-muted">
-              Today Colonel&apos;s Pickle ships pan-India from Jaipur,
-              Rajasthan. Every product is FSSAI certified, prepared without
-              artificial preservatives, and made from the same premium
-              ingredients used in their home kitchen — Afghani hing at
-              ₹35,000/kg, wooden cold-press mustard oil, and 24 whole spices
-              dried and ground fresh.
+          </div>
+        </div>
+
+        {/* Story continuation */}
+        <div className="mx-auto mt-14 max-w-3xl space-y-10 px-4">
+          <div>
+            <h3 className="font-display text-2xl font-bold text-cp-olive">
+              The COVID Lockdown &amp; the Birth of &ldquo;Colonel Special&rdquo;
+            </h3>
+            <p className="mt-3 font-serif text-[15px] leading-relaxed text-cp-text-muted">
+              Years later, posted at a military cantonment during the COVID-19
+              lockdown, the Colonel and his mother — Urmila Devi, a resilient
+              officer&apos;s mother from Haryana — found comfort in their Army
+              bungalow&apos;s kitchen garden. Surrounded by fresh, sun-ripened
+              green chillies, mother and son began experimenting with time-tested
+              family recipes, hand-selecting, sun-drying and freshly grinding a
+              proprietary mix of 24 whole spices — crafting what would become
+              their signature &ldquo;Colonel Special&rdquo; masala. The jars they
+              gifted across the cantonment tasted, to every homesick officer and
+              neighbour, exactly like home.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-display text-2xl font-bold text-cp-olive">
+              A Legacy Named &ldquo;Ridhwika&rdquo;
+            </h3>
+            <p className="mt-3 font-serif text-[15px] leading-relaxed text-cp-text-muted">
+              What began as a gesture of warmth soon called for a name — one that
+              reflected family, unity and hope. Ridhwika Agro Organics is named
+              after the three daughters of this patriotic family, a synthesis of
+              their names lovingly chosen by the Colonel himself.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-display text-2xl font-bold text-cp-olive">
+              Uncompromising Quality &amp; Authentic Heritage
+            </h3>
+            <p className="mt-3 font-serif text-[15px] leading-relaxed text-cp-text-muted">
+              Operating from dual hubs in Jaipur, Rajasthan and Bahadurgarh,
+              Haryana, Colonel&apos;s Pickle ships pan-India while empowering
+              local women through meaningful employment. Every FSSAI-licensed jar
+              stays true to its military roots — crafted from 100% natural
+              ingredients using authentic, traditional Bhartiya recipes: no
+              artificial preservatives, no chemicals, and no vinegar. Pure
+              Afghani, Tajikistani and Uzbeki hing valued at ₹30,000/kg, wooden
+              cold-pressed <span className="font-hindi">kachi ghani</span> mustard
+              oil, and the secret &ldquo;Colonel Special&rdquo; blend of 24 whole
+              spices. From a hospital bed in Assam to kitchens across India — pure
+              tradition, unmatched heritage, and the heartwarming taste of Maa Ka
+              Pyaar.
             </p>
           </div>
         </div>
@@ -237,32 +280,39 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 4. Certifications */}
+      {/* 4. Certifications & Registrations */}
       <section className="bg-cp-cream py-20">
         <div className="mx-auto max-w-6xl px-4">
           <SectionHeader
-            eyebrow="CERTIFIED & REGISTERED"
-            title="Trusted by Standards"
+            eyebrow="LICENSED & REGISTERED"
+            title="Trust You Can Verify"
+            subtitle="Colonel's Pickle operates under Ridhwika Agro Organics — fully licensed and registered with the Government of India."
           />
-          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-            {CERTS.map((c) => (
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {REGISTRATIONS.map((r) => (
               <div
-                key={c.name}
+                key={r.key}
                 className="rounded-2xl border border-cp-border bg-white p-8 text-center"
               >
-                <span className="text-4xl">{c.icon}</span>
-                <h3 className="mt-3 font-display text-xl font-extrabold text-cp-crimson">
-                  {c.name}
+                <span className="text-4xl" aria-hidden>{r.icon}</span>
+                <h3 className="mt-3 font-display text-xl font-extrabold text-cp-olive">
+                  {r.label}
                 </h3>
                 <p className="mt-2 font-sans text-sm font-semibold text-cp-text">
-                  {c.detail}
+                  {r.fullName}
                 </p>
-                <p className="mt-1 font-serif text-sm text-cp-text-muted">
-                  {c.sub}
+                <p className="mt-2 select-all break-all font-mono text-[13px] font-semibold text-cp-terracotta">
+                  {r.number}
+                </p>
+                <p className="mt-1 font-serif text-xs text-cp-text-muted">
+                  {r.detail}
                 </p>
               </div>
             ))}
           </div>
+          <p className="mt-8 text-center font-sans text-xs text-cp-text-light">
+            Official certificates available on request.
+          </p>
         </div>
       </section>
 
@@ -274,14 +324,14 @@ export default function AboutPage() {
           </h2>
           <div className="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-2 font-sans text-lg font-bold">
             {BRAND.phones.map((p) => (
-              <a key={p} href={`tel:+91${p}`} className="hover:text-[#FCD34D]">
+              <a key={p} href={`tel:+91${p}`} className="hover:text-[#E4B94B]">
                 +91 {p}
               </a>
             ))}
           </div>
           <a
             href={`mailto:${CONTACT_EMAIL}`}
-            className="mt-4 inline-block font-sans text-sm text-white/90 hover:text-[#FCD34D]"
+            className="mt-4 inline-block font-sans text-sm text-white/90 hover:text-[#E4B94B]"
           >
             {CONTACT_EMAIL}
           </a>

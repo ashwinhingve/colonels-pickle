@@ -11,7 +11,7 @@ export function CTABanner() {
           Order Authentic Ghar Ka Achar Today
         </h2>
         <p className="mt-4 font-serif text-[15px] text-white/80">
-          Free delivery above ₹499 · Pan India shipping · FSSAI certified
+          Free delivery above ₹999 · Pan India shipping · FSSAI licensed
         </p>
 
         <div className="mt-8 flex flex-wrap justify-center gap-4">

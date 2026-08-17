@@ -1,37 +1,51 @@
+import type { ComponentType, SVGProps } from "react";
 import { SectionHeader } from "@/components/common/SectionHeader";
+import {
+  HingIllustration,
+  MustardOilIllustration,
+  SpiceBowlIllustration,
+} from "@/components/illustrations";
 
-const INGREDIENTS = [
+const INGREDIENTS: {
+  Illustration?: ComponentType<SVGProps<SVGSVGElement>>;
+  icon?: string;
+  title: string;
+  sub: string;
+  note: string;
+  color: string;
+  tint: string;
+}[] = [
   {
-    icon: "🌿",
+    Illustration: HingIllustration,
     title: "Afghani Hing",
     sub: "Premium Asafoetida",
-    note: "~₹35,000/kg · World's finest",
-    color: "#166534",
-    tint: "#DCFCE7",
+    note: "~₹30,000/kg · World's finest",
+    color: "#4B5D2A",
+    tint: "#E8EBD9",
   },
   {
-    icon: "🫙",
+    Illustration: MustardOilIllustration,
     title: "Kachi Ghani Mustard Oil",
     sub: "Cold Pressed Wooden Press",
     note: "~₹300/litre · Pure & unrefined",
-    color: "#92400E",
-    tint: "#FEF3C7",
+    color: "#7C4A1E",
+    tint: "#F3E6CE",
   },
   {
-    icon: "🌶️",
+    Illustration: SpiceBowlIllustration,
     title: "24 Exotic Whole Spices",
     sub: "Sun-dried, Roasted & Ground",
     note: "From across India & Central Asia",
-    color: "#B91C1C",
-    tint: "#FEE2E2",
+    color: "#C05621",
+    tint: "#FBE5D6",
   },
   {
     icon: "🧂",
     title: "Rock Salt & Black Salt",
     sub: "Sendha & Kala Namak",
     note: "No iodized table salt, ever",
-    color: "#1E40AF",
-    tint: "#DBEAFE",
+    color: "#9C4420",
+    tint: "#F0C9A8",
   },
 ];
 
@@ -56,13 +70,17 @@ export function PremiumIngredients() {
                   background: `linear-gradient(135deg, ${item.color}0D 0%, #FFFFFF 70%)`,
                 } as React.CSSProperties
               }
-              className="rounded-2xl border-2 border-[color:var(--ing-soft)] p-6 transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-[color:var(--ing)]"
+              className="group rounded-2xl border-2 border-[color:var(--ing-soft)] p-6 transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-[color:var(--ing)]"
             >
               <div
-                className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"
+                className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110"
                 style={{ backgroundColor: item.tint }}
               >
-                <span className="text-4xl">{item.icon}</span>
+                {item.Illustration ? (
+                  <item.Illustration className="h-10 w-10" aria-hidden />
+                ) : (
+                  <span className="text-4xl">{item.icon}</span>
+                )}
               </div>
               <h3 className="font-display text-base font-bold text-cp-text">
                 {item.title}
