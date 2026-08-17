@@ -1,4 +1,8 @@
+"use client";
+
 import { SectionHeader } from "@/components/common/SectionHeader";
+import { StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
+import { HoverLift } from "@/components/shared/HoverLift";
 
 const STEPS = [
   {
@@ -37,37 +41,43 @@ export function ProcessSection() {
           subtitle="Every jar is a labour of love — from sourcing the finest ingredients to delivering it to your home."
         />
 
-        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((step, index) => (
-            <div key={step.number} className="relative">
-              {/* Connecting line (desktop only) */}
-              {index < STEPS.length - 1 && (
-                <div className="absolute top-[60px] left-[calc(100%+0px)] hidden w-[calc(100%-32px)] h-1 bg-gradient-to-r from-cp-crimson to-transparent lg:block" />
-              )}
+        <StaggerContainer staggerDelay={0.12}>
+          <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+            {STEPS.map((step, index) => (
+              <StaggerItem key={step.number}>
+                <div className="relative">
+                  {/* Connecting line (desktop only) */}
+                  {index < STEPS.length - 1 && (
+                    <div className="absolute top-[60px] left-[calc(100%+0px)] hidden w-[calc(100%-32px)] h-1 bg-gradient-to-r from-cp-crimson to-transparent lg:block" />
+                  )}
 
-              {/* Step card */}
-              <div className="flex flex-col h-full rounded-2xl bg-white p-8 transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
-                {/* Step circle */}
-                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-cp-crimson text-white font-display text-2xl font-extrabold">
-                  {step.number}
+                  {/* Step card */}
+                  <HoverLift lift={5}>
+                    <div className="flex flex-col h-full rounded-2xl bg-white p-8 transition-all duration-300 hover:shadow-lg">
+                      {/* Step circle */}
+                      <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-cp-crimson text-white font-display text-2xl font-extrabold">
+                        {step.number}
+                      </div>
+
+                      {/* Icon */}
+                      <div className="mb-4 text-4xl">{step.icon}</div>
+
+                      {/* Title */}
+                      <h3 className="mb-3 font-display text-lg font-bold text-cp-text">
+                        {step.title}
+                      </h3>
+
+                      {/* Description */}
+                      <p className="font-serif text-[14px] leading-relaxed text-cp-text-muted">
+                        {step.description}
+                      </p>
+                    </div>
+                  </HoverLift>
                 </div>
-
-                {/* Icon */}
-                <div className="mb-4 text-4xl">{step.icon}</div>
-
-                {/* Title */}
-                <h3 className="mb-3 font-display text-lg font-bold text-cp-text">
-                  {step.title}
-                </h3>
-
-                {/* Description */}
-                <p className="font-serif text-[14px] leading-relaxed text-cp-text-muted">
-                  {step.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+              </StaggerItem>
+            ))}
+          </div>
+        </StaggerContainer>
       </div>
     </section>
   );

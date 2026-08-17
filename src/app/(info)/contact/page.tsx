@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
+import { HoverLift } from "@/components/shared/HoverLift";
+import { ContactIllustration } from "@/components/illustrations";
 import { BRAND, CONTACT_EMAIL } from "@/lib/constants";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
@@ -42,10 +45,35 @@ const fullAddress = `${BRAND.address.line1}, ${BRAND.address.line2}, ${BRAND.add
 
 export default function ContactPage() {
   return (
-    <section className="bg-cp-cream py-16">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 lg:grid-cols-2">
-        {/* LEFT — info */}
-        <div className="rounded-2xl border border-cp-border bg-white p-8">
+    <>
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-cp-olive-dark via-cp-olive to-cp-olive-light py-16 md:py-20 text-white relative overflow-hidden">
+        <div className="mx-auto max-w-6xl px-4">
+          <AnimatedSection direction="up" duration={0.65} className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="flex-1">
+              <p className="font-hindi text-sm font-bold uppercase tracking-widest text-cp-gold-light mb-3">
+                Let&apos;s Connect
+              </p>
+              <h1 className="font-display text-4xl md:text-5xl font-extrabold mb-4">
+                Get in Touch
+              </h1>
+              <p className="font-serif text-lg text-white/90 max-w-lg">
+                Have questions about our pickles, ingredients, or orders? We&apos;re here to help — reach out anytime.
+              </p>
+            </div>
+            <div className="flex-1 flex justify-center md:justify-end">
+              <ContactIllustration className="w-48 h-48 md:w-56 md:h-56 text-white/80" />
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Content Section */}
+      <section className="bg-cp-cream py-16">
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 lg:grid-cols-2">
+          {/* LEFT — info */}
+          <AnimatedSection direction="left" duration={0.65}>
+            <div className="rounded-2xl border border-cp-border bg-white p-8">
           <Image
             src="/logo.png"
             alt="Colonel's Pickle by Ridhwika Agro Organics"
@@ -120,31 +148,40 @@ export default function ContactPage() {
           <p className="mt-5 font-sans text-xs text-cp-text-light">
             FSSAI: {BRAND.fssai}
           </p>
-        </div>
+            </div>
+          </AnimatedSection>
 
-        {/* RIGHT — form */}
-        <ContactForm />
-      </div>
-
-      <div className="mx-auto mt-12 max-w-6xl px-4">
-        <h2 className="mb-4 text-center font-display text-2xl font-extrabold text-cp-crimson md:text-3xl">
-          Visit Us
-        </h2>
-        <div
-          className="w-full overflow-hidden rounded-xl border border-cp-border"
-          style={{ height: "400px" }}
-        >
-          <iframe
-            title="Colonel's Pickle by Ridhwika Agro Organics location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.2240668159716!2d75.735727!3d26.896383099999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db5b37d033a3b%3A0x552b635ade1c64ea!2sColonel's%20Pickle%20by%20Ridhwika%20Agro%20Organics!5e0!3m2!1sen!2sin!4v1779167668683!5m2!1sen!2sin"
-            className="h-full w-full"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+          {/* RIGHT — form */}
+          <AnimatedSection direction="right" duration={0.65}>
+            <ContactForm />
+          </AnimatedSection>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Map Section */}
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <AnimatedSection direction="up" duration={0.65}>
+            <h2 className="mb-4 text-center font-display text-2xl font-extrabold text-cp-olive md:text-3xl">
+              Visit Us
+            </h2>
+            <div
+              className="w-full overflow-hidden rounded-xl border border-cp-border shadow-sm hover:shadow-md transition-shadow duration-300"
+              style={{ height: "400px" }}
+            >
+              <iframe
+                title="Colonel's Pickle by Ridhwika Agro Organics location"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.2240668159716!2d75.735727!3d26.896383099999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db5b37d033a3b%3A0x552b635ade1c64ea!2sColonel's%20Pickle%20by%20Ridhwika%20Agro%20Organics!5e0!3m2!1sen!2sin!4v1779167668683!5m2!1sen!2sin"
+                className="h-full w-full"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+    </>
   );
 }

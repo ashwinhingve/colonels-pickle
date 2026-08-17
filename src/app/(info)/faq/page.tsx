@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { FAQAccordion, type FAQItem } from "@/components/shared/FAQAccordion";
 import { SectionHeader } from "@/components/common/SectionHeader";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
+import { FAQIllustration, ContactIllustration } from "@/components/illustrations";
 import { BRAND, WHATSAPP_URL, FREE_DELIVERY_THRESHOLD } from "@/lib/constants";
 import { connectDB } from "@/lib/mongodb";
 import Faq from "@/models/Faq";
@@ -312,13 +314,18 @@ export default async function FAQPage() {
       />
 
       {/* 1. Hero/Header Section */}
-      <section className="bg-cp-cream py-16 md:py-20">
+      <section className="bg-gradient-to-b from-cp-cream via-white to-cp-cream py-16 md:py-20">
         <div className="mx-auto max-w-6xl px-4">
-          <SectionHeader
-            eyebrow="QUESTIONS & ANSWERS"
-            title="Frequently Asked Questions"
-            subtitle="Everything you need to know about Colonel's Pickle — from our ingredients to shipping, payments, and more."
-          />
+          <AnimatedSection direction="up" duration={0.65} className="text-center mb-8">
+            <div className="flex justify-center mb-6">
+              <FAQIllustration className="w-40 h-40 text-cp-olive opacity-80" />
+            </div>
+            <SectionHeader
+              eyebrow="QUESTIONS & ANSWERS"
+              title="Frequently Asked Questions"
+              subtitle="Everything you need to know about Colonel's Pickle — from our ingredients to shipping, payments, and more."
+            />
+          </AnimatedSection>
         </div>
       </section>
 
@@ -333,14 +340,16 @@ export default async function FAQPage() {
         return (
           <section key={cat.key} className={`${bgColor} py-16 md:py-20`}>
             <div className="mx-auto max-w-4xl px-4">
-              <div className="mb-10">
-                <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-crimson">
-                  {eyebrowText}
-                </p>
-                <h3 className="mt-2 font-display text-2xl font-extrabold text-cp-text md:text-3xl">
-                  {cat.label}
-                </h3>
-              </div>
+              <AnimatedSection direction="up" duration={0.65}>
+                <div className="mb-10">
+                  <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-olive">
+                    {eyebrowText}
+                  </p>
+                  <h3 className="mt-2 font-display text-2xl font-extrabold text-cp-text md:text-3xl">
+                    {cat.label}
+                  </h3>
+                </div>
+              </AnimatedSection>
               <FAQAccordion items={categoryFaqs} />
             </div>
           </section>
@@ -348,22 +357,29 @@ export default async function FAQPage() {
       })}
 
       {/* CTA Section */}
-      <section className="bg-cp-crimson py-16 md:py-20">
-        <div className="mx-auto max-w-4xl px-4 text-center text-white">
-          <h3 className="font-display text-2xl font-extrabold md:text-3xl">
-            Still Have Questions?
-          </h3>
-          <p className="mt-4 font-serif text-[15px] leading-relaxed">
-            Our team is here to help. Reach out via WhatsApp for instant support.
-          </p>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-7 inline-block rounded-lg bg-[#25D366] px-7 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white transition-transform hover:-translate-y-px"
-          >
-            Chat on WhatsApp
-          </a>
+      <section className="bg-cp-olive py-16 md:py-20">
+        <div className="mx-auto max-w-4xl px-4">
+          <AnimatedSection direction="up" duration={0.65}>
+            <div className="text-center text-white">
+              <h3 className="font-display text-2xl font-extrabold md:text-3xl mb-6">
+                Still Have Questions?
+              </h3>
+              <div className="flex justify-center mb-6">
+                <ContactIllustration className="w-32 h-32 text-white/70" />
+              </div>
+              <p className="mt-4 font-serif text-[15px] leading-relaxed max-w-2xl mx-auto">
+                Our team is here to help. Reach out via WhatsApp for instant support, or call us during business hours.
+              </p>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-7 inline-block rounded-lg bg-[#25D366] px-7 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white transition-transform hover:-translate-y-px"
+              >
+                Chat on WhatsApp
+              </a>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
     </>

@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { requireAuth } from "@/lib/auth-helpers";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { AddressManager } from "@/components/account/AddressManager";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 
 export const dynamic = "force-dynamic";
 
@@ -18,23 +19,25 @@ export default async function AddressesPage() {
   return (
     <section className="min-h-screen bg-cp-cream py-12">
       <div className="mx-auto max-w-3xl px-4">
-        <Link
-          href="/account"
-          className="mb-6 inline-flex items-center gap-1.5 font-sans text-sm font-medium text-cp-text-muted transition-colors hover:text-cp-crimson"
-        >
-          <ArrowLeft className="h-4 w-4" /> Back to Account
-        </Link>
+        <AnimatedSection direction="up">
+          <Link
+            href="/account"
+            className="mb-6 inline-flex items-center gap-1.5 font-sans text-sm font-medium text-cp-text-muted transition-colors hover:text-cp-crimson"
+          >
+            <ArrowLeft className="h-4 w-4" /> Back to Account
+          </Link>
 
-        <SectionHeader
-          eyebrow="MY ACCOUNT"
-          title="Saved Addresses"
-          subtitle="Manage where we deliver your orders."
-          align="left"
-        />
+          <SectionHeader
+            eyebrow="MY ACCOUNT"
+            title="Saved Addresses"
+            subtitle="Manage where we deliver your orders."
+            align="left"
+          />
+        </AnimatedSection>
 
-        <div className="mt-8">
+        <AnimatedSection direction="up" delay={0.05} className="mt-8">
           <AddressManager />
-        </div>
+        </AnimatedSection>
       </div>
     </section>
   );

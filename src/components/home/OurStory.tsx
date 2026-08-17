@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
+import { SpiceScatter, CornerFlourish } from "@/components/illustrations";
 
 const FACT_TILES = [
   { icon: "👩‍🍳", label: "Women Empowerment", sub: "Creating local employment" },
@@ -16,6 +19,16 @@ export function OurStory() {
         background: "linear-gradient(135deg, #2A2417 0%, #3A4A1F 100%)",
       }}
     >
+      {/* Decorative elements */}
+      <SpiceScatter
+        aria-hidden
+        className="pointer-events-none absolute left-8 top-12 h-16 w-16 opacity-10"
+      />
+      <CornerFlourish
+        aria-hidden
+        className="pointer-events-none absolute right-12 bottom-16 h-14 w-14 opacity-12"
+      />
+
       <div className="absolute inset-y-0 right-0 w-1/2">
         <RajasthaniPattern variant="jali" opacity={0.05} color="#F5EBDA" />
       </div>

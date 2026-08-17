@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState, useEffect, useSyncExternalStore } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import { MobileMenu } from "./MobileMenu";
 import { useCartStore } from "@/store/useCartStore";
 import { cn } from "@/lib/utils";
@@ -14,6 +15,7 @@ import {
   LogOut,
   LayoutDashboard,
 } from "lucide-react";
+import { TapScale } from "@/components/shared/TapScale";
 
 const emptySubscribe = () => () => {};
 
@@ -300,32 +302,37 @@ export function Header() {
             >
               <ShoppingCart className="h-5 w-5" />
               {mounted && totalItems > 0 && (
-                <span
+                <motion.span
                   key={totalItems}
-                  className="absolute -right-1 -top-1 flex h-5 w-5 animate-cart-bounce items-center justify-center rounded-full bg-cp-crimson text-[11px] font-extrabold text-white shadow-md ring-2 ring-cp-cream"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                  className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-cp-crimson text-[11px] font-extrabold text-white shadow-md ring-2 ring-cp-cream"
                 >
                   {totalItems}
-                </span>
+                </motion.span>
               )}
             </button>
 
             {/* ORDER NOW CTA — animated sheen */}
-            <Link
-              href="/products"
-              className="group relative hidden overflow-hidden rounded-lg bg-gradient-to-br from-cp-saffron to-cp-saffron-bright px-5 py-2.5 font-sans text-sm font-bold uppercase tracking-wide text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_-6px_rgba(217,119,6,0.6),0_0_0_3px_rgba(185,28,28,0.18)] md:inline-flex md:items-center md:gap-1.5"
-            >
-              <span
-                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
-                aria-hidden="true"
-              />
-              <span className="relative">Order Now</span>
-              <span
-                className="relative transition-transform duration-300 group-hover:translate-x-1"
-                aria-hidden="true"
+            <TapScale asChild>
+              <Link
+                href="/products"
+                className="group relative hidden overflow-hidden rounded-lg bg-gradient-to-br from-cp-saffron to-cp-saffron-bright px-5 py-2.5 font-sans text-sm font-bold uppercase tracking-wide text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_-6px_rgba(217,119,6,0.6),0_0_0_3px_rgba(185,28,28,0.18)] md:inline-flex md:items-center md:gap-1.5"
               >
-                →
-              </span>
-            </Link>
+                <span
+                  className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
+                  aria-hidden="true"
+                />
+                <span className="relative">Order Now</span>
+                <span
+                  className="relative transition-transform duration-300 group-hover:translate-x-1"
+                  aria-hidden="true"
+                >
+                  →
+                </span>
+              </Link>
+            </TapScale>
 
             {/* Mobile menu toggle */}
             <button

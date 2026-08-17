@@ -14,6 +14,7 @@ import { VerifiedAuthentic } from "@/components/home/VerifiedAuthentic";
 import { CTABanner } from "@/components/home/CTABanner";
 import { WholesaleTeaser } from "@/components/home/WholesaleTeaser";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
+import { SectionDivider } from "@/components/shared/SectionDivider";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
 
@@ -52,30 +53,54 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <HingOriginsBand />
-      <TrustBar />
-      <AnimatedSection direction="up">
+      <SectionDivider variant="curve" color="#FDF8F0" height={80} />
+
+      <AnimatedSection direction="up" duration={0.5}>
+        <HingOriginsBand />
+      </AnimatedSection>
+      <SectionDivider variant="tilt" color="#FFFFFF" height={60} />
+
+      <AnimatedSection direction="fade" duration={0.5}>
+        <TrustBar />
+      </AnimatedSection>
+      <SectionDivider variant="wave" color="#FDF8F0" height={70} />
+
+      <AnimatedSection direction="up" duration={0.5}>
         <FeaturedProducts />
       </AnimatedSection>
-      <AnimatedSection direction="up">
+      <SectionDivider variant="curve" color="#FFFFFF" height={65} flip />
+
+      <AnimatedSection direction="up" duration={0.5}>
         <CategoryGrid />
       </AnimatedSection>
-      <AnimatedSection direction="up">
+      <SectionDivider variant="tilt" color="#FDF8F0" height={60} />
+
+      <AnimatedSection direction="up" duration={0.5}>
         <PremiumIngredients />
       </AnimatedSection>
-      <AnimatedSection direction="up">
+      <SectionDivider variant="wave" color="#F5ECD8" height={70} flip />
+
+      <AnimatedSection direction="up" duration={0.5}>
         <ProcessSection />
       </AnimatedSection>
-      <AnimatedSection direction="fade">
+      <SectionDivider variant="curve" color="#2A2417" height={80} />
+
+      <AnimatedSection direction="fade" duration={0.5}>
         <OurStory />
       </AnimatedSection>
-      <AnimatedSection direction="up">
+      <SectionDivider variant="tilt" color="#FFFFFF" height={65} flip />
+
+      <AnimatedSection direction="up" duration={0.5}>
         <VerifiedAuthentic />
       </AnimatedSection>
-      <AnimatedSection direction="up">
+      <SectionDivider variant="wave" color="#B91C1C" height={75} />
+
+      <AnimatedSection direction="up" duration={0.5}>
         <CTABanner />
       </AnimatedSection>
-      <AnimatedSection direction="up">
+      <SectionDivider variant="curve" color="#FFFFFF" height={70} flip />
+
+      <AnimatedSection direction="up" duration={0.5}>
         <WholesaleTeaser />
       </AnimatedSection>
     </>

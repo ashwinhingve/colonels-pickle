@@ -2,6 +2,10 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { MapPin, Plus, Pencil, Trash2, Star, Loader2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { HoverLift } from "@/components/shared/HoverLift";
+import { StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
+import { PickleJarIllustration } from "@/components/illustrations";
 
 interface Address {
   _id: string;
@@ -169,28 +173,56 @@ export function AddressManager() {
       )}
 
       {/* Address list */}
-      {addresses.length === 0 && !showForm ? (
-        <div className="rounded-2xl border border-dashed border-cp-border bg-white px-6 py-14 text-center">
-          <MapPin className="mx-auto mb-3 h-8 w-8 text-cp-text-light" />
-          <p className="font-display text-lg font-bold text-cp-text">No saved addresses yet</p>
-          <p className="mt-1 font-serif text-sm text-cp-text-muted">
-            Add an address to check out faster next time.
-          </p>
-          <button
-            type="button"
-            onClick={openAdd}
-            className="mt-5 inline-flex items-center gap-2 rounded-lg bg-cp-crimson px-5 py-2.5 font-sans text-sm font-bold text-white transition-colors hover:bg-cp-crimson-dark"
+      <AnimatePresence mode="wait">
+        {addresses.length === 0 && !showForm ? (
+          <motion.div
+            key="empty"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="rounded-2xl border border-dashed border-cp-border bg-white px-6 py-14 text-center"
           >
-            <Plus className="h-4 w-4" /> Add Address
-          </button>
-        </div>
-      ) : (
-        <div className="space-y-4">
-          {addresses.map((a) => (
-            <div
-              key={a._id}
-              className="rounded-2xl border border-cp-border bg-white p-5 transition-shadow hover:shadow-sm"
+            <motion.div
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.1 }}
+              className="mx-auto mb-6 w-24 h-24"
             >
+              <PickleJarIllustration />
+            </motion.div>
+            <p className="font-display text-lg font-bold text-cp-text">No saved addresses yet</p>
+            <p className="mt-1 font-serif text-sm text-cp-text-muted">
+              Add an address to check out faster next time.
+            </p>
+            <motion.button
+              type="button"
+              onClick={openAdd}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-cp-crimson px-5 py-2.5 font-sans text-sm font-bold text-white transition-colors hover:bg-cp-crimson-dark"
+            >
+              <Plus className="h-4 w-4" /> Add Address
+            </motion.button>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="list"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="space-y-4"
+          >
+            <StaggerContainer staggerDelay={0.05}>
+              {addresses.map((a) => (
+                <StaggerItem key={a._id}>
+                  <HoverLift lift={3}>
+                    <motion.div
+                      layout
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      className="rounded-2xl border border-cp-border bg-white p-5 transition-shadow hover:shadow-md"
+                    >
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2">
@@ -227,29 +259,39 @@ export function AddressManager() {
                   </button>
                 </div>
               </div>
-              {!a.isDefault && (
-                <button
-                  type="button"
-                  onClick={() => makeDefault(a._id)}
-                  className="mt-3 font-sans text-xs font-semibold text-cp-crimson hover:underline"
-                >
-                  Set as default
-                </button>
-              )}
-            </div>
-          ))}
+                      {!a.isDefault && (
+                        <motion.button
+                          type="button"
+                          onClick={() => makeDefault(a._id)}
+                          whileHover={{ color: "#B91C1C" }}
+                          className="mt-3 font-sans text-xs font-semibold text-cp-crimson hover:underline"
+                        >
+                          Set as default
+                        </motion.button>
+                      )}
+                    </motion.div>
+                  </HoverLift>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
 
-          {!showForm && (
-            <button
-              type="button"
-              onClick={openAdd}
-              className="inline-flex items-center gap-2 rounded-lg border-2 border-dashed border-cp-border px-5 py-3 font-sans text-sm font-bold text-cp-text-muted transition-colors hover:border-cp-crimson hover:text-cp-crimson"
-            >
-              <Plus className="h-4 w-4" /> Add Another Address
-            </button>
-          )}
-        </div>
-      )}
+            {!showForm && (
+              <motion.button
+                type="button"
+                onClick={openAdd}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex items-center gap-2 rounded-lg border-2 border-dashed border-cp-border px-5 py-3 font-sans text-sm font-bold text-cp-text-muted transition-colors hover:border-cp-crimson hover:text-cp-crimson"
+              >
+                <Plus className="h-4 w-4" /> Add Another Address
+              </motion.button>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Add / Edit form */}
       {showForm && (

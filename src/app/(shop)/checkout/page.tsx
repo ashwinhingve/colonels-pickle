@@ -7,6 +7,7 @@ import { useCartStore, cartItemKey } from '@/store/useCartStore';
 import { AddressStep } from '@/components/checkout/AddressStep';
 import PaymentStep from '@/components/checkout/PaymentStep';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -170,60 +171,74 @@ export default function CheckoutPage() {
 
               {/* Step Content */}
               <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
-                {currentStep === 'address' && (
-                  <>
-                    {orderError && (
-                      <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
-                        <div className="flex items-center gap-3">
-                          <svg
-                            className="w-5 h-5 text-red-600"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
-                          </svg>
-                          <p className="text-sm text-red-700">{orderError}</p>
-                        </div>
-                      </div>
-                    )}
-                    <AddressStep onNext={handleAddressNext} disabled={creatingOrder} />
-                    {creatingOrder && (
-                      <div className="mt-4 text-center">
-                        <div className="inline-block w-6 h-6 border-4 border-orange-600 border-t-transparent rounded-full animate-spin"></div>
-                        <p className="mt-2 text-sm text-gray-600">Creating order...</p>
-                      </div>
-                    )}
-                  </>
-                )}
-
-                {currentStep === 'payment' && orderDetails && (
-                  <>
-                    <button
-                      onClick={() => setCurrentStep('address')}
-                      className="mb-4 text-orange-600 hover:text-orange-700 flex items-center gap-2"
+                <AnimatePresence mode="wait">
+                  {currentStep === 'address' && (
+                    <motion.div
+                      key="address-step"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.4 }}
                     >
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
+                      {orderError && (
+                        <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
+                          <div className="flex items-center gap-3">
+                            <svg
+                              className="w-5 h-5 text-red-600"
+                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+                            </svg>
+                            <p className="text-sm text-red-700">{orderError}</p>
+                          </div>
+                        </div>
+                      )}
+                      <AddressStep onNext={handleAddressNext} disabled={creatingOrder} />
+                      {creatingOrder && (
+                        <div className="mt-4 text-center">
+                          <div className="inline-block w-6 h-6 border-4 border-orange-600 border-t-transparent rounded-full animate-spin"></div>
+                          <p className="mt-2 text-sm text-gray-600">Creating order...</p>
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+
+                  {currentStep === 'payment' && orderDetails && (
+                    <motion.div
+                      key="payment-step"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <button
+                        onClick={() => setCurrentStep('address')}
+                        className="mb-4 text-orange-600 hover:text-orange-700 flex items-center gap-2"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M15 19l-7-7 7-7"
-                        />
-                      </svg>
-                      Back to Address
-                    </button>
-                    <PaymentStep
-                      orderId={orderDetails.orderId}
-                      orderNumber={orderDetails.orderNumber}
-                      totalAmount={orderDetails.totalAmount}
-                    />
-                  </>
-                )}
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 19l-7-7 7-7"
+                          />
+                        </svg>
+                        Back to Address
+                      </button>
+                      <PaymentStep
+                        orderId={orderDetails.orderId}
+                        orderNumber={orderDetails.orderNumber}
+                        totalAmount={orderDetails.totalAmount}
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
 

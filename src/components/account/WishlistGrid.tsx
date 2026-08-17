@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ProductCard } from '@/components/products/ProductCard';
 import { Heart, ShoppingBag } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { HoverLift } from '@/components/shared/HoverLift';
+import { StaggerContainer, StaggerItem } from '@/components/shared/AnimatedSection';
+import { EmptyWishlistIllustration } from '@/components/illustrations';
 
 interface WishlistProduct {
   _id: string;
@@ -81,35 +85,58 @@ export function WishlistGrid() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-16">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="flex items-center justify-center py-16"
+      >
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-cp-crimson border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            className="w-12 h-12 border-4 border-cp-crimson border-t-transparent rounded-full mx-auto mb-4"
+          />
           <p className="text-cp-text-muted">Loading your wishlist...</p>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   if (error) {
     return (
-      <div className="rounded-lg border border-red-200 bg-red-50 p-6 text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="rounded-lg border border-red-200 bg-red-50 p-6 text-center"
+      >
         <p className="text-red-700 font-medium mb-3">{error}</p>
-        <button
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={fetchWishlist}
           className="text-red-600 hover:text-red-800 underline font-medium"
         >
           Try Again
-        </button>
-      </div>
+        </motion.button>
+      </motion.div>
     );
   }
 
   if (wishlistItems.length === 0) {
     return (
-      <div className="rounded-2xl border border-cp-border bg-white p-12 text-center">
-        <div className="w-20 h-20 mx-auto mb-6 bg-cp-crimson-light rounded-full flex items-center justify-center">
-          <Heart className="w-10 h-10 text-cp-crimson" />
-        </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="rounded-2xl border border-cp-border bg-white p-12 text-center"
+      >
+        <motion.div
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.1 }}
+          className="w-28 h-28 mx-auto mb-6"
+        >
+          <EmptyWishlistIllustration />
+        </motion.div>
         <h3 className="font-display text-2xl font-bold text-cp-text mb-2">
           Your Wishlist is Empty
         </h3>
@@ -117,41 +144,65 @@ export function WishlistGrid() {
           Start adding your favorite products to save them for later.
         </p>
         <Link href="/products">
-          <button className="inline-flex items-center gap-2 px-6 py-3 bg-cp-crimson text-white font-medium rounded-lg hover:bg-cp-crimson-dark transition-colors">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-cp-crimson text-white font-medium rounded-lg hover:bg-cp-crimson-dark transition-colors"
+          >
             <ShoppingBag className="w-5 h-5" />
             Browse Products
-          </button>
+          </motion.button>
         </Link>
-      </div>
+      </motion.div>
     );
   }
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="mb-6 flex items-center justify-between"
+      >
         <p className="text-sm text-cp-text-muted">
           {wishlistItems.length} product{wishlistItems.length !== 1 ? 's' : ''} saved
         </p>
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-        {wishlistItems.map((item) => {
-          const product = item.productId;
-          return (
-            <div key={product._id} className="relative group">
-              <ProductCard product={product} />
-              <button
-                onClick={() => handleRemove(product._id)}
-                className="absolute top-3 right-3 z-10 inline-flex items-center justify-center w-8 h-8 bg-cp-crimson text-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-cp-crimson-dark"
-                aria-label={`Remove ${product.name} from wishlist`}
-                title="Remove from wishlist"
-              >
-                <Heart className="w-4 h-4 fill-current" />
-              </button>
-            </div>
-          );
-        })}
-      </div>
+      <StaggerContainer staggerDelay={0.05}>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          <AnimatePresence>
+            {wishlistItems.map((item) => {
+              const product = item.productId;
+              return (
+                <StaggerItem key={product._id}>
+                  <HoverLift lift={4}>
+                    <motion.div
+                      layout
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      className="relative group"
+                    >
+                      <ProductCard product={product} />
+                      <motion.button
+                        onClick={() => handleRemove(product._id)}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="absolute top-3 right-3 z-10 inline-flex items-center justify-center w-8 h-8 bg-cp-crimson text-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-cp-crimson-dark"
+                        aria-label={`Remove ${product.name} from wishlist`}
+                        title="Remove from wishlist"
+                      >
+                        <Heart className="w-4 h-4 fill-current" />
+                      </motion.button>
+                    </motion.div>
+                  </HoverLift>
+                </StaggerItem>
+              );
+            })}
+          </AnimatePresence>
+        </div>
+      </StaggerContainer>
     </div>
   );
 }

@@ -7,6 +7,8 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, AlertCircle, CheckCircle, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { AnimatedSection } from '@/components/shared/AnimatedSection';
 
 interface OrderItem {
   productId: string;
@@ -150,10 +152,10 @@ export default function ReturnRequestPage({
 
   if (status === 'loading' || isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-red-50">
+      <div className="min-h-screen flex items-center justify-center bg-cp-cream">
         <div className="text-center">
-          <div className="inline-block w-12 h-12 border-4 border-amber-600 border-t-transparent rounded-full animate-spin"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <div className="inline-block w-12 h-12 border-4 border-cp-crimson border-t-transparent rounded-full animate-spin"></div>
+          <p className="mt-4 font-serif text-cp-text-muted">Loading...</p>
         </div>
       </div>
     );
@@ -161,51 +163,67 @@ export default function ReturnRequestPage({
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-red-50">
-        <div className="bg-white rounded-2xl shadow-xl p-12 max-w-md text-center">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <CheckCircle className="w-10 h-10 text-green-600" />
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+      <div className="min-h-screen flex items-center justify-center bg-cp-cream">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4 }}
+          className="bg-white rounded-2xl shadow-xl p-12 max-w-md text-center"
+        >
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="w-16 h-16 bg-cp-green-light rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            <CheckCircle className="w-10 h-10 text-cp-green" />
+          </motion.div>
+          <h2 className="font-display text-2xl font-bold text-cp-text mb-2">
             Return Request Submitted!
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="font-serif text-cp-text-muted mb-6">
             Your return request has been submitted successfully. Our team will review it
             shortly.
           </p>
-          <p className="text-sm text-gray-500">Redirecting to order details...</p>
-        </div>
+          <p className="font-sans text-sm text-cp-text-light">Redirecting to order details...</p>
+        </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-red-50 py-12">
+    <div className="min-h-screen bg-cp-cream py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="mb-8">
-            <Link
-              href={`/orders/${orderNumber}`}
-              className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 mb-4"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Order
-            </Link>
+          <AnimatedSection direction="up">
+            {/* Header */}
+            <div className="mb-8">
+              <Link
+                href={`/orders/${orderNumber}`}
+                className="inline-flex items-center gap-2 text-cp-crimson hover:text-cp-crimson-dark mb-4"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back to Order
+              </Link>
 
-            <h1 className="text-3xl md:text-4xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-amber-600 to-red-700 bg-clip-text text-transparent">
-                Request Return/Refund
-              </span>
-            </h1>
-            <p className="text-gray-600">Order #{orderNumber}</p>
-          </div>
+              <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">
+                <span className="bg-gradient-to-r from-cp-olive to-cp-terracotta bg-clip-text text-transparent">
+                  Request Return/Refund
+                </span>
+              </h1>
+              <p className="font-serif text-cp-text-muted">Order #{orderNumber}</p>
+            </div>
 
           {error && (
-            <div className="bg-red-50 border-2 border-red-200 rounded-xl p-4 mb-6 flex items-start gap-3">
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="bg-red-50 border-2 border-red-200 rounded-xl p-4 mb-6 flex items-start gap-3"
+            >
               <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
               <p className="text-red-800">{error}</p>
-            </div>
+            </motion.div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -216,26 +234,26 @@ export default function ReturnRequestPage({
                 <button
                   type="button"
                   onClick={() => setReturnType('refund')}
-                  className={`p-4 rounded-xl border-2 text-left transition-all ${
+                  className={`p-4 rounded-xl border-2 text-left transition-all duration-200 ${
                     returnType === 'refund'
-                      ? 'border-amber-500 bg-amber-50'
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? 'border-cp-crimson bg-red-50'
+                      : 'border-cp-border hover:border-cp-crimson/50'
                   }`}
                 >
-                  <p className="font-semibold text-gray-900">Refund</p>
-                  <p className="text-sm text-gray-600">Get your money back</p>
+                  <p className="font-semibold text-cp-text">Refund</p>
+                  <p className="text-sm text-cp-text-muted">Get your money back</p>
                 </button>
                 <button
                   type="button"
                   onClick={() => setReturnType('exchange')}
-                  className={`p-4 rounded-xl border-2 text-left transition-all ${
+                  className={`p-4 rounded-xl border-2 text-left transition-all duration-200 ${
                     returnType === 'exchange'
-                      ? 'border-amber-500 bg-amber-50'
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? 'border-cp-crimson bg-red-50'
+                      : 'border-cp-border hover:border-cp-crimson/50'
                   }`}
                 >
-                  <p className="font-semibold text-gray-900">Exchange</p>
-                  <p className="text-sm text-gray-600">Replace with same product</p>
+                  <p className="font-semibold text-cp-text">Exchange</p>
+                  <p className="text-sm text-cp-text-muted">Replace with same product</p>
                 </button>
               </div>
             </div>
@@ -252,17 +270,17 @@ export default function ReturnRequestPage({
                   return (
                     <label
                       key={item.productId}
-                      className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                      className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
                         isSelected
-                          ? 'border-amber-500 bg-amber-50'
-                          : 'border-gray-200 hover:border-gray-300'
+                          ? 'border-cp-crimson bg-red-50'
+                          : 'border-cp-border hover:border-cp-crimson/50'
                       }`}
                     >
                       <input
                         type="checkbox"
                         checked={isSelected}
                         onChange={() => handleItemToggle(item.productId, item.quantity)}
-                        className="w-5 h-5 text-amber-600 rounded focus:ring-amber-500"
+                        className="w-5 h-5 text-cp-crimson rounded focus:ring-cp-crimson"
                       />
                       {item.image && (
                         <Image
@@ -296,7 +314,7 @@ export default function ReturnRequestPage({
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
                   required
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-amber-500 focus:outline-none"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-cp-border bg-white text-cp-text transition-all duration-200 focus:border-cp-crimson focus:outline-none focus:shadow-md"
                 >
                   <option value="">Select a reason</option>
                   <option value="defective">Defective or damaged product</option>
@@ -312,34 +330,39 @@ export default function ReturnRequestPage({
                   onChange={(e) => setReasonDetails(e.target.value)}
                   placeholder="Please provide additional details (optional)"
                   rows={4}
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-amber-500 focus:outline-none resize-none"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-cp-border bg-white text-cp-text transition-all duration-200 focus:border-cp-crimson focus:outline-none focus:shadow-md resize-none"
                 />
               </div>
             </div>
 
             {/* Refund Summary */}
             {selectedItems.length > 0 && (
-              <div className="bg-gradient-to-br from-amber-50 to-red-50 rounded-2xl border-2 border-amber-200 shadow-xl p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-3">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl border-2 border-cp-crimson shadow-xl p-6"
+              >
+                <h3 className="font-display text-lg font-bold text-cp-text mb-3">
                   {returnType === 'refund' ? 'Refund' : 'Exchange'} Summary
                 </h3>
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Items Selected:</span>
-                    <span className="font-semibold text-gray-900">
+                    <span className="font-serif text-cp-text-muted">Items Selected:</span>
+                    <span className="font-semibold text-cp-text">
                       {selectedItems.length}
                     </span>
                   </div>
                   {returnType === 'refund' && (
-                    <div className="flex justify-between text-lg font-bold border-t border-amber-200 pt-2">
-                      <span className="text-gray-900">Refund Amount:</span>
-                      <span className="text-amber-700">
+                    <div className="flex justify-between text-lg font-bold border-t border-cp-crimson/20 pt-2">
+                      <span className="font-display text-cp-text">Refund Amount:</span>
+                      <span className="text-cp-crimson">
                         ₹{calculateRefundAmount().toLocaleString('en-IN')}
                       </span>
                     </div>
                   )}
                 </div>
-              </div>
+              </motion.div>
             )}
 
             {/* Submit Button */}
@@ -348,7 +371,7 @@ export default function ReturnRequestPage({
                 type="button"
                 variant="outline"
                 onClick={() => router.back()}
-                className="flex-1"
+                className="flex-1 border-cp-border text-cp-text hover:bg-cp-cream"
                 disabled={isSubmitting}
               >
                 Cancel
@@ -356,7 +379,7 @@ export default function ReturnRequestPage({
               <Button
                 type="submit"
                 disabled={isSubmitting || selectedItems.length === 0}
-                className="flex-1 bg-gradient-to-r from-amber-600 to-red-700 hover:from-amber-700 hover:to-red-800"
+                className="flex-1 bg-cp-crimson hover:bg-cp-crimson-dark text-white"
               >
                 {isSubmitting ? (
                   <>
@@ -371,15 +394,16 @@ export default function ReturnRequestPage({
           </form>
 
           {/* Policy Info */}
-          <div className="mt-6 bg-blue-50 border-2 border-blue-200 rounded-xl p-6">
-            <h4 className="font-semibold text-blue-900 mb-2">Return Policy</h4>
-            <ul className="space-y-1 text-sm text-blue-800">
+          <div className="mt-6 bg-cp-green-light border-2 border-cp-green rounded-xl p-6">
+            <h4 className="font-display font-semibold text-cp-green mb-2">Return Policy</h4>
+            <ul className="space-y-1 text-sm font-serif text-cp-green">
               <li>• Returns are accepted within 7 days of delivery</li>
               <li>• Items must be unused and in original packaging</li>
               <li>• Refunds will be processed within 5-7 business days</li>
               <li>• Pickup will be scheduled after approval</li>
             </ul>
           </div>
+          </AnimatedSection>
         </div>
       </div>
     </div>

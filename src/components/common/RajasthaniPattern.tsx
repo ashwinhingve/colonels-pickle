@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface RajasthaniPatternProps {
-  variant?: "jali" | "medallion";
+  variant?: "jali" | "medallion" | "trellis";
   opacity?: number;
   color?: string;
   className?: string;
@@ -38,6 +38,13 @@ export function RajasthaniPattern({
               strokeWidth="0.8"
             />
             <circle cx="18" cy="18" r="7" fill="none" stroke={color} strokeWidth="0.5" />
+          </pattern>
+        ) : variant === "trellis" ? (
+          <pattern id={patternId} width="28" height="28" patternUnits="userSpaceOnUse">
+            {/* Diagonal lattice with a small floret at each crossing — reads well
+                on light beige backgrounds where the jali is too heavy. */}
+            <path d="M0 14 L14 0 M14 28 L28 14 M0 14 L14 28 M14 0 L28 14" fill="none" stroke={color} strokeWidth="0.6" />
+            <circle cx="14" cy="14" r="1.6" fill={color} />
           </pattern>
         ) : (
           <pattern id={patternId} width="64" height="64" patternUnits="userSpaceOnUse">

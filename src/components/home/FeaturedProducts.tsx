@@ -3,6 +3,7 @@ import connectDB from "@/lib/mongodb/connection";
 import Product from "@/models/Product";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { ProductCard } from "@/components/products/ProductCard";
+import { TapScale } from "@/components/shared/TapScale";
 
 async function getFeaturedProducts() {
   try {
@@ -40,12 +41,14 @@ export async function FeaturedProducts() {
         )}
 
         <div className="mt-12 text-center">
-          <Link
-            href="/products"
-            className="inline-block rounded-lg border-2 border-cp-crimson px-7 py-3 font-sans text-sm font-bold uppercase tracking-wide text-cp-crimson transition-colors hover:bg-cp-crimson hover:text-white"
-          >
-            View All 15+ Products →
-          </Link>
+          <TapScale asChild>
+            <Link
+              href="/products"
+              className="inline-block rounded-lg border-2 border-cp-crimson px-7 py-3 font-sans text-sm font-bold uppercase tracking-wide text-cp-crimson transition-all hover:bg-cp-crimson hover:text-white hover:shadow-lg"
+            >
+              View All 15+ Products →
+            </Link>
+          </TapScale>
         </div>
       </div>
     </section>

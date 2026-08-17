@@ -1,5 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import { WHATSAPP_URL, OFFERS } from "@/lib/constants";
+import { StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
+import { HoverLift } from "@/components/shared/HoverLift";
+import { TapScale } from "@/components/shared/TapScale";
 
 const BENEFITS = [
   {
@@ -45,40 +50,47 @@ export function WholesaleTeaser() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/wholesale"
-                className="rounded-lg bg-cp-crimson px-8 py-3.5 text-center font-sans text-sm font-bold uppercase tracking-wide text-white transition-all hover:bg-cp-crimson-dark hover:-translate-y-0.5"
-              >
-                Apply for Wholesale
-              </Link>
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-lg bg-[#25D366] px-8 py-3.5 text-center font-sans text-sm font-bold uppercase tracking-wide text-white transition-all hover:bg-[#20BA5A] hover:-translate-y-0.5"
-              >
-                Chat on WhatsApp
-              </a>
+              <TapScale asChild>
+                <Link
+                  href="/wholesale"
+                  className="rounded-lg bg-cp-crimson px-8 py-3.5 text-center font-sans text-sm font-bold uppercase tracking-wide text-white transition-all hover:bg-cp-crimson-dark hover:shadow-lg"
+                >
+                  Apply for Wholesale
+                </Link>
+              </TapScale>
+              <TapScale asChild>
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-lg bg-[#25D366] px-8 py-3.5 text-center font-sans text-sm font-bold uppercase tracking-wide text-white transition-all hover:bg-[#20BA5A] hover:shadow-lg"
+                >
+                  Chat on WhatsApp
+                </a>
+              </TapScale>
             </div>
           </div>
 
           {/* RIGHT — Benefit tiles */}
-          <div className="grid gap-5">
-            {BENEFITS.map((benefit) => (
-              <div
-                key={benefit.title}
-                className="rounded-xl border border-cp-border bg-cp-cream-muted p-6 transition-all duration-300 hover:border-cp-crimson hover:shadow-md"
-              >
-                <div className="mb-3 text-4xl">{benefit.icon}</div>
-                <h4 className="mb-2 font-display text-lg font-bold text-cp-text">
-                  {benefit.title}
-                </h4>
-                <p className="font-serif text-[14px] leading-relaxed text-cp-text-muted">
-                  {benefit.description}
-                </p>
-              </div>
-            ))}
-          </div>
+          <StaggerContainer staggerDelay={0.1}>
+            <div className="grid gap-5">
+              {BENEFITS.map((benefit) => (
+                <StaggerItem key={benefit.title}>
+                  <HoverLift lift={4}>
+                    <div className="rounded-xl border border-cp-border bg-cp-cream-muted p-6 transition-all duration-300 hover:border-cp-crimson hover:shadow-md">
+                      <div className="mb-3 text-4xl">{benefit.icon}</div>
+                      <h4 className="mb-2 font-display text-lg font-bold text-cp-text">
+                        {benefit.title}
+                      </h4>
+                      <p className="font-serif text-[14px] leading-relaxed text-cp-text-muted">
+                        {benefit.description}
+                      </p>
+                    </div>
+                  </HoverLift>
+                </StaggerItem>
+              ))}
+            </div>
+          </StaggerContainer>
         </div>
       </div>
     </section>

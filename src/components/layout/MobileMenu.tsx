@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS } from "./Navigation";
 
@@ -16,22 +17,26 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const pathname = usePathname();
 
   return (
-    <>
-      <div
-        aria-hidden="true"
-        onClick={onClose}
-        className={cn(
-          "fixed inset-0 z-[55] bg-black/40 transition-opacity duration-300 lg:hidden",
-          isOpen ? "opacity-100" : "pointer-events-none opacity-0"
-        )}
-      />
-      <nav
-        aria-label="Mobile navigation"
-        className={cn(
-          "fixed right-0 top-0 z-[56] flex h-screen w-[80vw] max-w-[320px] flex-col gap-1.5 bg-cp-cream px-6 py-8 shadow-2xl transition-transform duration-300 lg:hidden",
-          isOpen ? "translate-x-0" : "translate-x-full"
-        )}
-      >
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div
+            aria-hidden="true"
+            onClick={onClose}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[55] bg-black/40 lg:hidden"
+          />
+          <motion.nav
+            aria-label="Mobile navigation"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="fixed right-0 top-0 z-[56] flex h-screen w-[80vw] max-w-[320px] flex-col gap-1.5 bg-cp-cream px-6 py-8 shadow-2xl lg:hidden"
+          >
         <span className="mb-4 font-display text-xl font-extrabold text-cp-crimson">
           Menu
         </span>
@@ -60,7 +65,9 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         >
           Order Now
         </Link>
-      </nav>
-    </>
+          </motion.nav>
+        </>
+      )}
+    </AnimatePresence>
   );
 }

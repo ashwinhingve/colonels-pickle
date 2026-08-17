@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { X, Plus, Minus, Trash2, ShoppingBag } from "lucide-react";
+import { X, Plus, Minus, Trash2 } from "lucide-react";
 
 import { useCartStore, cartItemKey } from "@/store/useCartStore";
 import { FREE_DELIVERY_THRESHOLD } from "@/lib/constants";
+import { EmptyCartIllustration } from "@/components/illustrations";
 import { getProductTheme } from "@/lib/productTheme";
 
 export function CartDrawer() {
@@ -69,8 +70,10 @@ export function CartDrawer() {
 
             {/* Items */}
             {items.length === 0 ? (
-              <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
-                <ShoppingBag className="h-12 w-12 text-cp-border-dark" />
+              <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 text-center">
+                <div className="w-32 h-32">
+                  <EmptyCartIllustration />
+                </div>
                 <p className="font-display text-base font-bold text-cp-text">
                   Your cart is empty
                 </p>
@@ -80,25 +83,30 @@ export function CartDrawer() {
                 <Link
                   href="/products"
                   onClick={closeCart}
-                  className="mt-2 rounded-lg bg-cp-crimson px-5 py-2.5 font-sans text-sm font-bold text-white transition-colors hover:bg-cp-crimson-dark"
+                  className="mt-2 rounded-lg bg-cp-crimson px-5 py-2.5 font-sans text-sm font-bold text-white transition-all duration-200 hover:bg-cp-crimson-dark hover:shadow-md"
                 >
                   Browse Products
                 </Link>
               </div>
             ) : (
               <div className="flex-1 overflow-y-auto px-5 py-4">
-                {items.map((item) => {
-                  const key = cartItemKey(
-                    item.product.id,
-                    item.product.variantId
-                  );
-                  const theme = getProductTheme(item.product.slug);
-                  const lineTotal = item.product.price * item.quantity;
-                  return (
-                    <div
-                      key={key}
-                      className="flex gap-3 border-b border-cp-border py-4 last:border-0"
-                    >
+                <AnimatePresence mode="popLayout">
+                  {items.map((item) => {
+                    const key = cartItemKey(
+                      item.product.id,
+                      item.product.variantId
+                    );
+                    const theme = getProductTheme(item.product.slug);
+                    const lineTotal = item.product.price * item.quantity;
+                    return (
+                      <motion.div
+                        key={key}
+                        layout
+                        initial={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 100 }}
+                        transition={{ duration: 0.3 }}
+                        className="flex gap-3 border-b border-cp-border py-4 last:border-0"
+                      >
                       <span
                         className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-xl"
                         style={{ backgroundColor: theme.themeColor }}
@@ -155,9 +163,10 @@ export function CartDrawer() {
                           </span>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                      </motion.div>
+                    );
+                  })}
+                </AnimatePresence>
               </div>
             )}
 

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { X, ZoomIn, Play } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface ProductImage {
   url: string;
@@ -47,49 +48,65 @@ export default function ProductImageGallery({
     <div className="space-y-4">
       {/* Main Image / Video */}
       <div className="relative aspect-square bg-white rounded-2xl shadow-xl overflow-hidden group">
-        {showVideo && videoUrl ? (
-          <div className="w-full h-full flex items-center justify-center bg-black">
-            {isYouTube ? (
-              <iframe
-                src={getYouTubeEmbedUrl(videoUrl)}
-                className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                title={`${productName} video`}
-              />
-            ) : (
-              <video
-                src={videoUrl}
-                controls
-                className="w-full h-full object-contain"
-                autoPlay
-              >
-                Your browser does not support the video tag.
-              </video>
-            )}
-          </div>
-        ) : (
-          <>
-            {currentImage && (
-              <Image
-                src={currentImage}
-                alt={`${productName} - Image ${selectedIndex + 1}`}
-                fill
-                className="object-contain p-4"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                priority={selectedIndex === 0}
-              />
-            )}
-
-            {/* Zoom Button */}
-            <button
-              onClick={() => setIsLightboxOpen(true)}
-              className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
+        <AnimatePresence mode="wait">
+          {showVideo && videoUrl ? (
+            <motion.div
+              key="video"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="w-full h-full flex items-center justify-center bg-black"
             >
-              <ZoomIn className="w-5 h-5 text-gray-700" />
-            </button>
-          </>
-        )}
+              {isYouTube ? (
+                <iframe
+                  src={getYouTubeEmbedUrl(videoUrl)}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  title={`${productName} video`}
+                />
+              ) : (
+                <video
+                  src={videoUrl}
+                  controls
+                  className="w-full h-full object-contain"
+                  autoPlay
+                >
+                  Your browser does not support the video tag.
+                </video>
+              )}
+            </motion.div>
+          ) : (
+            <motion.div
+              key={`image-${selectedIndex}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="w-full h-full relative"
+            >
+              {currentImage && (
+                <Image
+                  src={currentImage}
+                  alt={`${productName} - Image ${selectedIndex + 1}`}
+                  fill
+                  className="object-contain p-4"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority={selectedIndex === 0}
+                />
+              )}
+
+              {/* Zoom Button */}
+              <button
+                onClick={() => setIsLightboxOpen(true)}
+                className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <ZoomIn className="w-5 h-5 text-gray-700" />
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Thumbnail Grid */}

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
+import { Parallax } from "@/components/shared/Parallax";
+import { TapScale } from "@/components/shared/TapScale";
 import {
   NoPreservativeIcon,
   NoChemicalIcon,
@@ -83,18 +85,22 @@ export function HeroSection() {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-4">
-            <Link
-              href="/products"
-              className="rounded-lg bg-gradient-to-br from-cp-terracotta to-cp-gold px-7 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white shadow-lg transition-transform hover:-translate-y-px"
-            >
-              Shop Now →
-            </Link>
-            <Link
-              href="/about"
-              className="rounded-lg border border-cp-beige/40 bg-white/10 px-7 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-cp-beige backdrop-blur transition-colors hover:bg-white/20"
-            >
-              Our Story
-            </Link>
+            <TapScale asChild>
+              <Link
+                href="/products"
+                className="rounded-lg bg-gradient-to-br from-cp-terracotta to-cp-gold px-7 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white shadow-lg transition-transform hover:-translate-y-px"
+              >
+                Shop Now →
+              </Link>
+            </TapScale>
+            <TapScale asChild>
+              <Link
+                href="/about"
+                className="rounded-lg border border-cp-beige/40 bg-white/10 px-7 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-cp-beige backdrop-blur transition-colors hover:bg-white/20"
+              >
+                Our Story
+              </Link>
+            </TapScale>
           </div>
 
           <div className="mt-10 flex gap-10">
@@ -112,7 +118,8 @@ export function HeroSection() {
         </div>
 
         {/* RIGHT — floating artisan collage (real brand photos, self-hosted) */}
-        <div className="relative hidden h-[500px] lg:block">
+        <Parallax offset={30} direction="up">
+          <div className="relative hidden h-[500px] lg:block">
           {/* warm glow behind collage */}
           <div
             className="pointer-events-none absolute inset-0 z-0"
@@ -177,7 +184,8 @@ export function HeroSection() {
           <span className="absolute bottom-[40px] left-[-12px] z-10 rounded-full bg-cp-beige px-3 py-1.5 font-hindi text-xs font-bold text-cp-terracotta shadow-lg">
             FSSAI ✓
           </span>
-        </div>
+          </div>
+        </Parallax>
       </div>
 
       {/* Wave divider into beige */}

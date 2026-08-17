@@ -4,7 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { AnimatedSection } from '@/components/shared/AnimatedSection';
+import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/shared/AnimatedSection';
+import { EmptyOrdersIllustration } from '@/components/illustrations';
 import { Button } from '@/components/ui/button';
 import {
   Package,
@@ -12,13 +13,13 @@ import {
   CheckCircle,
   XCircle,
   Clock,
-  ShoppingBag,
   Search,
   Filter,
   Download,
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 
 interface Order {
@@ -328,36 +329,39 @@ export default function OrdersPage() {
 
             {/* Orders List */}
             {orders.length === 0 ? (
-              <div className="bg-white rounded-2xl shadow-xl p-12 text-center">
-                <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-amber-100 to-red-100 rounded-full flex items-center justify-center">
-                  <ShoppingBag className="w-12 h-12 text-amber-600" />
-                </div>
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">No Orders Found</h2>
-                <p className="text-gray-600 mb-6">
-                  {hasActiveFilters
-                    ? "No orders match your filters"
-                    : "You haven't placed any orders yet"}
-                </p>
-                {hasActiveFilters ? (
-                  <Button onClick={handleClearFilters} className="bg-gradient-to-r from-amber-600 to-red-700">
-                    Clear Filters
-                  </Button>
-                ) : (
-                  <Link href="/products">
-                    <Button className="bg-gradient-to-r from-amber-600 to-red-700">
-                      Start Shopping
+              <AnimatedSection direction="up">
+                <div className="bg-white rounded-2xl shadow-xl p-12 text-center">
+                  <div className="w-40 h-40 mx-auto mb-6">
+                    <EmptyOrdersIllustration />
+                  </div>
+                  <h2 className="font-display text-2xl font-bold text-gray-800 mb-2">No Orders Found</h2>
+                  <p className="font-serif text-gray-600 mb-6">
+                    {hasActiveFilters
+                      ? "No orders match your filters"
+                      : "You haven't placed any orders yet. Start shopping!"}
+                  </p>
+                  {hasActiveFilters ? (
+                    <Button onClick={handleClearFilters} className="bg-cp-crimson hover:bg-cp-crimson-dark text-white">
+                      Clear Filters
                     </Button>
-                  </Link>
-                )}
-              </div>
+                  ) : (
+                    <Link href="/products">
+                      <Button className="bg-cp-crimson hover:bg-cp-crimson-dark text-white">
+                        Start Shopping
+                      </Button>
+                    </Link>
+                  )}
+                </div>
+              </AnimatedSection>
             ) : (
               <>
-                <div className="space-y-4">
-                  {orders.map((order) => (
-                    <div
-                      key={order._id}
-                      className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow p-6"
-                    >
+                <AnimatedSection direction="up">
+                  <StaggerContainer className="space-y-4">
+                    {orders.map((order) => (
+                      <StaggerItem key={order._id}>
+                        <motion.div
+                          className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow p-6"
+                        >
                       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         {/* Order Info */}
                         <div className="flex-1">
@@ -431,9 +435,11 @@ export default function OrdersPage() {
                           )}
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                        </motion.div>
+                      </StaggerItem>
+                    ))}
+                  </StaggerContainer>
+                </AnimatedSection>
 
                 {/* Pagination */}
                 {pagination.totalPages > 1 && (

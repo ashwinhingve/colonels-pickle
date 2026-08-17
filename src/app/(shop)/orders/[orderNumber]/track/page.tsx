@@ -5,6 +5,7 @@ import Shipment from '@/models/Shipment';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Package, MapPin, Clock, CheckCircle, Truck, AlertCircle } from 'lucide-react';
+import { AnimatedSection } from '@/components/shared/AnimatedSection';
 
 function getCourierTrackingUrl(provider: string, waybill: string, storedUrl?: string): string {
   if (storedUrl) return storedUrl;
@@ -75,22 +76,23 @@ export default async function OrderTrackPage({ params }: PageProps) {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-red-50 py-12">
+    <div className="min-h-screen bg-cp-cream py-12">
       <div className="container mx-auto px-4 max-w-3xl">
-        {/* Back link */}
-        <Link
-          href={`/orders/${orderNumber}`}
-          className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 mb-6"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Order Details
-        </Link>
+        <AnimatedSection direction="up">
+          {/* Back link */}
+          <Link
+            href={`/orders/${orderNumber}`}
+            className="inline-flex items-center gap-2 text-cp-crimson hover:text-cp-crimson-dark mb-6"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Order Details
+          </Link>
 
-        <h1 className="text-3xl font-bold mb-2">
-          <span className="bg-gradient-to-r from-amber-600 to-red-700 bg-clip-text text-transparent">
-            Track Order #{orderNumber}
-          </span>
-        </h1>
+          <h1 className="font-display text-3xl font-bold mb-2">
+            <span className="bg-gradient-to-r from-cp-olive to-cp-terracotta bg-clip-text text-transparent">
+              Track Order #{orderNumber}
+            </span>
+          </h1>
 
         {!o.trackingNumber ? (
           <div className="bg-white rounded-2xl shadow-xl p-8 mt-6 text-center">
@@ -244,6 +246,7 @@ export default async function OrderTrackPage({ params }: PageProps) {
             )}
           </div>
         )}
+        </AnimatedSection>
       </div>
     </div>
   );

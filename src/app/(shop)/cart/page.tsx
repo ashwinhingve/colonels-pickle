@@ -9,11 +9,12 @@ import type { AppliedDiscount } from "@/store/useCartStore"
 import { FREE_DELIVERY_THRESHOLD, STANDARD_SHIPPING_COST } from "@/lib/constants"
 import { Button } from "@/components/ui/button"
 import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection"
+import { EmptyCartIllustration, DeliveryTruckIllustration } from "@/components/illustrations"
 import {
-  Trash2, Plus, Minus, ShoppingBag, ArrowRight, Package,
+  Trash2, Plus, Minus, ArrowRight, Package,
   Tag, X, CheckCircle, Loader2, Gift,
 } from "lucide-react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 export default function CartPage() {
   const { data: session } = useSession()
@@ -107,24 +108,24 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 py-16">
+      <div className="min-h-screen bg-cp-cream py-16">
         <div className="container mx-auto px-4">
           <AnimatedSection direction="up">
             <div className="max-w-2xl mx-auto text-center py-20 bg-white rounded-2xl shadow-lg">
-              <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-amber-100 to-red-100 rounded-full flex items-center justify-center">
-                <ShoppingBag className="w-16 h-16 text-amber-600" />
+              <div className="w-48 h-48 mx-auto mb-6">
+                <EmptyCartIllustration />
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">Your Cart is Empty</h1>
-              <p className="text-gray-600 mb-8 text-lg">
-                Looks like you haven&apos;t added any items to your cart yet. Start shopping to fill it up!
+              <h1 className="font-display text-3xl md:text-4xl font-bold mb-3 text-cp-text">Your Cart is Empty</h1>
+              <p className="font-serif text-lg text-cp-text-muted mb-8">
+                Looks like you haven&apos;t added any of our homemade goodness yet. Let&apos;s fix that!
               </p>
               <Link href="/products">
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-amber-600 to-red-700 hover:from-amber-700 hover:to-red-800 text-white px-10 py-6 text-lg shadow-lg"
+                  className="bg-cp-crimson hover:bg-cp-crimson-dark text-white px-10 py-6 text-lg shadow-lg hover:shadow-xl"
                 >
-                  <ShoppingBag className="w-5 h-5 mr-2" />
-                  Browse Products
+                  Browse Pickles
+                  <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
             </div>
@@ -173,12 +174,16 @@ export default function CartPage() {
                 </div>
 
                 <StaggerContainer className="space-y-4">
-                  {items.map((item) => (
-                    <StaggerItem key={cartItemKey(item.product.id, item.product.variantId)}>
-                      <motion.div
-                        layout
-                        className="flex flex-col sm:flex-row gap-4 p-4 bg-gray-50 rounded-xl hover:shadow-md transition-shadow"
-                      >
+                  <AnimatePresence mode="popLayout">
+                    {items.map((item) => (
+                      <StaggerItem key={cartItemKey(item.product.id, item.product.variantId)}>
+                        <motion.div
+                          layout
+                          initial={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20, x: 100 }}
+                          transition={{ duration: 0.3 }}
+                          className="flex flex-col sm:flex-row gap-4 p-4 bg-gray-50 rounded-xl hover:shadow-md transition-shadow"
+                        >
                         {/* Product Image */}
                         <div className="w-full sm:w-32 h-32 flex-shrink-0 bg-white rounded-lg overflow-hidden">
                           {(() => {
@@ -246,9 +251,10 @@ export default function CartPage() {
                             </div>
                           </div>
                         </div>
-                      </motion.div>
-                    </StaggerItem>
-                  ))}
+                        </motion.div>
+                      </StaggerItem>
+                    ))}
+                  </AnimatePresence>
                 </StaggerContainer>
               </div>
 
@@ -414,19 +420,36 @@ export default function CartPage() {
                   </div>
                 )}
 
-                {/* Free Shipping Banner */}
+                {/* Free Shipping Banner with Progress Bar */}
                 {shipping > 0 && (
-                  <div className="bg-amber-50 border-2 border-amber-200 rounded-lg p-4 mb-6">
-                    <div className="flex items-start gap-3">
-                      <Package className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                      <div className="text-sm">
-                        <p className="font-semibold text-amber-900 mb-1">
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="bg-cp-saffron-light border-2 border-cp-saffron rounded-lg p-4 mb-6"
+                  >
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="w-5 h-5 text-cp-saffron flex-shrink-0 mt-0.5">
+                        <DeliveryTruckIllustration />
+                      </div>
+                      <div className="text-sm flex-1">
+                        <p className="font-semibold text-cp-brown-dark">
                           Add ₹{(FREE_DELIVERY_THRESHOLD - totalPrice).toLocaleString()} more for FREE shipping!
                         </p>
-                        <p className="text-amber-700">Orders above ₹{FREE_DELIVERY_THRESHOLD.toLocaleString()} get free delivery</p>
                       </div>
                     </div>
-                  </div>
+                    <div className="w-full bg-white rounded-full h-2 overflow-hidden border border-cp-saffron">
+                      <motion.div
+                        className="h-full bg-gradient-to-r from-cp-saffron to-cp-saffron-bright"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${Math.min((totalPrice / FREE_DELIVERY_THRESHOLD) * 100, 100)}%` }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                      />
+                    </div>
+                    <p className="text-xs text-cp-brown mt-2">
+                      {Math.round((totalPrice / FREE_DELIVERY_THRESHOLD) * 100)}% of ₹{FREE_DELIVERY_THRESHOLD.toLocaleString()} threshold
+                    </p>
+                  </motion.div>
                 )}
 
                 <Link href="/checkout">

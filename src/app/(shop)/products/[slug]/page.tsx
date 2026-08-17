@@ -9,6 +9,8 @@ import { ProductAccordion } from "@/components/products/ProductAccordion";
 import ProductImageGallery from "@/components/products/ProductImageGallery";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { SectionHeader } from "@/components/common/SectionHeader";
+import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
+import { ShieldCheckIcon, NoPreservativeIcon } from "@/components/illustrations";
 import { getProductTheme } from "@/lib/productTheme";
 
 const SITE_URL =
@@ -259,13 +261,64 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               eyebrow="FROM THE SAME RANGE"
               title="You May Also Like"
             />
-            <div className="mt-10 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
-              {related.map((r: any) => (
-                <ProductCard key={r._id} product={r} />
-              ))}
-            </div>
+            <AnimatedSection direction="up" className="mt-10">
+              <StaggerContainer>
+                <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
+                  {related.map((r: any) => (
+                    <StaggerItem key={r._id}>
+                      <ProductCard product={r} />
+                    </StaggerItem>
+                  ))}
+                </div>
+              </StaggerContainer>
+            </AnimatedSection>
           </div>
         )}
+
+        {/* Trust & Certification Strip */}
+        <div className="mt-16 rounded-2xl border border-cp-border bg-white p-8">
+          <h3 className="font-display text-lg font-bold text-cp-text mb-6">
+            Why You&apos;ll Love This
+          </h3>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 mb-3 text-cp-olive">
+                <NoPreservativeIcon />
+              </div>
+              <p className="font-sans text-sm font-semibold text-cp-text">
+                No Preservatives
+              </p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 mb-3 text-cp-olive">
+                <ShieldCheckIcon />
+              </div>
+              <p className="font-sans text-sm font-semibold text-cp-text">
+                FSSAI Certified
+              </p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 mb-3 text-cp-olive">
+                <svg className="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 1C6.48 1 2 5.48 2 11s4.48 10 10 10 10-4.48 10-10S17.52 1 12 1zm-2 15l-5-5 1.41-1.41L10 12.17l7.59-7.59L19 6l-9 9z" />
+                </svg>
+              </div>
+              <p className="font-sans text-sm font-semibold text-cp-text">
+                Homemade Recipe
+              </p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 mb-3 text-cp-olive">
+                <svg className="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
+                </svg>
+              </div>
+              <p className="font-sans text-sm font-semibold text-cp-text">
+                Authentic Taste
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

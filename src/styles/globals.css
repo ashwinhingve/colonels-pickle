@@ -359,3 +359,78 @@ body {
   animation: marquee 28s linear infinite;
   white-space: nowrap;
 }
+
+/* ─────────────────────────────────────────────
+   Motion enhancement utilities (Phase 0)
+   CSS-driven so ambient loops cost nothing on the JS thread.
+   All respect the prefers-reduced-motion block above.
+   ───────────────────────────────────────────── */
+
+/* Generic entrance (the fadeIn keyframe existed without a utility) */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* Shimmer skeleton loader — a light sweep across a muted block */
+@keyframes shimmer {
+  0% { background-position: -180% 0; }
+  100% { background-position: 180% 0; }
+}
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background-image: linear-gradient(
+    100deg,
+    rgba(228, 217, 196, 0) 20%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(228, 217, 196, 0) 80%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+/* Section-title underline that draws itself in when revealed */
+@keyframes drawUnderline {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.animate-underline-draw::after {
+  transform-origin: left center;
+  animation: drawUnderline 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Rising aroma wisp — for jar / spice illustrations */
+@keyframes wisp {
+  0% { opacity: 0; transform: translateY(4px) scaleY(0.85); }
+  40% { opacity: 0.8; }
+  100% { opacity: 0; transform: translateY(-10px) scaleY(1.1); }
+}
+.animate-wisp {
+  transform-origin: bottom center;
+  animation: wisp 3.2s ease-in-out infinite;
+}
+
+/* Slow drifting gradient — for premium hero / banner backgrounds */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 12s ease infinite;
+}
+
+/* Soft pulse for badges / status dots */
+@keyframes softPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.9); }
+}
+.animate-soft-pulse {
+  animation: softPulse 2s ease-in-out infinite;
+}
+
+/* Extra stagger delays (complements the 500/1000/1500 helpers) */
+.animation-delay-200 { animation-delay: 0.2s; }
+.animation-delay-300 { animation-delay: 0.3s; }
+.animation-delay-700 { animation-delay: 0.7s; }

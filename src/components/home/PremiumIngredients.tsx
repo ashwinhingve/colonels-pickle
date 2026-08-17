@@ -1,5 +1,9 @@
+"use client";
+
 import type { ComponentType, SVGProps } from "react";
 import { SectionHeader } from "@/components/common/SectionHeader";
+import { StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
+import { HoverLift } from "@/components/shared/HoverLift";
 import {
   HingIllustration,
   MustardOilIllustration,
@@ -59,44 +63,49 @@ export function PremiumIngredients() {
           subtitle="We source the finest — and refuse every cheap substitute the industry quietly relies on."
         />
 
-        <div className="mt-12 grid grid-cols-2 gap-5 lg:grid-cols-4">
-          {INGREDIENTS.map((item) => (
-            <div
-              key={item.title}
-              style={
-                {
-                  "--ing": item.color,
-                  "--ing-soft": `${item.color}33`,
-                  background: `linear-gradient(135deg, ${item.color}0D 0%, #FFFFFF 70%)`,
-                } as React.CSSProperties
-              }
-              className="group rounded-2xl border-2 border-[color:var(--ing-soft)] p-6 transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-[color:var(--ing)]"
-            >
-              <div
-                className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110"
-                style={{ backgroundColor: item.tint }}
-              >
-                {item.Illustration ? (
-                  <item.Illustration className="h-10 w-10" aria-hidden />
-                ) : (
-                  <span className="text-4xl">{item.icon}</span>
-                )}
-              </div>
-              <h3 className="font-display text-base font-bold text-cp-text">
-                {item.title}
-              </h3>
-              <p className="mt-1 font-sans text-sm text-cp-text-muted">
-                {item.sub}
-              </p>
-              <p
-                className="mt-3 font-sans text-xs font-semibold"
-                style={{ color: item.color }}
-              >
-                {item.note}
-              </p>
-            </div>
-          ))}
-        </div>
+        <StaggerContainer staggerDelay={0.1}>
+          <div className="mt-12 grid grid-cols-2 gap-5 lg:grid-cols-4">
+            {INGREDIENTS.map((item) => (
+              <StaggerItem key={item.title}>
+                <HoverLift lift={4}>
+                  <div
+                    style={
+                      {
+                        "--ing": item.color,
+                        "--ing-soft": `${item.color}33`,
+                        background: `linear-gradient(135deg, ${item.color}0D 0%, #FFFFFF 70%)`,
+                      } as React.CSSProperties
+                    }
+                    className="group rounded-2xl border-2 border-[color:var(--ing-soft)] p-6 transition-[border-color] duration-300 hover:border-[color:var(--ing)]"
+                  >
+                    <div
+                      className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110"
+                      style={{ backgroundColor: item.tint }}
+                    >
+                      {item.Illustration ? (
+                        <item.Illustration className="h-10 w-10" aria-hidden />
+                      ) : (
+                        <span className="text-4xl">{item.icon}</span>
+                      )}
+                    </div>
+                    <h3 className="font-display text-base font-bold text-cp-text">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1 font-sans text-sm text-cp-text-muted">
+                      {item.sub}
+                    </p>
+                    <p
+                      className="mt-3 font-sans text-xs font-semibold"
+                      style={{ color: item.color }}
+                    >
+                      {item.note}
+                    </p>
+                  </div>
+                </HoverLift>
+              </StaggerItem>
+            ))}
+          </div>
+        </StaggerContainer>
       </div>
     </section>
   );

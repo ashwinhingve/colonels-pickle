@@ -10,6 +10,10 @@
  */
 import * as React from "react";
 
+/* Larger scene / empty-state / hero illustrations live in ./scenes and are
+   re-exported here so everything is importable from "@/components/illustrations". */
+export * from "./scenes";
+
 type SVGProps = React.SVGProps<SVGSVGElement> & { title?: string };
 
 const base = (props: SVGProps) => ({

@@ -7,6 +7,7 @@ import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import SessionProvider from "@/components/providers/SessionProvider";
+import MotionProvider from "@/components/providers/MotionProvider";
 import { connectDB } from "@/lib/mongodb";
 import MarketingSettings from "@/models/MarketingSettings";
 
@@ -227,14 +228,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           </noscript>
         )}
         <SessionProvider>
-          <AnnouncementBar />
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-          <CartDrawer />
-          <WhatsAppFloat />
+          <MotionProvider>
+            <AnnouncementBar />
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+            <CartDrawer />
+            <WhatsAppFloat />
+          </MotionProvider>
         </SessionProvider>
       </body>
     </html>
