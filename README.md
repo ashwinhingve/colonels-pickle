@@ -1,219 +1,191 @@
-# TAPTIFS - Tapti Food & Spices E-commerce Website 
+# Colonel's Pickle® — by Ridhwika Agro Organics
 
-A modern, production-ready e-commerce website for premium spices and food products, built with Next.js 14, TypeScript, and Tailwind CSS. 
- 
-## 🚀 Features
+> **माँ का प्यार, घर का अचार** · *Maa Ka Pyaar, Ghar Ka Achar*
 
-### Phase 1: Foundation (COMPLETED ✅)
-- ✅ Next.js 14 with App Router and TypeScript
-- ✅ Tailwind CSS + shadcn/ui components
-- ✅ Responsive layout with Header, Footer, and Navigation
-- ✅ Route groups for organized page structure
-- ✅ Supabase integration configured
-- ✅ Database schema designed
-- ✅ Modern homepage with hero section and featured products
+A production-grade e-commerce storefront for **Colonel's Pickle** — homemade organic pickles, cold-press oils, gulkand, and natural products, made with pride by the family of an Indian Army Colonel in Jaipur, Rajasthan.
 
-### Upcoming Features (Roadmap)
-- **E-commerce Core**: Product listings, shopping cart, checkout
-- **Payment Integration**: Stripe and PayPal
-- **User Authentication**: Login, signup, account management
-- **Recipe Blog**: Sanity CMS integration
-- **Reviews & Ratings**: Customer feedback system
-- **Wholesale Portal**: B2B ordering system
-- **Admin Dashboard**: Order and inventory management
+Built with **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS**, and **MongoDB**.
 
-## 📋 Prerequisites
+**FSSAI Licensed** · **Udyam Registered** · **Trademark®** · **GST Registered**
 
-- Node.js 18+ installed
-- npm or yarn package manager
-- Supabase account (for database)
-- Stripe account (for payments - optional for development)
+---
 
-## 🛠️ Getting Started
+## 🫙 About
 
-### 1. Install Dependencies
+Colonel's Pickle sells authentic, small-batch pickles and cold-press oils with **no artificial preservatives, colours, or flavours** — made from a traditional mother's recipe using 24 exotic whole spices, Kachi Ghani cold-press mustard oil, rock & black salt, and premium Afghani/Tajikistani/Uzbeki hing.
 
+- **Brand:** Colonel's Pickle® by Ridhwika Agro Organics (RAO)
+- **Location:** Plot A-207, Block A, Vardhman Nagar, Gali 24, Ajmer Road, Jaipur, Rajasthan – 302019
+- **Free delivery** pan-India on orders above **₹999**
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) · React 19 · TypeScript 5 |
+| Styling | Tailwind CSS 4 · shadcn/ui (Radix) · Framer Motion |
+| Database | MongoDB via Mongoose 8 |
+| Auth | NextAuth v4 — Google OAuth + Email OTP |
+| Payments | Cashfree PG |
+| Images | Cloudinary (`next-cloudinary`) |
+| Shipping | Delhivery + Shiprocket |
+| Notifications | Nodemailer (email) + Twilio (SMS/WhatsApp) |
+| State | Zustand |
+| Content | TipTap rich-text editor (admin CMS) |
+| Validation | Zod + React Hook Form |
+
+---
+
+## ✨ Features
+
+- **Storefront** — product listings, variant selection (100g / 250g / 500g / 1kg), persistent cart, checkout
+- **Accounts** — Google OAuth + email OTP login, order history, addresses, wishlist
+- **Payments** — Cashfree PG integration with order lifecycle tracking
+- **Shipping** — pluggable Delhivery / Shiprocket provider factory, live rate calculation, order tracking & returns
+- **Wholesale (B2B) portal** — bulk pricing & applications
+- **Admin dashboard** — product/inventory CMS, review moderation, order operations (role-gated)
+- **Trust & compliance** — verified FSSAI / Udyam / Trademark / GST registrations surfaced in-store
+- **Sitewide motion & illustration system** — Framer Motion primitives + inline-SVG artwork
+- **Notifications** — transactional email (Nodemailer) + SMS/WhatsApp (Twilio)
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- A MongoDB connection string (MongoDB Atlas recommended)
+
+### 1. Install dependencies
 ```bash
 npm install
 ```
 
-### 2. Set Up Environment Variables
-
-Copy the example environment file:
-
+### 2. Configure environment
 ```bash
-cp .env.example .env.local
+cp .env.local.example .env.local
+```
+Then fill in `.env.local`. Required groups of keys:
+
+| Group | Keys |
+|---|---|
+| MongoDB | `MONGODB_URI` |
+| NextAuth | `NEXTAUTH_SECRET`, `NEXTAUTH_URL` |
+| Google OAuth | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` |
+| Cashfree | `CASHFREE_APP_ID`, `CASHFREE_SECRET_KEY` |
+| Cloudinary | `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` |
+| Twilio | `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_FROM_NUMBER` |
+| Email (SMTP) | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` |
+| Admin | `ADMIN_EMAIL` (comma-separated; first entry is the primary admin) |
+
+> See `.env.local.example` for the complete, up-to-date list.
+
+### 3. Seed the product catalogue
+```bash
+npx tsx scripts/seed-products.ts
 ```
 
-Edit `.env.local` and add your credentials:
-
-```env
-# Required for database
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-
-# Required for payments (add when implementing)
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_key
-STRIPE_SECRET_KEY=your_stripe_secret
-
-# Optional services
-NEXT_PUBLIC_SANITY_PROJECT_ID=your_sanity_project_id
-```
-
-### 3. Set Up Database
-
-1. Create a new project in [Supabase](https://supabase.com)
-2. Go to SQL Editor in your Supabase dashboard
-3. Copy the contents of `database-schema.sql`
-4. Execute the SQL to create all tables and policies
-
-### 4. Run Development Server
-
+### 4. Run the dev server
 ```bash
 npm run dev
 ```
+Open [http://localhost:3000](http://localhost:3000).
 
-Open [http://localhost:3000](http://localhost:3000) to view the website.
+---
+
+## 📦 Scripts
+
+### npm scripts
+```bash
+npm run dev      # start the dev server (http://localhost:3000)
+npm run build    # production build
+npm run start    # run the production build
+npm run lint     # ESLint
+```
+
+### Data / catalogue scripts (`tsx`)
+```bash
+npx tsx scripts/seed-products.ts        # seed products & categories into MongoDB
+npx tsx scripts/validate-products.ts    # validate product data integrity
+npx tsx scripts/add-extra-products.ts   # add supplementary products
+npx tsx scripts/reconcile-prices.ts     # reconcile prices against the price list
+npx tsx scripts/upload-product-images.ts # upload product images to Cloudinary
+npx tsx scripts/link-product-images.ts   # link uploaded images to products
+```
+
+---
 
 ## 📁 Project Structure
 
 ```
-taptifs/
-├── src/
-│   ├── app/                    # Next.js App Router pages
-│   │   ├── (shop)/            # Shop route group
-│   │   ├── (recipes)/         # Recipes route group
-│   │   ├── (account)/         # Account route group
-│   │   ├── (wholesale)/       # Wholesale route group
-│   │   ├── (info)/            # Info pages route group
-│   │   └── api/               # API routes
-│   ├── components/            # React components
-│   │   ├── ui/                # shadcn/ui components
-│   │   ├── layout/            # Header, Footer, Navigation
-│   │   ├── products/          # Product components
-│   │   ├── cart/              # Cart components
-│   │   └── ...
-│   ├── lib/                   # Utilities and configurations
-│   │   ├── supabase/          # Supabase clients
-│   │   ├── utils.ts           # Helper functions
-│   │   └── constants.ts       # App constants
-│   ├── types/                 # TypeScript type definitions
-│   ├── store/                 # State management (Zustand)
-│   ├── hooks/                 # Custom React hooks
-│   └── styles/                # Global styles
-├── database-schema.sql        # Complete database schema
-├── .env.example               # Environment variables template
-└── components.json            # shadcn/ui configuration
+src/
+├── app/
+│   ├── (shop)/          # Product listings, cart, checkout, orders
+│   ├── (info)/          # About, Contact, FAQ, policy pages
+│   ├── (account)/       # Login, account, orders, wishlist, addresses
+│   ├── (wholesale)/     # B2B wholesale portal
+│   ├── admin/           # Admin dashboard (role-gated)
+│   ├── auth/            # Auth pages (error, signout)
+│   └── api/             # REST API routes
+├── components/
+│   ├── ui/              # shadcn base components
+│   ├── layout/          # Header, Footer, MobileMenu, CartDrawer
+│   ├── home/            # Homepage sections
+│   ├── products/        # ProductCard, gallery, purchase
+│   ├── shared/          # Motion primitives, dividers, skeletons
+│   └── illustrations/   # Inline-SVG artwork & scenes
+├── models/              # Mongoose schemas
+├── lib/
+│   ├── constants.ts     # Brand, registrations, pricing, categories
+│   ├── auth.ts          # NextAuth config
+│   ├── payment/         # Cashfree
+│   ├── shipping/        # Delhivery + Shiprocket
+│   └── notifications/   # Email + SMS
+├── store/               # Zustand stores
+├── types/               # TypeScript types
+└── styles/              # globals.css, fonts
+scripts/                 # Seed / validate / image / price tooling
 ```
-
-## 🗃️ Database Schema
-
-The application uses PostgreSQL (via Supabase) with the following main tables:
-
-- **profiles**: User profile information
-- **products**: Product catalog with pricing and inventory
-- **product_reviews**: Customer reviews and ratings
-- **orders**: Order management with full details
-- **order_items**: Individual items in orders
-- **cart_items**: Persistent shopping cart
-- **wishlist_items**: User wishlists
-- **addresses**: Shipping and billing addresses
-- **wholesale_applications**: B2B customer applications
-
-All tables have Row Level Security (RLS) enabled for data protection.
-
-## 🎨 Tech Stack
-
-### Core
-- **Framework**: Next.js 14 with App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui (Radix UI + Tailwind)
-
-### Backend & Database
-- **Database**: Supabase (PostgreSQL)
-- **Authentication**: Supabase Auth
-- **ORM**: Supabase JavaScript Client
-
-### Payment & Services (To be integrated)
-- **Payments**: Stripe + PayPal
-- **CMS**: Sanity for recipes and blog
-- **State Management**: Zustand
-- **Email**: Resend or SendGrid
-
-## 🚢 Deployment
-
-### Deploy to Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Import project in [Vercel](https://vercel.com)
-3. Add environment variables
-4. Deploy!
-
-```bash
-# Or use Vercel CLI
-npm install -g vercel
-vercel
-```
-
-### Environment Variables for Production
-
-Make sure to add all required environment variables in your deployment platform:
-- Supabase credentials
-- Stripe keys
-- Sanity CMS credentials (when added)
-- Email service API keys (when added)
-
-## 📝 Development Commands
-
-```bash
-# Development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Run production build locally
-npm run start
-
-# Run linter
-npm run lint
-```
-
-## 🔐 Security
-
-- All database tables use Row Level Security (RLS)
-- Authentication handled by Supabase
-- Payment processing through secure Stripe integration
-- Environment variables for sensitive data
-- CORS and CSRF protection
-
-## 📈 Performance Optimizations
-
-- Next.js Image optimization for all product images
-- Server-side rendering for SEO
-- Code splitting and lazy loading
-- Static page generation where possible
-- Optimized bundle size with tree-shaking
-
-## 🤝 Contributing
-
-This is a private project, but contributions are welcome:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-Copyright © 2025 TAPTIFS - Tapti Food & Spices. All rights reserved.
-
-## 📧 Contact
-
-For questions or support, contact: info@taptifs.com
 
 ---
 
-**Built with ❤️ using Next.js, TypeScript, and Tailwind CSS**
+## 🚢 Deployment
+
+Deployable to any Node host; **Vercel** is recommended.
+
+1. Push to GitHub
+2. Import the project into Vercel
+3. Add every environment variable from `.env.local.example`
+4. Deploy
+
+Ensure production `NEXTAUTH_URL` and the Cashfree, Cloudinary, Twilio, and SMTP credentials point at their production values.
+
+---
+
+## 🏛️ Registrations & Trust
+
+These government registrations are displayed in-store so customers can independently verify the brand:
+
+| Registration | Number |
+|---|---|
+| FSSAI (valid till 12 Jan 2027) | `12226026000060` |
+| Udyam (MSME · Manufacturing) | `UDYAM-RJ-17-0307560` |
+| Trademark (Class 29 · Pickles) | `6202243` |
+| GSTIN (Rajasthan) | `08BFKPD8446R1ZM` |
+
+---
+
+## 📄 License & Contact
+
+Copyright © Ridhwika Agro Organics. All rights reserved. This is a private, proprietary project.
+
+- 🌐 [beacons.ai/colonelspickle](https://beacons.ai/colonelspickle)
+- 📸 [@colonels.pickle](https://instagram.com/colonels.pickle)
+- ✉️ colonelspickle@proton.me
+- 📞 +91 9717243306 · 9416845689 · 9350406289
+
+---
+
+**Built with ❤️ in Jaipur — Next.js · TypeScript · Tailwind CSS · MongoDB**
