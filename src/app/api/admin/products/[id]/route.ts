@@ -47,7 +47,9 @@ export async function PATCH(
     // Capture current stock before update (if stock is being changed)
     let stockBefore: number | undefined;
     if (validated.stock !== undefined) {
-      const currentProduct = await Product.findById(id).select('stock').lean() as any;
+      const currentProduct = (await Product.findById(id)
+        .select('stock')
+        .lean()) as { stock?: number } | null;
       if (currentProduct) {
         stockBefore = currentProduct.stock;
       }
@@ -85,6 +87,8 @@ export async function PATCH(
       stockBefore !== product.stock
     ) {
       try {
+        // adminCheck.session is guaranteed non-null here since verifyAdminAccess()
+        // already returned without an error above.
         const session = adminCheck.session;
 
         // Create StockMovement record (append-only ledger)
