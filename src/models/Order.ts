@@ -9,8 +9,8 @@ export interface IOrder extends Document {
   subtotal: number;
   shippingCost: number;
   taxAmount: number;    // total GST (informational — already included in subtotal)
-  cgst: number;         // CGST for intra-state (MP) orders
-  sgst: number;         // SGST for intra-state (MP) orders
+  cgst: number;         // CGST for intra-state (Rajasthan) orders
+  sgst: number;         // SGST for intra-state (Rajasthan) orders
   igst: number;         // IGST for inter-state orders
   isIntraState: boolean;
   discountAmount: number;
