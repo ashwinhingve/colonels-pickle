@@ -148,7 +148,7 @@ export default function AdminSuppliersPage() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm('Delete this supplier? This action cannot be undone.')) return;
+    if (!confirm('Deactivate this supplier? It will be hidden from active lists but can be restored later by an admin.')) return;
     try {
       const res = await fetch(`/api/admin/inventory/suppliers/${id}`, {
         method: 'DELETE',

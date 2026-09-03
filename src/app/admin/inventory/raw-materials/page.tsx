@@ -193,7 +193,7 @@ export default function AdminRawMaterialsPage() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm('Delete this raw material? This action cannot be undone.')) return;
+    if (!confirm('Deactivate this raw material? It will be hidden from active lists but can be restored later by an admin.')) return;
     try {
       const res = await fetch(`/api/admin/inventory/raw-materials/${id}`, {
         method: 'DELETE',
@@ -734,7 +734,7 @@ export default function AdminRawMaterialsPage() {
       </div>
 
       <p className="text-xs text-gray-400 mt-3">
-        💡 Tip: Items with a red left border are out of stock. Items with amber border are running low. Edit to update stock levels or assign suppliers.
+        💡 Tip: Items with a red left border are out of stock. Items with amber border are running low. Edit to update stock levels or assign suppliers. Deleting a raw material will only deactivate it — it stays in the system for history.
       </p>
     </div>
   );
