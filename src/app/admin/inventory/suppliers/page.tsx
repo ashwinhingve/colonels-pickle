@@ -49,28 +49,47 @@ export default function AdminSuppliersPage() {
   const [saving, setSaving] = useState(false);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 20,
+    total: 0,
+    pages: 1,
+    hasNext: false,
+    hasPrev: false,
+  });
 
   const fetchSuppliers = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
+      params.append('page', currentPage.toString());
+      params.append('limit', '20');
       if (search) params.append('search', search);
       if (statusFilter !== 'all') params.append('status', statusFilter);
 
       const res = await fetch(`/api/admin/inventory/suppliers?${params}`);
       const data = await res.json();
       setSuppliers(data.items || []);
+      if (data.pagination) {
+        setPagination(data.pagination);
+      }
     } catch (err) {
       console.error('Failed to fetch suppliers:', err);
       alert('Failed to load suppliers');
     } finally {
       setLoading(false);
     }
-  }, [search, statusFilter]);
+  }, [search, statusFilter, currentPage]);
 
   useEffect(() => {
     fetchSuppliers();
   }, [fetchSuppliers]);
+
+  // Reset to page 1 when filters/search change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, statusFilter]);
 
   async function handleAdd() {
     if (!addForm.name.trim()) {
@@ -322,8 +341,9 @@ export default function AdminSuppliersPage() {
       )}
 
       {/* Suppliers Table */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden overflow-x-auto">
-        <table className="w-full">
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
@@ -469,6 +489,7 @@ export default function AdminSuppliersPage() {
                           <Button
                             size="sm"
                             variant="ghost"
+                            aria-label={`Edit ${sup.name}`}
                             onClick={() => {
                               setEditingId(sup._id);
                               setEditForm({
@@ -488,6 +509,7 @@ export default function AdminSuppliersPage() {
                             size="sm"
                             variant="ghost"
                             className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            aria-label={`Delete ${sup.name}`}
                             onClick={() => handleDelete(sup._id)}
                           >
                             <Trash2 className="w-3 h-3" />
@@ -500,7 +522,41 @@ export default function AdminSuppliersPage() {
               ))
             )}
           </tbody>
-        </table>
+          </table>
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="border-t border-gray-200 px-4 py-3 flex items-center justify-between bg-gray-50">
+          <div className="text-sm text-gray-600">
+            Page <span className="font-semibold">{pagination.page}</span> of{' '}
+            <span className="font-semibold">{pagination.pages}</span>
+            {pagination.total > 0 && (
+              <>
+                {' '}
+                (
+                <span className="font-semibold">{pagination.total}</span> total)
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={!pagination.hasPrev || loading}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            >
+              Previous
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={!pagination.hasNext || loading}
+              onClick={() => setCurrentPage((p) => p + 1)}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
       </div>
 
       <p className="text-xs text-gray-400 mt-3">
