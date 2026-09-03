@@ -51,6 +51,7 @@ export interface IProduct extends Document {
   subcategory?: string;
   price: number;
   originalPrice?: number;
+  costPrice?: number;
   discountPercentage?: number;
   stock: number;
   images: IProductImage[];
@@ -76,6 +77,7 @@ export interface IProduct extends Document {
   totalReviews: number;
   gstRate: number; // 0 | 5 | 12 | 18 | 28 — GST rate; product price is GST-inclusive
   videoUrl?: string;
+  supplierId?: mongoose.Types.ObjectId;
   relatedProducts?: mongoose.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
@@ -128,6 +130,10 @@ const ProductSchema = new Schema<IProduct>(
       min: 0,
     },
     originalPrice: {
+      type: Number,
+      min: 0,
+    },
+    costPrice: {
       type: Number,
       min: 0,
     },
@@ -222,6 +228,10 @@ const ProductSchema = new Schema<IProduct>(
     },
     videoUrl: {
       type: String,
+    },
+    supplierId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Supplier',
     },
     relatedProducts: {
       type: [Schema.Types.ObjectId],
