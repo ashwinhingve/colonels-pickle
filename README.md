@@ -15,7 +15,7 @@ Built with **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS**, and **
 Colonel's Pickle sells authentic, small-batch pickles and cold-press oils with **no artificial preservatives, colours, or flavours** — made from a traditional mother's recipe using 24 exotic whole spices, Kachi Ghani cold-press mustard oil, rock & black salt, and premium Afghani/Tajikistani/Uzbeki hing.
 
 - **Brand:** Colonel's Pickle® by Ridhwika Agro Organics (RAO)
-- **Location:** Plot A-207, Block A, Vardhman Nagar, Gali 24, Ajmer Road, Jaipur, Rajasthan – 302019
+- **Location:** B-6/374, Vaishali Nagar, Jaipur, Rajasthan – 302020
 - **Free delivery** pan-India on orders above **₹999**
 
 ---

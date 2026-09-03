@@ -60,8 +60,8 @@ All variables must be set in **Vercel Project Settings > Environment Variables**
 
 - [ ] **DELHIVERY_API_KEY** — Production API key
 - [ ] **DELHIVERY_BASE_URL** — `https://one.delhivery.com`
-- [ ] **DELHIVERY_RETURN_PINCODE** — `302019`
-- [ ] **DELHIVERY_RETURN_ADDRESS** — `Plot A-207, Block A, Vardhman Nagar, Gali No. 24, Ajmer Road`
+- [ ] **DELHIVERY_RETURN_PINCODE** — `302020`
+- [ ] **DELHIVERY_RETURN_ADDRESS** — `B-6/374, Vaishali Nagar`
 - [ ] **DELHIVERY_RETURN_CITY** — `Jaipur`
 - [ ] **DELHIVERY_RETURN_STATE** — `Rajasthan`
 - [ ] **DELHIVERY_RETURN_COUNTRY** — `India`

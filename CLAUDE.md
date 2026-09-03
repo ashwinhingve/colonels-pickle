@@ -334,13 +334,13 @@ export const BRAND = {
   nameFull: "Colonel's Pickle® by Ridhwika Agro Organics",
   tagline: "Maa Ka Pyaar, Ghar Ka Achar",
   taglineHindi: "माँ का प्यार, घर का अचार",
-  fssai: "12223026002188",
+  fssai: "12226026000060",
   address: {
-    line1: "Plot A-207, Block A, Vardhman Nagar",
-    line2: "Gali No. 24, Ajmer Road",
+    line1: "B-6/374, Vaishali Nagar",
+    line2: "",
     city: "Jaipur",
     state: "Rajasthan",
-    pin: "302019",
+    pin: "302020",
   },
   phones: ["9717243306", "9416845689", "9350406289"],
   social: {
