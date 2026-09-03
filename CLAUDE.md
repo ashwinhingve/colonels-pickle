@@ -11,7 +11,7 @@ This file provides complete context to Claude Code for building the Colonel's Pi
 **Sub-brand:** Ridhwika Agro Organics (RAO) — the manufacturing entity  
 **Tagline:** *"Maa Ka Pyaar, Ghar Ka Achar"* (माँ का प्यार, घर का अचार)  
 **Owner:** Proprietor, Ridhwika Agro Organics — the family of an Indian Army Colonel. NOTE: the Colonel's personal name must never appear on the website; refer to him only as "Indian Army Colonel".  
-**Location:** Plot A-207, Block A, Vardhman Nagar, Gali 24, Ajmer Road, Jaipur, Rajasthan – 302019  
+**Location:** B-6/374, Vaishali Nagar, Jaipur, Rajasthan – 302020  
 **Contact:** 9717243306, 9416845689, 9350406289  
 **FSSAI:** 12226026000060 (valid till 12 Jan 2027)  
 **Registrations:** FSSAI 12226026000060 · Udyam UDYAM-RJ-17-0307560 · Trademark 6202243 (Class 29) · GST 08BFKPD8446R1ZM
