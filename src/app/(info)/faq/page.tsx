@@ -192,12 +192,12 @@ const FAQ_OTHER: FAQItem[] = [
   },
   {
     question: "How do I contact Colonel's Pickle?",
-    answer: `You can reach us via: WhatsApp: +91 9350406289, Email: colonelspickle@proton.me, Phone: +91 9717243306 / 9416845689 / 9350406289, Address: Plot A-207, Block A, Vardhman Nagar, Gali No. 24, Ajmer Road, Jaipur, Rajasthan – 302019. Visit us during business hours: Mon–Sat 9 AM–7 PM, Sunday 10 AM–5 PM (IST).`,
+    answer: `You can reach us via: WhatsApp: +91 9350406289, Email: colonelspickle@proton.me, Phone: +91 9717243306 / 9416845689 / 9350406289, Address: B-6/374, Vaishali Nagar, Jaipur, Rajasthan – 302020. Visit us during business hours: Mon–Sat 9 AM–7 PM, Sunday 10 AM–5 PM (IST).`,
   },
   {
     question: "Do you have a physical store in Jaipur?",
     answer:
-      "Yes! We're located in Jaipur at Plot A-207, Block A, Vardhman Nagar, Gali No. 24, Ajmer Road. Local customers are welcome to visit and meet our team. We offer free delivery, pan-India, on orders above ₹999. For directions, check Google Maps: https://maps.app.goo.gl/FCraoQErzuMnHLBz9",
+      "Yes! We're located in Jaipur at B-6/374, Vaishali Nagar. Local customers are welcome to visit and meet our team. We offer free delivery, pan-India, on orders above ₹999. For directions, check Google Maps: https://maps.app.goo.gl/FCraoQErzuMnHLBz9",
   },
   {
     question: "Are there any certifications besides FSSAI?",

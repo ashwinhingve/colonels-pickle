@@ -354,7 +354,7 @@ export const BRAND = {
     "24 Exotic Whole Spices",
     "Kachi Ghani Cold Press Mustard Oil",
     "Rock Salt & Black Salt Only",
-    "Afghani Hing (₹35,000/kg)",
+    "Afghani Hing (₹30,000/kg)",
     "Traditional Mother's Recipe",
     "FSSAI Certified",
   ],

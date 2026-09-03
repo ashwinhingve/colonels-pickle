@@ -28,10 +28,10 @@ const organizationJsonLd = {
   },
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Plot A-207, Block A, Vardhman Nagar, Gali No. 24, Ajmer Road',
+    streetAddress: 'B-6/374, Vaishali Nagar',
     addressLocality: 'Jaipur',
     addressRegion: 'Rajasthan',
-    postalCode: '302019',
+    postalCode: '302020',
     addressCountry: 'IN',
   },
   email: 'colonelspickle@proton.me',

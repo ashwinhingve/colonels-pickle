@@ -220,7 +220,7 @@ XL:      grid-cols-5 (only on All Products page)
 //   ⭐ FSSAI Certified / Safe & trusted
 //   🧂 Rock & Black Salt / No table salt used
 //   🌿 24 Whole Spices / Sun-dried & freshly ground
-//   💎 Afghani Hing / Premium ₹35,000/kg
+//   💎 Afghani Hing / Premium ₹30,000/kg
 ```
 
 ### ProductCard

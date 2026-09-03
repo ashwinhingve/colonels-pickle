@@ -1,15 +1,15 @@
 /**
  * GST Utility — Colonel's Pickle by Ridhwika Agro Organics
  *
- * Seller state: Madhya Pradesh (GSTIN: 23GGLPD7346M1ZZ)
- * Intra-state sale (customer in MP) → CGST + SGST (split equally)
- * Inter-state sale (customer outside MP) → IGST
+ * Seller state: Rajasthan (GSTIN: 08BFKPD8446R1ZM)
+ * Intra-state sale (customer in Rajasthan) → CGST + SGST (split equally)
+ * Inter-state sale (customer outside Rajasthan) → IGST
  *
  * Product prices in the DB are GST-INCLUSIVE (MRP).
  * GST is extracted from the inclusive price — never added on top.
  */
 
-export const SELLER_STATE = 'Madhya Pradesh';
+export const SELLER_STATE = 'Rajasthan';
 export const GST_RATES = [0, 5, 12, 18, 28] as const;
 export type GSTRate = (typeof GST_RATES)[number];
 

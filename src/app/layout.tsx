@@ -80,10 +80,10 @@ const orgJsonLd = {
   "description": "Authentic homemade pickles, gulkand and cold press oils — no preservatives, 24 whole spices, cold press mustard oil. FSSAI certified, Jaipur.",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Plot A-207, Block A, Vardhman Nagar, Gali No. 24, Ajmer Road",
+    "streetAddress": "B-6/374, Vaishali Nagar",
     "addressLocality": "Jaipur",
     "addressRegion": "Rajasthan",
-    "postalCode": "302019",
+    "postalCode": "302020",
     "addressCountry": "IN",
   },
   "hasCredential": {

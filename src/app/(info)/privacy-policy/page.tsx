@@ -227,7 +227,7 @@ function DefaultContent() {
                     <h2 className="text-2xl font-bold text-cp-text mb-4">Contact Information</h2>
                     <div className="space-y-2 text-cp-text-muted">
                       <p><strong>Colonel&apos;s Pickle by Ridhwika Agro Organics</strong></p>
-                      <p>📍 Plot A-207, Block A, Vardhman Nagar, Gali No. 24, Ajmer Road, Jaipur, Rajasthan - 302019</p>
+                      <p>📍 B-6/374, Vaishali Nagar, Jaipur, Rajasthan - 302020</p>
                       <p>📧 Email: ridhwika.agro.organics@gmail.com</p>
                       <p>📞 Phone: +91 9717243306, +91 9416845689, +91 9350406289</p>
                       <p>🌐 Website: colonelspickle.in</p>

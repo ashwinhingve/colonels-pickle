@@ -36,10 +36,10 @@ class DelhiveryService implements IShippingProvider {
       this.config = {
         apiKey: process.env.DELHIVERY_API_KEY.trim(),
         baseUrl: (process.env.DELHIVERY_BASE_URL || 'https://track.delhivery.com').trim(),
-        returnPincode: process.env.DELHIVERY_RETURN_PINCODE || '302019',
+        returnPincode: process.env.DELHIVERY_RETURN_PINCODE || '302020',
         returnAddress:
           process.env.DELHIVERY_RETURN_ADDRESS ||
-          'Plot A-207, Block A, Vardhman Nagar, Gali No. 24, Ajmer Road',
+          'B-6/374, Vaishali Nagar',
         returnCity: process.env.DELHIVERY_RETURN_CITY || 'Jaipur',
         returnState: process.env.DELHIVERY_RETURN_STATE || 'Rajasthan',
         returnCountry: process.env.DELHIVERY_RETURN_COUNTRY || 'India',

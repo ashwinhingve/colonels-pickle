@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth-helpers';
 import { connectDB } from '@/lib/mongodb';
+import { REGISTRATIONS } from '@/lib/constants';
 import Order from '@/models/Order';
 import '@/models/OrderItem';
 import '@/models/Address';
@@ -61,6 +62,9 @@ function formatINR(amount: number): string {
 }
 
 function generateInvoiceHTML(order: any): string {
+  const gstRegistration = REGISTRATIONS.find(reg => reg.key === 'gst');
+  const gstNumber = gstRegistration?.number || '08BFKPD8446R1ZM';
+
   const invoiceDate = new Date().toLocaleDateString('en-IN', {
     day: 'numeric',
     month: 'long',
@@ -289,7 +293,7 @@ function generateInvoiceHTML(order: any): string {
       <p>Premium Quality Food Products</p>
       <p>Email: support@colonelspickle.in</p>
       <p>Phone: +91-93292 16544</p>
-      <p>GST No: 23GGLPD7346M1ZZ</p>
+      <p>GST No: ${gstNumber}</p>
     </div>
     <div class="invoice-details">
       <h2>INVOICE</h2>

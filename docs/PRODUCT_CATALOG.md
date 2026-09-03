@@ -487,7 +487,7 @@ const PREMIUM_INGREDIENTS = [
     name: "Afghani, Tajiki & Uzbegi Hing",
     nameHindi: "अफगानी, ताजिकी और उज्बेगी हींग",
     subtitle: "Premium Asafoetida",
-    price: "~₹35,000/kg",
+    price: "~₹30,000/kg",
     detail: "The world's finest asafoetida, sourced directly from Central Asia. The quality of hing defines the character of every pickle.",
     color: "#166534",
   },
