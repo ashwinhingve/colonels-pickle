@@ -3,8 +3,11 @@ import { revalidatePath } from 'next/cache';
 import { verifyAdminAccess } from '@/lib/auth-helpers';
 import connectDB from '@/lib/mongodb/connection';
 import Product from '@/models/Product';
+import StockMovement from '@/models/StockMovement';
+import AdminActivity from '@/models/AdminActivity';
 import { productUpdateSchema } from '@/lib/validations/product';
 import cloudinary from '@/lib/cloudinary/config';
+import { Types } from 'mongoose';
 
 /**
  * PATCH /api/admin/products/[id]
@@ -41,6 +44,15 @@ export async function PATCH(
 
     await connectDB();
 
+    // Capture current stock before update (if stock is being changed)
+    let stockBefore: number | undefined;
+    if (validated.stock !== undefined) {
+      const currentProduct = await Product.findById(id).select('stock').lean() as any;
+      if (currentProduct) {
+        stockBefore = currentProduct.stock;
+      }
+    }
+
     // Calculate discount percentage if prices are updated
     if (validated.originalPrice && validated.price) {
       if (validated.originalPrice > validated.price) {
@@ -64,6 +76,53 @@ export async function PATCH(
         { error: 'Product not found' },
         { status: 404 }
       );
+    }
+
+    // Log stock movement if stock was actually changed via this update
+    if (
+      validated.stock !== undefined &&
+      stockBefore !== undefined &&
+      stockBefore !== product.stock
+    ) {
+      try {
+        const session = adminCheck.session;
+
+        // Create StockMovement record (append-only ledger)
+        await StockMovement.create({
+          itemType: 'product',
+          itemId: new Types.ObjectId(id),
+          movementType: 'adjustment',
+          quantity: product.stock, // For adjustment, quantity = new absolute stock level
+          reason: 'manual_adjustment',
+          balanceAfter: product.stock,
+          performedBy: new Types.ObjectId(session.user.id),
+        });
+
+        // Log admin activity
+        try {
+          await AdminActivity.create({
+            adminId: session.user.id,
+            adminName: session.user.name || 'Unknown Admin',
+            adminEmail: session.user.email,
+            action: 'stock_movement_created',
+            entityType: 'product',
+            entityId: new Types.ObjectId(id),
+            details: {
+              movementType: 'adjustment',
+              quantity: product.stock,
+              reason: 'manual_adjustment',
+              newStock: product.stock,
+              previousStock: stockBefore,
+            },
+          });
+        } catch (logError) {
+          console.error('Error logging admin activity for stock adjustment:', logError);
+          // Don't fail the request if logging fails
+        }
+      } catch (movementError) {
+        console.error('Error creating stock movement for product update:', movementError);
+        // Fail-open: don't fail the product update if the audit log write fails
+      }
     }
 
     // Invalidate homepage and products page cache
