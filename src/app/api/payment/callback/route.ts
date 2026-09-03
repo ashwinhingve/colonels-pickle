@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import { connectDB } from '@/lib/mongodb';
 import Order from '@/models/Order';
 import OrderItem from '@/models/OrderItem';
 import Transaction from '@/models/Transaction';
-import Product from '@/models/Product';
+import Product, { IProduct } from '@/models/Product';
 import { cashfreeService } from '@/lib/payment/cashfree';
 import { emailService } from '@/lib/notifications/email';
 import { smsService } from '@/lib/notifications/sms';
@@ -166,7 +166,7 @@ export async function GET(request: NextRequest) {
 
         // Collect stock movements for post-transaction logging
         const stockMovementsToLog: Array<{
-          productId: any;
+          productId: Types.ObjectId;
           quantity: number;
           balanceAfter: number;
         }> = [];
@@ -175,7 +175,7 @@ export async function GET(request: NextRequest) {
         const orderItems = await OrderItem.find({ orderId: order._id }).session(session);
 
         for (const item of orderItems) {
-          let updatedProduct;
+          let updatedProduct: IProduct | null;
 
           if (item.variantId) {
             // Reduce variant-level stock (and root stock for display consistency)
@@ -240,14 +240,16 @@ export async function GET(request: NextRequest) {
           orderId: order._id,
         });
 
-        // Log stock movements after transaction commits (non-blocking, fail-open)
+        // Log stock movements after transaction commits (non-blocking, fail-open).
+        // Safe here: logStockMovement never throws, so it cannot trigger the surrounding catch's abortTransaction().
         for (const movement of stockMovementsToLog) {
-          logStockMovement({
+          await logStockMovement({
             productId: movement.productId,
             movementType: 'out',
             quantity: movement.quantity,
             reason: 'sale',
             balanceAfter: movement.balanceAfter,
+            // Ledger attributes movement to the order's customer (party whose purchase caused the deduction).
             performedBy: order.userId,
             reference: order.orderNumber,
           });
@@ -520,7 +522,7 @@ export async function POST(request: NextRequest) {
           try {
             const webhookOrderItems = await OrderItem.find({ orderId: order._id });
             for (const item of webhookOrderItems) {
-              let updated;
+              let updated: IProduct | null;
               if (item.variantId) {
                 updated = await Product.findOneAndUpdate(
                   { _id: item.productId, variants: { $elemMatch: { id: item.variantId, stock: { $gte: item.quantity } } } },
@@ -536,12 +538,13 @@ export async function POST(request: NextRequest) {
               }
 
               if (updated) {
-                logStockMovement({
+                await logStockMovement({
                   productId: item.productId,
                   movementType: 'out',
                   quantity: item.quantity,
                   reason: 'sale',
                   balanceAfter: updated.stock,
+                  // Ledger attributes movement to the order's customer (party whose purchase caused the deduction).
                   performedBy: order.userId,
                   reference: order.orderNumber,
                 });

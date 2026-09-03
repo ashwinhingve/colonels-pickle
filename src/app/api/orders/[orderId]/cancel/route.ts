@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth';
 import { connectDB } from '@/lib/mongodb';
 import Order from '@/models/Order';
 import OrderItem from '@/models/OrderItem';
-import Product from '@/models/Product';
+import Product, { IProduct } from '@/models/Product';
 import Shipment from '@/models/Shipment';
 import Transaction from '@/models/Transaction';
 import User from '@/models/User';
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       const orderItems = await OrderItem.find({ orderId: order._id });
 
       for (const item of orderItems) {
-        let updated;
+        let updated: IProduct | null;
         if (item.variantId) {
           // Restore variant-level and root stock
           updated = await Product.findOneAndUpdate(
@@ -107,7 +107,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         }
 
         if (updated) {
-          logStockMovement({
+          await logStockMovement({
             productId: item.productId,
             movementType: 'in',
             quantity: item.quantity,
