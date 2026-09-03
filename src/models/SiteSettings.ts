@@ -34,6 +34,10 @@ export interface ISiteSettings extends Document {
   inventory?: {
     lowStockThreshold: number;
   };
+  invoiceCounter?: {
+    fiscalYear: string;
+    lastNumber: number;
+  };
   updatedAt: Date;
   createdAt: Date;
 }
@@ -81,6 +85,14 @@ const SiteSettingsSchema = new Schema<ISiteSettings>(
         type: Number,
         default: 10,
         min: 0,
+      },
+    },
+    invoiceCounter: {
+      fiscalYear: {
+        type: String,
+      },
+      lastNumber: {
+        type: Number,
       },
     },
   },

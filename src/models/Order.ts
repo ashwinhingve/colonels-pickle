@@ -3,6 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface IOrder extends Document {
   _id: mongoose.Types.ObjectId;
   orderNumber: string;
+  invoiceNumber?: string;
   userId: mongoose.Types.ObjectId;
   items: mongoose.Types.ObjectId[];
   subtotal: number;
@@ -61,6 +62,11 @@ const OrderSchema = new Schema<IOrder>(
       required: true,
       unique: true,
       uppercase: true,
+    },
+    invoiceNumber: {
+      type: String,
+      unique: true,
+      sparse: true,
     },
     userId: {
       type: Schema.Types.ObjectId,
