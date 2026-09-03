@@ -120,55 +120,72 @@ export async function POST(req: NextRequest) {
 
     await connectDB();
 
-    // Look up the referenced item (RawMaterial or Product based on itemType)
-    let item: any;
-    const itemIdObj = new Types.ObjectId(validated.itemId);
-
-    if (validated.itemType === 'raw_material') {
-      item = await RawMaterial.findById(itemIdObj);
-      if (!item) {
-        return NextResponse.json(
-          { error: 'Raw material not found' },
-          { status: 404 }
-        );
-      }
-    } else if (validated.itemType === 'product') {
-      item = await Product.findById(itemIdObj);
-      if (!item) {
-        return NextResponse.json(
-          { error: 'Product not found' },
-          { status: 404 }
-        );
-      }
-    }
-
-    // Determine current stock field name based on item type
+    // Determine item model and stock field name based on type
+    const ItemModel = validated.itemType === 'raw_material' ? RawMaterial : Product;
     const stockFieldName =
       validated.itemType === 'raw_material' ? 'currentStock' : 'stock';
-    const currentStock = item[stockFieldName];
+    const itemIdObj = new Types.ObjectId(validated.itemId);
 
-    // Compute new stock based on movementType
-    let newStock: number;
+    // Perform atomic stock update based on movementType using MongoDB operators
+    // This prevents race conditions where concurrent requests could both read stale stock
+    let updated: any;
 
     if (validated.movementType === 'in') {
-      // 'in' movement adds quantity to current stock
-      newStock = currentStock + validated.quantity;
+      // 'in' movement: atomically increment stock using $inc operator
+      updated = await ItemModel.findOneAndUpdate(
+        { _id: itemIdObj },
+        { $inc: { [stockFieldName]: validated.quantity } },
+        { new: true }
+      );
+      if (!updated) {
+        const itemType = validated.itemType === 'raw_material' ? 'Raw material' : 'Product';
+        return NextResponse.json(
+          { error: `${itemType} not found` },
+          { status: 404 }
+        );
+      }
     } else if (validated.movementType === 'out') {
-      // 'out' movement subtracts quantity from current stock
-      newStock = currentStock - validated.quantity;
-      // Reject if it would go negative
-      if (newStock < 0) {
+      // 'out' movement: atomically decrement stock, but only if sufficient stock exists
+      // The query filter checks stock >= quantity, ensuring the update only succeeds if stock is sufficient
+      // This is atomic: both the check and the decrement happen in the same MongoDB operation
+      updated = await ItemModel.findOneAndUpdate(
+        { _id: itemIdObj, [stockFieldName]: { $gte: validated.quantity } },
+        { $inc: { [stockFieldName]: -validated.quantity } },
+        { new: true }
+      );
+      if (!updated) {
+        // Determine if failure was due to missing item or insufficient stock
+        const exists = await ItemModel.exists({ _id: itemIdObj });
+        if (!exists) {
+          const itemType = validated.itemType === 'raw_material' ? 'Raw material' : 'Product';
+          return NextResponse.json(
+            { error: `${itemType} not found` },
+            { status: 404 }
+          );
+        }
+        // Item exists but stock is insufficient
         return NextResponse.json(
           {
             error: 'Insufficient stock',
-            details: `Cannot remove ${validated.quantity} units. Current stock is ${currentStock}.`,
+            details: `Cannot remove ${validated.quantity} units.`,
           },
           { status: 400 }
         );
       }
     } else if (validated.movementType === 'adjustment') {
-      // 'adjustment' sets the stock to the exact quantity value (absolute, not delta)
-      newStock = validated.quantity;
+      // 'adjustment' movement: atomically set stock to exact value using $set operator
+      updated = await ItemModel.findOneAndUpdate(
+        { _id: itemIdObj },
+        { $set: { [stockFieldName]: validated.quantity } },
+        { new: true }
+      );
+      if (!updated) {
+        const itemType = validated.itemType === 'raw_material' ? 'Raw material' : 'Product';
+        return NextResponse.json(
+          { error: `${itemType} not found` },
+          { status: 404 }
+        );
+      }
     } else {
       return NextResponse.json(
         { error: 'Invalid movement type' },
@@ -176,9 +193,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Update the item's stock field
-    item[stockFieldName] = newStock;
-    await item.save();
+    // Get the actual new stock from the atomic update result
+    // This value reflects exactly what MongoDB persisted, not what we assumed
+    const newStock = updated[stockFieldName];
 
     // Create the StockMovement ledger row (append-only)
     const movement = await StockMovement.create({
