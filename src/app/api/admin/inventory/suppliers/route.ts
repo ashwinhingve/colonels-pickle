@@ -4,6 +4,7 @@ import { connectDB } from '@/lib/mongodb';
 import Supplier from '@/models/Supplier';
 import { supplierSchema } from '@/lib/validations/supplier';
 import AdminActivity from '@/models/AdminActivity';
+import { escapeRegex } from '@/lib/utils/regex';
 
 /**
  * GET /api/admin/inventory/suppliers
@@ -43,11 +44,12 @@ export async function GET(req: NextRequest) {
 
     // Search filter (name, contactPerson, email, phone)
     if (search) {
+      const safeSearch = escapeRegex(search);
       query.$or = [
-        { name: { $regex: search, $options: 'i' } },
-        { contactPerson: { $regex: search, $options: 'i' } },
-        { email: { $regex: search, $options: 'i' } },
-        { phone: { $regex: search, $options: 'i' } },
+        { name: { $regex: safeSearch, $options: 'i' } },
+        { contactPerson: { $regex: safeSearch, $options: 'i' } },
+        { email: { $regex: safeSearch, $options: 'i' } },
+        { phone: { $regex: safeSearch, $options: 'i' } },
       ];
     }
 

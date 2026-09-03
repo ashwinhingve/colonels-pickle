@@ -4,6 +4,7 @@ import { connectDB } from '@/lib/mongodb';
 import RawMaterial from '@/models/RawMaterial';
 import { rawMaterialSchema } from '@/lib/validations/raw-material';
 import AdminActivity from '@/models/AdminActivity';
+import { escapeRegex } from '@/lib/utils/regex';
 
 /**
  * GET /api/admin/inventory/raw-materials
@@ -50,9 +51,10 @@ export async function GET(req: NextRequest) {
 
     // Search filter (name or itemCode)
     if (search) {
+      const safeSearch = escapeRegex(search);
       query.$or = [
-        { name: { $regex: search, $options: 'i' } },
-        { itemCode: { $regex: search, $options: 'i' } },
+        { name: { $regex: safeSearch, $options: 'i' } },
+        { itemCode: { $regex: safeSearch, $options: 'i' } },
       ];
     }
 
