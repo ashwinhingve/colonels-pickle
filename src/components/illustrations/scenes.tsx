@@ -304,6 +304,30 @@ export function HearthIllustration({ className, title, ...p }: SVGProps) {
 
 /* ═══════════════════════════ Decorative accents ═══════════════════════════ */
 
+export function DogTagIllustration({ className, title, ...p }: SVGProps) {
+  return (
+    <svg viewBox="0 0 64 64" className={className} {...base({ title })} {...p}>
+      {title ? <title>{title}</title> : null}
+      <g>
+        <ellipse cx="32" cy="12" rx="8" ry="6" fill="#D4A017" opacity="0.9" />
+        <circle cx="24" cy="8" r="2.4" fill="#E4B94B" opacity="0.7" />
+        <circle cx="32" cy="5.5" r="2.2" fill="#E4B94B" opacity="0.7" />
+        <circle cx="40" cy="8" r="2.4" fill="#E4B94B" opacity="0.7" />
+        <line x1="24" y1="12" x2="24" y2="22" stroke="#C0974F" strokeWidth="1.8" opacity="0.6" />
+        <line x1="40" y1="12" x2="40" y2="22" stroke="#C0974F" strokeWidth="1.8" opacity="0.6" />
+      </g>
+      <g>
+        <rect x="18" y="22" width="28" height="34" rx="4" fill="#6B7F3A" stroke="#4B5D2A" strokeWidth="1.8" />
+        <path d="M22 28h20M22 36h20M22 44h20" stroke="#4B5D2A" strokeWidth="1" opacity="0.4" />
+        <rect x="26" y="52" width="12" height="3" rx="1.5" fill="#4B5D2A" opacity="0.3" />
+        <path d="M32 52v2" stroke="#D4A017" strokeWidth="0.8" opacity="0.6" />
+        <path d="M30 56l4-1 4 1" fill="none" stroke="#4B5D2A" strokeWidth="1.2" strokeLinecap="round" opacity="0.5" />
+      </g>
+      <ellipse cx="32" cy="57" rx="3" ry="2" fill="#4B5D2A" opacity="0.4" />
+    </svg>
+  );
+}
+
 export function CornerFlourish({ className, title, ...p }: SVGProps) {
   // Rajasthani-style corner motif. Place in a corner and rotate via className.
   return (
@@ -333,6 +357,27 @@ export function SpiceScatter({ className, title, ...p }: SVGProps) {
         <circle cx="24" cy="30" r="1.4" />
         <circle cx="66" cy="32" r="1.3" />
         <circle cx="88" cy="12" r="1.2" />
+      </g>
+    </svg>
+  );
+}
+
+export function WebbingStitchAccent({ className, title, ...p }: SVGProps) {
+  // Canvas webbing double-stitch border accent. Pair of dashed parallel lines with cross-stitches.
+  return (
+    <svg viewBox="0 0 200 14" className={className} {...base({ title })} {...p}>
+      {title ? <title>{title}</title> : null}
+      <g stroke="currentColor" strokeWidth="1" fill="none" opacity="0.65">
+        <path d="M0 4 L200 4" strokeDasharray="6 5" />
+        <path d="M0 10 L200 10" strokeDasharray="6 5" />
+        <g strokeWidth="1.2" opacity="0.5">
+          <line x1="20" y1="2" x2="20" y2="12" />
+          <line x1="50" y1="2" x2="50" y2="12" />
+          <line x1="80" y1="2" x2="80" y2="12" />
+          <line x1="110" y1="2" x2="110" y2="12" />
+          <line x1="140" y1="2" x2="140" y2="12" />
+          <line x1="170" y1="2" x2="170" y2="12" />
+        </g>
       </g>
     </svg>
   );

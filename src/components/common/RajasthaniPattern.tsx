@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface RajasthaniPatternProps {
-  variant?: "jali" | "medallion" | "trellis";
+  variant?: "jali" | "medallion" | "trellis" | "camo";
   opacity?: number;
   color?: string;
   className?: string;
@@ -45,6 +45,14 @@ export function RajasthaniPattern({
                 on light beige backgrounds where the jali is too heavy. */}
             <path d="M0 14 L14 0 M14 28 L28 14 M0 14 L14 28 M14 0 L28 14" fill="none" stroke={color} strokeWidth="0.6" />
             <circle cx="14" cy="14" r="1.6" fill={color} />
+          </pattern>
+        ) : variant === "camo" ? (
+          <pattern id={patternId} width="48" height="48" patternUnits="userSpaceOnUse">
+            <path d="M8 12 Q14 8 20 10 Q22 6 28 8 Q30 12 26 18 Q20 20 14 18 Q10 22 8 16 Z" fill={color} opacity="0.7" />
+            <path d="M28 26 Q32 22 38 24 Q40 28 36 32 Q32 34 28 32 Z" fill={color} opacity="0.5" />
+            <path d="M10 32 Q16 30 22 34 Q20 38 14 38 Q8 36 10 32 Z" fill={color} opacity="0.6" />
+            <path d="M32 6 Q36 8 34 14 Q30 16 28 12 Z" fill={color} opacity="0.55" />
+            <path d="M42 36 Q46 38 44 44 Q40 46 38 42 Z" fill={color} opacity="0.5" />
           </pattern>
         ) : (
           <pattern id={patternId} width="64" height="64" patternUnits="userSpaceOnUse">
