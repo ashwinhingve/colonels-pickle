@@ -135,7 +135,7 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
     <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cp-border bg-white transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_48px_rgba(0,0,0,0.13)]">
       <Link href={href} className="block" aria-label={product?.name}>
         <div
-          className="relative flex h-[152px] items-center justify-center overflow-hidden"
+          className="relative flex aspect-[4/3] items-center justify-center overflow-hidden"
           style={{
             background: `linear-gradient(145deg, ${theme.themeColor}, ${theme.themeColor}CC)`,
           }}

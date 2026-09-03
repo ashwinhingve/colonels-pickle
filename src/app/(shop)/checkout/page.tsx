@@ -32,8 +32,8 @@ export default function CheckoutPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-block w-12 h-12 border-4 border-amber-600 border-t-transparent rounded-full animate-spin"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <div className="inline-block w-12 h-12 border-4 border-cp-olive border-t-transparent rounded-full animate-spin"></div>
+          <p className="mt-4 text-cp-text-muted">Loading...</p>
         </div>
       </div>
     );
@@ -126,17 +126,17 @@ export default function CheckoutPage() {
   const total = orderDetails?.totalAmount ?? estimatedTotal;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-red-50 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-cp-cream via-white to-cp-terracotta-light py-12">
       <div className="container mx-auto px-4">
         <AnimatedSection direction="up">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-amber-600 to-red-700 bg-clip-text text-transparent">
+              <span className="text-cp-olive">
                 Checkout
               </span>
             </h1>
-            <p className="text-gray-600">Complete your order</p>
+            <p className="text-cp-text-muted">Complete your order</p>
           </div>
 
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -148,23 +148,23 @@ export default function CheckoutPage() {
                   <div className="flex items-center">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
                       currentStep === 'address'
-                        ? 'bg-gradient-to-r from-amber-600 to-red-700 text-white'
+                        ? 'bg-gradient-to-r from-cp-terracotta to-cp-terracotta-deep text-white'
                         : 'bg-green-500 text-white'
                     }`}>
                       {currentStep === 'payment' ? '✓' : '1'}
                     </div>
-                    <span className="ml-2 font-medium text-gray-700">Address</span>
+                    <span className="ml-2 font-medium text-cp-text-muted">Address</span>
                   </div>
                   <div className="w-16 h-1 bg-gray-300"></div>
                   <div className="flex items-center">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
                       currentStep === 'payment'
-                        ? 'bg-gradient-to-r from-amber-600 to-red-700 text-white'
+                        ? 'bg-gradient-to-r from-cp-terracotta to-cp-terracotta-deep text-white'
                         : 'bg-gray-300 text-gray-600'
                     }`}>
                       2
                     </div>
-                    <span className="ml-2 font-medium text-gray-700">Payment</span>
+                    <span className="ml-2 font-medium text-cp-text-muted">Payment</span>
                   </div>
                 </div>
               </div>
@@ -181,24 +181,24 @@ export default function CheckoutPage() {
                       transition={{ duration: 0.4 }}
                     >
                       {orderError && (
-                        <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
+                        <div className="mb-6 bg-cp-terracotta-light border border-cp-terracotta/25 rounded-lg p-4">
                           <div className="flex items-center gap-3">
                             <svg
-                              className="w-5 h-5 text-red-600"
+                              className="w-5 h-5 text-cp-terracotta"
                               fill="currentColor"
                               viewBox="0 0 24 24"
                             >
                               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
                             </svg>
-                            <p className="text-sm text-red-700">{orderError}</p>
+                            <p className="text-sm text-cp-terracotta-deep">{orderError}</p>
                           </div>
                         </div>
                       )}
                       <AddressStep onNext={handleAddressNext} disabled={creatingOrder} />
                       {creatingOrder && (
                         <div className="mt-4 text-center">
-                          <div className="inline-block w-6 h-6 border-4 border-orange-600 border-t-transparent rounded-full animate-spin"></div>
-                          <p className="mt-2 text-sm text-gray-600">Creating order...</p>
+                          <div className="inline-block w-6 h-6 border-4 border-cp-terracotta border-t-transparent rounded-full animate-spin"></div>
+                          <p className="mt-2 text-sm text-cp-text-muted">Creating order...</p>
                         </div>
                       )}
                     </motion.div>
@@ -214,7 +214,7 @@ export default function CheckoutPage() {
                     >
                       <button
                         onClick={() => setCurrentStep('address')}
-                        className="mb-4 text-orange-600 hover:text-orange-700 flex items-center gap-2"
+                        className="mb-4 text-cp-terracotta hover:text-cp-terracotta-deep flex items-center gap-2"
                       >
                         <svg
                           className="w-5 h-5"
@@ -245,17 +245,17 @@ export default function CheckoutPage() {
             {/* Order Summary Sidebar */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-24">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Order Summary</h3>
+                <h3 className="text-xl font-bold text-cp-text mb-4">Order Summary</h3>
 
                 {/* Cart Items */}
                 <div className="space-y-3 mb-6 max-h-60 overflow-y-auto">
                   {items.map((item) => (
-                    <div key={cartItemKey(item.product.id, item.product.variantId)} className="flex gap-3 pb-3 border-b border-gray-200">
+                    <div key={cartItemKey(item.product.id, item.product.variantId)} className="flex gap-3 pb-3 border-b border-cp-border">
                       <div className="flex-1">
-                        <p className="font-medium text-sm text-gray-800">{item.product.name}</p>
-                        <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
+                        <p className="font-medium text-sm text-cp-text">{item.product.name}</p>
+                        <p className="text-xs text-cp-text-light">Qty: {item.quantity}</p>
                       </div>
-                      <p className="font-semibold text-gray-800">
+                      <p className="font-semibold text-cp-text">
                         ₹{(item.product.price * item.quantity).toLocaleString()}
                       </p>
                     </div>
@@ -264,11 +264,11 @@ export default function CheckoutPage() {
 
                 {/* Price Breakdown */}
                 <div className="space-y-3 mb-6">
-                  <div className="flex justify-between text-gray-600">
+                  <div className="flex justify-between text-cp-text-muted">
                     <span>Subtotal ({items.length} items)</span>
                     <span className="font-medium">₹{subtotal.toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-between text-gray-600">
+                  <div className="flex justify-between text-cp-text-muted">
                     <span>Shipping</span>
                     <span className="font-medium">
                       {shipping === 0 ? (
@@ -286,10 +286,10 @@ export default function CheckoutPage() {
                       <span className="font-semibold">-₹{discountAmt.toFixed(2)}</span>
                     </div>
                   )}
-                  <div className="border-t-2 border-gray-200 pt-3">
+                  <div className="border-t-2 border-cp-border pt-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-lg font-bold text-gray-800">Total</span>
-                      <span className="text-2xl font-bold bg-gradient-to-r from-amber-600 to-red-700 bg-clip-text text-transparent">
+                      <span className="text-lg font-bold text-cp-text">Total</span>
+                      <span className="text-2xl font-bold text-cp-olive">
                         ₹{total.toLocaleString()}
                       </span>
                     </div>
@@ -298,8 +298,8 @@ export default function CheckoutPage() {
 
                 {/* Free Shipping Banner */}
                 {shipping > 0 && (
-                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-center">
-                    <p className="text-amber-800">
+                  <div className="bg-cp-terracotta-light border border-cp-terracotta/25 rounded-lg p-3 text-sm text-center">
+                    <p className="text-cp-terracotta-deep">
                       Add ₹{(500 - subtotal).toLocaleString()} more for FREE shipping!
                     </p>
                   </div>

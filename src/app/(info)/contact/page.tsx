@@ -4,6 +4,7 @@ import { ContactForm } from "@/components/contact/ContactForm";
 import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
 import { HoverLift } from "@/components/shared/HoverLift";
 import { ContactIllustration } from "@/components/illustrations";
+import { MapPin, Phone, Mail, Instagram, Clock } from "lucide-react";
 import { BRAND, CONTACT_EMAIL } from "@/lib/constants";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
@@ -86,12 +87,12 @@ export default function ContactPage() {
 
           <div className="space-y-5 font-sans text-sm text-cp-text">
             <div className="flex gap-3">
-              <span className="text-lg">📍</span>
+              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-cp-terracotta" />
               <p className="text-cp-text-muted">{fullAddress}</p>
             </div>
 
             <div className="flex gap-3">
-              <span className="text-lg">📞</span>
+              <Phone className="mt-0.5 h-5 w-5 shrink-0 text-cp-terracotta" />
               <div className="flex flex-col gap-1">
                 {BRAND.phones.map((p) => (
                   <a
@@ -106,7 +107,7 @@ export default function ContactPage() {
             </div>
 
             <div className="flex gap-3">
-              <span className="text-lg">📧</span>
+              <Mail className="mt-0.5 h-5 w-5 shrink-0 text-cp-terracotta" />
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
                 className="text-cp-text-muted hover:text-cp-crimson"
@@ -116,7 +117,7 @@ export default function ContactPage() {
             </div>
 
             <div className="flex gap-3">
-              <span className="text-lg">📱</span>
+              <Instagram className="mt-0.5 h-5 w-5 shrink-0 text-cp-terracotta" />
               <a
                 href={BRAND.instagram.url}
                 target="_blank"
@@ -128,7 +129,7 @@ export default function ContactPage() {
             </div>
 
             <div className="flex gap-3">
-              <span className="text-lg">🕐</span>
+              <Clock className="mt-0.5 h-5 w-5 shrink-0 text-cp-terracotta" />
               <div className="text-cp-text-muted">
                 <p>Mon–Sat: 9:00 AM – 7:00 PM</p>
                 <p>Sunday: 10:00 AM – 5:00 PM</p>
@@ -171,13 +172,24 @@ export default function ContactPage() {
             >
               <iframe
                 title="Colonel's Pickle by Ridhwika Agro Organics location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.2240668159716!2d75.735727!3d26.896383099999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db5b37d033a3b%3A0x552b635ade1c64ea!2sColonel's%20Pickle%20by%20Ridhwika%20Agro%20Organics!5e0!3m2!1sen!2sin!4v1779167668683!5m2!1sen!2sin"
+                src="https://www.google.com/maps?q=26.896383,75.735727&z=16&output=embed"
                 className="h-full w-full"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
+            </div>
+            <div className="mt-4 text-center">
+              <a
+                href={BRAND.social.gmaps}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 font-sans text-sm font-semibold text-cp-terracotta transition-colors hover:text-cp-terracotta-deep"
+              >
+                Open in Google Maps
+                <span aria-hidden>→</span>
+              </a>
             </div>
           </AnimatedSection>
         </div>

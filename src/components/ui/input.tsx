@@ -18,15 +18,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             "focus:outline-none focus:ring-2 focus:ring-offset-0",
             "disabled:cursor-not-allowed disabled:opacity-50",
             error
-              ? "border-red-500 focus:border-red-500 focus:ring-red-200"
-              : "border-gray-300 focus:border-amber-600 focus:ring-amber-200",
+              ? "border-cp-terracotta focus:border-cp-terracotta focus:ring-cp-terracotta/25"
+              : "border-gray-300 focus:border-cp-olive focus:ring-cp-olive/25",
             className
           )}
           ref={ref}
           {...props}
         />
         {error && (
-          <p className="mt-1.5 text-sm text-red-600 font-medium">{error}</p>
+          <p className="mt-1.5 text-sm text-cp-terracotta font-medium">{error}</p>
         )}
       </div>
     )

@@ -29,12 +29,12 @@ export default function OrderSummaryCard({ orderData }: OrderSummaryCardProps) {
 
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6">
-      <h3 className="text-xl font-bold text-gray-900 mb-4">Order Summary</h3>
+      <h3 className="text-xl font-bold text-cp-text mb-4">Order Summary</h3>
 
       {/* Status Badges */}
       <div className="space-y-2 mb-6">
         <div>
-          <p className="text-xs text-gray-600 mb-1">Order Status</p>
+          <p className="text-xs text-cp-text-muted mb-1">Order Status</p>
           <span
             className={`inline-flex px-3 py-1.5 text-sm font-semibold rounded-lg border-2 capitalize ${getStatusColor(
               orderData.orderStatus
@@ -44,7 +44,7 @@ export default function OrderSummaryCard({ orderData }: OrderSummaryCardProps) {
           </span>
         </div>
         <div>
-          <p className="text-xs text-gray-600 mb-1">Payment Status</p>
+          <p className="text-xs text-cp-text-muted mb-1">Payment Status</p>
           <span
             className={`inline-flex px-3 py-1.5 text-sm font-semibold rounded-lg border-2 capitalize ${
               orderData.paymentStatus === 'paid'
@@ -60,18 +60,18 @@ export default function OrderSummaryCard({ orderData }: OrderSummaryCardProps) {
       </div>
 
       {/* Price Breakdown */}
-      <div className="space-y-3 border-t border-gray-200 pt-4">
+      <div className="space-y-3 border-t border-cp-border pt-4">
         <div className="flex items-center justify-between text-sm">
-          <span className="text-gray-600">Subtotal</span>
-          <span className="font-medium text-gray-900">
+          <span className="text-cp-text-muted">Subtotal</span>
+          <span className="font-medium text-cp-text">
             ₹{orderData.subtotal.toLocaleString('en-IN')}
           </span>
         </div>
 
         {orderData.shippingCost > 0 && (
           <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-600">Shipping</span>
-            <span className="font-medium text-gray-900">
+            <span className="text-cp-text-muted">Shipping</span>
+            <span className="font-medium text-cp-text">
               ₹{orderData.shippingCost.toLocaleString('en-IN')}
             </span>
           </div>
@@ -79,17 +79,17 @@ export default function OrderSummaryCard({ orderData }: OrderSummaryCardProps) {
 
         {orderData.discount > 0 && (
           <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-600">Discount</span>
+            <span className="text-cp-text-muted">Discount</span>
             <span className="font-medium text-green-600">
               -₹{orderData.discount.toLocaleString('en-IN')}
             </span>
           </div>
         )}
 
-        <div className="border-t border-gray-200 pt-3 mt-3">
+        <div className="border-t border-cp-border pt-3 mt-3">
           <div className="flex items-center justify-between">
-            <span className="text-lg font-bold text-gray-900">Total</span>
-            <span className="text-2xl font-bold bg-gradient-to-r from-amber-600 to-red-700 bg-clip-text text-transparent">
+            <span className="text-lg font-bold text-cp-text">Total</span>
+            <span className="text-2xl font-bold text-cp-olive">
               ₹{orderData.totalAmount.toLocaleString('en-IN')}
             </span>
           </div>

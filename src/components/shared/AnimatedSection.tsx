@@ -1,8 +1,32 @@
 "use client"
 
-import React from "react"
-import { motion } from "framer-motion"
-import { useInView } from "react-intersection-observer"
+import React, { useEffect, useRef, useState } from "react"
+import { motion, useInView } from "framer-motion"
+
+/**
+ * Reveal-on-scroll primitives.
+ *
+ * These deliberately FAIL OPEN: the scroll reveal is a progressive enhancement, but a
+ * short fallback timer always flips content to visible even if the in-view observer never
+ * fires. Without this, content can get permanently stuck at `opacity:0` — which happened on
+ * deeply-nested sections and in off-screen full-page captures. Content visibility must never
+ * depend solely on an IntersectionObserver callback.
+ */
+
+const REVEAL_FALLBACK_MS = 900
+
+function useReveal(once: boolean, amount = 0.15) {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once, amount })
+  const [fallback, setFallback] = useState(false)
+
+  useEffect(() => {
+    const t = setTimeout(() => setFallback(true), REVEAL_FALLBACK_MS)
+    return () => clearTimeout(t)
+  }, [])
+
+  return { ref, show: inView || fallback }
+}
 
 export interface AnimatedSectionProps {
   children: React.ReactNode;
@@ -21,10 +45,7 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   duration = 0.6,
   once = true,
 }) => {
-  const [ref, inView] = useInView({
-    threshold: 0.1,
-    triggerOnce: once,
-  })
+  const { ref, show } = useReveal(once)
 
   const variants = {
     hidden: {
@@ -48,7 +69,7 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
     <motion.div
       ref={ref}
       initial="hidden"
-      animate={inView ? "visible" : "hidden"}
+      animate={show ? "visible" : "hidden"}
       variants={variants}
       className={className}
     >
@@ -70,10 +91,7 @@ export const StaggerContainer: React.FC<StaggerContainerProps> = ({
   staggerDelay = 0.1,
   once = true,
 }) => {
-  const [ref, inView] = useInView({
-    threshold: 0.1,
-    triggerOnce: once,
-  })
+  const { ref, show } = useReveal(once)
 
   const container = {
     hidden: { opacity: 0 },
@@ -89,7 +107,7 @@ export const StaggerContainer: React.FC<StaggerContainerProps> = ({
     <motion.div
       ref={ref}
       initial="hidden"
-      animate={inView ? "visible" : "hidden"}
+      animate={show ? "visible" : "hidden"}
       variants={container}
       className={className}
     >

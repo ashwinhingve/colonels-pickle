@@ -259,10 +259,10 @@ export default async function ShippingPolicyPage() {
   if (pageContent?.isPublished) {
     return (
       <main>
-        <section className="relative overflow-hidden bg-gradient-to-br from-amber-50 via-white to-red-50 py-20 md:py-32">
+        <section className="relative overflow-hidden bg-gradient-to-br from-cp-cream via-white to-cp-terracotta-light py-20 md:py-32">
           <div className="container mx-auto px-4">
             <div className="text-center max-w-4xl mx-auto">
-              <div className="w-20 h-20 bg-gradient-to-br from-amber-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-20 h-20 bg-gradient-to-br from-cp-terracotta to-cp-terracotta-deep rounded-full flex items-center justify-center mx-auto mb-6">
                 <Truck className="w-10 h-10 text-white" />
               </div>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gray-900">

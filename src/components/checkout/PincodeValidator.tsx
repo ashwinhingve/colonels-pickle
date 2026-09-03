@@ -79,8 +79,8 @@ export default function PincodeValidator({
   return (
     <div className="mt-2">
       {checking && (
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <div className="inline-block w-4 h-4 border-2 border-orange-600 border-t-transparent rounded-full animate-spin"></div>
+        <div className="flex items-center gap-2 text-sm text-cp-text-muted">
+          <div className="inline-block w-4 h-4 border-2 border-cp-terracotta border-t-transparent rounded-full animate-spin"></div>
           <span>Checking delivery availability...</span>
         </div>
       )}
@@ -106,7 +106,7 @@ export default function PincodeValidator({
       )}
 
       {!checking && serviceable === false && (
-        <div className="flex items-start gap-2 text-sm text-red-600">
+        <div className="flex items-start gap-2 text-sm text-cp-terracotta">
           <svg
             className="w-5 h-5 flex-shrink-0 mt-0.5"
             fill="currentColor"
@@ -118,7 +118,7 @@ export default function PincodeValidator({
             <p className="font-medium">
               {error || 'Delivery not available to this PIN code'}
             </p>
-            <p className="text-xs text-gray-600 mt-0.5">
+            <p className="text-xs text-cp-text-muted mt-0.5">
               Please check the PIN code or try a different delivery address
             </p>
           </div>
@@ -126,7 +126,7 @@ export default function PincodeValidator({
       )}
 
       {!checking && error && serviceable === null && (
-        <div className="flex items-start gap-2 text-sm text-yellow-600">
+        <div className="flex items-start gap-2 text-sm text-cp-text-light">
           <svg
             className="w-5 h-5 flex-shrink-0 mt-0.5"
             fill="currentColor"

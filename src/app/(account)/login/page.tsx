@@ -6,7 +6,7 @@ import { getSession, signIn, useSession } from "next-auth/react"
 import { AnimatedSection } from "@/components/shared/AnimatedSection"
 import { HoverLift } from "@/components/shared/HoverLift"
 import { Button } from "@/components/ui/button"
-import { Mail, ArrowLeft, Phone } from "lucide-react"
+import { Mail, ArrowLeft, Phone, Lock, Zap, Sparkles } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { WelcomeIllustration } from "@/components/illustrations"
@@ -259,7 +259,7 @@ export default function LoginPage() {
           <AnimatedSection direction="up" delay={0.1} className="max-w-md mx-auto">
             <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
               {/* Tabs */}
-              <div className="flex border-b border-gray-200">
+              <div className="flex border-b border-cp-border">
                 {(["google", "email", "mobile"] as Tab[]).map((tab, idx) => (
                   <motion.button
                     key={tab}
@@ -269,7 +269,7 @@ export default function LoginPage() {
                     className={`flex-1 py-3 text-sm font-semibold transition-all ${
                       activeTab === tab
                         ? "text-cp-crimson border-b-2 border-cp-crimson bg-cp-crimson-light"
-                        : "text-gray-500 hover:text-gray-700"
+                        : "text-cp-text-light hover:text-cp-text-muted"
                     }`}
                   >
                     {tab === "google" ? "Google" : tab === "email" ? "Email OTP" : "Mobile OTP"}
@@ -285,7 +285,7 @@ export default function LoginPage() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="mb-6 bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-lg text-base"
+                      className="mb-6 bg-cp-terracotta-light border-2 border-cp-terracotta/30 text-cp-terracotta-deep px-4 py-3 rounded-lg text-base"
                     >
                       {error}
                     </motion.div>
@@ -316,7 +316,7 @@ export default function LoginPage() {
                             <motion.div
                               animate={{ rotate: 360 }}
                               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                              className="w-6 h-6 border-3 border-gray-300 border-t-amber-600 rounded-full"
+                              className="w-6 h-6 border-3 border-gray-300 border-t-cp-terracotta rounded-full"
                             />
                             <span>Signing in...</span>
                           </div>
@@ -339,7 +339,7 @@ export default function LoginPage() {
                 {activeTab === "email" && emailOtpStep === "input" && (
                   <div className="space-y-4">
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="email" className="block text-sm font-medium text-cp-text mb-2">
                         Email Address
                       </label>
                       <motion.input
@@ -352,7 +352,7 @@ export default function LoginPage() {
                         initial={{ opacity: 0, y: -5 }}
                         animate={{ opacity: 1, y: 0 }}
                         whileFocus={{ boxShadow: "0 0 0 3px rgba(185, 28, 28, 0.1)" }}
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-cp-crimson focus:outline-none text-gray-900 text-base transition-colors"
+                        className="w-full px-4 py-3 border-2 border-cp-border rounded-lg focus:border-cp-crimson focus:outline-none text-cp-text text-base transition-colors"
                         disabled={isLoading}
                       />
                     </div>
@@ -371,7 +371,7 @@ export default function LoginPage() {
                               <motion.div
                                 animate={{ rotate: 360 }}
                                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                className="w-6 h-6 border-3 border-amber-300 border-t-white rounded-full"
+                                className="w-6 h-6 border-3 border-white/50 border-t-white rounded-full"
                               />
                               <span>Sending OTP...</span>
                             </div>
@@ -390,12 +390,12 @@ export default function LoginPage() {
                       animate={{ opacity: 1 }}
                       className="text-center mb-4"
                     >
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-cp-text-muted">
                         We sent a 6-digit code to <strong>{email}</strong>
                       </p>
                     </motion.div>
                     <div>
-                      <label htmlFor="emailOtp" className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="emailOtp" className="block text-sm font-medium text-cp-text mb-2">
                         Verification Code
                       </label>
                       <motion.input
@@ -430,7 +430,7 @@ export default function LoginPage() {
                               <motion.div
                                 animate={{ rotate: 360 }}
                                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                className="w-6 h-6 border-3 border-amber-300 border-t-white rounded-full"
+                                className="w-6 h-6 border-3 border-white/50 border-t-white rounded-full"
                               />
                               <span>Verifying...</span>
                             </div>
@@ -460,14 +460,14 @@ export default function LoginPage() {
                 {activeTab === "mobile" && mobileOtpStep === "input" && (
                   <div className="space-y-4">
                     <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="phone" className="block text-sm font-medium text-cp-text mb-2">
                         Mobile Number
                       </label>
                       <div className="flex">
                         <motion.span
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
-                          className="inline-flex items-center px-3 border-2 border-r-0 border-gray-300 rounded-l-lg bg-gray-50 text-gray-600 text-sm font-medium"
+                          className="inline-flex items-center px-3 border-2 border-r-0 border-cp-border rounded-l-lg bg-cp-cream-dark text-cp-text-muted text-sm font-medium"
                         >
                           +91
                         </motion.span>
@@ -483,7 +483,7 @@ export default function LoginPage() {
                           initial={{ opacity: 0, y: -5 }}
                           animate={{ opacity: 1, y: 0 }}
                           whileFocus={{ boxShadow: "0 0 0 3px rgba(185, 28, 28, 0.1)" }}
-                          className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-r-lg focus:border-cp-crimson focus:outline-none text-gray-900 text-base transition-colors"
+                          className="flex-1 px-4 py-3 border-2 border-cp-border rounded-r-lg focus:border-cp-crimson focus:outline-none text-cp-text text-base transition-colors"
                           disabled={isLoading}
                         />
                       </div>
@@ -503,7 +503,7 @@ export default function LoginPage() {
                               <motion.div
                                 animate={{ rotate: 360 }}
                                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                className="w-6 h-6 border-3 border-amber-300 border-t-white rounded-full"
+                                className="w-6 h-6 border-3 border-white/50 border-t-white rounded-full"
                               />
                               <span>Sending OTP...</span>
                             </div>
@@ -522,12 +522,12 @@ export default function LoginPage() {
                       animate={{ opacity: 1 }}
                       className="text-center mb-4"
                     >
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-cp-text-muted">
                         We sent a 6-digit code to <strong>+91 {phone}</strong>
                       </p>
                     </motion.div>
                     <div>
-                      <label htmlFor="mobileOtp" className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="mobileOtp" className="block text-sm font-medium text-cp-text mb-2">
                         Verification Code
                       </label>
                       <motion.input
@@ -542,7 +542,7 @@ export default function LoginPage() {
                         initial={{ opacity: 0, y: -5 }}
                         animate={{ opacity: 1, y: 0 }}
                         whileFocus={{ boxShadow: "0 0 0 3px rgba(185, 28, 28, 0.1)", scale: 1.02 }}
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-cp-crimson focus:outline-none text-gray-900 text-center text-2xl tracking-[0.3em] font-mono transition-all"
+                        className="w-full px-4 py-3 border-2 border-cp-border rounded-lg focus:border-cp-crimson focus:outline-none text-cp-text text-center text-2xl tracking-[0.3em] font-mono transition-all"
                         disabled={isLoading}
                         autoFocus
                       />
@@ -562,7 +562,7 @@ export default function LoginPage() {
                               <motion.div
                                 animate={{ rotate: 360 }}
                                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                className="w-6 h-6 border-3 border-amber-300 border-t-white rounded-full"
+                                className="w-6 h-6 border-3 border-white/50 border-t-white rounded-full"
                               />
                               <span>Verifying...</span>
                             </div>
@@ -609,9 +609,9 @@ export default function LoginPage() {
           <AnimatedSection direction="up" delay={0.2} className="mt-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
-                { icon: "🔒", title: "Secure", desc: "Your data is safe with us" },
-                { icon: "⚡", title: "Fast", desc: "Quick and easy sign in" },
-                { icon: "✨", title: "Simple", desc: "No passwords to remember" },
+                { Icon: Lock, title: "Secure", desc: "Your data is safe with us" },
+                { Icon: Zap, title: "Fast", desc: "Quick and easy sign in" },
+                { Icon: Sparkles, title: "Simple", desc: "No passwords to remember" },
               ].map((feature, idx) => (
                 <HoverLift key={feature.title} lift={4} className="w-full">
                   <motion.div
@@ -621,11 +621,11 @@ export default function LoginPage() {
                     viewport={{ once: true }}
                     className="text-center p-6 bg-white rounded-lg shadow-md border border-cp-border transition-all"
                   >
-                    <div className="text-4xl mb-3">{feature.icon}</div>
-                    <h3 className="font-display text-lg font-bold text-gray-900 mb-1">
+                    <feature.Icon className="h-6 w-6 text-cp-terracotta mx-auto mb-3" />
+                    <h3 className="font-display text-lg font-bold text-cp-text mb-1">
                       {feature.title}
                     </h3>
-                    <p className="text-sm text-gray-600">{feature.desc}</p>
+                    <p className="text-sm text-cp-text-muted">{feature.desc}</p>
                   </motion.div>
                 </HoverLift>
               ))}

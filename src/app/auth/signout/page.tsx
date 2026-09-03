@@ -55,7 +55,7 @@ export default function SignOutPage() {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.3, duration: 0.4, type: "spring" }}
-                className="mx-auto w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-4"
+                className="mx-auto w-16 h-16 bg-cp-olive-light rounded-full flex items-center justify-center mb-4"
               >
                 <svg
                   className="w-8 h-8 text-cp-crimson"
@@ -71,10 +71,10 @@ export default function SignOutPage() {
                   />
                 </svg>
               </motion.div>
-              <h1 className="text-2xl font-bold text-gray-900 mb-2">
+              <h1 className="text-2xl font-bold text-cp-text mb-2">
                 See You Soon!
               </h1>
-              <p className="text-gray-600">
+              <p className="text-cp-text-muted">
                 Are you sure you want to sign out?
               </p>
             </div>
@@ -110,7 +110,7 @@ export default function SignOutPage() {
                 disabled={signingOut}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full bg-gray-200 text-gray-800 py-3 px-4 rounded-lg hover:bg-gray-300 font-medium transition-all disabled:opacity-50"
+                className="w-full bg-cp-cream-dark text-cp-text py-3 px-4 rounded-lg hover:bg-cp-border font-medium transition-all disabled:opacity-50"
               >
                 Cancel
               </motion.button>

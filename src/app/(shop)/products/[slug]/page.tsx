@@ -107,13 +107,27 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
   if (!productDoc) notFound();
 
-  const relatedDocs = await Product.find({
+  let relatedDocs = await Product.find({
     category: productDoc.category,
     isActive: true,
     _id: { $ne: productDoc._id },
   })
     .limit(4)
     .lean();
+
+  // Top up from the wider catalogue when the current category is sparse, so the
+  // "You May Also Like" grid never renders with empty columns.
+  if (relatedDocs.length < 4) {
+    const excludeIds = [productDoc._id, ...relatedDocs.map((r: any) => r._id)];
+    const fillers = await Product.find({
+      isActive: true,
+      _id: { $nin: excludeIds },
+    })
+      .sort({ createdAt: -1 })
+      .limit(4 - relatedDocs.length)
+      .lean();
+    relatedDocs = [...relatedDocs, ...fillers];
+  }
 
   const product = JSON.parse(JSON.stringify(productDoc));
   const related = JSON.parse(JSON.stringify(relatedDocs));

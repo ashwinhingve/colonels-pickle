@@ -14,7 +14,7 @@ const FACT_TILES = [
 export function OurStory() {
   return (
     <section
-      className="relative overflow-hidden py-20"
+      className="relative overflow-hidden py-14 md:py-20"
       style={{
         background: "linear-gradient(135deg, #2A2417 0%, #3A4A1F 100%)",
       }}

@@ -219,24 +219,24 @@ export default function ReturnRequestPage({
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className="bg-red-50 border-2 border-red-200 rounded-xl p-4 mb-6 flex items-start gap-3"
+              className="bg-cp-terracotta-light border-2 border-cp-terracotta/25 rounded-xl p-4 mb-6 flex items-start gap-3"
             >
-              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-              <p className="text-red-800">{error}</p>
+              <AlertCircle className="w-5 h-5 text-cp-terracotta flex-shrink-0 mt-0.5" />
+              <p className="text-cp-terracotta-deep">{error}</p>
             </motion.div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Return Type */}
             <div className="bg-white rounded-2xl shadow-xl p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Return Type</h3>
+              <h3 className="text-lg font-bold text-cp-text mb-4">Return Type</h3>
               <div className="grid grid-cols-2 gap-4">
                 <button
                   type="button"
                   onClick={() => setReturnType('refund')}
                   className={`p-4 rounded-xl border-2 text-left transition-all duration-200 ${
                     returnType === 'refund'
-                      ? 'border-cp-crimson bg-red-50'
+                      ? 'border-cp-crimson bg-cp-olive-light'
                       : 'border-cp-border hover:border-cp-crimson/50'
                   }`}
                 >
@@ -248,7 +248,7 @@ export default function ReturnRequestPage({
                   onClick={() => setReturnType('exchange')}
                   className={`p-4 rounded-xl border-2 text-left transition-all duration-200 ${
                     returnType === 'exchange'
-                      ? 'border-cp-crimson bg-red-50'
+                      ? 'border-cp-crimson bg-cp-olive-light'
                       : 'border-cp-border hover:border-cp-crimson/50'
                   }`}
                 >
@@ -260,7 +260,7 @@ export default function ReturnRequestPage({
 
             {/* Select Items */}
             <div className="bg-white rounded-2xl shadow-xl p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Select Items</h3>
+              <h3 className="text-lg font-bold text-cp-text mb-4">Select Items</h3>
               <div className="space-y-3">
                 {orderItems.map((item) => {
                   const isSelected = selectedItems.some(
@@ -272,7 +272,7 @@ export default function ReturnRequestPage({
                       key={item.productId}
                       className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
                         isSelected
-                          ? 'border-cp-crimson bg-red-50'
+                          ? 'border-cp-crimson bg-cp-olive-light'
                           : 'border-cp-border hover:border-cp-crimson/50'
                       }`}
                     >
@@ -292,12 +292,12 @@ export default function ReturnRequestPage({
                         />
                       )}
                       <div className="flex-1">
-                        <p className="font-semibold text-gray-900">{item.productName}</p>
+                        <p className="font-semibold text-cp-text">{item.productName}</p>
                         <p className="text-sm text-gray-600">
                           Qty: {item.quantity} × ₹{item.price.toLocaleString('en-IN')}
                         </p>
                       </div>
-                      <p className="font-bold text-gray-900">
+                      <p className="font-bold text-cp-text">
                         ₹{(item.quantity * item.price).toLocaleString('en-IN')}
                       </p>
                     </label>
@@ -308,7 +308,7 @@ export default function ReturnRequestPage({
 
             {/* Return Reason */}
             <div className="bg-white rounded-2xl shadow-xl p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Return Reason</h3>
+              <h3 className="text-lg font-bold text-cp-text mb-4">Return Reason</h3>
               <div className="space-y-4">
                 <select
                   value={reason}
@@ -341,7 +341,7 @@ export default function ReturnRequestPage({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl border-2 border-cp-crimson shadow-xl p-6"
+                className="bg-gradient-to-br from-cp-cream to-cp-terracotta-light rounded-2xl border-2 border-cp-crimson shadow-xl p-6"
               >
                 <h3 className="font-display text-lg font-bold text-cp-text mb-3">
                   {returnType === 'refund' ? 'Refund' : 'Exchange'} Summary

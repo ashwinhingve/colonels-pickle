@@ -50,7 +50,7 @@ const FAQ_PRODUCTS: FAQItem[] = [
   {
     question: "What makes Colonel's Pickle different from other brands?",
     answer:
-      "Colonel's Pickle stands apart through our unwavering commitment to purity and tradition. We use absolutely NO artificial preservatives, colours, flavours or vinegar—ever. Our recipes are based on time-honoured family traditions passed down through generations. Every jar contains 24 whole spices sourced carefully, Kachi Ghani (wooden cold-press) mustard oil, rock salt, black salt, and premium Afghani asafoetida (hing) sourced at ₹35,000/kg. Every batch is FSSAI licensed (License: 12226026000060) and prepared with the same love that goes into home cooking.",
+      "Colonel's Pickle stands apart through our unwavering commitment to purity and tradition. We use absolutely NO artificial preservatives, colours, flavours or vinegar—ever. Our recipes are based on time-honoured family traditions passed down through generations. Every jar contains 24 whole spices sourced carefully, Kachi Ghani (wooden cold-press) mustard oil, rock salt, black salt, and premium Afghani asafoetida (hing) sourced at ₹30,000/kg. Every batch is FSSAI licensed (License: 12226026000060) and prepared with the same love that goes into home cooking.",
   },
   {
     question: "Are the pickles completely free of artificial preservatives?",
@@ -254,45 +254,27 @@ export default async function FAQPage() {
   // Fetch FAQs from database; fallback to inline arrays if none found
   const dbFaqs = await fetchDbFaqs();
 
-  let faqs: FAQItem[] = [];
-
-  if (dbFaqs && dbFaqs.length > 0) {
-    // Group database FAQs by category
-    const categorizedFaqs = dbFaqs.reduce(
-      (acc: Record<string, FAQItem[]>, faq: any) => {
-        if (!acc[faq.category]) acc[faq.category] = [];
-        acc[faq.category].push({
-          question: faq.question,
-          answer: faq.answer,
-        });
-        return acc;
-      },
-      {}
-    );
-
-    // Convert to flat array (schema expects flat array with sections)
-    faqs = dbFaqs.map((faq: any) => ({
-      question: faq.question,
-      answer: faq.answer,
-    }));
-  } else {
-    // Use fallback inline FAQs
-    faqs = ALL_FAQS;
-  }
-
-  // Group FAQs by category for section rendering
-  const faqsByCategory = (dbFaqs || ALL_FAQS).reduce(
-    (acc: Record<string, FAQItem[]>, faq: any) => {
-      const cat = faq.category || 'General';
-      if (!acc[cat]) acc[cat] = [];
-      acc[cat].push({
-        question: faq.question,
-        answer: faq.answer,
-      });
-      return acc;
-    },
-    {}
-  );
+  // Group FAQs by category for section rendering.
+  // When the DB has active FAQs, group by their `category` field; otherwise map the
+  // inline fallback arrays directly to their section keys. (The inline items carry no
+  // `category`, so deriving it from the item — as before — bucketed everything into one
+  // group whose key never matched the render loop, leaving the page empty.)
+  const faqsByCategory: Record<string, FAQItem[]> =
+    dbFaqs && dbFaqs.length > 0
+      ? dbFaqs.reduce((acc: Record<string, FAQItem[]>, faq: any) => {
+          const cat = (faq.category || 'GENERAL').toUpperCase();
+          if (!acc[cat]) acc[cat] = [];
+          acc[cat].push({ question: faq.question, answer: faq.answer });
+          return acc;
+        }, {})
+      : {
+          'PRODUCTS & INGREDIENTS': FAQ_PRODUCTS,
+          'ORDERS & PAYMENT': FAQ_ORDERS,
+          'SHIPPING & DELIVERY': FAQ_SHIPPING,
+          'RETURNS & REPLACEMENTS': FAQ_RETURNS,
+          'WHOLESALE & B2B': FAQ_WHOLESALE,
+          'GENERAL': FAQ_OTHER,
+        };
 
   const categories = [
     { key: 'PRODUCTS & INGREDIENTS', label: 'Know Your Pickle' },

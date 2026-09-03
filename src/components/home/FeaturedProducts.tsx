@@ -24,7 +24,7 @@ export async function FeaturedProducts() {
   const products = await getFeaturedProducts();
 
   return (
-    <section className="bg-cp-cream py-20">
+    <section className="bg-cp-cream py-14 md:py-20">
       <div className="mx-auto max-w-7xl px-4">
         <SectionHeader
           eyebrow="OUR ACHAAR COLLECTION"

@@ -97,10 +97,10 @@ function ErrorContent() {
                 initial={{ scale: 0, rotate: -20 }}
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ delay: 0.3, duration: 0.4, type: "spring" }}
-                className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4"
+                className="mx-auto w-16 h-16 bg-cp-terracotta-light rounded-full flex items-center justify-center mb-4"
               >
                 <svg
-                  className="w-8 h-8 text-red-600"
+                  className="w-8 h-8 text-cp-terracotta"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -117,7 +117,7 @@ function ErrorContent() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-2xl font-bold text-gray-900 mb-2"
+                className="text-2xl font-bold text-cp-text mb-2"
               >
                 {errorInfo.title}
               </motion.h1>
@@ -125,7 +125,7 @@ function ErrorContent() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25 }}
-                className="text-gray-600"
+                className="text-cp-text-muted"
               >
                 {errorInfo.message}
               </motion.p>
@@ -136,9 +136,9 @@ function ErrorContent() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6"
+                className="bg-cp-terracotta-light border border-cp-terracotta/25 rounded-lg p-4 mb-6"
               >
-                <p className="text-sm text-red-700">
+                <p className="text-sm text-cp-terracotta-deep">
                   <strong>Error Code:</strong> {error}
                 </p>
               </motion.div>

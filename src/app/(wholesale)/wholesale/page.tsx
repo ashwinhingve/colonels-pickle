@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import { BadgePercent, Wallet, Truck, Boxes, ShieldCheck, Headset } from "lucide-react";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { WholesaleForm } from "@/components/wholesale/WholesaleForm";
+import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
+import { HoverLift } from "@/components/shared/HoverLift";
 import { OFFERS } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -11,11 +14,36 @@ export const metadata: Metadata = {
 };
 
 const BENEFITS = [
-  { icon: "💰", title: "20% Discount on MRP", desc: "Flat 20% off MRP on all wholesale orders." },
-  { icon: "📅", title: "Monthly Credit Basis", desc: "Stock now, pay later — flexible monthly credit." },
-  { icon: "🚚", title: "Free Transportation", desc: "Delivery cost borne entirely by us." },
-  { icon: "📦", title: "Bulk Order Discounts", desc: `${OFFERS.bulk1kg}; ${OFFERS.bulk5kg}.` },
-  { icon: "🚚", title: "Free Delivery", desc: OFFERS.freeDelivery },
+  {
+    Icon: BadgePercent,
+    title: "20% Discount on MRP",
+    desc: "Flat 20% off MRP on every wholesale order — healthy margins from day one.",
+  },
+  {
+    Icon: Wallet,
+    title: "Monthly Credit Basis",
+    desc: "Stock now, pay later — flexible monthly credit for registered businesses.",
+  },
+  {
+    Icon: Truck,
+    title: "Free Transportation",
+    desc: "Pan-India delivery cost borne entirely by us — no hidden freight.",
+  },
+  {
+    Icon: Boxes,
+    title: "Bulk Order Discounts",
+    desc: `${OFFERS.bulk1kg}; ${OFFERS.bulk5kg}.`,
+  },
+  {
+    Icon: ShieldCheck,
+    title: "Preservative-Free Stock",
+    desc: "Authentic, FSSAI-licensed pickles with no preservatives — the quality your customers return for.",
+  },
+  {
+    Icon: Headset,
+    title: "Dedicated Support",
+    desc: "A wholesale team that reaches out within 2 working days of your enquiry.",
+  },
 ];
 
 export default function WholesalePage() {
@@ -25,58 +53,71 @@ export default function WholesalePage() {
       <section
         className="relative overflow-hidden py-20"
         style={{
-          background: "linear-gradient(135deg, #1C1917 0%, #292524 100%)",
+          background:
+            "linear-gradient(135deg, #3A4A1F 0%, #4B5D2A 55%, #2E3818 100%)",
         }}
       >
-        <RajasthaniPattern variant="jali" opacity={0.05} color="#ffffff" />
+        <RajasthaniPattern variant="medallion" opacity={0.05} color="#F5EBDA" />
         <div className="relative z-10 mx-auto max-w-3xl px-4 text-center">
-          <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-saffron">
-            Retailer Program
-          </p>
-          <h1 className="mt-3 font-display text-4xl font-extrabold text-white md:text-5xl">
-            Partner With Colonel&apos;s Pickle
-          </h1>
-          <p className="mt-4 font-serif text-lg text-white/75">
-            Stock authentic, preservative-free homemade pickles and masalas —
-            with margins, credit, and delivery support built for retailers.
-          </p>
+          <AnimatedSection direction="up" duration={0.65}>
+            <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-gold-light">
+              Retailer Program
+            </p>
+            <h1 className="mt-3 font-display text-4xl font-extrabold text-cp-beige md:text-5xl">
+              Partner With Colonel&apos;s Pickle
+            </h1>
+            <p className="mt-4 font-serif text-lg text-cp-beige/80">
+              Stock authentic, preservative-free homemade pickles and masalas —
+              with margins, credit, and delivery support built for retailers.
+            </p>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Benefits */}
       <section className="bg-cp-cream py-20">
-        <div className="mx-auto max-w-7xl px-4">
-          <SectionHeader
-            eyebrow="WHY PARTNER WITH US"
-            title="Wholesale Benefits"
-          />
-          <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto max-w-6xl px-4">
+          <AnimatedSection direction="up" duration={0.65}>
+            <SectionHeader
+              eyebrow="WHY PARTNER WITH US"
+              title="Wholesale Benefits"
+            />
+          </AnimatedSection>
+          <StaggerContainer
+            staggerDelay={0.1}
+            className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          >
             {BENEFITS.map((b) => (
-              <div
-                key={b.title}
-                className="rounded-2xl border border-cp-border bg-white p-6"
-              >
-                <span className="text-4xl">{b.icon}</span>
-                <h3 className="mt-3 font-display text-lg font-bold text-cp-text">
-                  {b.title}
-                </h3>
-                <p className="mt-1 font-serif text-sm leading-relaxed text-cp-text-muted">
-                  {b.desc}
-                </p>
-              </div>
+              <StaggerItem key={b.title}>
+                <HoverLift lift={4}>
+                  <div className="flex h-full flex-col rounded-2xl border border-cp-border bg-white p-6 transition-shadow duration-300 hover:shadow-md">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-cp-olive-light text-cp-olive">
+                      <b.Icon className="h-6 w-6" strokeWidth={1.75} />
+                    </div>
+                    <h3 className="mt-4 font-display text-lg font-bold text-cp-text">
+                      {b.title}
+                    </h3>
+                    <p className="mt-1 font-serif text-sm leading-relaxed text-cp-text-muted">
+                      {b.desc}
+                    </p>
+                  </div>
+                </HoverLift>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* Application form */}
       <section className="bg-white py-20">
         <div className="mx-auto max-w-3xl px-4">
-          <SectionHeader
-            eyebrow="BECOME A PARTNER"
-            title="Wholesale Application"
-            subtitle="Fill in your details and our team will reach out within 2 working days."
-          />
+          <AnimatedSection direction="up" duration={0.65}>
+            <SectionHeader
+              eyebrow="BECOME A PARTNER"
+              title="Wholesale Application"
+              subtitle="Fill in your details and our team will reach out within 2 working days."
+            />
+          </AnimatedSection>
           <div className="mt-10">
             <WholesaleForm />
           </div>

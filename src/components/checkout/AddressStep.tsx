@@ -120,15 +120,15 @@ export function AddressStep({ onNext, disabled }: AddressStepProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Delivery Address</h2>
-        <p className="text-gray-600">Select or add a delivery address</p>
+        <h2 className="text-2xl font-bold text-cp-text mb-2">Delivery Address</h2>
+        <p className="text-cp-text-muted">Select or add a delivery address</p>
       </div>
 
       {/* Loading State */}
       {isLoading && (
         <div className="text-center py-8">
-          <div className="inline-block w-8 h-8 border-4 border-amber-600 border-t-transparent rounded-full animate-spin"></div>
-          <p className="mt-2 text-gray-600">Loading addresses...</p>
+          <div className="inline-block w-8 h-8 border-4 border-cp-olive border-t-transparent rounded-full animate-spin"></div>
+          <p className="mt-2 text-cp-text-muted">Loading addresses...</p>
         </div>
       )}
 
@@ -140,29 +140,29 @@ export function AddressStep({ onNext, disabled }: AddressStepProps) {
               key={address._id}
               className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
                 selectedAddressId === address._id
-                  ? 'border-amber-600 bg-amber-50'
-                  : 'border-gray-200 hover:border-amber-300'
+                  ? 'border-cp-olive bg-cp-olive-light'
+                  : 'border-cp-border hover:border-cp-terracotta/50'
               }`}
               onClick={() => setSelectedAddressId(address._id)}
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-semibold text-gray-800">{address.fullName}</h3>
+                    <h3 className="font-semibold text-cp-text">{address.fullName}</h3>
                     {address.isDefault && (
-                      <span className="bg-amber-100 text-amber-800 text-xs px-2 py-0.5 rounded-full">
+                      <span className="bg-cp-olive-light text-cp-olive text-xs px-2 py-0.5 rounded-full">
                         Default
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-sm text-cp-text-muted mt-1">
                     {address.addressLine1}
                     {address.addressLine2 && `, ${address.addressLine2}`}
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-cp-text-muted">
                     {address.city}, {address.state} - {address.postalCode}
                   </p>
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-sm text-cp-text-muted mt-1">
                     Phone: {address.phoneNumber}
                   </p>
                 </div>
@@ -170,7 +170,7 @@ export function AddressStep({ onNext, disabled }: AddressStepProps) {
                   type="radio"
                   checked={selectedAddressId === address._id}
                   onChange={() => setSelectedAddressId(address._id)}
-                  className="mt-1 w-4 h-4 text-amber-600 focus:ring-amber-500"
+                  className="mt-1 w-4 h-4 text-cp-terracotta focus:ring-cp-olive/25"
                 />
               </div>
             </div>
@@ -180,11 +180,11 @@ export function AddressStep({ onNext, disabled }: AddressStepProps) {
 
       {/* No Addresses Message */}
       {!isLoading && addresses.length === 0 && !showNewAddressForm && (
-        <div className="text-center py-8 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-          <p className="text-gray-600 mb-4">No saved addresses found</p>
+        <div className="text-center py-8 bg-cp-cream-dark rounded-lg border-2 border-dashed border-cp-border">
+          <p className="text-cp-text-muted mb-4">No saved addresses found</p>
           <Button
             onClick={() => setShowNewAddressForm(true)}
-            className="bg-gradient-to-r from-amber-600 to-red-700"
+            className="bg-gradient-to-r from-cp-terracotta to-cp-terracotta-deep"
           >
             Add Your First Address
           </Button>
@@ -194,7 +194,7 @@ export function AddressStep({ onNext, disabled }: AddressStepProps) {
       {/* New Address Form */}
       {showNewAddressForm && (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 border-2 rounded-lg p-6 bg-white">
-          <h3 className="font-semibold text-lg text-gray-800 mb-4">Add New Address</h3>
+          <h3 className="font-semibold text-lg text-cp-text mb-4">Add New Address</h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField label="Full Name" required error={errors.fullName?.message}>
@@ -239,7 +239,7 @@ export function AddressStep({ onNext, disabled }: AddressStepProps) {
                 />
                 {pincodeLookup.loading && (
                   <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                    <div className="w-4 h-4 border-2 border-amber-600 border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-4 h-4 border-2 border-cp-olive border-t-transparent rounded-full animate-spin"></div>
                   </div>
                 )}
               </div>
@@ -266,9 +266,9 @@ export function AddressStep({ onNext, disabled }: AddressStepProps) {
                 <input
                   type="checkbox"
                   {...register('isDefault')}
-                  className="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500"
+                  className="w-4 h-4 text-cp-terracotta border-cp-border rounded focus:ring-cp-olive/25"
                 />
-                <span className="ml-2 text-sm text-gray-700">Set as default address</span>
+                <span className="ml-2 text-sm text-cp-text">Set as default address</span>
               </label>
             </div>
           </div>
@@ -277,7 +277,7 @@ export function AddressStep({ onNext, disabled }: AddressStepProps) {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="bg-gradient-to-r from-amber-600 to-red-700"
+              className="bg-gradient-to-r from-cp-terracotta to-cp-terracotta-deep"
             >
               {isSubmitting ? 'Saving...' : 'Save Address'}
             </Button>
@@ -302,7 +302,7 @@ export function AddressStep({ onNext, disabled }: AddressStepProps) {
         <Button
           variant="outline"
           onClick={() => setShowNewAddressForm(true)}
-          className="w-full border-2 border-dashed border-gray-300 hover:border-amber-500"
+          className="w-full border-2 border-dashed border-cp-border hover:border-cp-terracotta"
         >
           + Add New Address
         </Button>
@@ -313,7 +313,7 @@ export function AddressStep({ onNext, disabled }: AddressStepProps) {
         <Button
           onClick={() => selectedAddressId && onNext(selectedAddressId)}
           disabled={!selectedAddressId || isLoading}
-          className="w-full py-6 text-lg bg-gradient-to-r from-amber-600 to-red-700 hover:from-amber-700 hover:to-red-800"
+          className="w-full py-6 text-lg bg-gradient-to-r from-cp-terracotta to-cp-terracotta-deep hover:from-cp-terracotta-deep hover:to-cp-terracotta"
         >
           Continue to Payment
         </Button>

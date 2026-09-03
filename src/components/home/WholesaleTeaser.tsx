@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { BadgePercent, Wallet, Truck } from "lucide-react";
 import { WHATSAPP_URL, OFFERS } from "@/lib/constants";
 import { StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
 import { HoverLift } from "@/components/shared/HoverLift";
@@ -8,17 +9,17 @@ import { TapScale } from "@/components/shared/TapScale";
 
 const BENEFITS = [
   {
-    icon: "🎯",
+    Icon: BadgePercent,
     title: "20% Bulk Discount",
     description: "Competitive wholesale rates on every product",
   },
   {
-    icon: "💳",
+    Icon: Wallet,
     title: "Credit Basis Supply",
     description: "Flexible monthly credit terms for registered retailers",
   },
   {
-    icon: "🚛",
+    Icon: Truck,
     title: "Transport Covered",
     description: "We bear transportation costs for your orders",
   },
@@ -26,7 +27,7 @@ const BENEFITS = [
 
 export function WholesaleTeaser() {
   return (
-    <section className="bg-white py-20">
+    <section className="bg-white py-14 md:py-20">
       <div className="mx-auto max-w-7xl px-4">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           {/* LEFT — Text content */}
@@ -38,7 +39,7 @@ export function WholesaleTeaser() {
               Partner With Us
             </h2>
             <h3 className="mb-6 font-display text-xl font-bold text-cp-crimson">
-              For Retailers & Distributors
+              For Retailers &amp; Distributors
             </h3>
 
             <p className="mb-4 font-serif text-[15.5px] leading-relaxed text-cp-text-muted">
@@ -77,14 +78,18 @@ export function WholesaleTeaser() {
               {BENEFITS.map((benefit) => (
                 <StaggerItem key={benefit.title}>
                   <HoverLift lift={4}>
-                    <div className="rounded-xl border border-cp-border bg-cp-cream-muted p-6 transition-all duration-300 hover:border-cp-crimson hover:shadow-md">
-                      <div className="mb-3 text-4xl">{benefit.icon}</div>
-                      <h4 className="mb-2 font-display text-lg font-bold text-cp-text">
-                        {benefit.title}
-                      </h4>
-                      <p className="font-serif text-[14px] leading-relaxed text-cp-text-muted">
-                        {benefit.description}
-                      </p>
+                    <div className="flex items-start gap-4 rounded-xl border border-cp-border bg-cp-cream p-6 transition-all duration-300 hover:border-cp-crimson hover:shadow-md">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-cp-olive-light text-cp-olive">
+                        <benefit.Icon className="h-6 w-6" strokeWidth={1.75} />
+                      </div>
+                      <div>
+                        <h4 className="mb-1 font-display text-lg font-bold text-cp-text">
+                          {benefit.title}
+                        </h4>
+                        <p className="font-serif text-[14px] leading-relaxed text-cp-text-muted">
+                          {benefit.description}
+                        </p>
+                      </div>
                     </div>
                   </HoverLift>
                 </StaggerItem>

@@ -67,7 +67,7 @@ function ShopContent() {
         <SectionHeader
           eyebrow="ALL PRODUCTS"
           title="The Complete Collection"
-          subtitle="22 varieties of homemade pickles, masalas, and cold press oils — all without preservatives."
+          subtitle="Over 20 varieties of homemade pickles, masalas, and cold-press oils — all without preservatives."
         />
 
         {/* Filter row */}

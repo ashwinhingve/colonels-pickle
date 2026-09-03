@@ -98,17 +98,17 @@ export default function PaymentStep({
         onError={() => setError('Failed to load payment gateway. Please refresh the page.')}
       />
 
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">Payment</h2>
+      <h2 className="text-2xl font-bold text-cp-text mb-6">Payment</h2>
 
       {/* Order Summary */}
-      <div className="bg-gray-50 p-4 rounded-lg mb-6">
+      <div className="bg-cp-cream-dark p-4 rounded-lg mb-6">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-gray-600">Order Number:</span>
-          <span className="font-semibold text-gray-900">{orderNumber}</span>
+          <span className="text-cp-text-muted">Order Number:</span>
+          <span className="font-semibold text-cp-text">{orderNumber}</span>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-gray-600">Total Amount:</span>
-          <span className="text-2xl font-bold text-orange-600">
+          <span className="text-cp-text-muted">Total Amount:</span>
+          <span className="text-2xl font-bold text-cp-terracotta">
             ₹{totalAmount.toFixed(2)}
           </span>
         </div>
@@ -116,23 +116,23 @@ export default function PaymentStep({
 
       {/* Payment Method Selection */}
       <div className="mb-6">
-        <p className="text-sm font-medium text-gray-700 mb-3">Select Payment Method</p>
+        <p className="text-sm font-medium text-cp-text mb-3">Select Payment Method</p>
         <div className="grid grid-cols-2 gap-3">
           {/* Online Payment */}
           <button
             onClick={() => setPaymentMethod('online')}
             className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
               paymentMethod === 'online'
-                ? 'border-orange-500 bg-orange-50'
-                : 'border-gray-200 hover:border-orange-300 bg-white'
+                ? 'border-cp-terracotta bg-cp-terracotta-light'
+                : 'border-cp-border hover:border-cp-terracotta/25 bg-white'
             }`}
           >
-            <svg className="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-8 h-8 text-cp-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                 d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
             </svg>
-            <span className="text-sm font-semibold text-gray-800">Online Payment</span>
-            <span className="text-xs text-gray-500 text-center">Card, UPI, Net Banking</span>
+            <span className="text-sm font-semibold text-cp-text">Online Payment</span>
+            <span className="text-xs text-cp-text-light text-center">Card, UPI, Net Banking</span>
           </button>
 
           {/* Cash on Delivery */}
@@ -141,15 +141,15 @@ export default function PaymentStep({
             className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
               paymentMethod === 'cod'
                 ? 'border-green-500 bg-green-50'
-                : 'border-gray-200 hover:border-green-300 bg-white'
+                : 'border-cp-border hover:border-green-300 bg-white'
             }`}
           >
             <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                 d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
-            <span className="text-sm font-semibold text-gray-800">Cash on Delivery</span>
-            <span className="text-xs text-gray-500 text-center">Pay when delivered</span>
+            <span className="text-sm font-semibold text-cp-text">Cash on Delivery</span>
+            <span className="text-xs text-cp-text-light text-center">Pay when delivered</span>
           </button>
         </div>
       </div>
@@ -157,7 +157,7 @@ export default function PaymentStep({
       {/* Online Payment Details */}
       {paymentMethod === 'online' && (
         <div className="mb-6">
-          <p className="text-xs text-gray-500 mb-3">Accepted methods:</p>
+          <p className="text-xs text-cp-text-light mb-3">Accepted methods:</p>
           <div className="grid grid-cols-2 gap-2">
             {[
               { icon: 'M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z', label: 'Credit/Debit Card', color: 'text-blue-600' },
@@ -165,7 +165,7 @@ export default function PaymentStep({
               { icon: 'M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-1h16v1zm0-3H4V8h16v7z', label: 'Net Banking', color: 'text-purple-600' },
               { icon: 'M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z', label: 'Wallets', color: 'text-orange-600' },
             ].map(({ icon, label, color }) => (
-              <div key={label} className="flex items-center gap-2 bg-white border border-gray-200 p-2.5 rounded-lg">
+              <div key={label} className="flex items-center gap-2 bg-white border border-cp-border p-2.5 rounded-lg">
                 <svg className={`w-5 h-5 ${color}`} fill="currentColor" viewBox="0 0 24 24">
                   <path d={icon} />
                 </svg>
@@ -213,14 +213,14 @@ export default function PaymentStep({
 
       {/* Error Message */}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+        <div className="bg-cp-terracotta-light border border-cp-terracotta/25 rounded-lg p-4 mb-6">
           <div className="flex items-start gap-3">
-            <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-cp-terracotta flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
             </svg>
             <div>
-              <p className="text-sm font-semibold text-red-900 mb-1">Error</p>
-              <p className="text-xs text-red-700">{error}</p>
+              <p className="text-sm font-semibold text-cp-terracotta-deep mb-1">Error</p>
+              <p className="text-xs text-cp-terracotta">{error}</p>
             </div>
           </div>
         </div>
@@ -231,7 +231,7 @@ export default function PaymentStep({
         <button
           onClick={handleOnlinePayment}
           disabled={loading || !sdkLoaded}
-          className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full bg-cp-terracotta hover:bg-cp-terracotta-deep text-white font-semibold py-4 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           {loading ? (
             <>
@@ -277,7 +277,7 @@ export default function PaymentStep({
         </button>
       )}
 
-      <p className="text-xs text-gray-500 text-center mt-4">
+      <p className="text-xs text-cp-text-light text-center mt-4">
         By proceeding, you agree to our Terms &amp; Conditions and Privacy Policy
       </p>
     </div>

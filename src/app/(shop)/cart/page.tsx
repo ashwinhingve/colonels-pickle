@@ -136,18 +136,18 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-cp-cream">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-amber-50 via-white to-red-50 py-12 md:py-16 border-b">
+      <section className="bg-gradient-to-br from-cp-cream via-white to-cp-terracotta-light py-12 md:py-16 border-b">
         <div className="container mx-auto px-4">
           <AnimatedSection direction="up" className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
               Shopping
-              <span className="block bg-gradient-to-r from-amber-600 to-red-700 bg-clip-text text-transparent">
+              <span className="block text-cp-olive">
                 Cart
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-600">
+            <p className="text-lg md:text-xl text-cp-text-muted">
               You have {totalItems} {totalItems === 1 ? "item" : "items"} in your cart
             </p>
           </AnimatedSection>
@@ -161,12 +161,12 @@ export default function CartPage() {
             <AnimatedSection direction="left">
               <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-gray-800">Cart Items</h2>
+                  <h2 className="text-2xl font-bold text-cp-text">Cart Items</h2>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={clearCart}
-                    className="text-red-600 border-red-300 hover:bg-red-50"
+                    className="text-cp-terracotta border-cp-terracotta/40 hover:bg-cp-terracotta-light"
                   >
                     <Trash2 className="w-4 h-4 mr-2" />
                     Clear Cart
@@ -182,7 +182,7 @@ export default function CartPage() {
                           initial={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -20, x: 100 }}
                           transition={{ duration: 0.3 }}
-                          className="flex flex-col sm:flex-row gap-4 p-4 bg-gray-50 rounded-xl hover:shadow-md transition-shadow"
+                          className="flex flex-col sm:flex-row gap-4 p-4 bg-cp-cream-dark rounded-xl hover:shadow-md transition-shadow"
                         >
                         {/* Product Image */}
                         <div className="w-full sm:w-32 h-32 flex-shrink-0 bg-white rounded-lg overflow-hidden">
@@ -198,8 +198,8 @@ export default function CartPage() {
                                 className="w-full h-full object-cover"
                               />
                             ) : (
-                              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-100 to-orange-100">
-                                <svg className="w-12 h-12 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-cp-olive-light to-cp-gold/20">
+                                <svg className="w-12 h-12 text-cp-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                                 </svg>
                               </div>
@@ -211,12 +211,12 @@ export default function CartPage() {
                         <div className="flex-1">
                           <div className="flex justify-between items-start mb-2">
                             <div>
-                              <h3 className="font-bold text-lg text-gray-800 mb-1">{item.product.name}</h3>
-                              <p className="text-sm text-gray-600">{item.product.category}</p>
+                              <h3 className="font-bold text-lg text-cp-text mb-1">{item.product.name}</h3>
+                              <p className="text-sm text-cp-text-muted">{item.product.category}</p>
                             </div>
                             <button
                               onClick={() => removeItem(cartItemKey(item.product.id, item.product.variantId))}
-                              className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                              className="p-2 text-cp-terracotta hover:bg-cp-terracotta-light rounded-lg transition-colors"
                             >
                               <Trash2 className="w-5 h-5" />
                             </button>
@@ -224,19 +224,19 @@ export default function CartPage() {
 
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-4">
                             <div className="flex items-center gap-3">
-                              <span className="text-sm font-semibold text-gray-700">Quantity:</span>
-                              <div className="flex items-center gap-2 bg-white rounded-lg border-2 border-gray-200">
+                              <span className="text-sm font-semibold text-cp-text-muted">Quantity:</span>
+                              <div className="flex items-center gap-2 bg-white rounded-lg border-2 border-cp-border">
                                 <button
                                   onClick={() => updateQuantity(cartItemKey(item.product.id, item.product.variantId), item.quantity - 1)}
                                   disabled={item.quantity <= 1}
-                                  className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 rounded-l-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                  className="w-10 h-10 flex items-center justify-center text-cp-text-muted hover:bg-cp-cream rounded-l-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                   <Minus className="w-4 h-4" />
                                 </button>
-                                <span className="w-12 text-center font-bold text-gray-800">{item.quantity}</span>
+                                <span className="w-12 text-center font-bold text-cp-text">{item.quantity}</span>
                                 <button
                                   onClick={() => updateQuantity(cartItemKey(item.product.id, item.product.variantId), item.quantity + 1)}
-                                  className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 rounded-r-lg transition-colors"
+                                  className="w-10 h-10 flex items-center justify-center text-cp-text-muted hover:bg-cp-cream rounded-r-lg transition-colors"
                                 >
                                   <Plus className="w-4 h-4" />
                                 </button>
@@ -244,8 +244,8 @@ export default function CartPage() {
                             </div>
 
                             <div className="text-right">
-                              <div className="text-sm text-gray-600 mb-1">₹{item.product.price} × {item.quantity}</div>
-                              <div className="text-xl font-bold text-amber-600">
+                              <div className="text-sm text-cp-text-muted mb-1">₹{item.product.price} × {item.quantity}</div>
+                              <div className="text-xl font-bold text-cp-terracotta">
                                 ₹{(item.product.price * item.quantity).toLocaleString()}
                               </div>
                             </div>
@@ -260,8 +260,8 @@ export default function CartPage() {
 
               {/* ── Discounts Section ──────────────────────────────── */}
               <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-                <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                  <Tag className="w-5 h-5 text-amber-600" />
+                <h2 className="text-lg font-bold text-cp-text mb-4 flex items-center gap-2">
+                  <Tag className="w-5 h-5 text-cp-terracotta" />
                   Discounts &amp; Coupons
                 </h2>
 
@@ -294,23 +294,23 @@ export default function CartPage() {
 
                 {/* Applied coupon code */}
                 {discount && discount.type === "coupon" && (
-                  <div className="flex items-start gap-3 p-3 bg-amber-50 border border-amber-200 rounded-xl mb-4">
-                    <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <div className="flex items-start gap-3 p-3 bg-cp-terracotta-light border border-cp-terracotta/25 rounded-xl mb-4">
+                    <CheckCircle className="w-5 h-5 text-cp-terracotta flex-shrink-0 mt-0.5" />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-amber-800">
-                        Coupon <span className="font-mono bg-amber-100 px-1.5 py-0.5 rounded text-amber-900">{discount.code}</span> applied
+                      <p className="text-sm font-semibold text-cp-terracotta-deep">
+                        Coupon <span className="font-mono bg-cp-olive-light px-1.5 py-0.5 rounded text-cp-olive">{discount.code}</span> applied
                       </p>
-                      <p className="text-xs text-amber-600 mt-0.5">{discount.name}</p>
+                      <p className="text-xs text-cp-terracotta mt-0.5">{discount.name}</p>
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0">
-                      <span className="text-sm font-bold text-amber-700">
+                      <span className="text-sm font-bold text-cp-terracotta-deep">
                         -{discount.discountType === "fixed"
                           ? `₹${discount.discountValue}`
                           : `${discount.discountValue}%`}
                       </span>
                       <button
                         onClick={clearDiscount}
-                        className="p-1 text-amber-500 hover:text-amber-700 rounded"
+                        className="p-1 text-cp-terracotta hover:text-cp-terracotta-deep rounded"
                         title="Remove coupon"
                       >
                         <X className="w-3.5 h-3.5" />
@@ -336,20 +336,20 @@ export default function CartPage() {
                       onChange={(e) => { setCouponInput(e.target.value.toUpperCase()); setCouponError("") }}
                       onKeyDown={(e) => e.key === "Enter" && handleApplyCoupon()}
                       placeholder="Enter coupon code"
-                      className="flex-1 px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm font-mono uppercase focus:outline-none focus:border-amber-400 transition-colors"
+                      className="flex-1 px-4 py-2.5 border-2 border-cp-border rounded-xl text-sm font-mono uppercase focus:outline-none focus:border-cp-olive transition-colors"
                       disabled={couponLoading}
                     />
                     <Button
                       onClick={handleApplyCoupon}
                       disabled={couponLoading || !couponInput.trim()}
-                      className="bg-gradient-to-r from-amber-600 to-red-700 hover:from-amber-700 hover:to-red-800 text-white px-5 rounded-xl"
+                      className="bg-gradient-to-r from-cp-terracotta to-cp-terracotta-deep hover:from-cp-terracotta-deep hover:to-cp-terracotta text-white px-5 rounded-xl"
                     >
                       {couponLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Apply"}
                     </Button>
                   </div>
                 )}
                 {couponError && (
-                  <p className="mt-2 text-sm text-red-600 flex items-center gap-1">
+                  <p className="mt-2 text-sm text-cp-terracotta flex items-center gap-1">
                     <X className="w-3.5 h-3.5" /> {couponError}
                   </p>
                 )}
@@ -357,7 +357,7 @@ export default function CartPage() {
 
               {/* Continue Shopping */}
               <Link href="/products">
-                <Button variant="outline" className="w-full border-2 border-amber-600 text-amber-700 hover:bg-amber-50">
+                <Button variant="outline" className="w-full border-2 border-cp-olive text-cp-terracotta hover:bg-cp-olive-light">
                   Continue Shopping
                 </Button>
               </Link>
@@ -368,15 +368,15 @@ export default function CartPage() {
           <div className="lg:col-span-1">
             <AnimatedSection direction="right">
               <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6">Order Summary</h2>
+                <h2 className="text-2xl font-bold text-cp-text mb-6">Order Summary</h2>
 
                 <div className="space-y-4 mb-6">
-                  <div className="flex justify-between text-gray-700">
+                  <div className="flex justify-between text-cp-text-muted">
                     <span>Subtotal ({totalItems} items)</span>
                     <span className="font-semibold">₹{totalPrice.toLocaleString()}</span>
                   </div>
 
-                  <div className="flex justify-between text-gray-700">
+                  <div className="flex justify-between text-cp-text-muted">
                     <span>Shipping</span>
                     {shipping === 0 ? (
                       <span className="font-semibold text-green-600">FREE</span>
@@ -395,15 +395,15 @@ export default function CartPage() {
                     </div>
                   )}
 
-                  <div className="border-t-2 border-gray-200 pt-4 flex justify-between items-center">
-                    <span className="text-lg font-bold text-gray-800">Total</span>
+                  <div className="border-t-2 border-cp-border pt-4 flex justify-between items-center">
+                    <span className="text-lg font-bold text-cp-text">Total</span>
                     <div className="text-right">
                       {discountAmt > 0 && (
-                        <p className="text-xs text-gray-400 line-through">
+                        <p className="text-xs text-cp-text-light line-through">
                           ₹{(totalPrice + shipping).toLocaleString()}
                         </p>
                       )}
-                      <span className="text-2xl font-bold bg-gradient-to-r from-amber-600 to-red-700 bg-clip-text text-transparent">
+                      <span className="text-2xl font-bold text-cp-olive">
                         ₹{finalTotal.toLocaleString()}
                       </span>
                     </div>
@@ -459,7 +459,7 @@ export default function CartPage() {
                   </Button>
                 </Link>
 
-                <div className="space-y-3 text-sm text-gray-600">
+                <div className="space-y-3 text-sm text-cp-text-muted">
                   {[
                     "Secure checkout",
                     "Easy returns within 7 days",

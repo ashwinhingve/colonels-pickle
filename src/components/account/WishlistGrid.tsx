@@ -107,14 +107,14 @@ export function WishlistGrid() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-lg border border-red-200 bg-red-50 p-6 text-center"
+        className="rounded-lg border border-cp-terracotta/25 bg-cp-terracotta-light p-6 text-center"
       >
-        <p className="text-red-700 font-medium mb-3">{error}</p>
+        <p className="text-cp-terracotta-deep font-medium mb-3">{error}</p>
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={fetchWishlist}
-          className="text-red-600 hover:text-red-800 underline font-medium"
+          className="text-cp-terracotta hover:text-cp-terracotta-deep underline font-medium"
         >
           Try Again
         </motion.button>

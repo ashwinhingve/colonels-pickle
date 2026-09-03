@@ -93,7 +93,7 @@ export default function HomePage() {
       <AnimatedSection direction="up" duration={0.5}>
         <VerifiedAuthentic />
       </AnimatedSection>
-      <SectionDivider variant="wave" color="#B91C1C" height={75} />
+      <SectionDivider variant="wave" color="#4B5D2A" height={75} />
 
       <AnimatedSection direction="up" duration={0.5}>
         <CTABanner />

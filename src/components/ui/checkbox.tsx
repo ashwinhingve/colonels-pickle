@@ -23,11 +23,11 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             <div
               className={cn(
                 "w-5 h-5 rounded border-2 transition-all duration-200 flex items-center justify-center",
-                "peer-focus:ring-2 peer-focus:ring-amber-200 peer-focus:ring-offset-0",
-                "peer-checked:bg-gradient-to-r peer-checked:from-amber-600 peer-checked:to-red-700 peer-checked:border-transparent",
+                "peer-focus:ring-2 peer-focus:ring-cp-olive/25 peer-focus:ring-offset-0",
+                "peer-checked:bg-cp-olive peer-checked:border-transparent",
                 error
-                  ? "border-red-500"
-                  : "border-gray-300 group-hover:border-amber-600",
+                  ? "border-cp-terracotta"
+                  : "border-gray-300 group-hover:border-cp-olive",
                 className
               )}
             >
@@ -41,7 +41,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           )}
         </label>
         {error && (
-          <p className="mt-1.5 text-sm text-red-600 font-medium">{error}</p>
+          <p className="mt-1.5 text-sm text-cp-terracotta font-medium">{error}</p>
         )}
       </div>
     )

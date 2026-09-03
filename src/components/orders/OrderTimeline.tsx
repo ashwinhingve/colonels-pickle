@@ -152,7 +152,7 @@ function Timeline({
 }) {
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6">
-      <h3 className="text-xl font-bold text-gray-900 mb-6">Order Status</h3>
+      <h3 className="text-xl font-bold text-cp-text mb-6">Order Status</h3>
 
       <div className="relative">
         {steps.map((step, index) => {
@@ -165,7 +165,7 @@ function Timeline({
               {!isLast && (
                 <div
                   className={`absolute left-5 top-12 w-0.5 h-full ${
-                    step.status === 'completed' ? 'bg-green-500' : 'bg-gray-200'
+                    step.status === 'completed' ? 'bg-green-500' : 'bg-cp-border'
                   }`}
                 />
               )}
@@ -176,8 +176,8 @@ function Timeline({
                   step.status === 'completed'
                     ? 'bg-green-100'
                     : step.status === 'current'
-                    ? 'bg-amber-100'
-                    : 'bg-gray-100'
+                    ? 'bg-cp-terracotta-light'
+                    : 'bg-cp-cream'
                 }`}
               >
                 <Icon
@@ -185,8 +185,8 @@ function Timeline({
                     step.status === 'completed'
                       ? 'text-green-600'
                       : step.status === 'current'
-                      ? 'text-amber-600'
-                      : 'text-gray-400'
+                      ? 'text-cp-terracotta'
+                      : 'text-cp-text-light'
                   }`}
                 />
               </div>
@@ -196,16 +196,16 @@ function Timeline({
                 <p
                   className={`text-base font-medium ${
                     step.status === 'completed'
-                      ? 'text-gray-900'
+                      ? 'text-cp-text'
                       : step.status === 'current'
-                      ? 'text-amber-700'
-                      : 'text-gray-500'
+                      ? 'text-cp-terracotta-deep'
+                      : 'text-cp-text-light'
                   }`}
                 >
                   {step.label}
                 </p>
                 {step.date && (
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-sm text-cp-text-light mt-1">
                     {typeof step.date === 'string' && step.date.startsWith('Est.')
                       ? step.date
                       : formatDate(step.date)}
@@ -237,8 +237,8 @@ function FailedTimeline({
             <CheckCircle className="w-5 h-5 text-green-600" />
           </div>
           <div>
-            <p className="text-base font-medium text-gray-900">Order Placed</p>
-            <p className="text-sm text-gray-600 mt-1">{formatDate(createdAt)}</p>
+            <p className="text-base font-medium text-cp-text">Order Placed</p>
+            <p className="text-sm text-cp-text-muted mt-1">{formatDate(createdAt)}</p>
           </div>
         </div>
 

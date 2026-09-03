@@ -118,10 +118,10 @@ export default function OrdersPage() {
 
   if (status === 'loading' || isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-red-50">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cp-cream via-white to-cp-terracotta-light">
         <div className="text-center">
-          <div className="inline-block w-12 h-12 border-4 border-amber-600 border-t-transparent rounded-full animate-spin"></div>
-          <p className="mt-4 text-gray-600">Loading your orders...</p>
+          <div className="inline-block w-12 h-12 border-4 border-cp-olive border-t-transparent rounded-full animate-spin"></div>
+          <p className="mt-4 text-cp-text-muted">Loading your orders...</p>
         </div>
       </div>
     );
@@ -141,7 +141,7 @@ export default function OrdersPage() {
       case 'processing':
         return <Clock className="w-5 h-5 text-yellow-600" />;
       default:
-        return <Package className="w-5 h-5 text-amber-600" />;
+        return <Package className="w-5 h-5 text-cp-terracotta" />;
     }
   };
 
@@ -160,22 +160,22 @@ export default function OrdersPage() {
       case 'processing':
         return 'bg-purple-100 text-purple-800';
       default:
-        return 'bg-amber-100 text-amber-800';
+        return 'bg-cp-cream-dark text-cp-text';
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-red-50 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-cp-cream via-white to-cp-terracotta-light py-12">
       <div className="container mx-auto px-4">
         <AnimatedSection direction="up">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-amber-600 to-red-700 bg-clip-text text-transparent">
+              <span className="text-cp-olive">
                 My Orders
               </span>
             </h1>
-            <p className="text-gray-600">
+            <p className="text-cp-text-muted">
               Track and manage your orders
               {pagination.totalOrders > 0 && ` (${pagination.totalOrders} total)`}
             </p>
@@ -188,13 +188,13 @@ export default function OrdersPage() {
                 {/* Search */}
                 <form onSubmit={handleSearch} className="flex-1">
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-cp-text-light" />
                     <input
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search by order number..."
-                      className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-amber-500 focus:outline-none text-sm"
+                      className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-cp-border focus:border-cp-olive focus:outline-none text-sm"
                     />
                   </div>
                 </form>
@@ -205,14 +205,14 @@ export default function OrdersPage() {
                   onClick={() => setShowFilters(!showFilters)}
                   className={`inline-flex items-center gap-2 px-4 py-3 rounded-xl border-2 font-medium transition-colors ${
                     hasActiveFilters
-                      ? 'bg-amber-50 border-amber-500 text-amber-700'
-                      : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+                      ? 'bg-cp-olive-light border-cp-olive text-cp-olive'
+                      : 'bg-white border-cp-border text-cp-text-muted hover:bg-cp-cream'
                   }`}
                 >
                   <Filter className="w-5 h-5" />
                   Filters
                   {hasActiveFilters && (
-                    <span className="bg-amber-600 text-white text-xs rounded-full px-2 py-0.5">
+                    <span className="bg-cp-terracotta text-white text-xs rounded-full px-2 py-0.5">
                       Active
                     </span>
                   )}
@@ -221,7 +221,7 @@ export default function OrdersPage() {
                 {/* Export Button */}
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-700 font-medium hover:bg-gray-50"
+                  className="inline-flex items-center gap-2 px-4 py-3 bg-white border-2 border-cp-border rounded-xl text-cp-text-muted font-medium hover:bg-cp-cream"
                 >
                   <Download className="w-5 h-5" />
                   <span className="hidden sm:inline">Export</span>
@@ -230,10 +230,10 @@ export default function OrdersPage() {
 
               {/* Expanded Filters */}
               {showFilters && (
-                <div className="bg-white rounded-xl border-2 border-gray-200 p-6 space-y-4">
+                <div className="bg-white rounded-xl border-2 border-cp-border p-6 space-y-4">
                   {/* Status Filters */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    <label className="block text-sm font-semibold text-cp-text-muted mb-3">
                       Order Status
                     </label>
                     <div className="flex flex-wrap gap-2">
@@ -241,7 +241,7 @@ export default function OrdersPage() {
                         variant={filter === 'all' ? 'default' : 'outline'}
                         onClick={() => setFilter('all')}
                         size="sm"
-                        className={filter === 'all' ? 'bg-gradient-to-r from-amber-600 to-red-700' : ''}
+                        className={filter === 'all' ? 'bg-gradient-to-r from-cp-terracotta to-cp-terracotta-deep' : ''}
                       >
                         All Orders
                       </Button>
@@ -249,7 +249,7 @@ export default function OrdersPage() {
                         variant={filter === 'confirmed' ? 'default' : 'outline'}
                         onClick={() => setFilter('confirmed')}
                         size="sm"
-                        className={filter === 'confirmed' ? 'bg-gradient-to-r from-amber-600 to-red-700' : ''}
+                        className={filter === 'confirmed' ? 'bg-gradient-to-r from-cp-terracotta to-cp-terracotta-deep' : ''}
                       >
                         Confirmed
                       </Button>
@@ -257,7 +257,7 @@ export default function OrdersPage() {
                         variant={filter === 'processing' ? 'default' : 'outline'}
                         onClick={() => setFilter('processing')}
                         size="sm"
-                        className={filter === 'processing' ? 'bg-gradient-to-r from-amber-600 to-red-700' : ''}
+                        className={filter === 'processing' ? 'bg-gradient-to-r from-cp-terracotta to-cp-terracotta-deep' : ''}
                       >
                         Processing
                       </Button>
@@ -265,7 +265,7 @@ export default function OrdersPage() {
                         variant={filter === 'shipped' ? 'default' : 'outline'}
                         onClick={() => setFilter('shipped')}
                         size="sm"
-                        className={filter === 'shipped' ? 'bg-gradient-to-r from-amber-600 to-red-700' : ''}
+                        className={filter === 'shipped' ? 'bg-gradient-to-r from-cp-terracotta to-cp-terracotta-deep' : ''}
                       >
                         Shipped
                       </Button>
@@ -273,7 +273,7 @@ export default function OrdersPage() {
                         variant={filter === 'delivered' ? 'default' : 'outline'}
                         onClick={() => setFilter('delivered')}
                         size="sm"
-                        className={filter === 'delivered' ? 'bg-gradient-to-r from-amber-600 to-red-700' : ''}
+                        className={filter === 'delivered' ? 'bg-gradient-to-r from-cp-terracotta to-cp-terracotta-deep' : ''}
                       >
                         Delivered
                       </Button>
@@ -283,42 +283,42 @@ export default function OrdersPage() {
                   {/* Date Filters */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      <label className="block text-sm font-semibold text-cp-text-muted mb-2">
                         From Date
                       </label>
                       <input
                         type="date"
                         value={dateFrom}
                         onChange={(e) => setDateFrom(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg border-2 border-gray-200 focus:border-amber-500 focus:outline-none text-sm"
+                        className="w-full px-3 py-2 rounded-lg border-2 border-cp-border focus:border-cp-olive focus:outline-none text-sm"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      <label className="block text-sm font-semibold text-cp-text-muted mb-2">
                         To Date
                       </label>
                       <input
                         type="date"
                         value={dateTo}
                         onChange={(e) => setDateTo(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg border-2 border-gray-200 focus:border-amber-500 focus:outline-none text-sm"
+                        className="w-full px-3 py-2 rounded-lg border-2 border-cp-border focus:border-cp-olive focus:outline-none text-sm"
                       />
                     </div>
                   </div>
 
                   {/* Filter Actions */}
-                  <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
+                  <div className="flex items-center justify-end gap-3 pt-4 border-t border-cp-border">
                     <button
                       type="button"
                       onClick={handleClearFilters}
-                      className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
+                      className="px-4 py-2 text-sm font-medium text-cp-text-muted hover:text-cp-text"
                     >
                       Clear All
                     </button>
                     <button
                       type="button"
                       onClick={() => setShowFilters(false)}
-                      className="px-4 py-2 bg-gradient-to-r from-amber-600 to-red-700 text-white text-sm font-medium rounded-lg hover:from-amber-700 hover:to-red-800"
+                      className="px-4 py-2 bg-gradient-to-r from-cp-terracotta to-cp-terracotta-deep text-white text-sm font-medium rounded-lg hover:from-cp-terracotta-deep hover:to-cp-terracotta-deep"
                     >
                       Apply Filters
                     </button>
@@ -334,8 +334,8 @@ export default function OrdersPage() {
                   <div className="w-40 h-40 mx-auto mb-6">
                     <EmptyOrdersIllustration />
                   </div>
-                  <h2 className="font-display text-2xl font-bold text-gray-800 mb-2">No Orders Found</h2>
-                  <p className="font-serif text-gray-600 mb-6">
+                  <h2 className="font-display text-2xl font-bold text-cp-text mb-2">No Orders Found</h2>
+                  <p className="font-serif text-cp-text-muted mb-6">
                     {hasActiveFilters
                       ? "No orders match your filters"
                       : "You haven't placed any orders yet. Start shopping!"}
@@ -368,10 +368,10 @@ export default function OrdersPage() {
                           <div className="flex items-center gap-3 mb-3">
                             {getStatusIcon(order.orderStatus)}
                             <div>
-                              <h3 className="font-bold text-lg text-gray-800">
+                              <h3 className="font-bold text-lg text-cp-text">
                                 Order #{order.orderNumber}
                               </h3>
-                              <p className="text-sm text-gray-500">
+                              <p className="text-sm text-cp-text-light">
                                 Placed on {format(new Date(order.createdAt), 'MMM dd, yyyy')}
                               </p>
                             </div>
@@ -379,21 +379,21 @@ export default function OrdersPage() {
 
                           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                             <div>
-                              <p className="text-gray-600">Items</p>
-                              <p className="font-semibold text-gray-800">{order.items.length}</p>
+                              <p className="text-cp-text-muted">Items</p>
+                              <p className="font-semibold text-cp-text">{order.items.length}</p>
                             </div>
                             <div>
-                              <p className="text-gray-600">Total</p>
-                              <p className="font-bold text-gray-800">₹{order.totalAmount.toLocaleString()}</p>
+                              <p className="text-cp-text-muted">Total</p>
+                              <p className="font-bold text-cp-text">₹{order.totalAmount.toLocaleString()}</p>
                             </div>
                             <div>
-                              <p className="text-gray-600">Status</p>
+                              <p className="text-cp-text-muted">Status</p>
                               <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(order.orderStatus)}`}>
                                 {order.orderStatus}
                               </span>
                             </div>
                             <div>
-                              <p className="text-gray-600">Payment</p>
+                              <p className="text-cp-text-muted">Payment</p>
                               <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium capitalize ${
                                 order.paymentStatus === 'paid' ? 'bg-green-100 text-green-800' :
                                 order.paymentStatus === 'failed' ? 'bg-red-100 text-red-800' :
@@ -406,8 +406,8 @@ export default function OrdersPage() {
 
                           {(order.trackingNumber || order.waybill) && (
                             <div className="mt-3 text-sm">
-                              <span className="text-gray-600">Tracking: </span>
-                              <span className="font-mono font-semibold text-gray-800">
+                              <span className="text-cp-text-muted">Tracking: </span>
+                              <span className="font-mono font-semibold text-cp-text">
                                 {order.waybill || order.trackingNumber}
                               </span>
                             </div>
@@ -429,7 +429,7 @@ export default function OrdersPage() {
                             </Link>
                           )}
                           {order.paymentStatus === 'failed' && (
-                            <Button className="w-full bg-gradient-to-r from-amber-600 to-red-700">
+                            <Button className="w-full bg-gradient-to-r from-cp-terracotta to-cp-terracotta-deep">
                               Retry Payment
                             </Button>
                           )}
@@ -444,7 +444,7 @@ export default function OrdersPage() {
                 {/* Pagination */}
                 {pagination.totalPages > 1 && (
                   <div className="mt-8 flex items-center justify-between bg-white rounded-xl shadow-lg p-4">
-                    <div className="text-sm text-gray-700">
+                    <div className="text-sm text-cp-text-muted">
                       Page {pagination.currentPage} of {pagination.totalPages}
                     </div>
 
@@ -453,7 +453,7 @@ export default function OrdersPage() {
                         type="button"
                         disabled={pagination.currentPage === 1}
                         onClick={() => fetchOrders(pagination.currentPage - 1)}
-                        className="inline-flex items-center gap-1 px-4 py-2 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="inline-flex items-center gap-1 px-4 py-2 border-2 border-cp-border rounded-lg text-sm font-medium text-cp-text-muted hover:bg-cp-cream disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <ChevronLeft className="w-4 h-4" />
                         Previous
@@ -463,7 +463,7 @@ export default function OrdersPage() {
                         type="button"
                         disabled={pagination.currentPage === pagination.totalPages}
                         onClick={() => fetchOrders(pagination.currentPage + 1)}
-                        className="inline-flex items-center gap-1 px-4 py-2 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="inline-flex items-center gap-1 px-4 py-2 border-2 border-cp-border rounded-lg text-sm font-medium text-cp-text-muted hover:bg-cp-cream disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         Next
                         <ChevronRight className="w-4 h-4" />

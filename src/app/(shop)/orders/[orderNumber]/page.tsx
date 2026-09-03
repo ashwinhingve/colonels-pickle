@@ -7,7 +7,7 @@ import OrderTimeline from '@/components/orders/OrderTimeline';
 import OrderItemsDisplay from '@/components/orders/OrderItemsDisplay';
 import OrderSummaryCard from '@/components/orders/OrderSummaryCard';
 import OrderActions from '@/components/orders/OrderActions';
-import { ArrowLeft, Download, Package, Truck } from 'lucide-react';
+import { ArrowLeft, Download, Package, Truck, Mail, Phone } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
@@ -137,14 +137,14 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
   const canReturn = isDelivered && daysSinceDelivery <= 7;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-red-50 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-cp-cream via-white to-cp-terracotta-light py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="mb-8">
             <Link
               href="/orders"
-              className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 mb-4"
+              className="inline-flex items-center gap-2 text-cp-terracotta hover:text-cp-terracotta-deep mb-4"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Orders
@@ -153,11 +153,11 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold mb-2">
-                  <span className="bg-gradient-to-r from-amber-600 to-red-700 bg-clip-text text-transparent">
+                  <span className="text-cp-olive">
                     Order #{orderData.orderNumber}
                   </span>
                 </h1>
-                <p className="text-gray-600">
+                <p className="text-cp-text-muted">
                   Placed on{' '}
                   {new Date(orderData.createdAt).toLocaleDateString('en-IN', {
                     day: 'numeric',
@@ -175,7 +175,7 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
                   href={`/api/orders/${orderData.orderNumber}/invoice`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-cp-border rounded-xl text-cp-text-muted font-medium hover:bg-cp-cream"
                 >
                   <Download className="w-4 h-4" />
                   Download Invoice
@@ -186,7 +186,7 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
                     href={orderData.trackingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-cp-border rounded-xl text-cp-text-muted font-medium hover:bg-cp-cream"
                   >
                     <Truck className="w-4 h-4" />
                     Track on {orderData.courier || 'Courier'}
@@ -195,7 +195,7 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
 
                 {canReturn && (
                   <Link href={`/orders/${orderData.orderNumber}/return`}>
-                    <Button className="bg-gradient-to-r from-amber-600 to-red-700">
+                    <Button className="bg-gradient-to-r from-cp-terracotta to-cp-terracotta-deep">
                       Request Return
                     </Button>
                   </Link>
@@ -222,7 +222,7 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
               </div>
               {orderData.refundAmount > 0 && (
                 <div className="bg-white rounded-xl border border-blue-200 px-5 py-3 text-center shrink-0">
-                  <p className="text-xs text-gray-500 mb-0.5">Refund Initiated</p>
+                  <p className="text-xs text-cp-text-light mb-0.5">Refund Initiated</p>
                   <p className="text-xl font-bold text-blue-700">
                     ₹{orderData.refundAmount.toLocaleString()}
                   </p>
@@ -249,53 +249,53 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
 
               {/* Shipping Information */}
               <div className="bg-white rounded-2xl shadow-xl p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <Package className="w-5 h-5 text-amber-600" />
+                <h3 className="text-xl font-bold text-cp-text mb-4 flex items-center gap-2">
+                  <Package className="w-5 h-5 text-cp-terracotta" />
                   Shipping Information
                 </h3>
                 <div className="space-y-3">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <p className="text-sm text-gray-600">Name</p>
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm text-cp-text-muted">Name</p>
+                      <p className="text-sm font-medium text-cp-text">
                         {orderData.shippingAddress.name}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-600">Phone</p>
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm text-cp-text-muted">Phone</p>
+                      <p className="text-sm font-medium text-cp-text">
                         {orderData.shippingAddress.phone}
                       </p>
                     </div>
                   </div>
 
                   <div>
-                    <p className="text-sm text-gray-600">Delivery Address</p>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm text-cp-text-muted">Delivery Address</p>
+                    <p className="text-sm font-medium text-cp-text">
                       {orderData.shippingAddress.addressLine1}
                       {orderData.shippingAddress.addressLine2 && (
                         <>, {orderData.shippingAddress.addressLine2}</>
                       )}
                     </p>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-cp-text">
                       {orderData.shippingAddress.city}, {orderData.shippingAddress.state}{' '}
                       {orderData.shippingAddress.postalCode}
                     </p>
                   </div>
 
                   {orderData.waybill && (
-                    <div className="border-t border-gray-200 pt-3 mt-3">
+                    <div className="border-t border-cp-border pt-3 mt-3">
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <p className="text-sm text-gray-600">Tracking Number</p>
-                          <p className="text-sm font-medium text-gray-900 font-mono">
+                          <p className="text-sm text-cp-text-muted">Tracking Number</p>
+                          <p className="text-sm font-medium text-cp-text font-mono">
                             {orderData.waybill}
                           </p>
                         </div>
                         {orderData.courier && (
                           <div>
-                            <p className="text-sm text-gray-600">Courier</p>
-                            <p className="text-sm font-medium text-gray-900">
+                            <p className="text-sm text-cp-text-muted">Courier</p>
+                            <p className="text-sm font-medium text-cp-text">
                               {orderData.courier}
                             </p>
                           </div>
@@ -304,8 +304,8 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
 
                       {orderData.estimatedDelivery && (
                         <div className="mt-3">
-                          <p className="text-sm text-gray-600">Estimated Delivery</p>
-                          <p className="text-sm font-medium text-gray-900">
+                          <p className="text-sm text-cp-text-muted">Estimated Delivery</p>
+                          <p className="text-sm font-medium text-cp-text">
                             {new Date(orderData.estimatedDelivery).toLocaleDateString('en-IN', {
                               day: 'numeric',
                               month: 'long',
@@ -321,19 +321,19 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
 
               {/* Payment Information */}
               <div className="bg-white rounded-2xl shadow-xl p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                <h3 className="text-xl font-bold text-cp-text mb-4">
                   Payment Information
                 </h3>
                 <div className="space-y-3">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <p className="text-sm text-gray-600">Payment Method</p>
-                      <p className="text-sm font-medium text-gray-900 capitalize">
+                      <p className="text-sm text-cp-text-muted">Payment Method</p>
+                      <p className="text-sm font-medium text-cp-text capitalize">
                         {orderData.paymentMethod}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-600">Payment Status</p>
+                      <p className="text-sm text-cp-text-muted">Payment Status</p>
                       <span
                         className={`inline-flex px-3 py-1 text-xs font-medium rounded-full capitalize ${
                           orderData.paymentStatus === 'paid' ||
@@ -353,18 +353,18 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
 
                   {/* Refund details */}
                   {orderData.refundAmount > 0 && (
-                    <div className="border-t border-gray-200 pt-3 mt-1">
+                    <div className="border-t border-cp-border pt-3 mt-1">
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <p className="text-sm text-gray-600">Refund Amount</p>
+                          <p className="text-sm text-cp-text-muted">Refund Amount</p>
                           <p className="text-sm font-semibold text-blue-700">
                             ₹{orderData.refundAmount.toLocaleString()}
                           </p>
                         </div>
                         {orderData.refundedAt && (
                           <div>
-                            <p className="text-sm text-gray-600">Refund Initiated</p>
-                            <p className="text-sm font-medium text-gray-900">
+                            <p className="text-sm text-cp-text-muted">Refund Initiated</p>
+                            <p className="text-sm font-medium text-cp-text">
                               {new Date(orderData.refundedAt).toLocaleDateString('en-IN', {
                                 day: 'numeric',
                                 month: 'short',
@@ -394,7 +394,7 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
               {/* Cancel Order */}
               {canCancel && (
                 <div className="bg-white rounded-2xl shadow-xl p-6">
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">Order Actions</h3>
+                  <h3 className="text-lg font-bold text-cp-text mb-3">Order Actions</h3>
                   <OrderActions
                     orderId={orderData.id}
                     orderStatus={orderData.orderStatus}
@@ -405,23 +405,25 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
               )}
 
               {/* Need Help? */}
-              <div className="bg-gradient-to-br from-amber-50 to-red-50 rounded-2xl shadow-xl p-6 border-2 border-amber-200">
-                <h3 className="text-lg font-bold text-gray-900 mb-3">Need Help?</h3>
-                <p className="text-sm text-gray-700 mb-4">
+              <div className="bg-gradient-to-br from-cp-cream to-cp-terracotta-light rounded-2xl shadow-xl p-6 border-2 border-cp-terracotta/25">
+                <h3 className="text-lg font-bold text-cp-text mb-3">Need Help?</h3>
+                <p className="text-sm text-cp-text-muted mb-4">
                   Have questions about your order? Our customer support team is here to help.
                 </p>
                 <div className="space-y-2">
                   <a
                     href="mailto:support@colonelspickle.in"
-                    className="block text-sm font-medium text-amber-600 hover:text-amber-700"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-cp-terracotta hover:text-cp-terracotta-deep"
                   >
-                    📧 support@colonelspickle.in
+                    <Mail className="h-4 w-4" />
+                    support@colonelspickle.in
                   </a>
                   <a
                     href="tel:+919329216544"
-                    className="block text-sm font-medium text-amber-600 hover:text-amber-700"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-cp-terracotta hover:text-cp-terracotta-deep"
                   >
-                    📞 +91-93292 16544
+                    <Phone className="h-4 w-4" />
+                    +91-93292 16544
                   </a>
                 </div>
               </div>
@@ -429,8 +431,8 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
               {/* Return Policy Info */}
               {isDelivered && (
                 <div className="bg-white rounded-2xl shadow-xl p-6">
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">Return Policy</h3>
-                  <p className="text-sm text-gray-700 mb-2">
+                  <h3 className="text-lg font-bold text-cp-text mb-3">Return Policy</h3>
+                  <p className="text-sm text-cp-text-muted mb-2">
                     {canReturn ? (
                       <>
                         You have <strong>{7 - daysSinceDelivery} days</strong> left to request a
@@ -440,7 +442,7 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
                       <>The 7-day return window for this order has expired.</>
                     )}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-cp-text-light">
                     Items must be unused and in original packaging.
                   </p>
                 </div>

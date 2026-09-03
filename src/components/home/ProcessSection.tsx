@@ -1,5 +1,6 @@
 "use client";
 
+import { Wheat, ChefHat, Package, Truck } from "lucide-react";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
 import { HoverLift } from "@/components/shared/HoverLift";
@@ -7,25 +8,25 @@ import { HoverLift } from "@/components/shared/HoverLift";
 const STEPS = [
   {
     number: 1,
-    icon: "🌾",
+    Icon: Wheat,
     title: "Premium Sourcing",
     description: "Afghani hing, whole spices, cold-pressed mustard oil sourced directly from trusted farms",
   },
   {
     number: 2,
-    icon: "👩‍🍳",
+    Icon: ChefHat,
     title: "Traditional Preparation",
     description: "Every batch made using mother's recipes, sun-dried spices, and time-tested methods",
   },
   {
     number: 3,
-    icon: "🫙",
+    Icon: Package,
     title: "Quality Packaging",
     description: "Glass jars sealed with care, labeled with love, ready to protect the freshness inside",
   },
   {
     number: 4,
-    icon: "🚚",
+    Icon: Truck,
     title: "Pan India Delivery",
     description: "Shipped with care across the country to your doorstep in 3–7 days",
   },
@@ -33,7 +34,7 @@ const STEPS = [
 
 export function ProcessSection() {
   return (
-    <section className="bg-cp-cream-dark py-20">
+    <section className="bg-cp-cream-dark py-14 md:py-20">
       <div className="mx-auto max-w-7xl px-4">
         <SectionHeader
           eyebrow="OUR PROCESS"
@@ -60,7 +61,9 @@ export function ProcessSection() {
                       </div>
 
                       {/* Icon */}
-                      <div className="mb-4 text-4xl">{step.icon}</div>
+                      <div className="mb-4 text-cp-terracotta">
+                        <step.Icon className="h-9 w-9" strokeWidth={1.75} />
+                      </div>
 
                       {/* Title */}
                       <h3 className="mb-3 font-display text-lg font-bold text-cp-text">

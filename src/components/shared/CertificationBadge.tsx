@@ -30,7 +30,7 @@ export const CertificationBadge: React.FC<CertificationBadgeProps> = ({
       {/* Icon or Image */}
       <div className="flex justify-center mb-4">
         {certification.image ? (
-          <div className="relative w-24 h-24 rounded-full overflow-hidden bg-gradient-to-br from-amber-100 to-red-100 p-2">
+          <div className="relative w-24 h-24 rounded-full overflow-hidden bg-gradient-to-br from-cp-olive-light to-cp-gold/20 p-2">
             <Image
               src={certification.image}
               alt={certification.name}
@@ -40,17 +40,17 @@ export const CertificationBadge: React.FC<CertificationBadgeProps> = ({
             />
           </div>
         ) : (
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-amber-500 to-red-600 flex items-center justify-center">
+          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-cp-olive to-cp-olive-dark flex items-center justify-center shadow-md ring-4 ring-cp-gold/25">
             {certification.icon || <Shield className="w-12 h-12 text-white" />}
           </div>
         )}
       </div>
 
       {/* Content */}
-      <h3 className="text-lg font-bold text-gray-800 text-center mb-2">
+      <h3 className="text-lg font-bold text-cp-text text-center mb-2">
         {certification.name}
       </h3>
-      <p className="text-sm text-gray-600 text-center leading-relaxed">
+      <p className="text-sm text-cp-text-muted text-center leading-relaxed">
         {certification.description}
       </p>
     </motion.div>
