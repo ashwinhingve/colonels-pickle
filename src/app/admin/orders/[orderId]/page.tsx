@@ -11,7 +11,7 @@ import OrderTimelineAdmin from '@/components/admin/OrderTimelineAdmin';
 import CreateShipmentButton from '@/components/admin/CreateShipmentButton';
 import ShipmentScanTimeline from '@/components/admin/ShipmentScanTimeline';
 import OrderActionsBar from '@/components/admin/orders/OrderActionsBar';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Download } from 'lucide-react';
 import Link from 'next/link';
 
 interface PageProps {
@@ -159,13 +159,24 @@ export default async function AdminOrderDetailsPage({ params }: PageProps) {
         </div>
 
         {/* Quick Actions */}
-        <OrderActionsBar
-          orderId={orderId}
-          orderNumber={orderData.orderNumber}
-          paymentStatus={orderData.paymentStatus}
-          refundAmount={orderData.refundAmount}
-          totalAmount={orderData.totalAmount}
-        />
+        <div className="flex items-center gap-3">
+          <a
+            href={`/api/orders/${orderId}/invoice/pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-600 text-sm font-medium hover:bg-gray-50 transition-colors"
+          >
+            <Download className="w-4 h-4" />
+            Download PDF Invoice
+          </a>
+          <OrderActionsBar
+            orderId={orderId}
+            orderNumber={orderData.orderNumber}
+            paymentStatus={orderData.paymentStatus}
+            refundAmount={orderData.refundAmount}
+            totalAmount={orderData.totalAmount}
+          />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

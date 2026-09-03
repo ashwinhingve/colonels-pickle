@@ -181,6 +181,16 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
                   Download Invoice
                 </a>
 
+                <a
+                  href={`/api/orders/${orderData.orderNumber}/invoice/pdf`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-cp-border rounded-xl text-cp-text-muted font-medium hover:bg-cp-cream"
+                >
+                  <Download className="w-4 h-4" />
+                  Download PDF Invoice
+                </a>
+
                 {orderData.trackingUrl && (
                   <a
                     href={orderData.trackingUrl}
