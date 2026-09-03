@@ -101,6 +101,8 @@ const PROMISES = [
 
 
 const fullAddress = `${BRAND.address.line1}, ${BRAND.address.line2}, ${BRAND.address.city}, ${BRAND.address.state} - ${BRAND.address.pin}`;
+const [taglineHindiLine1, taglineHindiLine2] = BRAND.taglineHindi.split(', ');
+const [taglineEnglishLine1, taglineEnglishLine2] = BRAND.tagline.split(', ');
 
 export default function AboutPage() {
   return (
@@ -125,12 +127,12 @@ export default function AboutPage() {
                 The Story Behind Every Jar
               </p>
               <h1 className="mt-6 font-hindi text-[2rem] font-bold leading-tight text-cp-beige drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-3xl">
-                माँ का प्यार,
+                {taglineHindiLine1},
                 <br />
-                <span className="text-cp-gold-light">घर का अचार</span>
+                <span className="text-cp-gold-light">{taglineHindiLine2}</span>
               </h1>
               <p className="mt-3 font-display text-lg italic text-cp-beige/80">
-                Born from a Mother&apos;s Kitchen
+                {taglineEnglishLine1}, {taglineEnglishLine2}
               </p>
               <p className="mt-1 font-serif text-base text-cp-beige/75">
                 A heartfelt initiative by the family of an Indian Army Colonel
