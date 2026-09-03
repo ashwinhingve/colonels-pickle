@@ -2,9 +2,12 @@ import { requireAdmin } from '@/lib/auth-helpers';
 import { connectDB } from '@/lib/mongodb';
 import SiteSettings from '@/models/SiteSettings';
 import Product from '@/models/Product';
+import RawMaterial from '@/models/RawMaterial';
+import StockMovement from '@/models/StockMovement';
 import Link from 'next/link';
 import ThresholdEditor from '@/components/admin/inventory/ThresholdEditor';
-import { AlertTriangle, AlertCircle, Package } from 'lucide-react';
+import { AlertTriangle, AlertCircle, Package, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
 
 interface InventoryItem {
   _id: string;
@@ -141,6 +144,106 @@ async function getInventoryData() {
   return { threshold, outOfStockCount, lowStockCount, items };
 }
 
+async function getDashboardData() {
+  await connectDB();
+
+  // Get site settings for product low stock threshold
+  let settings = (await SiteSettings.findOne({ key: 'global' }).lean()) as any;
+  if (!settings) {
+    settings = await SiteSettings.create({
+      key: 'global',
+      inventory: { lowStockThreshold: 10 },
+    });
+  }
+  const productThreshold =
+    (settings?.inventory?.lowStockThreshold ?? 10) as number;
+
+  // === RAW MATERIALS ===
+  const rawMaterials = await RawMaterial.find({ isActive: true }).lean();
+
+  let rawMaterialLowStockCount = 0;
+  let rawMaterialOutOfStockCount = 0;
+  let rawMaterialStockValue = 0;
+
+  rawMaterials.forEach((rm: any) => {
+    if (rm.currentStock === 0) {
+      rawMaterialOutOfStockCount++;
+    } else if (rm.currentStock > 0 && rm.currentStock <= rm.lowStockThreshold) {
+      rawMaterialLowStockCount++;
+    }
+
+    // Calculate stock value: currentStock * purchaseCost
+    rawMaterialStockValue += rm.currentStock * (rm.purchaseCost || 0);
+  });
+
+  // === PRODUCTS ===
+  // Mirror the logic from src/app/admin/inventory/page.tsx for consistency
+  const products = await Product.find({ isActive: true })
+    .select('_id name sku category stock hasVariants variants price images isActive')
+    .lean();
+
+  let productLowStockCount = 0;
+  let productOutOfStockCount = 0;
+  let productStockValue = 0;
+
+  products.forEach((product: any) => {
+    if (product.hasVariants && product.variants && product.variants.length > 0) {
+      const activeVariants = product.variants.filter((v: any) => v.isActive);
+      let minVariantStock = Infinity;
+      let hasLowOrOut = false;
+
+      activeVariants.forEach((variant: any) => {
+        minVariantStock = Math.min(minVariantStock, variant.stock);
+
+        if (variant.stock === 0 || variant.stock <= productThreshold) {
+          hasLowOrOut = true;
+        }
+      });
+
+      if (hasLowOrOut) {
+        const effectiveStock =
+          minVariantStock === Infinity ? 0 : minVariantStock;
+        if (effectiveStock === 0) {
+          productOutOfStockCount++;
+        } else {
+          productLowStockCount++;
+        }
+      }
+    } else {
+      // No variants, use top-level stock
+      if (product.stock === 0) {
+        productOutOfStockCount++;
+      } else if (product.stock > 0 && product.stock <= productThreshold) {
+        productLowStockCount++;
+      }
+    }
+
+    // Calculate stock value: stock * price (top-level only, ignoring variants)
+    productStockValue += product.stock * (product.price || 0);
+  });
+
+  // === RECENT MOVEMENTS ===
+  const recentMovements = await StockMovement.find({})
+    .sort({ createdAt: -1 })
+    .limit(10)
+    .populate('itemId', 'name itemCode currentStock stock')
+    .populate('performedBy', 'name email')
+    .lean();
+
+  return {
+    totalRawMaterials: rawMaterials.length,
+    totalProducts: products.length,
+    totalItems: rawMaterials.length + products.length,
+    rawMaterialLowStockCount,
+    rawMaterialOutOfStockCount,
+    productLowStockCount,
+    productOutOfStockCount,
+    rawMaterialStockValue: Math.round(rawMaterialStockValue * 100) / 100,
+    productStockValue: Math.round(productStockValue * 100) / 100,
+    recentMovements,
+  };
+}
+
 function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -155,6 +258,8 @@ export default async function AdminInventoryPage() {
   const { threshold, outOfStockCount, lowStockCount, items } =
     await getInventoryData();
 
+  const dashboardData = await getDashboardData();
+
   return (
     <div className="space-y-6 p-6">
       {/* Page Header */}
@@ -166,6 +271,210 @@ export default async function AdminInventoryPage() {
           Monitor product stock levels and configure low-stock alerts
         </p>
       </div>
+
+      {/* KPI Cards Row */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm text-gray-600">Total Items</p>
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <Package className="w-5 h-5 text-blue-600" />
+            </div>
+          </div>
+          <p className="text-3xl font-bold text-blue-600">
+            {dashboardData.totalItems}
+          </p>
+          <p className="text-xs text-gray-500 mt-1">
+            {dashboardData.totalRawMaterials} raw + {dashboardData.totalProducts}{' '}
+            products
+          </p>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm text-gray-600">Raw Materials</p>
+            <div className="p-2 bg-purple-100 rounded-lg">
+              <Package className="w-5 h-5 text-purple-600" />
+            </div>
+          </div>
+          <p className="text-3xl font-bold text-purple-600">
+            {dashboardData.totalRawMaterials}
+          </p>
+          <p className="text-xs text-gray-500 mt-1">active inventory</p>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm text-gray-600">Finished Products</p>
+            <div className="p-2 bg-green-100 rounded-lg">
+              <Package className="w-5 h-5 text-green-600" />
+            </div>
+          </div>
+          <p className="text-3xl font-bold text-green-600">
+            {dashboardData.totalProducts}
+          </p>
+          <p className="text-xs text-gray-500 mt-1">active inventory</p>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm text-gray-600">Total Stock Value</p>
+            <div className="p-2 bg-yellow-100 rounded-lg">
+              <TrendingUp className="w-5 h-5 text-yellow-600" />
+            </div>
+          </div>
+          <p className="text-3xl font-bold text-yellow-600">
+            {formatCurrency(
+              dashboardData.rawMaterialStockValue +
+                dashboardData.productStockValue
+            )}
+          </p>
+          <p className="text-xs text-gray-500 mt-1">raw + finished</p>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm text-gray-600">Combined Low Stock</p>
+            <div className="p-2 bg-amber-100 rounded-lg">
+              <AlertCircle className="w-5 h-5 text-amber-600" />
+            </div>
+          </div>
+          <p className="text-3xl font-bold text-amber-600">
+            {dashboardData.rawMaterialLowStockCount +
+              dashboardData.productLowStockCount}
+          </p>
+          <p className="text-xs text-gray-500 mt-1">items need attention</p>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm text-gray-600">Combined Out of Stock</p>
+            <div className="p-2 bg-red-100 rounded-lg">
+              <AlertTriangle className="w-5 h-5 text-red-600" />
+            </div>
+          </div>
+          <p className="text-3xl font-bold text-red-600">
+            {dashboardData.rawMaterialOutOfStockCount +
+              dashboardData.productOutOfStockCount}
+          </p>
+          <p className="text-xs text-gray-500 mt-1">out of stock</p>
+        </div>
+      </div>
+
+      {/* Recent Stock Movements */}
+      {dashboardData.recentMovements.length > 0 && (
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+          <div className="p-6 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-gray-900">
+              Recent Stock Movements
+            </h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Latest {dashboardData.recentMovements.length} transactions
+            </p>
+          </div>
+
+          <div className="divide-y divide-gray-200">
+            {dashboardData.recentMovements.map((movement: any) => {
+              const isIn = movement.movementType === 'in';
+              const isOut = movement.movementType === 'out';
+              const isAdjustment = movement.movementType === 'adjustment';
+
+              const MovementIcon = isIn
+                ? TrendingUp
+                : isOut
+                  ? TrendingDown
+                  : Minus;
+
+              const badgeColor = isIn
+                ? 'bg-green-100 text-green-700'
+                : isOut
+                  ? 'bg-red-100 text-red-700'
+                  : 'bg-amber-100 text-amber-700';
+
+              const iconColor = isIn
+                ? 'text-green-600'
+                : isOut
+                  ? 'text-red-600'
+                  : 'text-amber-600';
+
+              const itemName =
+                movement.itemId?.name ||
+                (typeof movement.itemId === 'object'
+                  ? movement.itemId?.name
+                  : 'Unknown Item');
+
+              const performedByName =
+                movement.performedBy?.name ||
+                movement.performedBy?.email ||
+                'System';
+
+              return (
+                <div key={movement._id} className="p-6 hover:bg-gray-50">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-start gap-4 flex-1">
+                      <div className={`p-2 rounded-lg ${badgeColor} mt-1`}>
+                        <MovementIcon className={`w-4 h-4 ${iconColor}`} />
+                      </div>
+
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-1">
+                          <p className="text-sm font-medium text-gray-900">
+                            {itemName}
+                          </p>
+                          <span
+                            className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded ${badgeColor}`}
+                          >
+                            {movement.movementType === 'in'
+                              ? 'Stock In'
+                              : movement.movementType === 'out'
+                                ? 'Stock Out'
+                                : 'Adjustment'}
+                          </span>
+                        </div>
+
+                        <div className="text-sm text-gray-600">
+                          <p>
+                            <span className="font-semibold">
+                              {movement.quantity}
+                            </span>{' '}
+                            units •{' '}
+                            <span className="text-gray-500">
+                              Reason: {movement.reason.replace('_', ' ')}
+                            </span>
+                          </p>
+                          {movement.notes && (
+                            <p className="text-xs text-gray-500 mt-1">
+                              Notes: {movement.notes}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="text-xs text-gray-500 mt-2">
+                          <p>
+                            Performed by {performedByName} •{' '}
+                            {formatDistanceToNow(new Date(movement.createdAt), {
+                              addSuffix: true,
+                            })}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="text-right ml-4">
+                      <p className="text-sm font-semibold text-gray-900">
+                        {movement.quantity} units
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        Balance: {movement.balanceAfter}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Threshold Editor Card */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
