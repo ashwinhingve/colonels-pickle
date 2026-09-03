@@ -176,3 +176,13 @@ export const WHATSAPP_URL = "https://wa.me/919350406289";
 export const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/FCraoQErzuMnHLBz9";
 export const INSTAGRAM_URL = "https://instagram.com/colonels.pickle";
 export const BEACONS_URL = "https://beacons.ai/colonelspickle";
+
+// Bank Details for UPI QR Code and Invoice Display
+export const BANK_DETAILS = {
+  accountName: 'RIDHWIKA AGRO ORGANICS',
+  bankName: 'State Bank of India',
+  branch: 'SBI Shivgyan Enclave, Nirman Nagar, Jaipur, Rajasthan – 302019',
+  accountNumber: '42855337064',
+  ifsc: 'SBIN0032054',
+  upiId: '9717243306@ptsbi',
+} as const;

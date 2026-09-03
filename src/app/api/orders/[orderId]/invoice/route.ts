@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth-helpers';
 import { connectDB } from '@/lib/mongodb';
-import { REGISTRATIONS } from '@/lib/constants';
+import { REGISTRATIONS, BRAND } from '@/lib/constants';
 import Order from '@/models/Order';
 import '@/models/OrderItem';
 import '@/models/Address';
@@ -291,8 +291,8 @@ function generateInvoiceHTML(order: any): string {
     <div class="company-info">
       <h1>Colonel's Pickle by Ridhwika Agro Organics</h1>
       <p>Premium Quality Food Products</p>
-      <p>Email: support@colonelspickle.in</p>
-      <p>Phone: +91-93292 16544</p>
+      <p>Email: ${BRAND.email}</p>
+      <p>Phone: ${BRAND.phones[0]}</p>
       <p>GST No: ${gstNumber}</p>
     </div>
     <div class="invoice-details">
