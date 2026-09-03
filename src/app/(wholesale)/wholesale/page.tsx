@@ -37,7 +37,7 @@ const BENEFITS = [
   {
     Icon: ShieldCheck,
     title: "Preservative-Free Stock",
-    desc: "Authentic, FSSAI-licensed pickles with no preservatives — the quality your customers return for.",
+    desc: "FSSAI-licensed pickles featuring our Colonel Special blend of 24 hand-selected whole spices — the authentic quality your customers return for.",
   },
   {
     Icon: Headset,

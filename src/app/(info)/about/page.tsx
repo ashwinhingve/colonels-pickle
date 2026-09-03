@@ -96,6 +96,7 @@ const PROMISES = [
   { icon: "🧂", title: "Rock & Black Salt", desc: "No iodized table salt used in any product.", color: "#6B7F3A" },
   { icon: "🌶️", title: "24 Whole Spices", desc: "Sun-dried, roasted and ground fresh at our facility.", color: "#C05621" },
   { icon: "🛡️", title: "FSSAI Licensed", desc: `Licensed by the Food Safety and Standards Authority of India (${BRAND.fssai}).`, color: "#4B5D2A" },
+  { icon: "🍃", title: "100% Natural", desc: "Every ingredient hand-selected — no synthetic additives, no shortcuts.", color: "#8FA87E" },
 ];
 
 
@@ -123,10 +124,15 @@ export default function AboutPage() {
               <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-gold-light">
                 The Story Behind Every Jar
               </p>
-              <h1 className="mt-4 font-display text-4xl font-extrabold text-cp-beige md:text-5xl">
-                Born from a Mother&apos;s Kitchen
+              <h1 className="mt-6 font-hindi text-[2rem] font-bold leading-tight text-cp-beige drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-3xl">
+                माँ का प्यार,
+                <br />
+                <span className="text-cp-gold-light">घर का अचार</span>
               </h1>
-              <p className="mt-4 font-serif text-lg italic text-cp-beige/80">
+              <p className="mt-3 font-display text-lg italic text-cp-beige/80">
+                Born from a Mother&apos;s Kitchen
+              </p>
+              <p className="mt-1 font-serif text-base text-cp-beige/75">
                 A heartfelt initiative by the family of an Indian Army Colonel
               </p>
             </AnimatedSection>
