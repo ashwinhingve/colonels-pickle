@@ -30,7 +30,6 @@ const SupplierSchema = new Schema<ISupplier>(
       lowercase: true,
       trim: true,
       match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email address'],
-      sparse: true,
     },
     phone: {
       type: String,
