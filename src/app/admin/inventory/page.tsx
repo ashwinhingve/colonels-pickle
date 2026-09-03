@@ -144,7 +144,29 @@ async function getInventoryData() {
   return { threshold, outOfStockCount, lowStockCount, items };
 }
 
+const EMPTY_DASHBOARD_DATA = {
+  totalRawMaterials: 0,
+  totalProducts: 0,
+  totalItems: 0,
+  rawMaterialLowStockCount: 0,
+  rawMaterialOutOfStockCount: 0,
+  productLowStockCount: 0,
+  productOutOfStockCount: 0,
+  rawMaterialStockValue: 0,
+  productStockValue: 0,
+  recentMovements: [] as any[],
+};
+
 async function getDashboardData() {
+  try {
+    return await fetchDashboardData();
+  } catch (error) {
+    console.error('Error fetching inventory dashboard data:', error);
+    return EMPTY_DASHBOARD_DATA;
+  }
+}
+
+async function fetchDashboardData() {
   await connectDB();
 
   // Get site settings for product low stock threshold
@@ -398,10 +420,8 @@ export default async function AdminInventoryPage() {
                   : 'text-amber-600';
 
               const itemName =
-                movement.itemId?.name ||
-                (typeof movement.itemId === 'object'
-                  ? movement.itemId?.name
-                  : 'Unknown Item');
+                (typeof movement.itemId === 'object' && movement.itemId?.name) ||
+                'Unknown Item';
 
               const performedByName =
                 movement.performedBy?.name ||
