@@ -111,9 +111,9 @@ async function renderInvoicePDF(
   const gstin = gstReg?.number || '08BFKPD8446R1ZM';
 
   // ===== HEADER BAND =====
-  // Logo (left)
+  // Logo (left) — uses optimized plain logo (61KB) instead of unoptimized large asset
   try {
-    const logoPath = path.join(process.cwd(), 'public', 'logo.png');
+    const logoPath = path.join(process.cwd(), 'public', 'images', 'brand', 'colonels-pickle-logo-plain.jpeg');
     if (fs.existsSync(logoPath)) {
       const logoBuffer = fs.readFileSync(logoPath);
       doc.image(logoBuffer, 40, 40, { width: 50, height: 50 });
