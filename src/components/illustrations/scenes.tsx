@@ -317,13 +317,9 @@ export function DogTagIllustration({ className, title, ...p }: SVGProps) {
         <line x1="40" y1="12" x2="40" y2="22" stroke="#C0974F" strokeWidth="1.8" opacity="0.6" />
       </g>
       <g>
-        <rect x="18" y="22" width="28" height="34" rx="4" fill="#6B7F3A" stroke="#4B5D2A" strokeWidth="1.8" />
+        <path d="M22 22 Q18 22 18 26 L18 52 Q18 56 22 56 L30 56 Q32 58 34 56 L42 56 Q46 56 46 52 L46 26 Q46 22 42 22 L22 22 Z" fill="#6B7F3A" stroke="#4B5D2A" strokeWidth="1.8" />
         <path d="M22 28h20M22 36h20M22 44h20" stroke="#4B5D2A" strokeWidth="1" opacity="0.4" />
-        <rect x="26" y="52" width="12" height="3" rx="1.5" fill="#4B5D2A" opacity="0.3" />
-        <path d="M32 52v2" stroke="#D4A017" strokeWidth="0.8" opacity="0.6" />
-        <path d="M30 56l4-1 4 1" fill="none" stroke="#4B5D2A" strokeWidth="1.2" strokeLinecap="round" opacity="0.5" />
       </g>
-      <ellipse cx="32" cy="57" rx="3" ry="2" fill="#4B5D2A" opacity="0.4" />
     </svg>
   );
 }
