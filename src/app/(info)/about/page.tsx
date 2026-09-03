@@ -102,7 +102,6 @@ const PROMISES = [
 
 const fullAddress = `${BRAND.address.line1}, ${BRAND.address.line2}, ${BRAND.address.city}, ${BRAND.address.state} - ${BRAND.address.pin}`;
 const [taglineHindiLine1, taglineHindiLine2] = BRAND.taglineHindi.split(', ');
-const [taglineEnglishLine1, taglineEnglishLine2] = BRAND.tagline.split(', ');
 
 export default function AboutPage() {
   return (
@@ -132,7 +131,7 @@ export default function AboutPage() {
                 <span className="text-cp-gold-light">{taglineHindiLine2}</span>
               </h1>
               <p className="mt-3 font-display text-lg italic text-cp-beige/80">
-                {taglineEnglishLine1}, {taglineEnglishLine2}
+                Born from a Mother&apos;s Kitchen
               </p>
               <p className="mt-1 font-serif text-base text-cp-beige/75">
                 A heartfelt initiative by the family of an Indian Army Colonel
