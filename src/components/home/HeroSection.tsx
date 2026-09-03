@@ -10,6 +10,7 @@ import {
   ChilliIllustration,
   HingIllustration,
   LemonIllustration,
+  DogTagIllustration,
 } from "@/components/illustrations";
 
 const STATS = [
@@ -53,7 +54,8 @@ export function HeroSection() {
         {/* LEFT — messaging */}
         <div className="animate-fade-up">
           <span className="inline-flex items-center gap-2 rounded-full border border-cp-gold/40 bg-white/10 px-4 py-1.5 font-sans text-sm font-medium text-cp-beige backdrop-blur">
-            🎖️ Made with pride by the mother of an Indian Army Colonel
+            <DogTagIllustration className="h-4 w-4 flex-shrink-0" aria-hidden />
+            Made with pride by the mother of an Indian Army Colonel
           </span>
 
           <h1 className="mt-6 font-hindi text-[2.85rem] font-bold leading-tight text-cp-beige drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-[4rem]">

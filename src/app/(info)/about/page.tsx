@@ -6,7 +6,7 @@ import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/sha
 import { Parallax } from "@/components/shared/Parallax";
 import { CertificationBadge } from "@/components/shared/CertificationBadge";
 import { HoverLift } from "@/components/shared/HoverLift";
-import { HearthIllustration, HingIllustration, MountainOriginIllustration } from "@/components/illustrations";
+import { HearthIllustration, HingIllustration, MountainOriginIllustration, WebbingStitchAccent } from "@/components/illustrations";
 import { BRAND, CONTACT_EMAIL, REGISTRATIONS } from "@/lib/constants";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
@@ -288,14 +288,18 @@ export default function AboutPage() {
       </section>
 
       {/* 3. Our Promise */}
-      <section className="bg-white py-20">
-        <div className="mx-auto max-w-7xl px-4">
+      <section className="relative overflow-hidden bg-white py-20">
+        <RajasthaniPattern variant="camo" opacity={0.04} color="#6B7F3A" />
+        <div className="relative z-10 mx-auto max-w-7xl px-4">
           <AnimatedSection direction="up" duration={0.65}>
             <SectionHeader
               eyebrow="WHY CHOOSE COLONEL'S PICKLE"
               title="Our Promise to You"
             />
           </AnimatedSection>
+          <div className="mx-auto mt-8 flex justify-center">
+            <WebbingStitchAccent className="h-3 w-48 text-cp-terracotta/40" />
+          </div>
           <StaggerContainer staggerDelay={0.15} className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {PROMISES.map((p) => (
               <StaggerItem key={p.title}>
