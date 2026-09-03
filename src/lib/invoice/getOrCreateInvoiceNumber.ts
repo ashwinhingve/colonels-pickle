@@ -1,4 +1,5 @@
 import { Types } from 'mongoose';
+import { connectDB } from '@/lib/mongodb';
 import Order from '@/models/Order';
 import SiteSettings from '@/models/SiteSettings';
 
@@ -53,6 +54,8 @@ export function getIndianFiscalYear(date: Date = new Date()): string {
 export async function getOrCreateInvoiceNumber(
   orderId: string | Types.ObjectId
 ): Promise<string> {
+  await connectDB();
+
   const objectId = new Types.ObjectId(orderId);
 
   // Step 1: Check if order already has an invoice number
@@ -100,7 +103,12 @@ export async function getOrCreateInvoiceNumber(
   }
 
   // Step 4: Format the invoice number
-  const lastNumber = siteSettings!.invoiceCounter!.lastNumber;
+  if (!siteSettings?.invoiceCounter) {
+    throw new Error(
+      `Failed to initialize invoice counter for fiscal year ${currentFY}`
+    );
+  }
+  const lastNumber = siteSettings.invoiceCounter.lastNumber;
   const invoiceNumber = `TI/${currentFY}/${lastNumber}`;
 
   // Step 5: Persist to the order with a conditional update to prevent race conditions
