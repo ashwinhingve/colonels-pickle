@@ -9,6 +9,7 @@ import Discount from '@/models/Discount';
 import { emailService } from '@/lib/notifications/email';
 import { smsService } from '@/lib/notifications/sms';
 import { whatsappService } from '@/lib/notifications/whatsapp';
+import { logStockMovement } from '@/lib/inventory/logStockMovement';
 
 /**
  * POST /api/payment/confirm-cod
@@ -58,19 +59,34 @@ export async function POST(req: NextRequest) {
     // Reduce product stock (variant-aware)
     const orderItems = await OrderItem.find({ orderId: order._id });
     for (const item of orderItems) {
+      let updated;
       if (item.variantId) {
-        await Product.findOneAndUpdate(
+        updated = await Product.findOneAndUpdate(
           {
             _id: item.productId,
             variants: { $elemMatch: { id: item.variantId, stock: { $gte: item.quantity } } },
           },
-          { $inc: { 'variants.$.stock': -item.quantity, stock: -item.quantity } }
+          { $inc: { 'variants.$.stock': -item.quantity, stock: -item.quantity } },
+          { new: true }
         );
       } else {
-        await Product.findOneAndUpdate(
+        updated = await Product.findOneAndUpdate(
           { _id: item.productId, stock: { $gte: item.quantity } },
-          { $inc: { stock: -item.quantity } }
+          { $inc: { stock: -item.quantity } },
+          { new: true }
         );
+      }
+
+      if (updated) {
+        logStockMovement({
+          productId: item.productId,
+          movementType: 'out',
+          quantity: item.quantity,
+          reason: 'sale',
+          balanceAfter: updated.stock,
+          performedBy: order.userId,
+          reference: order.orderNumber,
+        });
       }
     }
 

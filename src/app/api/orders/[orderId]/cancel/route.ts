@@ -11,6 +11,7 @@ import User from '@/models/User';
 import { delhiveryService } from '@/lib/shipping/delhivery';
 import { emailService } from '@/lib/notifications/email';
 import { smsService } from '@/lib/notifications/sms';
+import { logStockMovement } from '@/lib/inventory/logStockMovement';
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ orderId: string }> }) {
   try {
@@ -89,18 +90,34 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       const orderItems = await OrderItem.find({ orderId: order._id });
 
       for (const item of orderItems) {
+        let updated;
         if (item.variantId) {
           // Restore variant-level and root stock
-          await Product.findOneAndUpdate(
+          updated = await Product.findOneAndUpdate(
             { _id: item.productId, 'variants.id': item.variantId },
-            { $inc: { 'variants.$.stock': item.quantity, stock: item.quantity } }
+            { $inc: { 'variants.$.stock': item.quantity, stock: item.quantity } },
+            { new: true }
           );
         } else {
-          await Product.findByIdAndUpdate(
+          updated = await Product.findByIdAndUpdate(
             item.productId,
-            { $inc: { stock: item.quantity } }
+            { $inc: { stock: item.quantity } },
+            { new: true }
           );
         }
+
+        if (updated) {
+          logStockMovement({
+            productId: item.productId,
+            movementType: 'in',
+            quantity: item.quantity,
+            reason: 'return',
+            balanceAfter: updated.stock,
+            performedBy: order.userId._id,
+            reference: order.orderNumber,
+          });
+        }
+
         console.log(`Stock restored for product ${item.productName}: +${item.quantity} units`);
       }
     }

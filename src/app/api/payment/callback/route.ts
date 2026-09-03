@@ -14,6 +14,7 @@ import Discount from '@/models/Discount';
 import { applyRateLimit, RateLimitPresets } from '@/lib/middleware/rateLimit';
 import { generatePaymentIdempotencyKey, idempotencyService } from '@/lib/utils/idempotency';
 import { createRequestLogger, LogMessages, MetricNames } from '@/lib/utils/logger';
+import { logStockMovement } from '@/lib/inventory/logStockMovement';
 
 // Cashfree redirects here via GET with ?order_id=xxx after payment
 export async function GET(request: NextRequest) {
@@ -163,6 +164,13 @@ export async function GET(request: NextRequest) {
         order.lastStatusUpdate = new Date();
         await order.save({ session });
 
+        // Collect stock movements for post-transaction logging
+        const stockMovementsToLog: Array<{
+          productId: any;
+          quantity: number;
+          balanceAfter: number;
+        }> = [];
+
         // Reduce product stock atomically
         const orderItems = await OrderItem.find({ orderId: order._id }).session(session);
 
@@ -210,6 +218,12 @@ export async function GET(request: NextRequest) {
             );
           }
 
+          stockMovementsToLog.push({
+            productId: item.productId,
+            quantity: item.quantity,
+            balanceAfter: updatedProduct.stock,
+          });
+
           logger.debug('Stock reduced successfully', {
             productId: item.productId,
             productName: item.productName,
@@ -225,6 +239,19 @@ export async function GET(request: NextRequest) {
           transactionId: verificationResult.transactionId,
           orderId: order._id,
         });
+
+        // Log stock movements after transaction commits (non-blocking, fail-open)
+        for (const movement of stockMovementsToLog) {
+          logStockMovement({
+            productId: movement.productId,
+            movementType: 'out',
+            quantity: movement.quantity,
+            reason: 'sale',
+            balanceAfter: movement.balanceAfter,
+            performedBy: order.userId,
+            reference: order.orderNumber,
+          });
+        }
 
         // Store idempotency key
         await idempotencyService.executeOnce(
@@ -493,16 +520,31 @@ export async function POST(request: NextRequest) {
           try {
             const webhookOrderItems = await OrderItem.find({ orderId: order._id });
             for (const item of webhookOrderItems) {
+              let updated;
               if (item.variantId) {
-                await Product.findOneAndUpdate(
+                updated = await Product.findOneAndUpdate(
                   { _id: item.productId, variants: { $elemMatch: { id: item.variantId, stock: { $gte: item.quantity } } } },
-                  { $inc: { 'variants.$.stock': -item.quantity, stock: -item.quantity } }
+                  { $inc: { 'variants.$.stock': -item.quantity, stock: -item.quantity } },
+                  { new: true }
                 );
               } else {
-                await Product.findOneAndUpdate(
+                updated = await Product.findOneAndUpdate(
                   { _id: item.productId, stock: { $gte: item.quantity } },
-                  { $inc: { stock: -item.quantity } }
+                  { $inc: { stock: -item.quantity } },
+                  { new: true }
                 );
+              }
+
+              if (updated) {
+                logStockMovement({
+                  productId: item.productId,
+                  movementType: 'out',
+                  quantity: item.quantity,
+                  reason: 'sale',
+                  balanceAfter: updated.stock,
+                  performedBy: order.userId,
+                  reference: order.orderNumber,
+                });
               }
             }
           } catch (stockErr) {
