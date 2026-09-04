@@ -16,6 +16,7 @@ export const CLOUDINARY_FOLDERS = {
   HERO_SLIDES: 'cp/hero-slides',
   TEAM: 'cp/team',
   REVIEWS: 'cp/reviews',
+  GALLERY: 'cp/gallery',
 };
 
 // Upload configuration
@@ -49,5 +50,19 @@ export const IMAGE_TRANSFORMATIONS = {
     fetch_format: 'auto',
   },
 };
+
+// Derive a poster/thumbnail frame from a Cloudinary video without a separate upload
+export function getVideoPosterUrl(publicId: string): string {
+  return cloudinary.url(publicId, {
+    resource_type: 'video',
+    format: 'jpg',
+    start_offset: '1',
+    width: 800,
+    height: 800,
+    crop: 'fill',
+    quality: 'auto',
+    secure: true,
+  });
+}
 
 export default cloudinary;

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyAdminAccess } from '@/lib/auth-helpers';
-import cloudinary, { CLOUDINARY_FOLDERS } from '@/lib/cloudinary/config';
+import cloudinary, { CLOUDINARY_FOLDERS, getVideoPosterUrl } from '@/lib/cloudinary/config';
 
 /**
  * POST /api/admin/products/upload-video
@@ -40,7 +40,8 @@ export async function POST(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const folder = `${CLOUDINARY_FOLDERS.PRODUCTS}/videos`;
+    const folderField = formData.get('folder');
+    const folder = typeof folderField === 'string' && folderField ? folderField : `${CLOUDINARY_FOLDERS.PRODUCTS}/videos`;
 
     const result = await new Promise((resolve, reject) => {
       cloudinary.uploader
@@ -67,6 +68,7 @@ export async function POST(req: NextRequest) {
       video: {
         url: uploadResult.secure_url,
         publicId: uploadResult.public_id,
+        posterUrl: getVideoPosterUrl(uploadResult.public_id),
         duration: uploadResult.duration,
         format: uploadResult.format,
         width: uploadResult.width,
