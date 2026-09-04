@@ -14,6 +14,7 @@ import {
   HingIllustration,
   LemonIllustration,
   DogTagIllustration,
+  CornerFlourish,
 } from "@/components/illustrations";
 
 // Static fallback so the homepage hero never breaks before any admin has
@@ -87,6 +88,17 @@ export async function HeroSection() {
       }}
     >
       <RajasthaniPattern variant="camo" opacity={0.05} color="#F5EBDA" />
+      <RajasthaniPattern variant="blueprint" opacity={0.04} color="#D4A017" />
+
+      {/* Tactical corner brackets — subtle HUD framing */}
+      <CornerFlourish
+        aria-hidden
+        className="pointer-events-none absolute left-4 top-4 hidden h-16 w-16 text-cp-gunmetal-light opacity-20 md:block"
+      />
+      <CornerFlourish
+        aria-hidden
+        className="pointer-events-none absolute bottom-4 right-4 hidden h-16 w-16 rotate-180 text-cp-gunmetal-light opacity-20 md:block"
+      />
 
       {/* Ambient floating illustration accents */}
       <ChilliIllustration

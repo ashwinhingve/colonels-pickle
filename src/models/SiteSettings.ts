@@ -38,6 +38,14 @@ export interface ISiteSettings extends Document {
     fiscalYear: string;
     lastNumber: number;
   };
+  paymentSettings?: {
+    accountName: string;
+    bankName: string;
+    branch: string;
+    accountNumber: string;
+    ifsc: string;
+    upiId: string;
+  };
   updatedAt: Date;
   createdAt: Date;
 }
@@ -93,6 +101,32 @@ const SiteSettingsSchema = new Schema<ISiteSettings>(
       },
       lastNumber: {
         type: Number,
+      },
+    },
+    paymentSettings: {
+      accountName: {
+        type: String,
+        default: 'RIDHWIKA AGRO ORGANICS',
+      },
+      bankName: {
+        type: String,
+        default: 'State Bank of India',
+      },
+      branch: {
+        type: String,
+        default: 'SBI Shivgyan Enclave, Nirman Nagar, Jaipur, Rajasthan – 302019',
+      },
+      accountNumber: {
+        type: String,
+        default: '42855337064',
+      },
+      ifsc: {
+        type: String,
+        default: 'SBIN0032054',
+      },
+      upiId: {
+        type: String,
+        default: '9717243306@ptsbi',
       },
     },
   },

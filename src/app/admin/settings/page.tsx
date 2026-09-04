@@ -3,6 +3,8 @@ import { connectDB } from '@/lib/mongodb';
 import SiteSettings from '@/models/SiteSettings';
 import AnnouncementManager from '@/components/admin/AnnouncementManager';
 import HeroSliderManager from '@/components/admin/HeroSliderManager';
+import PaymentSettingsManager from '@/components/admin/PaymentSettingsManager';
+import { BANK_DETAILS } from '@/lib/constants';
 
 export default async function AdminSettingsPage() {
   await requireAdmin();
@@ -50,12 +52,21 @@ export default async function AdminSettingsPage() {
     order: s.order ?? 0,
   }));
 
+  const paymentSettings = {
+    accountName: settings.paymentSettings?.accountName || BANK_DETAILS.accountName,
+    bankName: settings.paymentSettings?.bankName || BANK_DETAILS.bankName,
+    branch: settings.paymentSettings?.branch || BANK_DETAILS.branch,
+    accountNumber: settings.paymentSettings?.accountNumber || BANK_DETAILS.accountNumber,
+    ifsc: settings.paymentSettings?.ifsc || BANK_DETAILS.ifsc,
+    upiId: settings.paymentSettings?.upiId || BANK_DETAILS.upiId,
+  };
+
   return (
     <div className="space-y-8 max-w-5xl">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Site Settings</h1>
         <p className="text-sm text-gray-500 mt-1">
-          Manage homepage content, announcement banner, and slider.
+          Manage homepage content, announcement banner, slider, and payment details.
         </p>
       </div>
 
@@ -64,6 +75,9 @@ export default async function AdminSettingsPage() {
 
       {/* Announcement Banner */}
       <AnnouncementManager initialData={bannerData} />
+
+      {/* Payment Settings */}
+      <PaymentSettingsManager initialData={paymentSettings} />
     </div>
   );
 }

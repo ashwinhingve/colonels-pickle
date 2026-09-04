@@ -76,6 +76,17 @@
   --color-cp-gold: #D4A017;
   --color-cp-gold-light: #E4B94B;
 
+  /* Gunmetal / Charcoal — cool industrial grays (NEW, distinct from the warm
+     browns above) for the tactical/admin-console surfaces. */
+  --color-cp-gunmetal: #3D4550;
+  --color-cp-gunmetal-dark: #262B31;
+  --color-cp-gunmetal-light: #6B7480;
+  --color-cp-charcoal: #1C1F22;
+
+  /* Sand — muted khaki field accent (distinct from the warm cp-beige) */
+  --color-cp-sand: #C9BC96;
+  --color-cp-sand-dark: #A89A6E;
+
   /* Fonts */
   --font-display: 'Playfair Display', Georgia, serif;
   --font-serif: 'Lora', Georgia, serif;
@@ -323,6 +334,16 @@ h5, h6 {
   --cp-beige: #F5EBDA;
   --cp-gold: #D4A017;
   --cp-gold-light: #E4B94B;
+
+  /* Gunmetal / Charcoal */
+  --cp-gunmetal: #3D4550;
+  --cp-gunmetal-dark: #262B31;
+  --cp-gunmetal-light: #6B7480;
+  --cp-charcoal: #1C1F22;
+
+  /* Sand */
+  --cp-sand: #C9BC96;
+  --cp-sand-dark: #A89A6E;
 }
 
 html {

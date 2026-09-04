@@ -30,12 +30,13 @@ export default function OrderActionsBar({
       <div className="flex items-center gap-3">
         <button
           type="button"
+          onClick={() => window.open(`/api/orders/${orderId}/invoice`, '_blank', 'noopener,noreferrer')}
           className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50"
         >
           Print Order
         </button>
         <a
-          href={`/api/orders/${orderId}/invoice`}
+          href={`/api/orders/${orderId}/invoice/pdf`}
           target="_blank"
           rel="noopener noreferrer"
           className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50"

@@ -8,6 +8,25 @@ import { extractGST } from '@/lib/gst';
 import { numberToIndianWords } from '@/lib/utils/numberToWords';
 import Order from '@/models/Order';
 import User from '@/models/User';
+import SiteSettings from '@/models/SiteSettings';
+
+/**
+ * Bank/UPI details are admin-editable (SiteSettings.paymentSettings). The
+ * BANK_DETAILS constant is kept only as a fallback for the rare case a
+ * settings doc predates this field (should never happen post-migration,
+ * since the schema itself defaults every subfield to the same values).
+ */
+async function getPaymentDetails(): Promise<typeof BANK_DETAILS> {
+  try {
+    const settings = await SiteSettings.findOne({ key: 'global' }).lean() as any;
+    if (settings?.paymentSettings) {
+      return settings.paymentSettings;
+    }
+  } catch (error) {
+    console.warn('Could not fetch paymentSettings from DB, using constants fallback:', error);
+  }
+  return BANK_DETAILS;
+}
 
 /**
  * Invoice data structure — ensures all required fields are present before PDF generation.
@@ -109,6 +128,7 @@ async function renderInvoicePDF(
 ): Promise<void> {
   const gstReg = REGISTRATIONS.find(reg => reg.key === 'gst');
   const gstin = gstReg?.number || '08BFKPD8446R1ZM';
+  const paymentDetails = await getPaymentDetails();
 
   // ===== HEADER BAND =====
   // Logo (left) — uses optimized plain logo (61KB) instead of unoptimized large asset
@@ -391,17 +411,17 @@ async function renderInvoicePDF(
   doc.fontSize(10).font('Helvetica-Bold').text('Bank Details', 40, bankY);
 
   doc.fontSize(9).font('Helvetica');
-  doc.text(`Account Name: ${BANK_DETAILS.accountName}`, 40, bankY + 18);
-  doc.text(`Bank: ${BANK_DETAILS.bankName}`, 40, bankY + 28);
-  doc.text(`Branch: ${BANK_DETAILS.branch}`, 40, bankY + 38);
-  doc.text(`Account No.: ${BANK_DETAILS.accountNumber}`, 40, bankY + 48);
-  doc.text(`IFSC: ${BANK_DETAILS.ifsc}`, 40, bankY + 58);
-  doc.text(`UPI: ${BANK_DETAILS.upiId}`, 40, bankY + 68);
+  doc.text(`Account Name: ${paymentDetails.accountName}`, 40, bankY + 18);
+  doc.text(`Bank: ${paymentDetails.bankName}`, 40, bankY + 28);
+  doc.text(`Branch: ${paymentDetails.branch}`, 40, bankY + 38);
+  doc.text(`Account No.: ${paymentDetails.accountNumber}`, 40, bankY + 48);
+  doc.text(`IFSC: ${paymentDetails.ifsc}`, 40, bankY + 58);
+  doc.text(`UPI: ${paymentDetails.upiId}`, 40, bankY + 68);
 
   // Generate UPI QR code
   try {
-    const upiUri = `upi://pay?pa=${BANK_DETAILS.upiId}&pn=${encodeURIComponent(
-      BANK_DETAILS.accountName
+    const upiUri = `upi://pay?pa=${paymentDetails.upiId}&pn=${encodeURIComponent(
+      paymentDetails.accountName
     )}&am=${order.totalAmount}&cu=INR&tn=${encodeURIComponent(
       'Invoice ' + order.invoiceNumber
     )}`;

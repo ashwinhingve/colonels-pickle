@@ -32,21 +32,21 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
   };
 
   return (
-    <header className="bg-white border-b border-cp-border sticky top-0 z-50">
+    <header className="bg-cp-charcoal border-b border-cp-gunmetal-dark sticky top-0 z-50">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Left side: Mobile menu button + Title */}
           <div className="flex items-center">
             <button
               type="button"
-              className="lg:hidden -ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cp-crimson"
+              className="lg:hidden -ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-cp-gunmetal-light hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cp-crimson"
               onClick={() => setShowMobileMenu(!showMobileMenu)}
             >
               <span className="sr-only">Open sidebar</span>
               <Menu className="h-6 w-6" />
             </button>
             <div className="ml-4 lg:ml-0">
-              <h1 className="text-lg font-semibold text-gray-900">Admin Dashboard</h1>
+              <h1 className="text-lg font-semibold text-white">Admin Dashboard</h1>
             </div>
           </div>
 
@@ -55,19 +55,19 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
             {/* Notifications */}
             <button
               type="button"
-              className="relative rounded-full p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-cp-crimson"
+              className="relative rounded-full p-2 text-cp-gunmetal-light hover:text-cp-sand hover:bg-cp-gunmetal focus:outline-none focus:ring-2 focus:ring-cp-crimson"
             >
               <span className="sr-only">View notifications</span>
               <Bell className="h-5 w-5" />
               {/* Notification badge */}
-              <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-cp-crimson ring-2 ring-white" />
+              <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-cp-crimson ring-2 ring-cp-charcoal" />
             </button>
 
             {/* User menu */}
             <div className="relative">
               <button
                 type="button"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-cp-crimson"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-cp-gunmetal focus:outline-none focus:ring-2 focus:ring-cp-crimson"
                 onClick={() => setShowUserMenu(!showUserMenu)}
               >
                 {/* User avatar */}
@@ -77,11 +77,11 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
 
                 {/* User info */}
                 <div className="hidden sm:block text-left">
-                  <p className="text-sm font-medium text-gray-900">{user.name || 'Admin'}</p>
-                  <p className="text-xs text-gray-500">{user.email}</p>
+                  <p className="text-sm font-medium text-white">{user.name || 'Admin'}</p>
+                  <p className="text-xs text-cp-sand">{user.email}</p>
                 </div>
 
-                <ChevronDown className="h-4 w-4 text-gray-400" />
+                <ChevronDown className="h-4 w-4 text-cp-gunmetal-light" />
               </button>
 
               {/* Dropdown menu */}
@@ -91,17 +91,17 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
                     className="fixed inset-0 z-10"
                     onClick={() => setShowUserMenu(false)}
                   />
-                  <div className="absolute right-0 z-20 mt-2 w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <div className="absolute right-0 z-20 mt-2 w-56 origin-top-right rounded-lg bg-cp-charcoal border border-cp-gunmetal-dark shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="p-2">
                       {/* Profile info */}
-                      <div className="px-3 py-2 border-b border-gray-100 mb-2">
-                        <p className="text-sm font-medium text-gray-900">{user.name}</p>
-                        <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                      <div className="px-3 py-2 border-b border-cp-gunmetal-dark mb-2">
+                        <p className="text-sm font-medium text-white">{user.name}</p>
+                        <p className="text-xs text-cp-sand truncate">{user.email}</p>
                       </div>
 
                       {/* Menu items */}
                       <button
-                        className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-cp-sand hover:bg-cp-gunmetal hover:text-white"
                         onClick={() => {
                           setShowUserMenu(false);
                           router.push('/admin/settings');
@@ -112,7 +112,7 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
                       </button>
 
                       <button
-                        className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-cp-sand hover:bg-cp-gunmetal hover:text-white"
                         onClick={() => {
                           setShowUserMenu(false);
                           router.push('/profile');
@@ -122,10 +122,10 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
                         View Profile
                       </button>
 
-                      <div className="my-2 border-t border-gray-100" />
+                      <div className="my-2 border-t border-cp-gunmetal-dark" />
 
                       <button
-                        className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-cp-crimson hover:bg-cp-crimson-light"
+                        className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-cp-terracotta-bright hover:bg-cp-gunmetal"
                         onClick={handleSignOut}
                       >
                         <LogOut className="h-4 w-4" />
@@ -142,14 +142,14 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
 
       {/* Mobile navigation menu */}
       {showMobileMenu && (
-        <div className="lg:hidden border-t border-gray-200">
+        <div className="lg:hidden border-t border-cp-gunmetal-dark">
           <div className="px-2 py-3 space-y-1">
             {/* Add mobile navigation items here if needed */}
-            <p className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <p className="px-3 text-xs font-semibold text-cp-gunmetal-light uppercase tracking-wider">
               Navigation
             </p>
             {/* Mobile nav items would go here - for now directing to desktop view */}
-            <p className="px-3 py-2 text-sm text-gray-600">
+            <p className="px-3 py-2 text-sm text-cp-sand">
               Please use desktop view for full admin functionality
             </p>
           </div>

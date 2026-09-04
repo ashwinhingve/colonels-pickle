@@ -3,6 +3,7 @@ import Image from "next/image";
 import { MapPin, Mail, Phone } from "lucide-react";
 import { BRAND, CONTACT_EMAIL, PUBLIC_REGISTRATIONS } from "@/lib/constants";
 import { SpiceScatter } from "@/components/illustrations";
+import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 
 const PRODUCT_LINKS = [
   { href: "/products", label: "All Products" },
@@ -37,7 +38,8 @@ export function Footer() {
 
       {/* Crimson accent bar */}
       <div className="bg-cp-crimson h-1 w-full" />
-      <div className="bg-cp-text relative">
+      <div className="bg-cp-charcoal relative">
+      <RajasthaniPattern variant="blueprint" opacity={0.03} color="#D4A017" />
       <div className="container mx-auto px-4 py-14">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}

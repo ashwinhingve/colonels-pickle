@@ -21,6 +21,7 @@ import {
   AlertTriangle,
   TrendingUp,
 } from 'lucide-react';
+import { RajasthaniPattern } from '@/components/common/RajasthaniPattern';
 
 interface NavItem {
   label: string;
@@ -43,6 +44,11 @@ const navigation: NavItem[] = [
     label: 'Orders',
     href: '/admin/orders',
     icon: ShoppingBag,
+  },
+  {
+    label: 'Create Invoice',
+    href: '/admin/invoices/create',
+    icon: FileText,
   },
   {
     label: 'Payments',
@@ -122,9 +128,10 @@ export default function AdminSidebar() {
   return (
     <aside className="hidden lg:flex lg:flex-shrink-0">
       <div className="flex flex-col w-64">
-        <div className="flex flex-col flex-grow bg-cp-crimson border-r border-cp-crimson-dark pt-5 pb-4 overflow-y-auto">
+        <div className="relative flex flex-col flex-grow bg-cp-crimson border-r border-cp-crimson-dark pt-5 pb-4 overflow-y-auto">
+          <RajasthaniPattern variant="blueprint" opacity={0.03} color="#F5EBDA" />
           {/* Brand */}
-          <div className="flex items-center flex-shrink-0 px-6 mb-6">
+          <div className="relative z-10 flex items-center flex-shrink-0 px-6 mb-6">
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="font-display text-xl font-extrabold text-white">
@@ -139,7 +146,7 @@ export default function AdminSidebar() {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 px-3 space-y-1">
+          <nav className="relative z-10 flex-1 px-3 space-y-1">
             {navigation.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
@@ -170,7 +177,7 @@ export default function AdminSidebar() {
           </nav>
 
           {/* Footer */}
-          <div className="px-6 py-4 border-t border-white/20">
+          <div className="relative z-10 px-6 py-4 border-t border-white/20">
             <p className="text-xs text-white/60">
               Admin access only. All actions are logged.
             </p>

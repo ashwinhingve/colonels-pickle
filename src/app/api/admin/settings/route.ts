@@ -50,11 +50,12 @@ export async function PUT(request: NextRequest) {
     await connectDB();
 
     const body = await request.json();
-    const { announcementBanner, heroSlider } = body;
+    const { announcementBanner, heroSlider, paymentSettings } = body;
 
     const updateFields: Record<string, any> = {};
     if (announcementBanner !== undefined) updateFields.announcementBanner = announcementBanner;
     if (heroSlider !== undefined) updateFields.heroSlider = heroSlider;
+    if (paymentSettings !== undefined) updateFields.paymentSettings = paymentSettings;
 
     const settings = await SiteSettings.findOneAndUpdate(
       { key: 'global' },
