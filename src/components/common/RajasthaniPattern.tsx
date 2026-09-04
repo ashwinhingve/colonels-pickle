@@ -2,6 +2,12 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+// Local to this component only (not a sitewide @theme token) — a 4-tone digital
+// army camo palette. Two tones reuse the site's existing olive hex values for
+// continuity; the near-black shadow and khaki/tan are new, sourced to match an
+// authentic pixelated military camo reference.
+const CAMO_TONES = ["#2E3818", "#6B7F3A", "#1F1B12", "#A89A6E"];
+
 export interface RajasthaniPatternProps {
   variant?: "jali" | "medallion" | "trellis" | "camo";
   opacity?: number;
@@ -47,12 +53,47 @@ export function RajasthaniPattern({
             <circle cx="14" cy="14" r="1.6" fill={color} />
           </pattern>
         ) : variant === "camo" ? (
-          <pattern id={patternId} width="48" height="48" patternUnits="userSpaceOnUse">
-            <path d="M8 12 Q14 8 20 10 Q22 6 28 8 Q30 12 26 18 Q20 20 14 18 Q10 22 8 16 Z" fill={color} opacity="0.7" />
-            <path d="M28 26 Q32 22 38 24 Q40 28 36 32 Q32 34 28 32 Z" fill={color} opacity="0.5" />
-            <path d="M10 32 Q16 30 22 34 Q20 38 14 38 Q8 36 10 32 Z" fill={color} opacity="0.6" />
-            <path d="M32 6 Q36 8 34 14 Q30 16 28 12 Z" fill={color} opacity="0.55" />
-            <path d="M42 36 Q46 38 44 44 Q40 46 38 42 Z" fill={color} opacity="0.5" />
+          // Pixel-block digital military camo — 4-tone, clustered arrangement.
+          // Ignores the incoming `color` prop (a single hue can't read as camo);
+          // uses the fixed CAMO_TONES palette instead. `opacity` still applies
+          // via the outer <svg style> exactly as with every other variant.
+          <pattern id={patternId} width="40" height="40" patternUnits="userSpaceOnUse">
+            <rect x="0" y="0" width="4" height="4" fill={CAMO_TONES[0]} />
+            <rect x="4" y="0" width="4" height="4" fill={CAMO_TONES[0]} />
+            <rect x="0" y="4" width="4" height="4" fill={CAMO_TONES[0]} />
+
+            <rect x="10" y="2" width="4" height="4" fill={CAMO_TONES[1]} />
+            <rect x="14" y="2" width="4" height="4" fill={CAMO_TONES[1]} />
+            <rect x="12" y="6" width="4" height="4" fill={CAMO_TONES[1]} />
+
+            <rect x="28" y="1" width="4" height="4" fill={CAMO_TONES[2]} />
+            <rect x="32" y="1" width="4" height="4" fill={CAMO_TONES[2]} />
+            <rect x="30" y="5" width="4" height="4" fill={CAMO_TONES[2]} />
+
+            <rect x="4" y="14" width="4" height="4" fill={CAMO_TONES[3]} />
+            <rect x="8" y="16" width="4" height="4" fill={CAMO_TONES[3]} />
+            <rect x="6" y="19" width="5" height="4" fill={CAMO_TONES[3]} />
+
+            <rect x="18" y="14" width="4" height="4" fill={CAMO_TONES[0]} />
+            <rect x="22" y="16" width="4" height="4" fill={CAMO_TONES[0]} />
+            <rect x="20" y="20" width="4" height="4" fill={CAMO_TONES[0]} />
+
+            <rect x="32" y="12" width="4" height="4" fill={CAMO_TONES[1]} />
+            <rect x="36" y="14" width="4" height="4" fill={CAMO_TONES[1]} />
+            <rect x="34" y="18" width="4" height="4" fill={CAMO_TONES[1]} />
+
+            <rect x="2" y="26" width="4" height="4" fill={CAMO_TONES[2]} />
+            <rect x="6" y="28" width="4" height="4" fill={CAMO_TONES[2]} />
+            <rect x="4" y="31" width="4" height="5" fill={CAMO_TONES[2]} />
+
+            <rect x="16" y="28" width="4" height="4" fill={CAMO_TONES[3]} />
+            <rect x="20" y="30" width="4" height="4" fill={CAMO_TONES[3]} />
+            <rect x="18" y="34" width="5" height="4" fill={CAMO_TONES[3]} />
+
+            <rect x="30" y="32" width="4" height="4" fill={CAMO_TONES[0]} />
+            <rect x="34" y="34" width="4" height="4" fill={CAMO_TONES[0]} />
+
+            <rect x="36" y="26" width="4" height="4" fill={CAMO_TONES[1]} />
           </pattern>
         ) : (
           <pattern id={patternId} width="64" height="64" patternUnits="userSpaceOnUse">
