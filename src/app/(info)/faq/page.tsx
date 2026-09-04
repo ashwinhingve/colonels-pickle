@@ -3,6 +3,7 @@ import { FAQAccordion, type FAQItem } from "@/components/shared/FAQAccordion";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { FAQIllustration, ContactIllustration } from "@/components/illustrations";
+import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { BRAND, WHATSAPP_URL, FREE_DELIVERY_THRESHOLD } from "@/lib/constants";
 import { connectDB } from "@/lib/mongodb";
 import Faq from "@/models/Faq";
@@ -296,8 +297,9 @@ export default async function FAQPage() {
       />
 
       {/* 1. Hero/Header Section */}
-      <section className="bg-gradient-to-b from-cp-cream via-white to-cp-cream py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-4">
+      <section className="relative overflow-hidden bg-gradient-to-b from-cp-cream via-white to-cp-cream py-16 md:py-20">
+        <RajasthaniPattern variant="camo" opacity={0.03} color="#6B7F3A" />
+        <div className="relative z-10 mx-auto max-w-6xl px-4">
           <AnimatedSection direction="up" duration={0.65} className="text-center mb-8">
             <div className="flex justify-center mb-6">
               <FAQIllustration className="w-40 h-40 text-cp-olive opacity-80" />

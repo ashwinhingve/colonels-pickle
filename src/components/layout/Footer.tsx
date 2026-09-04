@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Mail, Phone } from "lucide-react";
-import { BRAND, CONTACT_EMAIL, REGISTRATIONS } from "@/lib/constants";
+import { BRAND, CONTACT_EMAIL, PUBLIC_REGISTRATIONS } from "@/lib/constants";
 import { SpiceScatter } from "@/components/illustrations";
 
 const PRODUCT_LINKS = [
@@ -44,11 +44,11 @@ export function Footer() {
           <div className="lg:col-span-1">
             <Link href="/" className="inline-flex items-center">
               <Image
-                src="/logo.png"
+                src="/images/brand/colonels-pickle-logo-plain.jpeg"
                 alt="Colonel's Pickle by Ridhwika Agro Organics"
                 width={90}
                 height={90}
-                className="object-contain"
+                className="rounded-full object-cover"
               />
             </Link>
             <p className="font-display mt-1 text-xl font-bold" style={{ color: "#E4B94B" }}>
@@ -172,8 +172,8 @@ export function Footer() {
           <p className="mb-4 font-sans text-xs font-bold uppercase tracking-widest text-cp-saffron-muted">
             Verified &amp; Registered · Govt. of India
           </p>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {REGISTRATIONS.map((r) => (
+          <div className="grid max-w-md grid-cols-2 gap-3">
+            {PUBLIC_REGISTRATIONS.map((r) => (
               <div
                 key={r.key}
                 className="rounded-lg border border-white/15 bg-white/[0.04] px-3 py-2.5"

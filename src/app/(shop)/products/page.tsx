@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ProductCard } from "@/components/products/ProductCard";
 import { SectionHeader } from "@/components/common/SectionHeader";
+import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
 import { ProductGridSkeleton } from "@/components/shared/Skeleton";
 import { NoResultsIllustration } from "@/components/illustrations";
@@ -64,11 +65,16 @@ function ShopContent() {
   return (
     <div className="bg-cp-cream py-16">
       <div className="mx-auto max-w-7xl px-4">
-        <SectionHeader
-          eyebrow="ALL PRODUCTS"
-          title="The Complete Collection"
-          subtitle="Over 20 varieties of homemade pickles, masalas, and cold-press oils — all without preservatives."
-        />
+        <div className="relative mb-8">
+          <RajasthaniPattern variant="camo" opacity={0.04} color="#6B7F3A" />
+          <div className="relative z-10">
+            <SectionHeader
+              eyebrow="ALL PRODUCTS"
+              title="The Complete Collection"
+              subtitle="Over 20 varieties of homemade pickles, masalas, and cold-press oils — all without preservatives."
+            />
+          </div>
+        </div>
 
         {/* Filter row */}
         <div className="mt-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">

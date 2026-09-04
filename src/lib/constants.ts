@@ -53,6 +53,8 @@ export const REGISTRATIONS = [
     fullName: "Food Safety & Standards Authority of India",
     number: "12226026000060",
     detail: "State License · valid till 12 Jan 2027",
+    // Shown as a public trust badge (footer/homepage/about); safe to display everywhere.
+    publicTrust: true,
   },
   {
     key: "udyam",
@@ -61,6 +63,8 @@ export const REGISTRATIONS = [
     fullName: "Ministry of MSME · Udyam Registration",
     number: "UDYAM-RJ-17-0307560",
     detail: "Registered Micro Enterprise (Manufacturing)",
+    // Legal/company detail — shown only on the Terms & Conditions page, not as sitewide decoration.
+    publicTrust: false,
   },
   {
     key: "trademark",
@@ -69,6 +73,7 @@ export const REGISTRATIONS = [
     fullName: "Trade Marks Registry, Govt. of India",
     number: "6202243",
     detail: "Registered Trademark · Class 29 (Pickles)",
+    publicTrust: true,
   },
   {
     key: "gst",
@@ -77,8 +82,13 @@ export const REGISTRATIONS = [
     fullName: "Goods & Services Tax · Govt. of India",
     number: "08BFKPD8446R1ZM",
     detail: "GSTIN · Rajasthan",
+    // Legal/company detail — shown only on the Terms & Conditions page (and invoices), not as sitewide decoration.
+    publicTrust: false,
   },
 ] as const;
+
+/** Subset of REGISTRATIONS safe to show as sitewide trust badges (footer/homepage/about). */
+export const PUBLIC_REGISTRATIONS = REGISTRATIONS.filter((r) => r.publicTrust);
 
 // Product Categories
 export const PRODUCT_CATEGORIES = [
@@ -149,7 +159,7 @@ export const CART_STORAGE_KEY = "cp-cart-storage";
 // Announcement bar (marquee) items
 export const ANNOUNCEMENTS = [
   "🌿 No Artificial Preservatives · No Chemicals · No Vinegar",
-  "🛡️ FSSAI Licensed · Udyam · Trademark® · GST Registered",
+  "🛡️ FSSAI Licensed · Trademark® Registered",
   "🫙 15+ Authentic Varieties",
   "🚚 Free Delivery on Orders ₹999+ · Pan India",
   "📞 +91 9350406289",

@@ -10,7 +10,7 @@ import ProductImageGallery from "@/components/products/ProductImageGallery";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
-import { ShieldCheckIcon, NoPreservativeIcon } from "@/components/illustrations";
+import { ShieldCheckIcon, NoPreservativeIcon, WebbingStitchAccent } from "@/components/illustrations";
 import { getProductTheme } from "@/lib/productTheme";
 
 const SITE_URL =
@@ -275,6 +275,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               eyebrow="FROM THE SAME RANGE"
               title="You May Also Like"
             />
+            <div className="mt-4 flex justify-center">
+              <WebbingStitchAccent className="h-3 w-48 text-cp-terracotta/40" />
+            </div>
             <AnimatedSection direction="up" className="mt-10">
               <StaggerContainer>
                 <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
@@ -290,10 +293,12 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         )}
 
         {/* Trust & Certification Strip */}
-        <div className="mt-16 rounded-2xl border border-cp-border bg-white p-8">
-          <h3 className="font-display text-lg font-bold text-cp-text mb-6">
-            Why You&apos;ll Love This
-          </h3>
+        <div className="mt-16 relative rounded-2xl border border-cp-border bg-white p-8">
+          <RajasthaniPattern variant="camo" opacity={0.03} color="#6B7F3A" />
+          <div className="relative z-10">
+            <h3 className="font-display text-lg font-bold text-cp-text mb-6">
+              Why You&apos;ll Love This
+            </h3>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             <div className="flex flex-col items-center text-center">
               <div className="w-12 h-12 mb-3 text-cp-olive">
@@ -331,6 +336,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                 Authentic Taste
               </p>
             </div>
+          </div>
           </div>
         </div>
       </div>

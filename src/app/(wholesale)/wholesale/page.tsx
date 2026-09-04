@@ -5,6 +5,7 @@ import { SectionHeader } from "@/components/common/SectionHeader";
 import { WholesaleForm } from "@/components/wholesale/WholesaleForm";
 import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
 import { HoverLift } from "@/components/shared/HoverLift";
+import { WebbingStitchAccent } from "@/components/illustrations";
 import { OFFERS } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -82,6 +83,9 @@ export default function WholesalePage() {
               eyebrow="WHY PARTNER WITH US"
               title="Wholesale Benefits"
             />
+            <div className="mt-3 flex justify-center">
+              <WebbingStitchAccent className="h-3 w-48 text-cp-terracotta/35" />
+            </div>
           </AnimatedSection>
           <StaggerContainer
             staggerDelay={0.1}

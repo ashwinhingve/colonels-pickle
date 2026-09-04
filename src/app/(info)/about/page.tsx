@@ -7,7 +7,8 @@ import { Parallax } from "@/components/shared/Parallax";
 import { CertificationBadge } from "@/components/shared/CertificationBadge";
 import { HoverLift } from "@/components/shared/HoverLift";
 import { HearthIllustration, HingIllustration, MountainOriginIllustration, WebbingStitchAccent } from "@/components/illustrations";
-import { BRAND, CONTACT_EMAIL, REGISTRATIONS } from "@/lib/constants";
+import { BRAND, CONTACT_EMAIL, PUBLIC_REGISTRATIONS } from "@/lib/constants";
+import { Highlight } from "@/components/common/Highlight";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
 
@@ -18,7 +19,7 @@ const organizationJsonLd = {
   name: "Colonel's Pickle",
   alternateName: "Colonel's Pickle® by Ridhwika Agro Organics",
   description:
-    'Authentic homemade pickles, gulkand and cold press oils — no preservatives, 24 whole spices, FSSAI certified, Jaipur.',
+    'Authentic homemade pickles, gulkand and cold press oils — no preservatives, 22 to 24 whole spices, FSSAI certified, Jaipur.',
   url: SITE_URL,
   logo: {
     '@type': 'ImageObject',
@@ -90,11 +91,11 @@ export const metadata: Metadata = {
 };
 
 const PROMISES = [
-  { icon: "🌿", title: "No Preservatives", desc: "No artificial preservatives, colours, flavours or vinegar — ever.", color: "#166534" },
+  { icon: "🌿", title: "No Preservatives", desc: "No vinegar. No artificial preservatives. No artificial colours, flavours or other artificial ingredients — ever.", color: "#166534" },
   { icon: "🫙", title: "Kachi Ghani Oil", desc: "Cold-pressed wooden ghani mustard oil only.", color: "#7C4A1E" },
   { icon: "💎", title: "Afghani Hing", desc: "Premium asafoetida sourced from Central Asia at ₹30,000/kg.", color: "#9C4420" },
   { icon: "🧂", title: "Rock & Black Salt", desc: "No iodized table salt used in any product.", color: "#6B7F3A" },
-  { icon: "🌶️", title: "24 Whole Spices", desc: "Sun-dried, roasted and ground fresh at our facility.", color: "#C05621" },
+  { icon: "🌶️", title: "22–24 Whole Spices", desc: "Sun-dried, roasted and ground fresh at our facility.", color: "#C05621" },
   { icon: "🛡️", title: "FSSAI Licensed", desc: `Licensed by the Food Safety and Standards Authority of India (${BRAND.fssai}).`, color: "#4B5D2A" },
   { icon: "🍃", title: "100% Natural", desc: "Every ingredient hand-selected — no synthetic additives, no shortcuts.", color: "#8FA87E" },
 ];
@@ -134,7 +135,7 @@ export default function AboutPage() {
                 Born from a Mother&apos;s Kitchen
               </p>
               <p className="mt-1 font-serif text-base text-cp-beige/75">
-                A heartfelt initiative by the family of an Indian Army Colonel
+                A heartfelt initiative by the family of an <Highlight tone="dark">Indian Army Colonel</Highlight>
               </p>
             </AnimatedSection>
           </div>
@@ -167,10 +168,10 @@ export default function AboutPage() {
               />
               <div className="text-center">
                 <Image
-                  src="/logo.png"
+                  src="/images/brand/colonels-pickle-logo-plain.jpeg"
                   width={100}
                   height={100}
-                  className="mx-auto object-contain"
+                  className="mx-auto rounded-full object-cover"
                   alt="Colonel's Pickle"
                 />
                 <div className="mx-auto my-3 h-[2px] w-16 bg-cp-terracotta" />
@@ -200,10 +201,11 @@ export default function AboutPage() {
                 A Legacy of Service &amp; Flavour
               </h2>
               <p className="mt-5 font-serif text-[15px] leading-relaxed text-cp-text-muted">
-                Service to the nation runs deep in the roots of Ridhwika Agro
-                Organics. The family&apos;s proud military legacy was built by the
-                father, a retired Indian Army Officer — and today three family
-                members continue to wear the uniform: an Indian Army Colonel, his
+                Service to the nation runs deep in the roots of{" "}
+                <Highlight>Ridhwika Agro Organics</Highlight>. The family&apos;s
+                proud military legacy was built by the father, a retired Indian
+                Army Officer — and today three family members continue to wear
+                the uniform: an <Highlight>Indian Army Colonel</Highlight>, his
                 wife (a serving Army Officer), and his younger brother (also a
                 serving Army Officer).
               </p>
@@ -229,15 +231,16 @@ export default function AboutPage() {
                 </h3>
                 <p className="mt-3 font-serif text-[15px] leading-relaxed text-cp-text-muted">
                   Years later, posted at a military cantonment during the COVID-19
-                  lockdown, the Colonel and his mother — Urmila Devi, a resilient
-                  officer&apos;s mother from Haryana — found comfort in their Army
-                  bungalow&apos;s kitchen garden. Surrounded by fresh, sun-ripened
-                  green chillies, mother and son began experimenting with time-tested
-                  family recipes, hand-selecting, sun-drying and freshly grinding a
-                  proprietary mix of 24 whole spices — crafting what would become
-                  their signature &ldquo;Colonel Special&rdquo; masala. The jars they
-                  gifted across the cantonment tasted, to every homesick officer and
-                  neighbour, exactly like home.
+                  lockdown, the Colonel and his mother — <Highlight>Urmila Devi</Highlight>,
+                  a resilient officer&apos;s mother from Haryana — found comfort in
+                  their Army bungalow&apos;s kitchen garden. Surrounded by fresh,
+                  sun-ripened green chillies, mother and son began experimenting with
+                  time-tested family recipes, hand-selecting, sun-drying and freshly
+                  grinding a proprietary mix of 22 to{" "}
+                  <Highlight>24</Highlight> whole spices — crafting what would
+                  become their signature &ldquo;<Highlight>Colonel Special</Highlight>&rdquo;
+                  masala. The jars they gifted across the cantonment tasted, to every
+                  homesick officer and neighbour, exactly like home.
                 </p>
               </div>
               <div className="flex items-center justify-center">
@@ -252,9 +255,9 @@ export default function AboutPage() {
             </h3>
             <p className="mt-3 font-serif text-[15px] leading-relaxed text-cp-text-muted">
               What began as a gesture of warmth soon called for a name — one that
-              reflected family, unity and hope. Ridhwika Agro Organics is named
-              after the three daughters of this patriotic family, a synthesis of
-              their names lovingly chosen by the Colonel himself.
+              reflected family, unity and hope. <Highlight>Ridhwika Agro Organics</Highlight>{" "}
+              is named after the three daughters of this patriotic family, a
+              synthesis of their names lovingly chosen by the Colonel himself.
             </p>
           </AnimatedSection>
 
@@ -268,15 +271,17 @@ export default function AboutPage() {
                   Operating from dual hubs in Jaipur, Rajasthan and Bahadurgarh,
                   Haryana, Colonel&apos;s Pickle ships pan-India while empowering
                   local women through meaningful employment. Every FSSAI-licensed jar
-                  stays true to its military roots — crafted from 100% natural
-                  ingredients using authentic, traditional Bhartiya recipes: no
-                  artificial preservatives, no chemicals, and no vinegar. Pure
-                  Afghani, Tajikistani and Uzbeki hing valued at ₹30,000/kg, wooden
-                  cold-pressed <span className="font-hindi">kachi ghani</span> mustard
-                  oil, and the secret &ldquo;Colonel Special&rdquo; blend of 24 whole
-                  spices. From a hospital bed in Assam to kitchens across India — pure
-                  tradition, unmatched heritage, and the heartwarming taste of Maa Ka
-                  Pyaar.
+                  stays true to its military roots — crafted from{" "}
+                  <Highlight>100% natural</Highlight> ingredients using authentic,
+                  traditional Bhartiya recipes: no artificial preservatives, no
+                  chemicals, and no vinegar. Pure Afghani, Tajikistani and Uzbeki hing
+                  valued at <Highlight>₹30,000/kg</Highlight>, wooden cold-pressed{" "}
+                  <span className="font-hindi">kachi ghani</span> mustard oil, and the
+                  secret &ldquo;Colonel Special&rdquo; blend of 22 to{" "}
+                  <Highlight>24</Highlight> whole spices. From a hospital bed in Assam
+                  to kitchens across India — pure tradition, unmatched heritage, and
+                  the heartwarming taste of <Highlight>Maa Ka Pyaar</Highlight> in
+                  every <Highlight>Colonel&apos;s Pickle</Highlight> jar.
                 </p>
               </div>
               <div className="flex items-center justify-center">
@@ -333,8 +338,8 @@ export default function AboutPage() {
               subtitle="Colonel's Pickle operates under Ridhwika Agro Organics — fully licensed and registered with the Government of India."
             />
           </AnimatedSection>
-          <StaggerContainer staggerDelay={0.12} className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {REGISTRATIONS.map((r) => (
+          <StaggerContainer staggerDelay={0.12} className="mx-auto mt-12 grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2">
+            {PUBLIC_REGISTRATIONS.map((r) => (
               <StaggerItem key={r.key}>
                 <HoverLift lift={3}>
                   <CertificationBadge
@@ -358,7 +363,15 @@ export default function AboutPage() {
           </StaggerContainer>
           <AnimatedSection direction="up" duration={0.65} delay={0.3}>
             <p className="mt-8 text-center font-sans text-xs text-cp-text-light">
-              Official certificates available on request.
+              Official certificates available on request. Full company &amp;
+              registration details (incl. Udyam &amp; GST) are on our{" "}
+              <a
+                href="/terms-and-conditions"
+                className="font-semibold text-cp-terracotta underline-offset-2 hover:underline"
+              >
+                Terms &amp; Conditions
+              </a>{" "}
+              page.
             </p>
           </AnimatedSection>
         </div>

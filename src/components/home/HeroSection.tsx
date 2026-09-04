@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { Parallax } from "@/components/shared/Parallax";
 import { TapScale } from "@/components/shared/TapScale";
@@ -85,7 +86,7 @@ export async function HeroSection() {
           "linear-gradient(135deg, #3A4A1F 0%, #4B5D2A 55%, #2E3818 100%)",
       }}
     >
-      <RajasthaniPattern variant="medallion" opacity={0.05} color="#F5EBDA" />
+      <RajasthaniPattern variant="camo" opacity={0.05} color="#F5EBDA" />
 
       {/* Ambient floating illustration accents */}
       <ChilliIllustration
@@ -104,6 +105,35 @@ export async function HeroSection() {
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-4 py-20 lg:grid-cols-2">
         {/* LEFT — messaging */}
         <div className="animate-fade-up">
+          <div className="mb-6 flex items-center gap-4">
+            <div className="relative flex-shrink-0">
+              <span
+                className="absolute inset-0 -m-[3px] rounded-full border border-cp-gold/60"
+                aria-hidden="true"
+              />
+              <Image
+                src="/images/brand/colonels-pickle-logo-plain.jpeg"
+                alt="Colonel's Pickle emblem"
+                width={88}
+                height={88}
+                className="h-16 w-16 rounded-full border-2 border-cp-gold object-cover shadow-[0_4px_20px_rgba(0,0,0,0.35)] sm:h-[88px] sm:w-[88px]"
+                priority
+              />
+            </div>
+            <span
+              className="hidden h-12 w-px bg-cp-beige/25 sm:block"
+              aria-hidden="true"
+            />
+            <div className="hidden sm:block">
+              <p className="font-display text-xl font-extrabold tracking-tight text-cp-beige">
+                Colonel&apos;s Pickle
+              </p>
+              <p className="mt-0.5 font-hindi text-[11px] tracking-[0.2em] text-cp-gold-light">
+                MAA KA PYAAR, GHAR KA ACHAR
+              </p>
+            </div>
+          </div>
+
           <span className="inline-flex items-center gap-2 rounded-full border border-cp-gold/40 bg-white/10 px-4 py-1.5 font-sans text-sm font-medium text-cp-beige backdrop-blur">
             <DogTagIllustration className="h-4 w-4 flex-shrink-0" aria-hidden />
             Made with pride by the mother of an Indian Army Colonel

@@ -16,6 +16,7 @@ import {
   LayoutDashboard,
 } from "lucide-react";
 import { TapScale } from "@/components/shared/TapScale";
+import { WebbingStitchAccent } from "@/components/illustrations";
 
 const emptySubscribe = () => () => {};
 
@@ -91,22 +92,22 @@ export function Header() {
             aria-label="Colonel's Pickle — Home"
           >
             <Image
-              src="/logo.png"
+              src="/images/brand/colonels-pickle-logo-plain.jpeg"
               alt="Colonel's Pickle by Ridhwika Agro Organics"
               width={72}
               height={72}
               className={cn(
-                "hidden object-contain transition-transform duration-300 group-hover:scale-105 lg:block",
+                "hidden rounded-full object-cover transition-transform duration-300 group-hover:scale-105 lg:block",
                 scrolled ? "h-[52px] w-[52px]" : "h-[68px] w-[68px]"
               )}
               priority
             />
             <Image
-              src="/logo.png"
+              src="/images/brand/colonels-pickle-logo-plain.jpeg"
               alt="Colonel's Pickle by Ridhwika Agro Organics"
               width={48}
               height={48}
-              className="block h-11 w-11 object-contain transition-transform duration-300 group-hover:scale-105 lg:hidden"
+              className="block h-11 w-11 rounded-full object-cover transition-transform duration-300 group-hover:scale-105 lg:hidden"
               priority
             />
 
@@ -122,6 +123,10 @@ export function Header() {
               <span className="font-hindi text-[10px] tracking-[0.18em] text-cp-brown">
                 MAA KA PYAAR, GHAR KA ACHAR
               </span>
+              <WebbingStitchAccent
+                className="mt-1 h-2 w-20 text-cp-olive/40"
+                aria-hidden="true"
+              />
             </span>
           </Link>
 

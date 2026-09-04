@@ -8,8 +8,9 @@ import { useCartStore, cartItemKey } from "@/store/useCartStore"
 import type { AppliedDiscount } from "@/store/useCartStore"
 import { FREE_DELIVERY_THRESHOLD, STANDARD_SHIPPING_COST } from "@/lib/constants"
 import { Button } from "@/components/ui/button"
+import { RajasthaniPattern } from "@/components/common/RajasthaniPattern"
 import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection"
-import { EmptyCartIllustration, DeliveryTruckIllustration } from "@/components/illustrations"
+import { EmptyCartIllustration, DeliveryTruckIllustration, WebbingStitchAccent } from "@/components/illustrations"
 import {
   Trash2, Plus, Minus, ArrowRight, Package,
   Tag, X, CheckCircle, Loader2, Gift,
@@ -138,8 +139,9 @@ export default function CartPage() {
   return (
     <div className="min-h-screen bg-cp-cream">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-cp-cream via-white to-cp-terracotta-light py-12 md:py-16 border-b">
-        <div className="container mx-auto px-4">
+      <section className="relative bg-gradient-to-br from-cp-cream via-white to-cp-terracotta-light py-12 md:py-16 border-b">
+        <RajasthaniPattern variant="camo" opacity={0.03} color="#6B7F3A" />
+        <div className="relative z-10 container mx-auto px-4">
           <AnimatedSection direction="up" className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
               Shopping
@@ -171,6 +173,9 @@ export default function CartPage() {
                     <Trash2 className="w-4 h-4 mr-2" />
                     Clear Cart
                   </Button>
+                </div>
+                <div className="mb-4 flex justify-center">
+                  <WebbingStitchAccent className="h-2 w-40 text-cp-terracotta/25" />
                 </div>
 
                 <StaggerContainer className="space-y-4">

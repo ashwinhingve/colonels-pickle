@@ -3,7 +3,8 @@ import Image from "next/image";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
 import { HoverLift } from "@/components/shared/HoverLift";
-import { ContactIllustration } from "@/components/illustrations";
+import { ContactIllustration, WebbingStitchAccent } from "@/components/illustrations";
+import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { MapPin, Phone, Mail, Instagram, Clock } from "lucide-react";
 import { BRAND, CONTACT_EMAIL } from "@/lib/constants";
 
@@ -48,8 +49,9 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-cp-olive-dark via-cp-olive to-cp-olive-light py-16 md:py-20 text-white relative overflow-hidden">
-        <div className="mx-auto max-w-6xl px-4">
+      <section className="relative overflow-hidden bg-gradient-to-br from-cp-olive-dark via-cp-olive to-cp-olive-light py-16 md:py-20 text-white">
+        <RajasthaniPattern variant="camo" opacity={0.03} color="#6B7F3A" />
+        <div className="relative z-10 mx-auto max-w-6xl px-4">
           <AnimatedSection direction="up" duration={0.65} className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="flex-1">
               <p className="font-hindi text-sm font-bold uppercase tracking-widest text-cp-gold-light mb-3">
@@ -166,6 +168,9 @@ export default function ContactPage() {
             <h2 className="mb-4 text-center font-display text-2xl font-extrabold text-cp-olive md:text-3xl">
               Visit Us
             </h2>
+            <div className="flex justify-center mb-6">
+              <WebbingStitchAccent className="h-3 w-40 text-cp-terracotta/40" />
+            </div>
             <div
               className="w-full overflow-hidden rounded-xl border border-cp-border shadow-sm hover:shadow-md transition-shadow duration-300"
               style={{ height: "400px" }}

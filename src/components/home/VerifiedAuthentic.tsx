@@ -1,6 +1,6 @@
 "use client";
 
-import { REGISTRATIONS } from "@/lib/constants";
+import { PUBLIC_REGISTRATIONS } from "@/lib/constants";
 import { ShieldCheckIcon } from "@/components/illustrations";
 import { StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
 import { HoverLift } from "@/components/shared/HoverLift";
@@ -25,8 +25,8 @@ export function VerifiedAuthentic() {
         </div>
 
         <StaggerContainer staggerDelay={0.1}>
-          <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {REGISTRATIONS.map((r) => (
+          <div className="mx-auto mt-12 grid max-w-2xl grid-cols-1 gap-5 sm:grid-cols-2">
+            {PUBLIC_REGISTRATIONS.map((r) => (
               <StaggerItem key={r.key}>
                 <HoverLift lift={4}>
                   <div className="group flex h-full flex-col rounded-2xl border border-cp-border-dark bg-cp-cream p-6 shadow-sm transition-all duration-300 hover:border-cp-olive/50 hover:shadow-md">

@@ -1,10 +1,11 @@
 import React from "react"
 import { Metadata } from "next"
 import { AnimatedSection } from "@/components/shared/AnimatedSection"
-import { CornerFlourish } from "@/components/illustrations"
-import { FileText, ShoppingCart, CreditCard, Package, Scale, Mail } from "lucide-react"
+import { CornerFlourish, CertSeal } from "@/components/illustrations"
+import { FileText, ShoppingCart, CreditCard, Package, Scale, Mail, BadgeCheck } from "lucide-react"
 import { connectDB } from "@/lib/mongodb"
 import PageContent from "@/models/PageContent"
+import { REGISTRATIONS } from "@/lib/constants"
 
 export const dynamic = "force-dynamic"
 
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
 // Default hardcoded content - fallback if no published DB record
 function DefaultContent() {
   return (
-    <main>
+    <>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-cp-beige via-white to-cp-cream py-20 md:py-32">
         <CornerFlourish className="absolute top-6 left-6 w-20 h-20 text-cp-olive opacity-20" />
@@ -248,9 +249,55 @@ function DefaultContent() {
           </AnimatedSection>
         </div>
       </section>
-      </main>
+      </>
     )
   }
+
+// Company & registration details — always rendered after the terms body,
+// regardless of whether the CMS or default content is shown above, so Udyam
+// and GST stay reliably documented on this legal page.
+function RegistrationDetailsSection() {
+  return (
+    <section className="bg-white py-16 md:py-24">
+      <div className="container mx-auto max-w-4xl px-4">
+        <AnimatedSection direction="up" duration={0.65}>
+          <div className="flex items-start gap-4">
+            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-cp-olive to-cp-olive-dark">
+              <BadgeCheck className="h-6 w-6 text-white" />
+            </div>
+            <div className="flex-1">
+              <h2 className="mb-3 text-2xl font-bold text-cp-text">
+                Company &amp; Registration Details
+              </h2>
+              <p className="mb-8 leading-relaxed text-cp-text-muted">
+                Colonel&apos;s Pickle is operated by Ridhwika Agro Organics and
+                is fully licensed and registered with the Government of India.
+              </p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            {REGISTRATIONS.map((r) => (
+              <div
+                key={r.key}
+                className="flex items-center gap-4 rounded-2xl border border-cp-border bg-gradient-to-br from-cp-beige to-white p-5 shadow-sm"
+              >
+                <CertSeal label={r.label.split(" ")[0]} className="h-14 w-14 flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="font-semibold text-cp-text">{r.label}</p>
+                  <p className="text-xs text-cp-text-muted">{r.fullName}</p>
+                  <p className="mt-1 select-all break-all font-mono text-[13px] font-semibold text-cp-terracotta">
+                    {r.number}
+                  </p>
+                  <p className="mt-0.5 text-xs text-cp-text-light">{r.detail}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  )
+}
 
 async function fetchPageContent(): Promise<any> {
   try {
@@ -266,40 +313,49 @@ async function fetchPageContent(): Promise<any> {
   }
 }
 
+function CmsBody({ pageContent }: { pageContent: any }) {
+  return (
+    <>
+      <section className="relative overflow-hidden bg-gradient-to-br from-cp-cream via-white to-cp-terracotta-light py-20 md:py-32">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="w-20 h-20 bg-gradient-to-br from-cp-terracotta to-cp-terracotta-deep rounded-full flex items-center justify-center mx-auto mb-6">
+              <FileText className="w-10 h-10 text-white" />
+            </div>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gray-900">
+              {pageContent.title}
+            </h1>
+            {pageContent.subtitle && (
+              <p className="text-xl md:text-2xl text-gray-700 mb-4">{pageContent.subtitle}</p>
+            )}
+            <p className="text-base text-gray-600">Last Updated: {pageContent.lastUpdated}</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div
+            className="prose prose-sm max-w-none"
+            dangerouslySetInnerHTML={{ __html: pageContent.bodyHtml }}
+          />
+        </div>
+      </section>
+    </>
+  )
+}
+
 export default async function TermsConditionsPage() {
   const pageContent = await fetchPageContent()
 
-  if (pageContent?.isPublished) {
-    return (
-      <main>
-        <section className="relative overflow-hidden bg-gradient-to-br from-cp-cream via-white to-cp-terracotta-light py-20 md:py-32">
-          <div className="container mx-auto px-4">
-            <div className="text-center max-w-4xl mx-auto">
-              <div className="w-20 h-20 bg-gradient-to-br from-cp-terracotta to-cp-terracotta-deep rounded-full flex items-center justify-center mx-auto mb-6">
-                <FileText className="w-10 h-10 text-white" />
-              </div>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gray-900">
-                {pageContent.title}
-              </h1>
-              {pageContent.subtitle && (
-                <p className="text-xl md:text-2xl text-gray-700 mb-4">{pageContent.subtitle}</p>
-              )}
-              <p className="text-base text-gray-600">Last Updated: {pageContent.lastUpdated}</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 md:py-24 bg-white">
-          <div className="container mx-auto px-4 max-w-4xl">
-            <div
-              className="prose prose-sm max-w-none"
-              dangerouslySetInnerHTML={{ __html: pageContent.bodyHtml }}
-            />
-          </div>
-        </section>
-      </main>
-    )
-  }
-
-  return <DefaultContent />
+  return (
+    <main>
+      {pageContent?.isPublished ? (
+        <CmsBody pageContent={pageContent} />
+      ) : (
+        <DefaultContent />
+      )}
+      <RegistrationDetailsSection />
+    </main>
+  )
 }
