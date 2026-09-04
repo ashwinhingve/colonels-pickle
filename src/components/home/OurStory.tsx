@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
+import { Highlight } from "@/components/common/Highlight";
 import { SpiceScatter, CornerFlourish } from "@/components/illustrations";
 
 const FACT_TILES = [
@@ -108,10 +109,11 @@ export function OurStory() {
             During the COVID lockdown, posted at a military cantonment, he and
             his mother Urmila Devi — a resilient officer&apos;s mother from
             Haryana — turned to their kitchen garden and time-tested family
-            recipes, sun-drying and hand-grinding 24 whole spices into their
-            signature &ldquo;Colonel Special&rdquo; masala. The jars they gifted
-            across the cantonment tasted, to every homesick officer, exactly like
-            home.
+            recipes, sun-drying and hand-grinding{" "}
+            <Highlight tone="dark">22 to 24 whole spices</Highlight> into their
+            signature &ldquo;<Highlight tone="dark">Colonel Special</Highlight>&rdquo;
+            masala. The jars they gifted across the cantonment tasted, to every
+            homesick officer, exactly like home.
           </p>
           <p className="mt-4 font-serif text-[15px] leading-relaxed text-cp-beige/75">
             Named after the family&apos;s three daughters, Ridhwika Agro Organics

@@ -236,8 +236,8 @@ export default function AboutPage() {
                   their Army bungalow&apos;s kitchen garden. Surrounded by fresh,
                   sun-ripened green chillies, mother and son began experimenting with
                   time-tested family recipes, hand-selecting, sun-drying and freshly
-                  grinding a proprietary mix of 22 to{" "}
-                  <Highlight>24</Highlight> whole spices — crafting what would
+                  grinding a proprietary mix of{" "}
+                  <Highlight>22 to 24 whole spices</Highlight> — crafting what would
                   become their signature &ldquo;<Highlight>Colonel Special</Highlight>&rdquo;
                   masala. The jars they gifted across the cantonment tasted, to every
                   homesick officer and neighbour, exactly like home.
@@ -277,11 +277,12 @@ export default function AboutPage() {
                   chemicals, and no vinegar. Pure Afghani, Tajikistani and Uzbeki hing
                   valued at <Highlight>₹30,000/kg</Highlight>, wooden cold-pressed{" "}
                   <span className="font-hindi">kachi ghani</span> mustard oil, and the
-                  secret &ldquo;Colonel Special&rdquo; blend of 22 to{" "}
-                  <Highlight>24</Highlight> whole spices. From a hospital bed in Assam
+                  secret &ldquo;<Highlight>Colonel Special</Highlight>&rdquo; blend of{" "}
+                  <Highlight>22 to 24 whole spices</Highlight>. From a hospital bed in Assam
                   to kitchens across India — pure tradition, unmatched heritage, and
                   the heartwarming taste of <Highlight>Maa Ka Pyaar</Highlight> in
-                  every <Highlight>Colonel&apos;s Pickle</Highlight> jar.
+                  every <Highlight>Colonel&apos;s Pickle</Highlight> jar,{" "}
+                  <Highlight>blended with a mother&apos;s love</Highlight>.
                 </p>
               </div>
               <div className="flex items-center justify-center">
