@@ -14,6 +14,7 @@ const PRODUCT_LINKS = [
 
 const COMPANY_LINKS = [
   { href: "/about", label: "About Us" },
+  { href: "/gallery", label: "Gallery" },
   { href: "/contact", label: "Contact Us" },
   { href: "/faq", label: "FAQ" },
   { href: "/privacy-policy", label: "Privacy Policy" },

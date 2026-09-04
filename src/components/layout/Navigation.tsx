@@ -8,6 +8,7 @@ export const NAV_ITEMS = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Shop" },
   { href: "/about", label: "Our Story" },
+  { href: "/gallery", label: "Gallery" },
   { href: "/wholesale", label: "Wholesale" },
   { href: "/contact", label: "Contact" },
 ];
