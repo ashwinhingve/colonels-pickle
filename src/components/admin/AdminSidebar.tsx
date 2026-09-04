@@ -10,6 +10,7 @@ import {
   Users,
   Package,
   Film,
+  Images,
   Tags,
   Settings,
   UserCheck,
@@ -72,6 +73,11 @@ const navigation: NavItem[] = [
     label: 'Production',
     href: '/admin/production',
     icon: Film,
+  },
+  {
+    label: 'Gallery',
+    href: '/admin/gallery',
+    icon: Images,
   },
   {
     label: 'Team',
