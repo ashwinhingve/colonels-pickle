@@ -1,8 +1,10 @@
 import Link from "next/link";
-import Image from "next/image";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { Parallax } from "@/components/shared/Parallax";
 import { TapScale } from "@/components/shared/TapScale";
+import { StaggeredHeroPanels, type HeroPoolItem } from "@/components/home/StaggeredHeroPanels";
+import { connectDB } from "@/lib/mongodb";
+import GalleryMedia from "@/models/GalleryMedia";
 import {
   NoPreservativeIcon,
   NoChemicalIcon,
@@ -12,6 +14,53 @@ import {
   LemonIllustration,
   DogTagIllustration,
 } from "@/components/illustrations";
+
+// Static fallback so the homepage hero never breaks before any admin has
+// flagged gallery media as "Show in Hero" (e.g. right after first deploy).
+const FALLBACK_HERO_POOL: HeroPoolItem[] = [
+  {
+    type: "image",
+    url: "/hero/hero-poster.jpg",
+    altText: "Stuffed red chilli achar arranged in a spiral — Colonel's Pickle",
+  },
+  {
+    type: "image",
+    url: "/hero/collage-b.jpg",
+    altText: "Hand-mixing whole spices and chillies in a steel thali",
+  },
+  {
+    type: "image",
+    url: "/hero/collage-c.jpg",
+    altText: "Masala-coated mango pieces — homemade achar in the making",
+  },
+  {
+    type: "image",
+    url: "/hero/collage-d.jpg",
+    altText: "Fresh green mangoes soaking — raw ingredients",
+  },
+];
+
+async function getHeroPool(): Promise<HeroPoolItem[]> {
+  try {
+    await connectDB();
+    const items = await GalleryMedia.find({ isActive: true, showInHero: true })
+      .sort({ heroOrder: 1 })
+      .select("type url posterUrl title altText")
+      .lean();
+
+    if (!items.length) return FALLBACK_HERO_POOL;
+
+    return items.map((item: any) => ({
+      type: item.type,
+      url: item.url,
+      posterUrl: item.posterUrl,
+      title: item.title,
+      altText: item.altText,
+    }));
+  } catch {
+    return FALLBACK_HERO_POOL;
+  }
+}
 
 const STATS = [
   { value: "15+", label: "Pickle Varieties" },
@@ -25,7 +74,9 @@ const BENEFITS = [
   { Icon: NoVinegarIcon, label: "No Vinegar" },
 ];
 
-export function HeroSection() {
+export async function HeroSection() {
+  const heroPool = await getHeroPool();
+
   return (
     <section
       className="relative flex min-h-[90vh] items-center overflow-hidden"
@@ -119,74 +170,9 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* RIGHT — floating artisan collage (real brand photos, self-hosted) */}
+        {/* RIGHT — floating artisan collage, CMS-driven from the Gallery's Hero Pool */}
         <Parallax offset={30} direction="up">
-          <div className="relative hidden h-[500px] lg:block">
-          {/* warm glow behind collage */}
-          <div
-            className="pointer-events-none absolute inset-0 z-0"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, rgba(212,160,23,0.18) 0%, transparent 70%)",
-            }}
-          />
-
-          {/* Card A — primary, largest */}
-          <div className="animate-float absolute right-[20px] top-[40px] z-[3] h-[300px] w-[260px] rotate-[2deg] overflow-hidden rounded-2xl border-[3px] border-cp-beige/30 shadow-[0_20px_60px_rgba(0,0,0,0.35)] transition-[transform,box-shadow] duration-300 hover:scale-[1.03] hover:shadow-[0_28px_72px_rgba(0,0,0,0.45)]">
-            <Image
-              src="/hero/hero-poster.jpg"
-              alt="Stuffed red chilli achar arranged in a spiral — Colonel's Pickle"
-              fill
-              sizes="260px"
-              className="object-cover"
-              priority
-            />
-          </div>
-
-          {/* Card B — top-left, medium */}
-          <div className="animate-float animation-delay-500 absolute left-[20px] top-0 z-[2] h-[200px] w-[180px] -rotate-[3deg] overflow-hidden rounded-2xl border-[3px] border-cp-beige/30 shadow-[0_16px_40px_rgba(0,0,0,0.28)] transition-[transform,box-shadow] duration-300 hover:scale-[1.03] hover:shadow-[0_22px_52px_rgba(0,0,0,0.36)]">
-            <Image
-              src="/hero/collage-b.jpg"
-              alt="Hand-mixing whole spices and chillies in a steel thali"
-              fill
-              sizes="180px"
-              className="object-cover"
-            />
-          </div>
-
-          {/* Card C — bottom-left, medium */}
-          <div className="animate-float animation-delay-1000 absolute bottom-[60px] left-0 z-[2] h-[180px] w-[200px] rotate-[1.5deg] overflow-hidden rounded-2xl border-[3px] border-cp-beige/30 shadow-[0_16px_40px_rgba(0,0,0,0.28)] transition-[transform,box-shadow] duration-300 hover:scale-[1.03] hover:shadow-[0_22px_52px_rgba(0,0,0,0.36)]">
-            <Image
-              src="/hero/collage-c.jpg"
-              alt="Masala-coated mango pieces — homemade achar in the making"
-              fill
-              sizes="200px"
-              className="object-cover"
-            />
-          </div>
-
-          {/* Card D — bottom-right, small accent */}
-          <div className="animate-float animation-delay-1500 absolute bottom-[20px] right-[60px] z-[1] h-[160px] w-[150px] -rotate-[2deg] overflow-hidden rounded-2xl border-[3px] border-cp-beige/30 shadow-[0_12px_30px_rgba(0,0,0,0.22)] transition-[transform,box-shadow] duration-300 hover:scale-[1.03] hover:shadow-[0_18px_42px_rgba(0,0,0,0.32)]">
-            <Image
-              src="/hero/collage-d.jpg"
-              alt="Fresh green mangoes soaking — raw ingredients"
-              fill
-              sizes="150px"
-              className="object-cover"
-            />
-          </div>
-
-          {/* Floating badges on the collage */}
-          <span className="absolute right-[-12px] top-[-12px] z-10 rounded-full bg-cp-beige px-3 py-1.5 font-hindi text-xs font-bold text-cp-olive shadow-lg">
-            🌿 100% Natural
-          </span>
-          <span className="absolute right-[30%] top-[46%] z-10 rounded-full bg-cp-terracotta px-3 py-1.5 font-hindi text-xs font-bold text-white shadow-lg">
-            No Vinegar ✓
-          </span>
-          <span className="absolute bottom-[40px] left-[-12px] z-10 rounded-full bg-cp-beige px-3 py-1.5 font-hindi text-xs font-bold text-cp-terracotta shadow-lg">
-            FSSAI ✓
-          </span>
-          </div>
+          <StaggeredHeroPanels pool={heroPool} />
         </Parallax>
       </div>
 
