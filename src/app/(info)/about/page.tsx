@@ -168,10 +168,10 @@ export default function AboutPage() {
               />
               <div className="text-center">
                 <Image
-                  src="/images/brand/colonels-pickle-logo-plain.jpeg"
+                  src="/logo.png"
                   width={100}
                   height={100}
-                  className="mx-auto rounded-full object-cover"
+                  className="mx-auto object-contain"
                   alt="Colonel's Pickle"
                 />
                 <div className="mx-auto my-3 h-[2px] w-16 bg-cp-terracotta" />

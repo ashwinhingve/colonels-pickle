@@ -92,25 +92,31 @@ export function Header() {
             className="group flex items-center gap-3 leading-none"
             aria-label="Colonel's Pickle — Home"
           >
-            <Image
-              src="/images/brand/colonels-pickle-logo-plain.jpeg"
-              alt="Colonel's Pickle by Ridhwika Agro Organics"
-              width={72}
-              height={72}
+            <span
               className={cn(
-                "hidden rounded-full object-cover transition-transform duration-300 group-hover:scale-105 lg:block",
+                "hidden shrink-0 items-center justify-center overflow-hidden rounded-full border border-cp-gold/50 bg-white shadow-sm transition-transform duration-300 group-hover:scale-105 lg:flex",
                 scrolled ? "h-[52px] w-[52px]" : "h-[68px] w-[68px]"
               )}
-              priority
-            />
-            <Image
-              src="/images/brand/colonels-pickle-logo-plain.jpeg"
-              alt="Colonel's Pickle by Ridhwika Agro Organics"
-              width={48}
-              height={48}
-              className="block h-11 w-11 rounded-full object-cover transition-transform duration-300 group-hover:scale-105 lg:hidden"
-              priority
-            />
+            >
+              <Image
+                src="/logo.png"
+                alt="Colonel's Pickle by Ridhwika Agro Organics"
+                width={72}
+                height={72}
+                className="h-[92%] w-[92%] object-contain"
+                priority
+              />
+            </span>
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-cp-gold/50 bg-white shadow-sm transition-transform duration-300 group-hover:scale-105 lg:hidden">
+              <Image
+                src="/logo.png"
+                alt="Colonel's Pickle by Ridhwika Agro Organics"
+                width={48}
+                height={48}
+                className="h-[92%] w-[92%] object-contain"
+                priority
+              />
+            </span>
 
             <span
               className="hidden h-10 w-px bg-gradient-to-b from-transparent via-cp-border to-transparent lg:block"

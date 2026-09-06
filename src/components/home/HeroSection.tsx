@@ -123,14 +123,16 @@ export async function HeroSection() {
                 className="absolute inset-0 -m-[3px] rounded-full border border-cp-gold/60"
                 aria-hidden="true"
               />
-              <Image
-                src="/images/brand/colonels-pickle-logo-plain.jpeg"
-                alt="Colonel's Pickle emblem"
-                width={88}
-                height={88}
-                className="h-16 w-16 rounded-full border-2 border-cp-gold object-cover shadow-[0_4px_20px_rgba(0,0,0,0.35)] sm:h-[88px] sm:w-[88px]"
-                priority
-              />
+              <span className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 border-cp-gold bg-white shadow-[0_4px_20px_rgba(0,0,0,0.35)] sm:h-[88px] sm:w-[88px]">
+                <Image
+                  src="/logo.png"
+                  alt="Colonel's Pickle emblem"
+                  width={88}
+                  height={88}
+                  className="h-[92%] w-[92%] object-contain"
+                  priority
+                />
+              </span>
             </div>
             <span
               className="hidden h-12 w-px bg-cp-beige/25 sm:block"

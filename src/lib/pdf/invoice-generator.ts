@@ -131,9 +131,9 @@ async function renderInvoicePDF(
   const paymentDetails = await getPaymentDetails();
 
   // ===== HEADER BAND =====
-  // Logo (left) — uses optimized plain logo (61KB) instead of unoptimized large asset
+  // Logo (left) — full official crest + wordmark
   try {
-    const logoPath = path.join(process.cwd(), 'public', 'images', 'brand', 'colonels-pickle-logo-plain.jpeg');
+    const logoPath = path.join(process.cwd(), 'public', 'logo.png');
     if (fs.existsSync(logoPath)) {
       const logoBuffer = fs.readFileSync(logoPath);
       doc.image(logoBuffer, 40, 40, { width: 50, height: 50 });
