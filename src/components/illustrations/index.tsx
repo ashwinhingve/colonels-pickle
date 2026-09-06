@@ -13,6 +13,10 @@ import * as React from "react";
 /* Larger scene / empty-state / hero illustrations live in ./scenes and are
    re-exported here so everything is importable from "@/components/illustrations". */
 export * from "./scenes";
+export * from "./ChevronAccent";
+export * from "./LocationMarkers";
+export * from "./TacticalStamps";
+export * from "./TacticalCrosshair";
 
 type SVGProps = React.SVGProps<SVGSVGElement> & { title?: string };
 
