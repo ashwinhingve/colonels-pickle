@@ -36,7 +36,8 @@ export function OurStory() {
 
       <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2">
         {/* LEFT — story card */}
-        <div className="relative rounded-2xl bg-white/5 p-10">
+        <div className="relative overflow-hidden rounded-2xl bg-white/5 p-10">
+          <RajasthaniPattern variant="blueprint" opacity={0.03} color="#D4A017" />
           <span
             className="absolute left-0 top-0 h-12 w-12 rounded-tl-2xl border-l-2 border-t-2"
             style={{ borderColor: "#D4A017" }}

@@ -16,7 +16,6 @@ export * from "./scenes";
 export * from "./ChevronAccent";
 export * from "./LocationMarkers";
 export * from "./TacticalStamps";
-export * from "./TacticalCrosshair";
 
 type SVGProps = React.SVGProps<SVGSVGElement> & { title?: string };
 

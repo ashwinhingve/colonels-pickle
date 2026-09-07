@@ -46,6 +46,16 @@ export interface ISiteSettings extends Document {
     ifsc: string;
     upiId: string;
   };
+  businessProfile?: {
+    gstin: string;
+    fssai: string;
+    pan?: string;
+    addressLine1: string;
+    addressLine2?: string;
+    city: string;
+    state: string;
+    postalCode: string;
+  };
   updatedAt: Date;
   createdAt: Date;
 }
@@ -127,6 +137,38 @@ const SiteSettingsSchema = new Schema<ISiteSettings>(
       upiId: {
         type: String,
         default: '9717243306@ptsbi',
+      },
+    },
+    businessProfile: {
+      gstin: {
+        type: String,
+        default: '08BFKPD8446R1ZM',
+      },
+      fssai: {
+        type: String,
+        default: '12226026000060',
+      },
+      pan: {
+        type: String,
+      },
+      addressLine1: {
+        type: String,
+        default: 'B-6/374, Vaishali Nagar',
+      },
+      addressLine2: {
+        type: String,
+      },
+      city: {
+        type: String,
+        default: 'Jaipur',
+      },
+      state: {
+        type: String,
+        default: 'Rajasthan',
+      },
+      postalCode: {
+        type: String,
+        default: '302020',
       },
     },
   },

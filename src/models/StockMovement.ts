@@ -100,14 +100,16 @@ StockMovementSchema.index({ itemId: 1, createdAt: -1 });
 StockMovementSchema.index({ reason: 1 });
 StockMovementSchema.index({ itemType: 1 });
 
-// Pre-save hook: Auto-sync itemModel from itemType to prevent inconsistency
-// This ensures refPath populate() always resolves the correct model
+// Pre-validate hook: auto-sync itemModel from itemType to prevent inconsistency.
+// Must run pre-validate, not pre-save — Mongoose runs schema validation before
+// 'save' middleware, so a pre('save') hook is too late to satisfy the
+// `required: true` on itemModel (it would fail validation before ever running).
 const ITEM_TYPE_TO_MODEL: Record<string, 'RawMaterial' | 'Product'> = {
   raw_material: 'RawMaterial',
   product: 'Product',
 };
 
-StockMovementSchema.pre('save', function (next) {
+StockMovementSchema.pre('validate', function (next) {
   this.itemModel = ITEM_TYPE_TO_MODEL[this.itemType as keyof typeof ITEM_TYPE_TO_MODEL];
   next();
 });

@@ -20,6 +20,7 @@ import {
   FileText,
   AlertTriangle,
   TrendingUp,
+  History,
 } from 'lucide-react';
 import { RajasthaniPattern } from '@/components/common/RajasthaniPattern';
 
@@ -49,6 +50,11 @@ const navigation: NavItem[] = [
     label: 'Create Invoice',
     href: '/admin/invoices/create',
     icon: FileText,
+  },
+  {
+    label: 'Invoice History',
+    href: '/admin/invoices',
+    icon: History,
   },
   {
     label: 'Payments',

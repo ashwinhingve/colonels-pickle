@@ -1,31 +1,59 @@
 import PDFDocument from 'pdfkit';
-import QRCode from 'qrcode';
 import { Types } from 'mongoose';
 import fs from 'fs';
 import path from 'path';
 import { BRAND, REGISTRATIONS, BANK_DETAILS } from '@/lib/constants';
 import { extractGST } from '@/lib/gst';
+import { generateUpiQrForPayment } from '@/lib/payment/upiQr';
 import { numberToIndianWords } from '@/lib/utils/numberToWords';
 import Order from '@/models/Order';
 import User from '@/models/User';
 import SiteSettings from '@/models/SiteSettings';
 
+interface BusinessProfile {
+  gstin: string;
+  fssai: string;
+  pan?: string;
+  addressLine1: string;
+  addressLine2?: string;
+  city: string;
+  state: string;
+  postalCode: string;
+}
+
+const DEFAULT_BUSINESS_PROFILE: BusinessProfile = {
+  gstin: REGISTRATIONS.find((reg) => reg.key === 'gst')?.number || '08BFKPD8446R1ZM',
+  fssai: REGISTRATIONS.find((reg) => reg.key === 'fssai')?.number || BRAND.fssai,
+  addressLine1: BRAND.address.line1,
+  addressLine2: BRAND.address.line2 || undefined,
+  city: BRAND.address.city,
+  state: BRAND.address.state,
+  postalCode: BRAND.address.pin,
+};
+
 /**
- * Bank/UPI details are admin-editable (SiteSettings.paymentSettings). The
- * BANK_DETAILS constant is kept only as a fallback for the rare case a
- * settings doc predates this field (should never happen post-migration,
- * since the schema itself defaults every subfield to the same values).
+ * Bank/UPI details and business profile (GSTIN/FSSAI/address) are admin-editable
+ * (SiteSettings.paymentSettings / SiteSettings.businessProfile). Constants are
+ * kept only as a fallback for the rare case a settings doc predates these
+ * fields (should never happen post-migration, since the schema itself
+ * defaults every subfield to the same values).
  */
-async function getPaymentDetails(): Promise<typeof BANK_DETAILS> {
+async function getInvoiceSettings(): Promise<{
+  paymentDetails: typeof BANK_DETAILS;
+  businessProfile: BusinessProfile;
+}> {
   try {
     const settings = await SiteSettings.findOne({ key: 'global' }).lean() as any;
-    if (settings?.paymentSettings) {
-      return settings.paymentSettings;
-    }
+    return {
+      paymentDetails: settings?.paymentSettings || BANK_DETAILS,
+      businessProfile: settings?.businessProfile
+        ? { ...DEFAULT_BUSINESS_PROFILE, ...settings.businessProfile }
+        : DEFAULT_BUSINESS_PROFILE,
+    };
   } catch (error) {
-    console.warn('Could not fetch paymentSettings from DB, using constants fallback:', error);
+    console.warn('Could not fetch site settings from DB, using constants fallback:', error);
+    return { paymentDetails: BANK_DETAILS, businessProfile: DEFAULT_BUSINESS_PROFILE };
   }
-  return BANK_DETAILS;
 }
 
 /**
@@ -57,6 +85,7 @@ export interface PopulatedOrderForInvoice {
     productName: string;
     productSku: string;
     gstRate: number;
+    hsnCode?: string;
     priceAtPurchase: number;
     quantity: number;
   }>;
@@ -126,9 +155,8 @@ async function renderInvoicePDF(
   doc: PDFKit.PDFDocument,
   order: PopulatedOrderForInvoice
 ): Promise<void> {
-  const gstReg = REGISTRATIONS.find(reg => reg.key === 'gst');
-  const gstin = gstReg?.number || '08BFKPD8446R1ZM';
-  const paymentDetails = await getPaymentDetails();
+  const { paymentDetails, businessProfile } = await getInvoiceSettings();
+  const gstin = businessProfile.gstin;
 
   // ===== HEADER BAND =====
   // Logo (left) — full official crest + wordmark
@@ -160,8 +188,8 @@ async function renderInvoicePDF(
   // Business address & contact (right side)
   const addressX = 400;
   doc.fontSize(9).font('Helvetica');
-  doc.text(`${BRAND.address.line1}`, addressX, 45);
-  doc.text(`${BRAND.address.city}, ${BRAND.address.state} – ${BRAND.address.pin}`, addressX, 57);
+  doc.text(businessProfile.addressLine1, addressX, 45);
+  doc.text(`${businessProfile.city}, ${businessProfile.state} – ${businessProfile.postalCode}`, addressX, 57);
   doc.text(`Phone: ${BRAND.phones[0]}`, addressX, 69);
   doc.text(`Email: ${BRAND.email}`, addressX, 81);
 
@@ -181,8 +209,8 @@ async function renderInvoicePDF(
     .font('Helvetica')
     .text('ORIGINAL FOR RECIPIENT', { align: 'right' });
 
-  // GSTIN label
-  doc.fontSize(9).text(`GSTIN: ${gstin}`, 40, doc.y + 5);
+  // GSTIN / FSSAI labels
+  doc.fontSize(9).text(`GSTIN: ${gstin}    FSSAI: ${businessProfile.fssai}`, 40, doc.y + 5);
 
   // ===== INVOICE METADATA =====
   const metaY = doc.y + 15;
@@ -200,7 +228,7 @@ async function renderInvoicePDF(
 
   doc.fontSize(9).font('Helvetica');
   doc.text(`Name: ${order.userId.name}`, 40, custY + 18);
-  doc.text(`Email: ${order.userId.email}`, 40, custY + 30);
+  doc.text(`Email: ${order.userId.email || 'N/A'}`, 40, custY + 30);
 
   // Address block
   const addrLine = [
@@ -293,9 +321,7 @@ async function renderInvoicePDF(
       width: colWidths.product,
       align: 'left',
     });
-    // HSN/SAC is hardcoded to "2001" for pickles — v1 simplification
-    // TODO: Add per-product hsnCode field to Product model in future
-    doc.text('2001', 220, currentY, { width: colWidths.hsn, align: 'center' });
+    doc.text(item.hsnCode || '2001', 220, currentY, { width: colWidths.hsn, align: 'center' });
     doc.text(String(item.quantity), 270, currentY, {
       width: colWidths.qty,
       align: 'center',
@@ -418,27 +444,22 @@ async function renderInvoicePDF(
   doc.text(`IFSC: ${paymentDetails.ifsc}`, 40, bankY + 58);
   doc.text(`UPI: ${paymentDetails.upiId}`, 40, bankY + 68);
 
-  // Generate UPI QR code
-  try {
-    const upiUri = `upi://pay?pa=${paymentDetails.upiId}&pn=${encodeURIComponent(
-      paymentDetails.accountName
-    )}&am=${order.totalAmount}&cu=INR&tn=${encodeURIComponent(
-      'Invoice ' + order.invoiceNumber
-    )}`;
+  // Generate UPI QR code — skips cleanly (no broken image) if the configured
+  // UPI ID is missing/invalid or the amount isn't a valid positive number.
+  const upiQr = await generateUpiQrForPayment({
+    upiId: paymentDetails.upiId,
+    payeeName: paymentDetails.accountName,
+    amount: order.totalAmount,
+    note: `Invoice ${order.invoiceNumber}`,
+  });
 
-    const qrBuffer = await QRCode.toBuffer(upiUri, {
-      type: 'png',
-      width: 150,
-      margin: 1,
-      color: {
-        dark: '#000000',
-        light: '#ffffff',
-      },
+  if (upiQr) {
+    doc.image(upiQr.png, 450, bankY + 18, { width: 90, height: 90 });
+  } else {
+    doc.fontSize(8).font('Helvetica').text('UPI payment not configured', 450, bankY + 50, {
+      width: 90,
+      align: 'center',
     });
-
-    doc.image(qrBuffer, 450, bankY + 18, { width: 90, height: 90 });
-  } catch (error) {
-    console.warn('Could not generate UPI QR code:', error);
   }
 
   // ===== FOOTER =====

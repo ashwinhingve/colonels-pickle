@@ -69,8 +69,8 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full">
-      {/* Premium gradient hairline */}
-      <div className="h-[3px] w-full bg-gradient-to-r from-cp-saffron via-cp-crimson to-cp-saffron" />
+      {/* Premium gradient hairline — brass rank-bar feel */}
+      <div className="h-[3px] w-full bg-gradient-to-r from-cp-gunmetal via-cp-gold to-cp-gunmetal" />
 
       <div
         className={cn(

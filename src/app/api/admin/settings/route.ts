@@ -50,12 +50,23 @@ export async function PUT(request: NextRequest) {
     await connectDB();
 
     const body = await request.json();
-    const { announcementBanner, heroSlider, paymentSettings } = body;
+    const { announcementBanner, heroSlider, paymentSettings, businessProfile } = body;
 
     const updateFields: Record<string, any> = {};
     if (announcementBanner !== undefined) updateFields.announcementBanner = announcementBanner;
     if (heroSlider !== undefined) updateFields.heroSlider = heroSlider;
-    if (paymentSettings !== undefined) updateFields.paymentSettings = paymentSettings;
+    // paymentSettings/businessProfile are set per-field (not as a whole replaced
+    // object) so a partial payload can never wipe out the other saved fields.
+    if (paymentSettings !== undefined) {
+      for (const [key, value] of Object.entries(paymentSettings)) {
+        updateFields[`paymentSettings.${key}`] = value;
+      }
+    }
+    if (businessProfile !== undefined) {
+      for (const [key, value] of Object.entries(businessProfile)) {
+        updateFields[`businessProfile.${key}`] = value;
+      }
+    }
 
     const settings = await SiteSettings.findOneAndUpdate(
       { key: 'global' },

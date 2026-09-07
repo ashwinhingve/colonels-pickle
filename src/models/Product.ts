@@ -76,6 +76,7 @@ export interface IProduct extends Document {
   averageRating: number;
   totalReviews: number;
   gstRate: number; // 0 | 5 | 12 | 18 | 28 — GST rate; product price is GST-inclusive
+  hsnCode: string; // HSN/SAC code for GST invoices — confirm exact code with your accountant
   videoUrl?: string;
   supplierId?: mongoose.Types.ObjectId;
   relatedProducts?: mongoose.Types.ObjectId[];
@@ -225,6 +226,21 @@ const ProductSchema = new Schema<IProduct>(
       type: Number,
       enum: [0, 5, 12, 18, 28],
       default: 5,
+    },
+    // HSN/SAC code for GST tax invoices. Defaults are best-effort per category —
+    // confirm the exact code with your accountant before relying on it for filing.
+    hsnCode: {
+      type: String,
+      trim: true,
+      default: function (this: IProduct) {
+        const HSN_BY_CATEGORY: Record<string, string> = {
+          achaar: '2001', // Pickles / vegetables preserved by vinegar
+          oils: '1514', // Mustard / rapeseed oil
+          masala: '0910', // Spices, whole or ground
+          organic: '2008', // Other preserved fruit/vegetable preparations (e.g. gulkand)
+        };
+        return HSN_BY_CATEGORY[this.category] || '2001';
+      },
     },
     videoUrl: {
       type: String,

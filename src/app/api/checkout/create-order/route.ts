@@ -147,6 +147,7 @@ export async function POST(req: NextRequest) {
         productId: product._id,
         variantId: item.variantId || null,
         gstRate: resolvedGstRate,
+        hsnCode: product.hsnCode || '2001',
         productName: resolvedName,
         productSku: resolvedSku,
         productImage: (typeof product.images[0] === 'string' ? product.images[0] : product.images[0]?.url) || '',

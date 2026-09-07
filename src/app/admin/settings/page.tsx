@@ -4,7 +4,8 @@ import SiteSettings from '@/models/SiteSettings';
 import AnnouncementManager from '@/components/admin/AnnouncementManager';
 import HeroSliderManager from '@/components/admin/HeroSliderManager';
 import PaymentSettingsManager from '@/components/admin/PaymentSettingsManager';
-import { BANK_DETAILS } from '@/lib/constants';
+import BusinessProfileManager from '@/components/admin/BusinessProfileManager';
+import { BANK_DETAILS, BRAND, REGISTRATIONS } from '@/lib/constants';
 
 export default async function AdminSettingsPage() {
   await requireAdmin();
@@ -61,6 +62,19 @@ export default async function AdminSettingsPage() {
     upiId: settings.paymentSettings?.upiId || BANK_DETAILS.upiId,
   };
 
+  const gstFallback = REGISTRATIONS.find((r) => r.key === 'gst')?.number || '';
+  const fssaiFallback = REGISTRATIONS.find((r) => r.key === 'fssai')?.number || BRAND.fssai;
+  const businessProfile = {
+    gstin: settings.businessProfile?.gstin || gstFallback,
+    fssai: settings.businessProfile?.fssai || fssaiFallback,
+    pan: settings.businessProfile?.pan || '',
+    addressLine1: settings.businessProfile?.addressLine1 || BRAND.address.line1,
+    addressLine2: settings.businessProfile?.addressLine2 || BRAND.address.line2 || '',
+    city: settings.businessProfile?.city || BRAND.address.city,
+    state: settings.businessProfile?.state || BRAND.address.state,
+    postalCode: settings.businessProfile?.postalCode || BRAND.address.pin,
+  };
+
   return (
     <div className="space-y-8 max-w-5xl">
       <div>
@@ -75,6 +89,9 @@ export default async function AdminSettingsPage() {
 
       {/* Announcement Banner */}
       <AnnouncementManager initialData={bannerData} />
+
+      {/* Business Profile */}
+      <BusinessProfileManager initialData={businessProfile} />
 
       {/* Payment Settings */}
       <PaymentSettingsManager initialData={paymentSettings} />

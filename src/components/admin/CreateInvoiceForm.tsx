@@ -63,7 +63,9 @@ async function debounceSearch<T>(
   });
 }
 
-export default function CreateInvoiceForm() {
+export default function CreateInvoiceForm({ editOrderId }: { editOrderId?: string }) {
+  const isEdit = !!editOrderId;
+
   // Customer
   const [customerMode, setCustomerMode] = useState<'existing' | 'new'>('existing');
   const [customerSearch, setCustomerSearch] = useState('');
@@ -100,6 +102,91 @@ export default function CreateInvoiceForm() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<{ orderId: string; orderNumber: string; invoiceNumber: string; totalAmount: number } | null>(null);
+  const [loadingExisting, setLoadingExisting] = useState(isEdit);
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  // ── Prefill from an existing invoice when editing ─────────────────
+  useEffect(() => {
+    if (!editOrderId) return;
+    (async () => {
+      try {
+        const res = await fetch(`/api/admin/invoices/${editOrderId}`);
+        const data = await res.json();
+        if (!res.ok) {
+          setLoadError(data.error || 'Failed to load invoice');
+          return;
+        }
+        const order = data.order;
+        if (order.paymentStatus !== 'pending') {
+          setLoadError('Only invoices with a pending payment status can be edited. Void this invoice and create a new one instead.');
+          return;
+        }
+
+        setCustomerMode('existing');
+        setSelectedCustomer({
+          id: order.userId._id,
+          name: order.userId.name,
+          email: order.userId.email,
+          phoneNumber: order.userId.phoneNumber,
+        });
+        setCustomerSearch(order.userId.name);
+
+        setAddress({
+          fullName: order.shippingAddressId.fullName,
+          phoneNumber: order.shippingAddressId.phoneNumber,
+          addressLine1: order.shippingAddressId.addressLine1,
+          addressLine2: order.shippingAddressId.addressLine2 || '',
+          city: order.shippingAddressId.city,
+          state: order.shippingAddressId.state,
+          postalCode: order.shippingAddressId.postalCode,
+          country: order.shippingAddressId.country || 'India',
+        });
+
+        const items: LineItem[] = await Promise.all(
+          order.items.map(async (item: any) => {
+            let maxStock = item.quantity;
+            try {
+              const pRes = await fetch(`/api/admin/products?search=${encodeURIComponent(item.productSku)}&limit=1`);
+              const pData = await pRes.json();
+              const product = pData.products?.[0];
+              if (product) {
+                if (item.variantId) {
+                  const variant = product.variants?.find((v: ProductVariant) => v.id === item.variantId);
+                  maxStock = (variant?.stock ?? 0) + item.quantity;
+                } else {
+                  maxStock = (product.stock ?? 0) + item.quantity;
+                }
+              }
+            } catch {
+              // fall back to just this item's quantity if the stock lookup fails
+            }
+            return {
+              key: `${item.productId}-${item.variantId || 'base'}`,
+              productId: item.productId,
+              variantId: item.variantId || undefined,
+              name: item.productName,
+              sku: item.productSku,
+              price: item.priceAtPurchase,
+              gstRate: item.gstRate,
+              quantity: item.quantity,
+              maxStock,
+            };
+          })
+        );
+        setLineItems(items);
+
+        setDiscountAmount(order.discountAmount || 0);
+        setShippingCost(order.shippingCost || 0);
+        setPaymentMethod(order.paymentMethod || 'cod');
+        setPaymentStatus('pending');
+        setNotes(order.notes || '');
+      } catch (err: any) {
+        setLoadError(err.message || 'Failed to load invoice');
+      } finally {
+        setLoadingExisting(false);
+      }
+    })();
+  }, [editOrderId]);
 
   // ── Customer search ──────────────────────────────────────────────
   useEffect(() => {
@@ -219,8 +306,8 @@ export default function CreateInvoiceForm() {
     setError(null);
     setSubmitting(true);
     try {
-      const res = await fetch('/api/admin/invoices/create', {
-        method: 'POST',
+      const res = await fetch(isEdit ? `/api/admin/invoices/${editOrderId}` : '/api/admin/invoices/create', {
+        method: isEdit ? 'PATCH' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           customer:
@@ -238,22 +325,43 @@ export default function CreateInvoiceForm() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || 'Failed to create invoice');
+        const message = data.error || `Failed to ${isEdit ? 'update' : 'create'} invoice`;
+        setError(data.details && data.details !== message ? `${message}: ${data.details}` : message);
         return;
       }
       setResult(data);
     } catch (err: any) {
-      setError(err.message || 'Failed to create invoice');
+      setError(err.message || `Failed to ${isEdit ? 'update' : 'create'} invoice`);
     } finally {
       setSubmitting(false);
     }
   };
 
+  if (isEdit && loadingExisting) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center text-gray-500">
+        <Loader2 className="w-6 h-6 animate-spin mx-auto mb-2" />
+        Loading invoice…
+      </div>
+    );
+  }
+
+  if (isEdit && loadError) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+        <p className="text-sm text-red-600">{loadError}</p>
+        <a href="/admin/invoices" className="mt-4 inline-block text-sm text-cp-crimson hover:underline">
+          Back to Invoice History
+        </a>
+      </div>
+    );
+  }
+
   if (result) {
     return (
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
         <CheckCircle2 className="w-14 h-14 text-green-500 mx-auto mb-4" />
-        <h2 className="text-xl font-semibold text-gray-900">Invoice created</h2>
+        <h2 className="text-xl font-semibold text-gray-900">{isEdit ? 'Invoice updated' : 'Invoice created'}</h2>
         <p className="text-sm text-gray-500 mt-1">
           Order {result.orderNumber} · Invoice {result.invoiceNumber} · ₹
           {result.totalAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
@@ -278,21 +386,27 @@ export default function CreateInvoiceForm() {
             Download PDF
           </a>
         </div>
-        <button
-          type="button"
-          onClick={() => {
-            setResult(null);
-            setLineItems([]);
-            setSelectedCustomer(null);
-            setCustomerSearch('');
-            setDiscountAmount(0);
-            setShippingCost(0);
-            setNotes('');
-          }}
-          className="mt-6 text-sm text-cp-crimson hover:underline"
-        >
-          Create another invoice
-        </button>
+        {isEdit ? (
+          <a href="/admin/invoices" className="mt-6 inline-block text-sm text-cp-crimson hover:underline">
+            Back to Invoice History
+          </a>
+        ) : (
+          <button
+            type="button"
+            onClick={() => {
+              setResult(null);
+              setLineItems([]);
+              setSelectedCustomer(null);
+              setCustomerSearch('');
+              setDiscountAmount(0);
+              setShippingCost(0);
+              setNotes('');
+            }}
+            className="mt-6 text-sm text-cp-crimson hover:underline"
+          >
+            Create another invoice
+          </button>
+        )}
       </div>
     );
   }
@@ -593,11 +707,17 @@ export default function CreateInvoiceForm() {
           <select
             value={paymentStatus}
             onChange={(e) => setPaymentStatus(e.target.value as 'paid' | 'pending')}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+            disabled={isEdit}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 disabled:bg-gray-100 disabled:text-gray-500"
           >
             <option value="paid">Paid (collected now)</option>
             <option value="pending">Pending (bill now, collect later)</option>
           </select>
+          {isEdit && (
+            <p className="mt-1 text-xs text-gray-400">
+              Mark as paid from the Invoice History page once finalized — editing then locks automatically.
+            </p>
+          )}
         </div>
         <div className="sm:col-span-2">
           <label className="block text-xs font-medium text-gray-500 mb-1">Notes (optional)</label>
@@ -659,7 +779,7 @@ export default function CreateInvoiceForm() {
             className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-amber-600 to-red-700 text-white font-medium rounded-lg hover:from-amber-700 hover:to-red-800 disabled:opacity-50 transition-all"
           >
             {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
-            {submitting ? 'Creating...' : 'Create Invoice'}
+            {submitting ? (isEdit ? 'Saving...' : 'Creating...') : isEdit ? 'Save Changes' : 'Create Invoice'}
           </button>
         </div>
       </div>

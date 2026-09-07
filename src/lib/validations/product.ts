@@ -60,6 +60,7 @@ export const productSchema = z.object({
   gstRate: z.number().refine((v) => [0, 5, 12, 18, 28].includes(v), {
     message: 'GST rate must be 0, 5, 12, 18, or 28',
   }).default(5),
+  hsnCode: z.string().trim().min(1, 'HSN/SAC code is required').optional(),
   stock: z.number().min(0, 'Stock must be non-negative'),
   images: z
     .array(productImageSchema)

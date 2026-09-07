@@ -12,6 +12,7 @@ const CATEGORIES = [
     subtitle: "16 varieties",
     icon: "🫙",
     bg: "#4B5D2A",
+    insignia: "⚔️",
     href: "/products?category=achaar",
   },
   {
@@ -19,6 +20,7 @@ const CATEGORIES = [
     subtitle: "6 spice blends",
     icon: "🌶️",
     bg: "#C05621",
+    insignia: "★",
     href: "/products?category=masala",
   },
   {
@@ -26,6 +28,7 @@ const CATEGORIES = [
     subtitle: "Rose preserve & snacks",
     icon: "🌹",
     bg: "#7C4A1E",
+    insignia: "🛡️",
     href: "/products?category=organic",
   },
   {
@@ -33,6 +36,7 @@ const CATEGORIES = [
     subtitle: "20% off MRP",
     icon: "📦",
     bg: "#2E3818",
+    insignia: "⚔️⚔️",
     href: "/wholesale",
   },
 ];
@@ -50,13 +54,18 @@ export function CategoryGrid() {
                 <HoverLift lift={5} scale={1.02}>
                   <Link
                     href={c.href}
-                    className="group relative flex h-[180px] flex-col items-center justify-center overflow-hidden rounded-2xl text-center shadow-md transition-all duration-[250ms] hover:shadow-xl"
+                    className="group relative flex h-[180px] flex-col items-center justify-center overflow-hidden rounded-2xl text-center shadow-md transition-all duration-[250ms] hover:shadow-xl border-2 border-cp-border/30 hover:border-cp-gold/50"
                     style={{ backgroundColor: c.bg }}
                   >
-                    <RajasthaniPattern variant="jali" opacity={0.08} color="#ffffff" />
+                    <RajasthaniPattern variant="camo" opacity={0.12} color="#ffffff" />
+                    
+                    {/* ── Corner insignias ── */}
+                    <span className="absolute top-2 left-2 text-white/40 text-xs z-[1]">★</span>
+                    <span className="absolute bottom-2 right-2 text-white/40 text-xs z-[1]">⚔️</span>
+                    
                     <div className="relative z-10 px-4">
                       <span className="text-5xl">{c.icon}</span>
-                      <h3 className="mt-3 font-display text-lg font-bold text-white">
+                      <h3 className="mt-3 font-display text-lg font-bold text-white uppercase">
                         {c.title}
                       </h3>
                       <p className="mt-1 font-hindi text-sm text-white/70">

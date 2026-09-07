@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth-helpers';
 import { connectDB } from '@/lib/mongodb';
-import { REGISTRATIONS, BRAND } from '@/lib/constants';
+import { REGISTRATIONS, BRAND, BANK_DETAILS } from '@/lib/constants';
 import Order from '@/models/Order';
+import SiteSettings from '@/models/SiteSettings';
 import '@/models/OrderItem';
 import '@/models/Address';
+import { getOrCreateInvoiceNumber } from '@/lib/invoice/getOrCreateInvoiceNumber';
+import { generateUpiQrForPayment } from '@/lib/payment/upiQr';
 
 /**
  * GET /api/orders/[orderId]/invoice
@@ -43,8 +46,23 @@ export async function GET(
       return new NextResponse('Order not found', { status: 404 });
     }
 
+    const invoiceNumber = await getOrCreateInvoiceNumber((order as any)._id);
+
+    const settings = (await SiteSettings.findOne({ key: 'global' }).lean()) as any;
+    const paymentDetails = settings?.paymentSettings || BANK_DETAILS;
+    const gstin = settings?.businessProfile?.gstin || REGISTRATIONS.find((r) => r.key === 'gst')?.number || '08BFKPD8446R1ZM';
+    const fssai = settings?.businessProfile?.fssai || BRAND.fssai;
+
+    const upiQr = await generateUpiQrForPayment({
+      upiId: paymentDetails.upiId,
+      payeeName: paymentDetails.accountName,
+      amount: (order as any).totalAmount,
+      note: `Invoice ${invoiceNumber}`,
+    });
+    const qrDataUri = upiQr ? `data:image/png;base64,${upiQr.png.toString('base64')}` : null;
+
     // Generate invoice HTML
-    const invoiceHTML = generateInvoiceHTML(order);
+    const invoiceHTML = generateInvoiceHTML(order, { invoiceNumber, gstin, fssai, paymentDetails, qrDataUri });
 
     return new NextResponse(invoiceHTML, {
       headers: {
@@ -61,9 +79,17 @@ function formatINR(amount: number): string {
   return amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-function generateInvoiceHTML(order: any): string {
-  const gstRegistration = REGISTRATIONS.find(reg => reg.key === 'gst');
-  const gstNumber = gstRegistration?.number || '08BFKPD8446R1ZM';
+function generateInvoiceHTML(
+  order: any,
+  opts: {
+    invoiceNumber: string;
+    gstin: string;
+    fssai: string;
+    paymentDetails: { accountName: string; bankName: string; branch: string; accountNumber: string; ifsc: string; upiId: string };
+    qrDataUri: string | null;
+  }
+): string {
+  const { invoiceNumber, gstin, fssai, paymentDetails, qrDataUri } = opts;
 
   const invoiceDate = new Date().toLocaleDateString('en-IN', {
     day: 'numeric',
@@ -83,7 +109,7 @@ function generateInvoiceHTML(order: any): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Invoice - ${order.orderNumber}</title>
+  <title>Invoice - ${invoiceNumber}</title>
   <style>
     * {
       margin: 0;
@@ -224,6 +250,47 @@ function generateInvoiceHTML(order: any): string {
       color: #d97706;
     }
 
+    .payment-block {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 30px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .bank-details h3 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #111;
+      margin-bottom: 8px;
+    }
+
+    .bank-details p {
+      font-size: 12px;
+      color: #555;
+      margin: 2px 0;
+    }
+
+    .upi-qr {
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .upi-qr p {
+      font-size: 11px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .upi-qr .no-upi {
+      width: 110px;
+      font-size: 11px;
+      color: #991b1b;
+    }
+
     .footer {
       text-align: center;
       padding-top: 30px;
@@ -293,13 +360,13 @@ function generateInvoiceHTML(order: any): string {
       <p>Premium Quality Food Products</p>
       <p>Email: ${BRAND.email}</p>
       <p>Phone: ${BRAND.phones[0]}</p>
-      <p>GST No: ${gstNumber}</p>
+      <p>GSTIN: ${gstin} &nbsp;·&nbsp; FSSAI: ${fssai}</p>
     </div>
     <div class="invoice-details">
-      <h2>INVOICE</h2>
-      <p><strong>Invoice #:</strong> ${order.orderNumber}</p>
+      <h2>TAX INVOICE</h2>
+      <p><strong>Invoice #:</strong> ${invoiceNumber}</p>
       <p><strong>Invoice Date:</strong> ${invoiceDate}</p>
-      <p><strong>Order Date:</strong> ${orderDate}</p>
+      <p><strong>Order Ref:</strong> ${order.orderNumber} (${orderDate})</p>
       <span class="payment-status payment-${order.paymentStatus === 'paid' ? 'success' : order.paymentStatus === 'pending' ? 'pending' : 'failed'}">
         ${order.paymentStatus === 'paid' ? 'PAID' : order.paymentStatus === 'pending' ? 'PENDING' : 'FAILED'}
       </span>
@@ -328,6 +395,7 @@ function generateInvoiceHTML(order: any): string {
       <tr>
         <th>Item</th>
         <th>SKU</th>
+        <th>HSN/SAC</th>
         <th>GST%</th>
         <th>Qty</th>
         <th>Unit Price (Incl. GST)</th>
@@ -344,13 +412,14 @@ function generateInvoiceHTML(order: any): string {
         <tr>
           <td><strong>${item.productName || 'N/A'}</strong></td>
           <td>${item.productSku || item.sku || 'N/A'}</td>
+          <td>${item.hsnCode || '2001'}</td>
           <td>${gstRate}%</td>
           <td>${qty}</td>
           <td>₹${formatINR(price)}</td>
           <td>₹${formatINR(price * qty)}</td>
         </tr>`;
         })
-        .join('') || '<tr><td colspan="6">No items</td></tr>'}
+        .join('') || '<tr><td colspan="7">No items</td></tr>'}
     </tbody>
   </table>
 
@@ -403,6 +472,22 @@ function generateInvoiceHTML(order: any): string {
       <span>Total:</span>
       <span>₹${formatINR(order.totalAmount || 0)}</span>
     </div>
+  </div>
+
+  <div class="payment-block">
+    <div class="bank-details">
+      <h3>Bank Details</h3>
+      <p>Account Name: ${paymentDetails.accountName}</p>
+      <p>Bank: ${paymentDetails.bankName}</p>
+      <p>Branch: ${paymentDetails.branch}</p>
+      <p>Account No.: ${paymentDetails.accountNumber}</p>
+      <p>IFSC: ${paymentDetails.ifsc}</p>
+      <p>UPI: ${paymentDetails.upiId}</p>
+    </div>
+    ${qrDataUri
+      ? `<div class="upi-qr"><img src="${qrDataUri}" alt="UPI payment QR code" width="110" height="110" /><p>Scan to pay ₹${formatINR(order.totalAmount || 0)}</p></div>`
+      : `<div class="upi-qr"><p class="no-upi">UPI payment not configured</p></div>`
+    }
   </div>
 
   <div class="footer">

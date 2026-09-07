@@ -15,7 +15,6 @@ import {
   LemonIllustration,
   DogTagIllustration,
   CornerFlourish,
-  TacticalCrosshair,
 } from "@/components/illustrations";
 
 // Static fallback so the homepage hero never breaks before any admin has
@@ -72,9 +71,9 @@ const STATS = [
 ];
 
 const BENEFITS = [
-  { Icon: NoPreservativeIcon, label: "Zero Artificial Preservatives", insignia: "⚔️" },
-  { Icon: NoChemicalIcon, label: "Zero Chemicals", insignia: "🛡️" },
-  { Icon: NoVinegarIcon, label: "No Vinegar", insignia: "★" },
+  { Icon: NoPreservativeIcon, label: "Zero Artificial Preservatives" },
+  { Icon: NoChemicalIcon, label: "Zero Chemicals" },
+  { Icon: NoVinegarIcon, label: "No Vinegar" },
 ];
 
 export async function HeroSection() {
@@ -85,35 +84,23 @@ export async function HeroSection() {
       className="relative flex min-h-[90vh] items-center overflow-hidden"
       style={{
         background:
-          "linear-gradient(135deg, #2E3818 0%, #4B5D2A 40%, #3A4A1F 70%, #1C1F22 100%)",
+          "linear-gradient(135deg, #3A4A1F 0%, #4B5D2A 55%, #2E3818 100%)",
       }}
     >
-      {/* ── Tactical pattern layers ── */}
-      <RajasthaniPattern variant="camo" opacity={0.15} color="#F5EBDA" />
-      <RajasthaniPattern variant="blueprint" opacity={0.12} color="#E4B94B" />
+      <RajasthaniPattern variant="camo" opacity={0.07} color="#F5EBDA" />
+      <RajasthaniPattern variant="blueprint" opacity={0.05} color="#D4A017" />
 
-      {/* ── Tactical crosshair reticle ── */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <TacticalCrosshair
-          className="absolute"
-          size={400}
-          opacity={0.08}
-          color="#E4B94B"
-          aria-hidden="true"
-        />
-      </div>
-
-      {/* ── Tactical corner brackets ── */}
+      {/* Tactical corner brackets — subtle HUD framing */}
       <CornerFlourish
         aria-hidden
-        className="pointer-events-none absolute left-4 top-4 hidden h-24 w-24 text-cp-gold-light opacity-30 md:block"
+        className="pointer-events-none absolute left-4 top-4 hidden h-16 w-16 text-cp-gunmetal-light opacity-20 md:block"
       />
       <CornerFlourish
         aria-hidden
-        className="pointer-events-none absolute bottom-4 right-4 hidden h-24 w-24 rotate-180 text-cp-gold-light opacity-30 md:block"
+        className="pointer-events-none absolute bottom-4 right-4 hidden h-16 w-16 rotate-180 text-cp-gunmetal-light opacity-20 md:block"
       />
 
-      {/* ── Ambient floating icons ── */}
+      {/* Ambient floating illustration accents */}
       <ChilliIllustration
         aria-hidden
         className="animate-float pointer-events-none absolute left-[4%] top-[18%] hidden h-16 w-16 opacity-25 md:block"
@@ -127,64 +114,31 @@ export async function HeroSection() {
         className="animate-float animation-delay-500 pointer-events-none absolute right-[3%] top-[10%] hidden h-14 w-14 opacity-20 lg:block"
       />
 
-      {/* ── Floating insignia accents ── */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute left-[8%] top-[25%] hidden h-12 w-12 opacity-20 md:block text-cp-gold-light text-xl"
-      >
-        ★
-      </span>
-      <span
-        aria-hidden
-        className="pointer-events-none absolute right-[5%] bottom-[20%] hidden h-12 w-12 opacity-20 lg:block text-cp-gold-light text-xl"
-      >
-        ⚔️
-      </span>
-
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-4 py-20 lg:grid-cols-2">
-        {/* ── LEFT: Tactical messaging ── */}
+        {/* LEFT — messaging */}
         <div className="animate-fade-up">
-          {/* ── Logo emblem with dual-ring insignia ── */}
-          <div className="mb-6 flex flex-col items-center lg:items-start text-center lg:text-left">
-            <p className="font-hindi text-xs font-bold uppercase tracking-[0.2em] text-cp-gold-light mb-3">
-              Colonel&apos;s Command
-            </p>
-
-            <div className="relative flex-shrink-0 mb-4">
-              {/* Outer gold ring */}
+          <div className="mb-6 flex items-center gap-4">
+            <div className="relative flex-shrink-0">
               <span
-                className="absolute inset-0 -m-1 rounded-full border-4 border-cp-gold-light"
+                className="absolute inset-0 -m-[3px] rounded-full border border-cp-gold/60"
                 aria-hidden="true"
               />
-              {/* Inner terracotta ring */}
-              <span
-                className="absolute inset-0 m-2 rounded-full border-2 border-cp-terracotta"
-                aria-hidden="true"
-              />
-              {/* Corner insignia brackets */}
-              <span className="absolute -top-3 -left-3 h-3 w-3 border-t-2 border-l-2 border-cp-gold-light opacity-60" />
-              <span className="absolute -top-3 -right-3 h-3 w-3 border-t-2 border-r-2 border-cp-gold-light opacity-60" />
-              <span className="absolute -bottom-3 -left-3 h-3 w-3 border-b-2 border-l-2 border-cp-gold-light opacity-60" />
-              <span className="absolute -bottom-3 -right-3 h-3 w-3 border-b-2 border-r-2 border-cp-gold-light opacity-60" />
-
-              <Image
-                src="/images/brand/colonels-pickle-logo-plain.jpeg"
-                alt="Colonel's Pickle emblem"
-                width={88}
-                height={88}
-                className="h-16 w-16 rounded-full border-4 border-cp-gold-light object-cover shadow-[0_4px_20px_rgba(0,0,0,0.35)] sm:h-[88px] sm:w-[88px]"
-                priority
-              />
+              <span className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 border-cp-gold bg-white shadow-[0_4px_20px_rgba(0,0,0,0.35)] sm:h-[88px] sm:w-[88px]">
+                <Image
+                  src="/logo.png"
+                  alt="Colonel's Pickle emblem"
+                  width={88}
+                  height={88}
+                  className="h-[92%] w-[92%] object-contain"
+                  priority
+                />
+              </span>
             </div>
-          </div>
-
-          {/* ── Desktop brand text ── */}
-          <div className="hidden lg:flex lg:items-center lg:gap-4 mb-6">
             <span
-              className="h-12 w-px bg-cp-beige/25"
+              className="hidden h-12 w-px bg-cp-beige/25 sm:block"
               aria-hidden="true"
             />
-            <div>
+            <div className="hidden sm:block">
               <p className="font-display text-xl font-extrabold tracking-tight text-cp-beige">
                 Colonel&apos;s Pickle
               </p>
@@ -194,13 +148,11 @@ export async function HeroSection() {
             </div>
           </div>
 
-          {/* ── DogTag tactical chip ── */}
-          <span className="inline-flex items-center gap-2 rounded-md border-2 border-cp-gold bg-white/10 px-4 py-2 font-sans text-sm font-bold text-cp-beige backdrop-blur">
-            <span aria-hidden className="text-cp-gold">⚔️</span>
-            BATTLE-TESTED FAMILY RECIPE
+          <span className="inline-flex items-center gap-2 rounded-full border border-cp-gold/40 bg-white/10 px-4 py-1.5 font-sans text-sm font-medium text-cp-beige backdrop-blur">
+            <DogTagIllustration className="h-4 w-4 flex-shrink-0" aria-hidden />
+            Made with pride by the mother of an Indian Army Colonel
           </span>
 
-          {/* ── Main headline ── */}
           <h1 className="mt-6 font-hindi text-[2.85rem] font-bold leading-tight text-cp-beige drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-[4rem]">
             माँ का प्यार,
             <br />
@@ -211,55 +163,47 @@ export async function HeroSection() {
             Maa Ka Pyaar, Ghar Ka Achar
           </p>
 
-          {/* ── Soldier's Promise copy ── */}
-          <p className="mt-5 max-w-xl font-serif text-[16px] font-bold leading-relaxed text-cp-beige/90">
-            <span className="text-cp-gold-light font-black uppercase">SOLDIER&apos;S PROMISE:</span> No Vinegar. No Artificial Preservatives. Just Battle-Tested Tradition.
+          <p className="mt-5 max-w-xl font-serif text-[16px] font-medium leading-relaxed text-cp-beige/90">
+            No Vinegar. No Artificial Preservatives. Just Authentic, Traditional
+            Flavours.
           </p>
 
-          {/* ── Benefit chips ── */}
+          {/* Benefit chips — the hero's focal promise */}
           <div className="mt-6 flex flex-wrap gap-2.5">
-            {BENEFITS.map(({ Icon, label, insignia }) => (
+            {BENEFITS.map(({ Icon, label }) => (
               <span
                 key={label}
-                className="inline-flex items-center gap-2 rounded-full border-2 border-cp-gold bg-white/15 py-2.5 pl-3 pr-4 font-sans text-[13px] font-bold text-cp-beige backdrop-blur transition-all hover:bg-white/25 hover:border-cp-gold-light"
+                className="inline-flex items-center gap-2 rounded-full border border-cp-beige/20 bg-white/10 py-2 pl-3 pr-4 font-sans text-[13px] font-semibold text-cp-beige backdrop-blur transition-colors hover:bg-white/20"
               >
-                <span aria-hidden className="text-cp-gold-light text-lg">
-                  {insignia}
-                </span>
+                <Icon className="h-[18px] w-[18px] text-cp-gold-light" />
                 {label}
               </span>
             ))}
           </div>
 
-          {/* ── CTA buttons ── */}
           <div className="mt-8 flex flex-wrap gap-4">
             <TapScale asChild>
               <Link
                 href="/products"
-                className="relative rounded-lg bg-gradient-to-br from-cp-terracotta to-cp-gold px-7 py-3.5 font-sans text-sm font-bold uppercase tracking-[0.08em] text-white shadow-lg transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(212,160,23,0.5)]"
+                className="rounded-lg bg-gradient-to-br from-cp-terracotta to-cp-gold px-7 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white shadow-lg transition-transform hover:-translate-y-px"
               >
-                <span className="absolute left-0 top-0 bottom-0 w-1 bg-cp-gold-light rounded-l-lg" />
-                PLACE ORDER ⚔️
+                Shop Now →
               </Link>
             </TapScale>
             <TapScale asChild>
               <Link
                 href="/about"
-                className="rounded-lg border-2 border-cp-beige/50 bg-white/10 px-7 py-3.5 font-sans text-sm font-bold uppercase tracking-[0.08em] text-cp-beige backdrop-blur transition-all hover:bg-white/25 hover:border-cp-gold"
+                className="rounded-lg border border-cp-beige/40 bg-white/10 px-7 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-cp-beige backdrop-blur transition-colors hover:bg-white/20"
               >
-                KNOW THE COLONEL
+                Our Story
               </Link>
             </TapScale>
           </div>
 
-          {/* ── Stats with insignia ── */}
           <div className="mt-10 flex gap-10">
             {STATS.map((s) => (
               <div key={s.label}>
-                <span className="text-cp-gold-light text-lg" aria-hidden>
-                  ★
-                </span>
-                <div className="font-display text-4xl font-black text-cp-gold-light">
+                <div className="font-tactical-bold text-4xl text-cp-gold-light">
                   {s.value}
                 </div>
                 <div className="mt-1 font-hindi text-xs uppercase tracking-widest text-cp-beige/60">
@@ -270,26 +214,20 @@ export async function HeroSection() {
           </div>
         </div>
 
-        {/* ── RIGHT: Floating collage ── */}
+        {/* RIGHT — floating artisan collage, CMS-driven from the Gallery's Hero Pool */}
         <Parallax offset={30} direction="up">
           <StaggeredHeroPanels pool={heroPool} />
         </Parallax>
       </div>
 
-      {/* ── Wave divider ── */}
+      {/* Wave divider into beige */}
       <svg
         aria-hidden="true"
         viewBox="0 0 1440 80"
         preserveAspectRatio="none"
         className="absolute bottom-0 left-0 z-[2] block h-[60px] w-full"
       >
-        <defs>
-          <linearGradient id="wave-gradient-hero" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#F5EBDA" stopOpacity="1" />
-            <stop offset="100%" stopColor="#F5EBDA" stopOpacity="0.85" />
-          </linearGradient>
-        </defs>
-        <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="url(#wave-gradient-hero)" />
+        <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#F5EBDA" />
       </svg>
     </section>
   );

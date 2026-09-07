@@ -226,8 +226,10 @@ OrderSchema.index({ userId: 1, createdAt: -1 });
 OrderSchema.index({ orderStatus: 1 });
 OrderSchema.index({ paymentStatus: 1 });
 
-// Auto-generate order number before save if not exists
-OrderSchema.pre('save', async function (next) {
+// Auto-generate order number before validation (must run pre-validate, not
+// pre-save — Mongoose runs schema validation before 'save' middleware, so a
+// pre('save') hook is too late to satisfy the `required: true` on orderNumber).
+OrderSchema.pre('validate', function (next) {
   if (!this.orderNumber) {
     const timestamp = Date.now().toString(36).toUpperCase();
     const random = Math.random().toString(36).substring(2, 6).toUpperCase();

@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { ClientSession, Types } from 'mongoose';
 import { connectDB } from '@/lib/mongodb';
 import Order from '@/models/Order';
 import SiteSettings from '@/models/SiteSettings';
@@ -48,11 +48,15 @@ export function getIndianFiscalYear(date: Date = new Date()): string {
  * Wasted numbers are not a compliance problem; only duplicates are critical.
  *
  * @param orderId - The order ID (string or ObjectId)
+ * @param session - Optional Mongoose session, so this can participate in the
+ *   caller's transaction (e.g. manual invoice creation, which creates the
+ *   order, its items, and its invoice number as one atomic unit).
  * @returns The invoice number string (e.g., "TI/26-27/31")
  * @throws Error if the order doesn't exist
  */
 export async function getOrCreateInvoiceNumber(
-  orderId: string | Types.ObjectId
+  orderId: string | Types.ObjectId,
+  session?: ClientSession
 ): Promise<string> {
   await connectDB();
 
@@ -61,6 +65,7 @@ export async function getOrCreateInvoiceNumber(
   // Step 1: Check if order already has an invoice number
   const existingOrder = (await Order.findById(objectId)
     .select('invoiceNumber')
+    .session(session ?? null)
     .lean()) as { invoiceNumber?: string } | null;
 
   if (!existingOrder) {
@@ -84,7 +89,7 @@ export async function getOrCreateInvoiceNumber(
     {
       $inc: { 'invoiceCounter.lastNumber': 1 },
     },
-    { new: true }
+    { new: true, session }
   );
 
   // If no document matched (either no SiteSettings yet or fiscal year differs),
@@ -98,7 +103,7 @@ export async function getOrCreateInvoiceNumber(
           'invoiceCounter.lastNumber': 1,
         },
       },
-      { new: true, upsert: true }
+      { new: true, upsert: true, session }
     );
   }
 
@@ -120,7 +125,7 @@ export async function getOrCreateInvoiceNumber(
     {
       $set: { invoiceNumber },
     },
-    { new: true }
+    { new: true, session }
   );
 
   // If the conditional update matched, we're done
@@ -132,6 +137,7 @@ export async function getOrCreateInvoiceNumber(
   // re-fetch and return the actual invoice number
   const finalOrder = (await Order.findById(objectId)
     .select('invoiceNumber')
+    .session(session ?? null)
     .lean()) as { invoiceNumber?: string } | null;
 
   if (!finalOrder?.invoiceNumber) {

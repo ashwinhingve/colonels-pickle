@@ -98,6 +98,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
     weightUnit: initialData?.weightUnit || 'g',
     tags: initialData?.tags || [],
     gstRate: initialData?.gstRate ?? 5,
+    hsnCode: initialData?.hsnCode || '',
     isActive: initialData?.isActive !== false,
     isFeatured: initialData?.isFeatured || false,
     isBestseller: initialData?.isBestseller || false,
@@ -642,7 +643,23 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                   <option value={28}>28%</option>
                 </select>
                 <p className="mt-1 text-xs text-gray-500">
-                  Intra-state (MP): CGST+SGST &nbsp;|&nbsp; Inter-state: IGST
+                  Intra-state (Rajasthan): CGST+SGST &nbsp;|&nbsp; Inter-state: IGST
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  HSN/SAC Code *
+                </label>
+                <Input
+                  type="text"
+                  value={formData.hsnCode}
+                  onChange={(e) => updateField('hsnCode', e.target.value)}
+                  placeholder="e.g. 2001"
+                  required
+                />
+                <p className="mt-1 text-xs text-gray-500">
+                  Shown on GST invoices for this product. Confirm with your accountant.
                 </p>
               </div>
 

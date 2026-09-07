@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 export default function GalleryPage() {
   return (
     <div className="relative overflow-hidden bg-cp-cream py-16 md:py-24">
-      <RajasthaniPattern variant="camo" opacity={0.03} color="#6B7F3A" />
+      <RajasthaniPattern variant="camo" opacity={0.06} color="#6B7F3A" />
       <div className="relative z-10 mx-auto max-w-7xl px-4">
         <AnimatedSection direction="up" duration={0.5}>
           <SectionHeader

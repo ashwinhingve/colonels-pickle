@@ -6,6 +6,7 @@ export interface IOrderItem extends Document {
   productId: mongoose.Types.ObjectId;
   variantId?: string;
   gstRate: number;
+  hsnCode?: string;
   productName: string;
   productSku: string;
   productImage?: string;
@@ -35,6 +36,10 @@ const OrderItemSchema = new Schema<IOrderItem>(
     gstRate: {
       type: Number,
       default: 5,
+    },
+    hsnCode: {
+      type: String,
+      trim: true,
     },
     productName: {
       type: String,

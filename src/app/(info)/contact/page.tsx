@@ -50,7 +50,7 @@ export default function ContactPage() {
     <>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-cp-olive-dark via-cp-olive to-cp-olive-light py-16 md:py-20 text-white">
-        <RajasthaniPattern variant="camo" opacity={0.03} color="#6B7F3A" />
+        <RajasthaniPattern variant="camo" opacity={0.06} color="#6B7F3A" />
         <div className="relative z-10 mx-auto max-w-6xl px-4">
           <AnimatedSection direction="up" duration={0.65} className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="flex-1">

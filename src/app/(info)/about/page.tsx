@@ -6,7 +6,15 @@ import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/sha
 import { Parallax } from "@/components/shared/Parallax";
 import { CertificationBadge } from "@/components/shared/CertificationBadge";
 import { HoverLift } from "@/components/shared/HoverLift";
-import { HearthIllustration, HingIllustration, MountainOriginIllustration, WebbingStitchAccent } from "@/components/illustrations";
+import {
+  HearthIllustration,
+  HingIllustration,
+  MountainOriginIllustration,
+  WebbingStitchAccent,
+  InkStampRound,
+  DualHubCompass,
+  MapPin,
+} from "@/components/illustrations";
 import { BRAND, CONTACT_EMAIL, PUBLIC_REGISTRATIONS } from "@/lib/constants";
 import { Highlight } from "@/components/common/Highlight";
 
@@ -166,6 +174,17 @@ export default function AboutPage() {
                 className="absolute bottom-0 right-0 h-12 w-12 rounded-br-2xl border-b-2 border-r-2"
                 style={{ borderColor: "#C05621" }}
               />
+              {/* Tactical framing accents — smaller gunmetal ticks alongside the gold/terracotta corners */}
+              <span
+                className="absolute right-0 top-0 h-8 w-8 rounded-tr-2xl border-r border-t opacity-60"
+                style={{ borderColor: "#6B7480" }}
+                aria-hidden="true"
+              />
+              <span
+                className="absolute bottom-0 left-0 h-8 w-8 rounded-bl-2xl border-b border-l opacity-60"
+                style={{ borderColor: "#6B7480" }}
+                aria-hidden="true"
+              />
               <div className="text-center">
                 <Image
                   src="/logo.png"
@@ -293,9 +312,83 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* 2.5 Dual Hubs */}
+      <section className="relative overflow-hidden bg-cp-beige-muted py-20">
+        <div className="relative z-10 mx-auto max-w-6xl px-4">
+          <AnimatedSection direction="up" duration={0.65}>
+            <SectionHeader
+              eyebrow="TWO HOMES, ONE FAMILY RECIPE"
+              title="Crafted Across Two Hubs"
+              subtitle="From Rajasthan's heritage kitchens to Haryana's operations floor — one family, one recipe, pan-India."
+            />
+          </AnimatedSection>
+
+          <AnimatedSection direction="up" duration={0.65} delay={0.15}>
+            <div className="mt-8 flex justify-center">
+              <DualHubCompass className="h-auto w-full max-w-md" aria-hidden />
+            </div>
+          </AnimatedSection>
+
+          <StaggerContainer
+            staggerDelay={0.15}
+            className="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2"
+          >
+            <StaggerItem>
+              <HoverLift lift={3}>
+                <div className="relative overflow-hidden rounded-2xl border border-cp-border bg-white p-6">
+                  <MapPin
+                    color="#C05621"
+                    className="absolute -right-2 -top-2 h-12 w-12 opacity-90"
+                    aria-hidden
+                  />
+                  <p className="font-tactical text-[10px] uppercase text-cp-gunmetal">
+                    Hub One &middot; Rajasthan
+                  </p>
+                  <h3 className="mt-1 font-display text-xl font-bold text-cp-terracotta">
+                    Jaipur
+                  </h3>
+                  <p className="mt-3 font-serif text-sm leading-relaxed text-cp-text-muted">
+                    Where it all began — the family kitchen, the original
+                    &ldquo;Colonel Special&rdquo; recipe, and our primary
+                    production facility.
+                  </p>
+                  <p className="mt-3 font-hindi text-[12px] font-semibold text-cp-terracotta-deep">
+                    {fullAddress}
+                  </p>
+                </div>
+              </HoverLift>
+            </StaggerItem>
+            <StaggerItem>
+              <HoverLift lift={3}>
+                <div className="relative overflow-hidden rounded-2xl border border-cp-border bg-white p-6">
+                  <MapPin
+                    color="#4B5D2A"
+                    className="absolute -right-2 -top-2 h-12 w-12 opacity-90"
+                    aria-hidden
+                  />
+                  <p className="font-tactical text-[10px] uppercase text-cp-gunmetal">
+                    Hub Two &middot; Haryana
+                  </p>
+                  <h3 className="mt-1 font-display text-xl font-bold text-cp-olive">
+                    Bahadurgarh
+                  </h3>
+                  <p className="mt-3 font-serif text-sm leading-relaxed text-cp-text-muted">
+                    Our secondary operations hub, supporting sourcing,
+                    packaging and pan-India distribution.
+                  </p>
+                  <p className="mt-3 font-hindi text-[12px] font-semibold text-cp-terracotta-deep">
+                    Bahadurgarh, Haryana
+                  </p>
+                </div>
+              </HoverLift>
+            </StaggerItem>
+          </StaggerContainer>
+        </div>
+      </section>
+
       {/* 3. Our Promise */}
       <section className="relative overflow-hidden bg-white py-20">
-        <RajasthaniPattern variant="camo" opacity={0.04} color="#6B7F3A" />
+        <RajasthaniPattern variant="camo" opacity={0.06} color="#6B7F3A" />
         <div className="relative z-10 mx-auto max-w-7xl px-4">
           <AnimatedSection direction="up" duration={0.65}>
             <SectionHeader
@@ -314,7 +407,15 @@ export default function AboutPage() {
                     className="rounded-2xl border border-cp-border bg-cp-cream p-6 transition-all duration-300"
                     style={{ borderBottom: `3px solid ${p.color}` }}
                   >
-                    <span className="text-4xl">{p.icon}</span>
+                    <div className="relative flex h-14 w-14 items-center justify-center">
+                      <InkStampRound
+                        label=""
+                        color={p.color}
+                        className="pointer-events-none absolute inset-0 opacity-20"
+                        aria-hidden
+                      />
+                      <span className="relative text-4xl">{p.icon}</span>
+                    </div>
                     <h3 className="mt-3 font-display text-lg font-bold text-cp-text">
                       {p.title}
                     </h3>
