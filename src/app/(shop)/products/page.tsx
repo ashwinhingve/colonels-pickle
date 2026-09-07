@@ -66,7 +66,7 @@ function ShopContent() {
     <div className="bg-cp-cream py-16">
       <div className="mx-auto max-w-7xl px-4">
         <div className="relative mb-8">
-          <RajasthaniPattern variant="camo" opacity={0.04} color="#6B7F3A" />
+          <RajasthaniPattern variant="camo" opacity={0.06} color="#6B7F3A" />
           <div className="relative z-10">
             <SectionHeader
               eyebrow="ALL PRODUCTS"

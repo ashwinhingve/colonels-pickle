@@ -85,10 +85,22 @@ export function GalleryClient() {
             {t === 'all' ? 'All' : t === 'image' ? 'Photos' : 'Videos'}
           </button>
         ))}
+        {categories.length > 0 && (
+          <button
+            onClick={() => setCategory('all')}
+            className={`rounded-full px-4 py-1.5 font-sans text-sm font-semibold transition-colors ${
+              category === 'all'
+                ? 'bg-cp-saffron text-white'
+                : 'bg-white text-cp-text-secondary ring-1 ring-cp-border hover:ring-cp-saffron/50'
+            }`}
+          >
+            All
+          </button>
+        )}
         {categories.map((c) => (
           <button
             key={c}
-            onClick={() => setCategory((prev) => (prev === c ? 'all' : c))}
+            onClick={() => setCategory(c)}
             className={`rounded-full px-4 py-1.5 font-sans text-sm font-semibold transition-colors ${
               category === c
                 ? 'bg-cp-saffron text-white'

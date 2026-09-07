@@ -17,3 +17,6 @@ export {
 } from './WholesaleApplication';
 export { default as TeamMember, type ITeamMember } from './TeamMember';
 export { default as Discount, type IDiscount } from './Discount';
+export { default as RawMaterial, type IRawMaterial } from './RawMaterial';
+export { default as Supplier, type ISupplier } from './Supplier';
+export { default as StockMovement, type IStockMovement } from './StockMovement';

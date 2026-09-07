@@ -1,7 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 import {
   LayoutDashboard,
   ShoppingBag,
@@ -21,6 +23,7 @@ import {
   AlertTriangle,
   TrendingUp,
   History,
+  LogOut,
 } from 'lucide-react';
 import { RajasthaniPattern } from '@/components/common/RajasthaniPattern';
 
@@ -130,6 +133,19 @@ const navigation: NavItem[] = [
 
 export default function AdminSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [isSigningOut, setIsSigningOut] = useState(false);
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    try {
+      await signOut({ redirect: false });
+      router.push('/');
+    } catch (error) {
+      console.error('Sign-out failed:', error);
+      setIsSigningOut(false);
+    }
+  };
 
   return (
     <aside className="hidden lg:flex lg:flex-shrink-0">
@@ -183,8 +199,16 @@ export default function AdminSidebar() {
           </nav>
 
           {/* Footer */}
-          <div className="relative z-10 px-6 py-4 border-t border-white/20">
-            <p className="text-xs text-white/60">
+          <div className="relative z-10 px-3 py-3 border-t border-white/20 space-y-3">
+            <button
+              onClick={handleSignOut}
+              disabled={isSigningOut}
+              className="w-full flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white/85 transition-colors hover:bg-white/15 hover:text-white disabled:opacity-50"
+            >
+              <LogOut className="h-4 w-4" />
+              {isSigningOut ? 'Signing out...' : 'Sign Out'}
+            </button>
+            <p className="px-3 text-center text-xs text-white/60">
               Admin access only. All actions are logged.
             </p>
           </div>

@@ -15,6 +15,7 @@ import { CTABanner } from "@/components/home/CTABanner";
 import { WholesaleTeaser } from "@/components/home/WholesaleTeaser";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { SectionDivider } from "@/components/shared/SectionDivider";
+import { WebbingStitchAccent } from "@/components/illustrations";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
 
@@ -53,7 +54,15 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <SectionDivider variant="curve" color="#FDF8F0" height={80} />
+      <div className="relative">
+        <SectionDivider variant="curve" color="#FDF8F0" height={80} />
+        {/* One signature moment: the heavier rope motif, reserved for this seam only. */}
+        <WebbingStitchAccent
+          variant="rope"
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-3 mx-auto h-2 w-40 text-cp-gold-light/50 sm:w-56"
+        />
+      </div>
 
       <AnimatedSection direction="up" duration={0.5}>
         <HingOriginsBand />

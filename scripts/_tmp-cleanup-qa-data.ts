@@ -26,16 +26,22 @@ async function main() {
 
   for (const order of orders) {
     const items = await OrderItem.find({ orderId: order._id });
-    for (const item of items) {
-      if (item.variantId) {
-        await Product.findOneAndUpdate(
-          { _id: item.productId, 'variants.id': item.variantId },
-          { $inc: { 'variants.$.stock': item.quantity, stock: item.quantity } }
-        );
-      } else {
-        await Product.findOneAndUpdate({ _id: item.productId }, { $inc: { stock: item.quantity } });
+    // Voided/cancelled orders already had their stock restored by the void
+    // endpoint — restoring again here would double-count it.
+    if (order.orderStatus !== 'cancelled') {
+      for (const item of items) {
+        if (item.variantId) {
+          await Product.findOneAndUpdate(
+            { _id: item.productId, 'variants.id': item.variantId },
+            { $inc: { 'variants.$.stock': item.quantity, stock: item.quantity } }
+          );
+        } else {
+          await Product.findOneAndUpdate({ _id: item.productId }, { $inc: { stock: item.quantity } });
+        }
+        console.log('Restored stock for', item.productName, 'qty', item.quantity);
       }
-      console.log('Restored stock for', item.productName, 'qty', item.quantity);
+    } else {
+      console.log('Skipping stock restore for already-cancelled order', order.orderNumber);
     }
     await OrderItem.deleteMany({ orderId: order._id });
     await StockMovement.deleteMany({ reference: order.orderNumber });

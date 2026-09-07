@@ -57,10 +57,21 @@ const PANEL_COUNT = 4;
 const ROTATE_INTERVAL_MS = 4000;
 const STAGGER_MS = 1000;
 
+// Fisher-Yates shuffle so the 4 cards start on distinct random images on every mount/refresh.
+function shuffleArray<T>(array: T[]): T[] {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 export function StaggeredHeroPanels({ pool }: { pool: HeroPoolItem[] }) {
-  const [indices, setIndices] = useState<number[]>(() =>
-    Array.from({ length: PANEL_COUNT }, (_, i) => i % pool.length)
-  );
+  const [indices, setIndices] = useState<number[]>(() => {
+    const shuffled = shuffleArray(Array.from({ length: pool.length }, (_, i) => i));
+    return Array.from({ length: PANEL_COUNT }, (_, i) => shuffled[i % shuffled.length]);
+  });
   const poolRef = useRef(pool);
   poolRef.current = pool;
 
@@ -76,8 +87,13 @@ export function StaggeredHeroPanels({ pool }: { pool: HeroPoolItem[] }) {
     for (let panel = 0; panel < PANEL_COUNT; panel++) {
       const advance = () => {
         setIndices((prev) => {
+          const used = new Set(prev);
+          const candidates = Array.from({ length: poolRef.current.length }, (_, i) => i).filter(
+            (i) => !used.has(i)
+          );
+          if (candidates.length === 0) return prev; // pool <= 4 items: nothing free to rotate to
           const next = [...prev];
-          next[panel] = (next[panel] + 1) % poolRef.current.length;
+          next[panel] = candidates[Math.floor(Math.random() * candidates.length)];
           return next;
         });
       };

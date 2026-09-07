@@ -384,38 +384,35 @@ async function renderInvoicePDF(
     align: 'right',
   });
 
-  if (order.isIntraState) {
-    doc.text('CGST:', 40, summaryY + 12);
-    doc.text(`₹${formatINR(order.cgst)}`, 480, summaryY + 12, {
-      width: 75,
-      align: 'right',
-    });
+  let lineY = summaryY + 12;
 
-    doc.text('SGST:', 40, summaryY + 24);
-    doc.text(`₹${formatINR(order.sgst)}`, 480, summaryY + 24, {
-      width: 75,
-      align: 'right',
-    });
+  if (order.isIntraState) {
+    doc.text('CGST:', 40, lineY);
+    doc.text(`₹${formatINR(order.cgst)}`, 480, lineY, { width: 75, align: 'right' });
+    lineY += 12;
+
+    doc.text('SGST:', 40, lineY);
+    doc.text(`₹${formatINR(order.sgst)}`, 480, lineY, { width: 75, align: 'right' });
+    lineY += 12;
   } else {
-    doc.text('IGST:', 40, summaryY + 12);
-    doc.text(`₹${formatINR(order.igst)}`, 480, summaryY + 12, {
-      width: 75,
-      align: 'right',
-    });
+    doc.text('IGST:', 40, lineY);
+    doc.text(`₹${formatINR(order.igst)}`, 480, lineY, { width: 75, align: 'right' });
+    lineY += 12;
   }
 
   if (order.shippingCost > 0) {
-    const shippingY = order.isIntraState ? summaryY + 36 : summaryY + 24;
-    doc.text('Shipping:', 40, shippingY);
-    doc.text(`₹${formatINR(order.shippingCost)}`, 480, shippingY, {
-      width: 75,
-      align: 'right',
-    });
+    doc.text('Shipping:', 40, lineY);
+    doc.text(`₹${formatINR(order.shippingCost)}`, 480, lineY, { width: 75, align: 'right' });
+    lineY += 12;
   }
 
-  const grandTotalY = order.isIntraState
-    ? summaryY + 48
-    : summaryY + 36;
+  if (order.discountAmount > 0) {
+    doc.text('Discount:', 40, lineY);
+    doc.text(`-₹${formatINR(order.discountAmount)}`, 480, lineY, { width: 75, align: 'right' });
+    lineY += 12;
+  }
+
+  const grandTotalY = lineY + 12;
 
   doc.fontSize(11).font('Helvetica-Bold');
   doc.text('Grand Total:', 40, grandTotalY);

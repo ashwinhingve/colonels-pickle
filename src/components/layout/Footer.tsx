@@ -60,7 +60,7 @@ export function Footer() {
       {/* Crimson accent bar */}
       <div className="bg-cp-crimson h-1 w-full" />
       <div className="bg-cp-charcoal relative overflow-hidden">
-        <RajasthaniPattern variant="blueprint" opacity={0.03} color="#D4A017" />
+        <RajasthaniPattern variant="blueprint" opacity={0.05} color="#D4A017" />
 
         <div className="container relative mx-auto px-4 py-16">
           <StaggerContainer
