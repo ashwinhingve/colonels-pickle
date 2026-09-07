@@ -21,7 +21,8 @@ const PRODUCT_LINKS = [
   { href: "/products", label: "All Products" },
   { href: "/products?category=achaar", label: "Achaar Collection" },
   { href: "/products?category=masala", label: "Achaar Masale" },
-  { href: "/products?category=organic", label: "Gulkand & Preserves" },
+  { href: "/products?category=oils", label: "Cold Press Oils" },
+  { href: "/products?category=organic", label: "Organic & More" },
   { href: "/wholesale", label: "Wholesale Orders" },
 ];
 
