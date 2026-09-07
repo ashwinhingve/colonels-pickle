@@ -472,3 +472,73 @@ body {
 .animation-delay-200 { animation-delay: 0.2s; }
 .animation-delay-300 { animation-delay: 0.3s; }
 .animation-delay-700 { animation-delay: 0.7s; }
+
+/* ─────────────────────────────────────────────
+   Premium UI utilities (sitewide elevation pass)
+   All transform/opacity based → the prefers-reduced-motion block
+   above neutralises the motion for users who opt out.
+   ───────────────────────────────────────────── */
+
+/* CTA sheen — drop-in class. Adds an animated diagonal light sweep on
+   hover/focus. Direct children auto-lift above the sweep so text/icons stay
+   readable. Add to any button/link that already has its own background. */
+.btn-sheen { position: relative; overflow: hidden; }
+.btn-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transform: translateX(-120%);
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.38) 50%,
+    transparent 80%
+  );
+  transition: transform 0.75s ease-out;
+  pointer-events: none;
+}
+.btn-sheen:hover::after,
+.btn-sheen:focus-visible::after { transform: translateX(120%); }
+.btn-sheen > * { position: relative; z-index: 1; }
+
+/* Warm terracotta→gold clip-text for premium accent numbers / words.
+   Use on stat figures and select emphasis words, never on body copy. */
+.text-gradient-gold {
+  background-image: linear-gradient(90deg, var(--cp-terracotta), var(--cp-gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Ken Burns — slow zoom + drift for hero / PDP imagery. Two variants so
+   adjacent panels don't move in lock-step. */
+@keyframes kenburns {
+  0%   { transform: scale(1.02) translate3d(0, 0, 0); }
+  100% { transform: scale(1.12) translate3d(-1.5%, -1.5%, 0); }
+}
+@keyframes kenburnsAlt {
+  0%   { transform: scale(1.12) translate3d(-1.5%, 1%, 0); }
+  100% { transform: scale(1.02) translate3d(1.5%, -1%, 0); }
+}
+.animate-kenburns {
+  animation: kenburns 12s ease-out both;
+  will-change: transform;
+}
+.animate-kenburns-alt {
+  animation: kenburnsAlt 14s ease-out both;
+  will-change: transform;
+}
+
+/* Subtle premium ring/glow for elevated cards on hover. */
+.ring-premium {
+  box-shadow:
+    0 1px 2px rgba(42, 36, 23, 0.06),
+    0 12px 32px -12px rgba(42, 36, 23, 0.18);
+}
+
+/* Reveal helper for the drawn process line (scaleX from left). */
+@keyframes growLine {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}

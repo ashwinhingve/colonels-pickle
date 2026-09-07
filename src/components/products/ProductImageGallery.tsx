@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { X, ZoomIn, Play } from 'lucide-react';
+import { X, ZoomIn, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 interface ProductImage {
@@ -36,6 +36,10 @@ export default function ProductImageGallery({
   }
 
   const currentImage = imageUrls[selectedIndex];
+  const hasMultiple = imageUrls.length > 1;
+  const goPrev = () =>
+    setSelectedIndex((i) => (i - 1 + imageUrls.length) % imageUrls.length);
+  const goNext = () => setSelectedIndex((i) => (i + 1) % imageUrls.length);
 
   // Check if videoUrl is a YouTube link
   const isYouTube = videoUrl && (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be'));
@@ -47,7 +51,7 @@ export default function ProductImageGallery({
   return (
     <div className="space-y-4">
       {/* Main Image / Video */}
-      <div className="relative aspect-square bg-white rounded-2xl shadow-xl overflow-hidden group">
+      <div className="relative aspect-square bg-white rounded-2xl shadow-xl overflow-hidden group ring-1 ring-cp-border">
         <AnimatePresence mode="wait">
           {showVideo && videoUrl ? (
             <motion.div
@@ -91,22 +95,43 @@ export default function ProductImageGallery({
                   src={currentImage}
                   alt={`${productName} - Image ${selectedIndex + 1}`}
                   fill
-                  className="object-contain p-4"
+                  className="object-contain p-4 transition-transform duration-500 ease-out group-hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   priority={selectedIndex === 0}
                 />
               )}
 
-              {/* Zoom Button */}
+              {/* Zoom Button — always visible on touch, hover-revealed on desktop */}
               <button
                 onClick={() => setIsLightboxOpen(true)}
-                className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                aria-label="Zoom image"
+                className="absolute right-4 top-4 rounded-full bg-white/95 p-2 text-cp-text shadow-lg transition-all hover:bg-white active:scale-90 md:opacity-0 md:group-hover:opacity-100"
               >
-                <ZoomIn className="w-5 h-5 text-gray-700" />
+                <ZoomIn className="h-5 w-5" />
               </button>
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Prev / Next navigation */}
+        {hasMultiple && !showVideo && (
+          <>
+            <button
+              onClick={goPrev}
+              aria-label="Previous image"
+              className="absolute left-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-cp-text shadow-md transition-all hover:bg-white active:scale-90"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              onClick={goNext}
+              aria-label="Next image"
+              className="absolute right-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-cp-text shadow-md transition-all hover:bg-white active:scale-90"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </>
+        )}
       </div>
 
       {/* Thumbnail Grid */}

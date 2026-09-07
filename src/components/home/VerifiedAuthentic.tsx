@@ -1,7 +1,7 @@
 "use client";
 
 import { PUBLIC_REGISTRATIONS } from "@/lib/constants";
-import { ShieldCheckIcon } from "@/components/illustrations";
+import { ShieldCheckIcon, CertSeal } from "@/components/illustrations";
 import { StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
 import { HoverLift } from "@/components/shared/HoverLift";
 
@@ -30,8 +30,16 @@ export function VerifiedAuthentic() {
               <StaggerItem key={r.key}>
                 <HoverLift lift={4}>
                   <div className="group flex h-full flex-col rounded-2xl border border-cp-border-dark bg-cp-cream p-6 shadow-sm transition-all duration-300 hover:border-cp-olive/50 hover:shadow-md">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-2xl shadow-sm ring-1 ring-cp-border-dark">
-                      {r.icon}
+                    <div className="flex items-start justify-between">
+                      <CertSeal
+                        label={r.label}
+                        className="h-14 w-14 transition-transform duration-300 group-hover:scale-110"
+                        aria-hidden
+                      />
+                      <span className="inline-flex items-center gap-1 rounded-full bg-cp-green-light px-2.5 py-1 font-sans text-[10px] font-bold uppercase tracking-wide text-cp-green">
+                        <ShieldCheckIcon className="h-3.5 w-3.5" aria-hidden />
+                        Verified
+                      </span>
                     </div>
                     <h3 className="mt-4 font-display text-lg font-bold text-cp-olive">
                       {r.label}

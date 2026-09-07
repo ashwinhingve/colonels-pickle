@@ -9,6 +9,7 @@ import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { FeaturedProducts } from "@/components/home/FeaturedProducts";
 import { OurStory } from "@/components/home/OurStory";
 import { PremiumIngredients } from "@/components/home/PremiumIngredients";
+import { SignatureMasala } from "@/components/home/SignatureMasala";
 import { ProcessSection } from "@/components/home/ProcessSection";
 import { VerifiedAuthentic } from "@/components/home/VerifiedAuthentic";
 import { CTABanner } from "@/components/home/CTABanner";
@@ -87,7 +88,12 @@ export default function HomePage() {
       <AnimatedSection direction="up" duration={0.5}>
         <PremiumIngredients />
       </AnimatedSection>
-      <SectionDivider variant="wave" color="#F5ECD8" height={70} flip />
+      <SectionDivider variant="wave" color="#FBF4E7" height={70} flip />
+
+      <AnimatedSection direction="up" duration={0.5}>
+        <SignatureMasala />
+      </AnimatedSection>
+      <SectionDivider variant="scallop" color="#EADFC8" height={64} />
 
       <AnimatedSection direction="up" duration={0.5}>
         <ProcessSection />

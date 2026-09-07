@@ -4,6 +4,12 @@ import Image from "next/image";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { Highlight } from "@/components/common/Highlight";
 import { SpiceScatter, CornerFlourish } from "@/components/illustrations";
+import {
+  AnimatedSection,
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/shared/AnimatedSection";
+import { HoverLift } from "@/components/shared/HoverLift";
 
 const FACT_TILES = [
   { icon: "👩‍🍳", label: "Women Empowerment", sub: "Creating local employment" },
@@ -36,8 +42,11 @@ export function OurStory() {
 
       <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2">
         {/* LEFT — story card */}
-        <div className="relative overflow-hidden rounded-2xl bg-white/5 p-10">
-          <RajasthaniPattern variant="blueprint" opacity={0.03} color="#D4A017" />
+        <AnimatedSection
+          direction="up"
+          className="relative overflow-hidden rounded-2xl bg-white/5 p-10"
+        >
+          <RajasthaniPattern variant="jali" opacity={0.04} color="#D4A017" />
           <span
             className="absolute left-0 top-0 h-12 w-12 rounded-tl-2xl border-l-2 border-t-2"
             style={{ borderColor: "#D4A017" }}
@@ -86,10 +95,10 @@ export function OurStory() {
               <p className="font-hindi text-[10px] text-cp-beige/50">Licensed</p>
             </div>
           </div>
-        </div>
+        </AnimatedSection>
 
         {/* RIGHT — story text */}
-        <div>
+        <AnimatedSection direction="up" delay={0.1}>
           <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-terracotta">
             The Story Behind Every Jar
           </p>
@@ -123,25 +132,29 @@ export function OurStory() {
             Ever.
           </p>
 
-          <div className="mt-8 grid grid-cols-2 gap-3">
+          <StaggerContainer
+            staggerDelay={0.08}
+            className="mt-8 grid grid-cols-2 gap-3"
+          >
             {FACT_TILES.map((tile) => (
-              <div
-                key={tile.label}
-                className="flex items-start gap-3 rounded-xl border border-white/12 bg-white/[0.06] px-4 py-3"
-              >
-                <span className="text-xl">{tile.icon}</span>
-                <div>
-                  <p className="font-sans text-sm font-semibold text-cp-beige/90">
-                    {tile.label}
-                  </p>
-                  <p className="mt-0.5 font-sans text-xs text-cp-beige/60">
-                    {tile.sub}
-                  </p>
-                </div>
-              </div>
+              <StaggerItem key={tile.label} className="h-full">
+                <HoverLift lift={3} className="h-full">
+                  <div className="flex h-full items-start gap-3 rounded-xl border border-white/12 bg-white/[0.06] px-4 py-3 transition-colors duration-300 hover:border-cp-gold/40 hover:bg-white/[0.1]">
+                    <span className="text-xl">{tile.icon}</span>
+                    <div>
+                      <p className="font-sans text-sm font-semibold text-cp-beige/90">
+                        {tile.label}
+                      </p>
+                      <p className="mt-0.5 font-sans text-xs text-cp-beige/60">
+                        {tile.sub}
+                      </p>
+                    </div>
+                  </div>
+                </HoverLift>
+              </StaggerItem>
             ))}
-          </div>
-        </div>
+          </StaggerContainer>
+        </AnimatedSection>
       </div>
     </section>
   );

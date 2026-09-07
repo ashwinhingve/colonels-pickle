@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useCartStore, cartItemKey } from '@/store/useCartStore';
+import { FREE_DELIVERY_THRESHOLD, STANDARD_SHIPPING_COST } from '@/lib/constants';
 import { AddressStep } from '@/components/checkout/AddressStep';
 import PaymentStep from '@/components/checkout/PaymentStep';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
@@ -115,7 +116,7 @@ export default function CheckoutPage() {
 
   const cartSubtotal = getTotalPrice();
   const cartDiscount = getDiscountAmount();
-  const estimatedShipping = cartSubtotal >= 500 ? 0 : 30;
+  const estimatedShipping = cartSubtotal >= FREE_DELIVERY_THRESHOLD ? 0 : STANDARD_SHIPPING_COST;
   // Prices are GST-inclusive — no separate tax added to total
   const estimatedTotal = Math.max(0, cartSubtotal + estimatedShipping - cartDiscount);
 
@@ -155,7 +156,13 @@ export default function CheckoutPage() {
                     </div>
                     <span className="ml-2 font-medium text-cp-text-muted">Address</span>
                   </div>
-                  <div className="w-16 h-1 bg-gray-300"></div>
+                  <div className="relative h-1 w-16 overflow-hidden rounded-full bg-gray-300">
+                    <div
+                      className={`absolute inset-0 origin-left rounded-full bg-gradient-to-r from-cp-terracotta to-cp-terracotta-deep transition-transform duration-500 ease-out ${
+                        currentStep === 'payment' ? 'scale-x-100' : 'scale-x-0'
+                      }`}
+                    />
+                  </div>
                   <div className="flex items-center">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
                       currentStep === 'payment'
@@ -300,7 +307,7 @@ export default function CheckoutPage() {
                 {shipping > 0 && (
                   <div className="bg-cp-terracotta-light border border-cp-terracotta/25 rounded-lg p-3 text-sm text-center">
                     <p className="text-cp-terracotta-deep">
-                      Add ₹{(500 - subtotal).toLocaleString()} more for FREE shipping!
+                      Add ₹{(FREE_DELIVERY_THRESHOLD - subtotal).toLocaleString()} more for FREE shipping!
                     </p>
                   </div>
                 )}

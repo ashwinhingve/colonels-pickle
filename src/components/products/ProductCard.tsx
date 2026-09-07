@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import { Badge } from "@/components/common/Badge";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { VariantSelector } from "@/components/common/VariantSelector";
+import { AnimatedPrice } from "@/components/shared/AnimatedPrice";
 import { InkStampRound } from "@/components/illustrations";
 import { useCartStore } from "@/store/useCartStore";
 import { getProductTheme } from "@/lib/productTheme";
@@ -167,19 +168,26 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
                 src={primaryImg.url}
                 alt={`${product?.name ?? "Product"} - Colonel's Pickle`}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                 sizes="(max-width: 768px) 50vw, 25vw"
               />
               <div className="absolute inset-x-0 bottom-0 z-[1] h-16 bg-gradient-to-t from-black/40 to-transparent" />
             </>
           ) : (
             <span
-              className="relative z-[1] select-none text-[58px]"
+              className="relative z-[1] select-none text-[58px] transition-transform duration-500 ease-out group-hover:scale-110"
               style={{ filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.22))" }}
             >
               {theme.icon}
             </span>
           )}
+
+          {/* View Details overlay on hover */}
+          <span className="pointer-events-none absolute inset-0 z-[2] flex items-center justify-center bg-black/0 opacity-0 transition-all duration-300 group-hover:bg-black/20 group-hover:opacity-100">
+            <span className="translate-y-2 rounded-full bg-white/95 px-4 py-2 font-sans text-[12px] font-bold uppercase tracking-wide text-cp-crimson shadow-lg transition-transform duration-300 group-hover:translate-y-0">
+              View Details
+            </span>
+          </span>
 
           {isBestValue ? (
             <span className="absolute right-[10px] top-[10px] z-[2] rounded-full bg-cp-gold px-2.5 py-1 font-sans text-[10px] font-bold uppercase tracking-wide text-cp-text shadow-md">
@@ -230,7 +238,7 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
         <div className="mt-auto flex items-center justify-between">
           <div>
             <div className="font-sans text-[22px] font-extrabold leading-none text-cp-crimson">
-              ₹{Number(current.price).toLocaleString("en-IN")}
+              <AnimatedPrice value={Number(current.price)} />
             </div>
             <div className="mt-px font-sans text-[10.5px] text-cp-text-muted">
               for {current.label}
@@ -242,14 +250,23 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
           <button
             type="button"
             onClick={handleAdd}
+            aria-label={`Add ${product?.name ?? "product"} to cart`}
             className={cn(
-              "whitespace-nowrap rounded-lg border-2 px-[17px] py-[9px] font-sans text-[13px] font-bold leading-none text-white transition-[background-color,border-color,transform]",
+              "whitespace-nowrap rounded-lg border-2 px-[17px] py-[9px] font-sans text-[13px] font-bold leading-none text-white transition-[background-color,border-color,transform] duration-200 active:scale-95",
               added
                 ? "border-cp-green bg-cp-green"
                 : "border-cp-crimson bg-cp-crimson hover:-translate-y-px hover:border-cp-crimson-dark hover:bg-cp-crimson-dark"
             )}
           >
-            {added ? "✓ Added" : "+ Cart"}
+            <span className="inline-flex items-center gap-1">
+              {added ? (
+                <>
+                  <span className="animate-soft-pulse">✓</span> Added
+                </>
+              ) : (
+                "+ Cart"
+              )}
+            </span>
           </button>
         </div>
       </div>

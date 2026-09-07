@@ -3,6 +3,7 @@ import Image from "next/image";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { Parallax } from "@/components/shared/Parallax";
 import { TapScale } from "@/components/shared/TapScale";
+import { CountUpStat } from "@/components/shared/CountUpStat";
 import { StaggeredHeroPanels, type HeroPoolItem } from "@/components/home/StaggeredHeroPanels";
 import { connectDB } from "@/lib/mongodb";
 import GalleryMedia from "@/models/GalleryMedia";
@@ -65,9 +66,9 @@ async function getHeroPool(): Promise<HeroPoolItem[]> {
 }
 
 const STATS = [
-  { value: "15+", label: "Pickle Varieties" },
-  { value: "100%", label: "Natural" },
-  { value: "0", label: "Preservatives" },
+  { end: 15, suffix: "+", label: "Pickle Varieties" },
+  { end: 100, suffix: "%", label: "Natural" },
+  { end: 0, suffix: "", label: "Preservatives" },
 ];
 
 const BENEFITS = [
@@ -87,32 +88,47 @@ export async function HeroSection() {
           "linear-gradient(135deg, #3A4A1F 0%, #4B5D2A 55%, #2E3818 100%)",
       }}
     >
-      <RajasthaniPattern variant="camo" opacity={0.07} color="#F5EBDA" />
-      <RajasthaniPattern variant="blueprint" opacity={0.05} color="#D4A017" />
+      {/* One subtle field texture — warm, not heavy combat */}
+      <RajasthaniPattern variant="camo" opacity={0.05} color="#F5EBDA" />
 
-      {/* Tactical corner brackets — subtle HUD framing */}
+      {/* Elegant gold corner flourishes — a refined nod to the Army heritage */}
       <CornerFlourish
         aria-hidden
-        className="pointer-events-none absolute left-4 top-4 hidden h-16 w-16 text-cp-gunmetal-light opacity-20 md:block"
+        className="pointer-events-none absolute left-4 top-4 hidden h-16 w-16 text-cp-gold opacity-25 md:block"
       />
       <CornerFlourish
         aria-hidden
-        className="pointer-events-none absolute bottom-4 right-4 hidden h-16 w-16 rotate-180 text-cp-gunmetal-light opacity-20 md:block"
+        className="pointer-events-none absolute bottom-4 right-4 hidden h-16 w-16 rotate-180 text-cp-gold opacity-25 md:block"
       />
 
-      {/* Ambient floating illustration accents */}
-      <ChilliIllustration
-        aria-hidden
-        className="animate-float pointer-events-none absolute left-[4%] top-[18%] hidden h-16 w-16 opacity-25 md:block"
-      />
-      <HingIllustration
-        aria-hidden
-        className="animate-float animation-delay-1000 pointer-events-none absolute bottom-[14%] left-[10%] hidden h-16 w-16 opacity-25 lg:block"
-      />
-      <LemonIllustration
-        aria-hidden
-        className="animate-float animation-delay-500 pointer-events-none absolute right-[3%] top-[10%] hidden h-14 w-14 opacity-20 lg:block"
-      />
+      {/* Ambient floating illustration accents — parallax-drifted for depth */}
+      <Parallax
+        offset={55}
+        direction="up"
+        className="pointer-events-none absolute left-[4%] top-[18%] hidden md:block"
+      >
+        <ChilliIllustration aria-hidden className="animate-float h-16 w-16 opacity-40" />
+      </Parallax>
+      <Parallax
+        offset={40}
+        direction="down"
+        className="pointer-events-none absolute bottom-[14%] left-[10%] hidden lg:block"
+      >
+        <HingIllustration
+          aria-hidden
+          className="animate-float animation-delay-1000 h-16 w-16 opacity-40"
+        />
+      </Parallax>
+      <Parallax
+        offset={65}
+        direction="up"
+        className="pointer-events-none absolute right-[3%] top-[10%] hidden lg:block"
+      >
+        <LemonIllustration
+          aria-hidden
+          className="animate-float animation-delay-500 h-14 w-14 opacity-35"
+        />
+      </Parallax>
 
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-4 py-20 lg:grid-cols-2">
         {/* LEFT — messaging */}
@@ -185,31 +201,36 @@ export async function HeroSection() {
             <TapScale asChild>
               <Link
                 href="/products"
-                className="rounded-lg bg-gradient-to-br from-cp-terracotta to-cp-gold px-7 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white shadow-lg transition-transform hover:-translate-y-px"
+                className="btn-sheen group inline-flex items-center gap-2 rounded-lg bg-gradient-to-br from-cp-terracotta to-cp-gold px-7 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_32px_-8px_rgba(192,86,33,0.65)]"
               >
-                Shop Now →
+                <span>Shop Now</span>
+                <span
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                  aria-hidden="true"
+                >
+                  →
+                </span>
               </Link>
             </TapScale>
             <TapScale asChild>
               <Link
                 href="/about"
-                className="rounded-lg border border-cp-beige/40 bg-white/10 px-7 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-cp-beige backdrop-blur transition-colors hover:bg-white/20"
+                className="rounded-lg border border-cp-beige/40 bg-white/10 px-7 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-cp-beige backdrop-blur transition-all duration-300 hover:border-cp-gold/60 hover:bg-white/20"
               >
                 Our Story
               </Link>
             </TapScale>
           </div>
 
-          <div className="mt-10 flex gap-10">
+          <div className="mt-10 flex gap-6 sm:gap-12">
             {STATS.map((s) => (
-              <div key={s.label}>
-                <div className="font-tactical-bold text-4xl text-cp-gold-light">
-                  {s.value}
-                </div>
-                <div className="mt-1 font-hindi text-xs uppercase tracking-widest text-cp-beige/60">
-                  {s.label}
-                </div>
-              </div>
+              <CountUpStat
+                key={s.label}
+                end={s.end}
+                suffix={s.suffix}
+                label={s.label}
+                tone="dark"
+              />
             ))}
           </div>
         </div>
@@ -218,6 +239,19 @@ export async function HeroSection() {
         <Parallax offset={30} direction="up">
           <StaggeredHeroPanels pool={heroPool} />
         </Parallax>
+      </div>
+
+      {/* Scroll cue */}
+      <div
+        aria-hidden="true"
+        className="absolute bottom-[74px] left-1/2 z-[3] hidden -translate-x-1/2 flex-col items-center gap-1.5 md:flex"
+      >
+        <span className="font-tactical text-[10px] uppercase tracking-[0.35em] text-cp-beige/55">
+          Scroll
+        </span>
+        <span className="flex h-8 w-5 items-start justify-center rounded-full border border-cp-beige/40 p-1">
+          <span className="animate-bounce-slow h-1.5 w-1.5 rounded-full bg-cp-gold-light" />
+        </span>
       </div>
 
       {/* Wave divider into beige */}

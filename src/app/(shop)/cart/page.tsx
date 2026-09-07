@@ -10,6 +10,7 @@ import { FREE_DELIVERY_THRESHOLD, STANDARD_SHIPPING_COST } from "@/lib/constants
 import { Button } from "@/components/ui/button"
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern"
 import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection"
+import { AnimatedPrice } from "@/components/shared/AnimatedPrice"
 import { EmptyCartIllustration, DeliveryTruckIllustration, WebbingStitchAccent } from "@/components/illustrations"
 import {
   Trash2, Plus, Minus, ArrowRight, Package,
@@ -123,10 +124,10 @@ export default function CartPage() {
               <Link href="/products">
                 <Button
                   size="lg"
-                  className="bg-cp-crimson hover:bg-cp-crimson-dark text-white px-10 py-6 text-lg shadow-lg hover:shadow-xl"
+                  className="btn-sheen group bg-cp-crimson hover:bg-cp-crimson-dark text-white px-10 py-6 text-lg shadow-lg hover:shadow-xl"
                 >
                   Browse Pickles
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
               </Link>
             </div>
@@ -409,7 +410,7 @@ export default function CartPage() {
                         </p>
                       )}
                       <span className="text-2xl font-bold text-cp-olive">
-                        ₹{finalTotal.toLocaleString()}
+                        <AnimatedPrice value={finalTotal} />
                       </span>
                     </div>
                   </div>
@@ -458,9 +459,9 @@ export default function CartPage() {
                 )}
 
                 <Link href="/checkout">
-                  <Button className="w-full bg-gradient-to-r from-cp-olive to-cp-terracotta hover:from-cp-olive-dark hover:to-cp-terracotta-deep text-white py-6 text-lg font-semibold shadow-lg hover:shadow-xl mb-4">
+                  <Button className="btn-sheen group w-full bg-gradient-to-r from-cp-olive to-cp-terracotta hover:from-cp-olive-dark hover:to-cp-terracotta-deep text-white py-6 text-lg font-semibold shadow-lg hover:shadow-xl mb-4">
                     Proceed to Checkout
-                    <ArrowRight className="w-5 h-5 ml-2" />
+                    <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                   </Button>
                 </Link>
 

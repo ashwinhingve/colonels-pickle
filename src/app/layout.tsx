@@ -8,6 +8,7 @@ import { CartDrawer } from "@/components/cart/CartDrawer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import SessionProvider from "@/components/providers/SessionProvider";
 import MotionProvider from "@/components/providers/MotionProvider";
+import { ScrollProgress } from "@/components/shared/ScrollProgress";
 import { connectDB } from "@/lib/mongodb";
 import MarketingSettings from "@/models/MarketingSettings";
 
@@ -229,6 +230,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         )}
         <SessionProvider>
           <MotionProvider>
+            <ScrollProgress />
             <AnnouncementBar />
             <div className="flex min-h-screen flex-col">
               <Header />

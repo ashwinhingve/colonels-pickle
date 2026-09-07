@@ -225,8 +225,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         </nav>
 
         {/* Main */}
-        <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-2">
+        <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-start">
           {/* Left: real images, or colored fallback block */}
+          <div className="lg:sticky lg:top-24">
           {Array.isArray(product.images) && product.images.length > 0 ? (
             <ProductImageGallery
               images={product.images}
@@ -258,6 +259,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               </div>
             </div>
           )}
+          </div>
 
           {/* Right: details */}
           <div>
@@ -282,7 +284,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               <StaggerContainer>
                 <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
                   {related.map((r: any) => (
-                    <StaggerItem key={r._id}>
+                    <StaggerItem key={r._id} className="h-full">
                       <ProductCard product={r} />
                     </StaggerItem>
                   ))}

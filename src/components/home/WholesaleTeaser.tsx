@@ -54,9 +54,15 @@ export function WholesaleTeaser() {
               <TapScale asChild>
                 <Link
                   href="/wholesale"
-                  className="rounded-lg bg-cp-crimson px-8 py-3.5 text-center font-sans text-sm font-bold uppercase tracking-wide text-white transition-all hover:bg-cp-crimson-dark hover:shadow-lg"
+                  className="btn-sheen group inline-flex items-center justify-center gap-2 rounded-lg bg-cp-crimson px-8 py-3.5 text-center font-sans text-sm font-bold uppercase tracking-wide text-white transition-all hover:-translate-y-0.5 hover:bg-cp-crimson-dark hover:shadow-lg"
                 >
-                  Apply for Wholesale
+                  <span>Apply for Wholesale</span>
+                  <span
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                    aria-hidden="true"
+                  >
+                    →
+                  </span>
                 </Link>
               </TapScale>
               <TapScale asChild>
@@ -64,7 +70,7 @@ export function WholesaleTeaser() {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg bg-[#25D366] px-8 py-3.5 text-center font-sans text-sm font-bold uppercase tracking-wide text-white transition-all hover:bg-[#20BA5A] hover:shadow-lg"
+                  className="btn-sheen inline-flex items-center justify-center rounded-lg bg-[#25D366] px-8 py-3.5 text-center font-sans text-sm font-bold uppercase tracking-wide text-white transition-all hover:-translate-y-0.5 hover:bg-[#20BA5A] hover:shadow-lg"
                 >
                   Chat on WhatsApp
                 </a>

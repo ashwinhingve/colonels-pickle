@@ -291,3 +291,43 @@ export function MountainOriginIllustration({ className, title, ...p }: SVGProps)
     </svg>
   );
 }
+
+export function GulkandRoseIllustration({ className, title, ...p }: SVGProps) {
+  // Rose bloom + leaves — for the Gulkand & rose-preserve category.
+  return (
+    <svg viewBox="0 0 64 64" className={className} {...base({ title })} {...p}>
+      {title ? <title>{title}</title> : null}
+      {/* leaves */}
+      <path d="M15 40c-5 5-5 12 0 16 3-6 2-12 0-16Z" fill="#3F7A34" />
+      <path d="M49 40c5 5 5 12 0 16-3-6-2-12 0-16Z" fill="#4B5D2A" />
+      {/* stem */}
+      <path d="M32 34v22" stroke="#4B5D2A" strokeWidth="2.6" strokeLinecap="round" />
+      {/* bloom */}
+      <circle cx="32" cy="24" r="16" fill="#C05621" />
+      <path d="M32 12c6 0 11 5 11 12 0 3-1 5-3 7 1-3 1-6-1-9-2-3-4-4-7-4Z" fill="#9C4420" opacity="0.5" />
+      <path d="M32 16c5 0 8 4 8 8.5S37 33 32 33s-8-4-8-8.5S27 16 32 16Z" fill="#DD7230" />
+      <path d="M32 20c2.7 0 4.8 2.2 4.8 4.8S34.7 29.6 32 29.6s-4.8-2.2-4.8-4.8S29.3 20 32 20Z" fill="#C05621" />
+      <circle cx="32" cy="24.5" r="2.4" fill="#9C4420" />
+    </svg>
+  );
+}
+
+export function WholesaleCrateIllustration({ className, title, ...p }: SVGProps) {
+  // A wooden crate with jars — for the wholesale / bulk category.
+  return (
+    <svg viewBox="0 0 64 64" className={className} {...base({ title })} {...p}>
+      {title ? <title>{title}</title> : null}
+      {/* jars peeking out */}
+      <rect x="20" y="16" width="9" height="4" rx="1.5" fill="#7C4A1E" />
+      <rect x="20" y="19" width="9" height="15" rx="2" fill="#C05621" />
+      <rect x="35" y="16" width="9" height="4" rx="1.5" fill="#7C4A1E" />
+      <rect x="35" y="19" width="9" height="15" rx="2" fill="#D4A017" />
+      {/* crate body */}
+      <path d="M12 32h40v18c0 1.7-1.3 3-3 3H15c-1.7 0-3-1.3-3-3V32Z" fill="#8A5A2B" />
+      <path d="M12 32h40v6H12z" fill="#A06A34" />
+      {/* slats */}
+      <path d="M22 38v15M32 38v15M42 38v15" stroke="#6E4520" strokeWidth="2" />
+      <path d="M12 44h40" stroke="#6E4520" strokeWidth="2" />
+    </svg>
+  );
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X, Plus, Minus, Trash2 } from "lucide-react";
@@ -8,7 +9,15 @@ import { X, Plus, Minus, Trash2 } from "lucide-react";
 import { useCartStore, cartItemKey } from "@/store/useCartStore";
 import { FREE_DELIVERY_THRESHOLD } from "@/lib/constants";
 import { EmptyCartIllustration } from "@/components/illustrations";
+import { AnimatedPrice } from "@/components/shared/AnimatedPrice";
 import { getProductTheme } from "@/lib/productTheme";
+
+/** First usable image URL from a cart item's images array, or null. */
+function firstImageUrl(images: (string | { url: string })[] | undefined): string | null {
+  const first = Array.isArray(images) ? images[0] : null;
+  if (!first) return null;
+  return typeof first === "string" ? first : first?.url || null;
+}
 
 export function CartDrawer() {
   const isOpen = useCartStore((s) => s.isOpen);
@@ -98,20 +107,32 @@ export function CartDrawer() {
                     );
                     const theme = getProductTheme(item.product.slug);
                     const lineTotal = item.product.price * item.quantity;
+                    const imgUrl = firstImageUrl(item.product.images);
                     return (
                       <motion.div
                         key={key}
                         layout
-                        initial={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0, x: 0 }}
                         exit={{ opacity: 0, x: 100 }}
                         transition={{ duration: 0.3 }}
                         className="flex gap-3 border-b border-cp-border py-4 last:border-0"
                       >
                       <span
-                        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-xl"
+                        className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg text-xl"
                         style={{ backgroundColor: theme.themeColor }}
                       >
-                        <span className="text-white">{theme.icon}</span>
+                        {imgUrl ? (
+                          <Image
+                            src={imgUrl}
+                            alt={item.product.name}
+                            fill
+                            sizes="56px"
+                            className="object-cover"
+                          />
+                        ) : (
+                          <span className="text-white">{theme.icon}</span>
+                        )}
                       </span>
                       <div className="flex flex-1 flex-col">
                         <div className="flex items-start justify-between gap-2">
@@ -140,7 +161,7 @@ export function CartDrawer() {
                               onClick={() =>
                                 updateQuantity(key, item.quantity - 1)
                               }
-                              className="flex h-7 w-7 items-center justify-center rounded-md border border-cp-border text-cp-text transition-colors hover:border-cp-crimson hover:text-cp-crimson"
+                              className="flex h-7 w-7 items-center justify-center rounded-md border border-cp-border text-cp-text transition-all hover:border-cp-crimson hover:text-cp-crimson active:scale-90"
                             >
                               <Minus className="h-3.5 w-3.5" />
                             </button>
@@ -153,13 +174,13 @@ export function CartDrawer() {
                               onClick={() =>
                                 updateQuantity(key, item.quantity + 1)
                               }
-                              className="flex h-7 w-7 items-center justify-center rounded-md border border-cp-border text-cp-text transition-colors hover:border-cp-crimson hover:text-cp-crimson"
+                              className="flex h-7 w-7 items-center justify-center rounded-md border border-cp-border text-cp-text transition-all hover:border-cp-crimson hover:text-cp-crimson active:scale-90"
                             >
                               <Plus className="h-3.5 w-3.5" />
                             </button>
                           </div>
                           <span className="font-sans text-sm font-extrabold text-cp-crimson">
-                            ₹{lineTotal.toLocaleString("en-IN")}
+                            <AnimatedPrice value={lineTotal} />
                           </span>
                         </div>
                       </div>
@@ -173,30 +194,52 @@ export function CartDrawer() {
             {/* Footer */}
             {items.length > 0 && (
               <div className="border-t border-cp-border px-5 py-4">
-                {remaining > 0 ? (
-                  <p className="mb-3 rounded-md bg-cp-saffron-light px-3 py-2 text-center font-sans text-xs font-medium text-cp-brown-dark">
-                    Add ₹{remaining.toLocaleString("en-IN")} more for free
-                    delivery
-                  </p>
-                ) : (
-                  <p className="mb-3 rounded-md bg-cp-green-light px-3 py-2 text-center font-sans text-xs font-medium text-cp-green">
-                    🎉 You&apos;ve unlocked free delivery!
-                  </p>
-                )}
+                {/* Free-delivery progress */}
+                <div className="mb-3">
+                  {remaining > 0 ? (
+                    <p className="mb-1.5 text-center font-sans text-xs font-medium text-cp-brown-dark">
+                      Add{" "}
+                      <span className="font-bold text-cp-terracotta">
+                        ₹{remaining.toLocaleString("en-IN")}
+                      </span>{" "}
+                      more for free delivery
+                    </p>
+                  ) : (
+                    <p className="mb-1.5 text-center font-sans text-xs font-bold text-cp-green">
+                      🎉 You&apos;ve unlocked free delivery!
+                    </p>
+                  )}
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-cp-cream-dark">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-cp-olive to-cp-gold transition-[width] duration-500 ease-out"
+                      style={{
+                        width: `${Math.min(100, (subtotal / FREE_DELIVERY_THRESHOLD) * 100)}%`,
+                      }}
+                    />
+                  </div>
+                </div>
                 <div className="mb-3 flex items-center justify-between">
                   <span className="font-sans text-sm text-cp-text-muted">
                     Subtotal
                   </span>
                   <span className="font-sans text-lg font-extrabold text-cp-text">
-                    ₹{subtotal.toLocaleString("en-IN")}
+                    <AnimatedPrice value={subtotal} />
                   </span>
                 </div>
                 <Link
                   href="/checkout"
                   onClick={closeCart}
-                  className="block rounded-lg bg-gradient-to-br from-cp-saffron to-cp-saffron-bright px-5 py-3 text-center font-sans text-sm font-bold uppercase tracking-wide text-white transition-transform hover:-translate-y-px"
+                  className="btn-sheen group block rounded-lg bg-gradient-to-br from-cp-saffron to-cp-saffron-bright px-5 py-3 text-center font-sans text-sm font-bold uppercase tracking-wide text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
                 >
-                  Proceed to Checkout →
+                  <span className="inline-flex items-center justify-center gap-2">
+                    Proceed to Checkout
+                    <span
+                      className="transition-transform duration-300 group-hover:translate-x-1"
+                      aria-hidden="true"
+                    >
+                      →
+                    </span>
+                  </span>
                 </Link>
                 <button
                   type="button"

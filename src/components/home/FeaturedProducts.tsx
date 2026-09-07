@@ -4,6 +4,7 @@ import Product from "@/models/Product";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { ProductCard } from "@/components/products/ProductCard";
 import { TapScale } from "@/components/shared/TapScale";
+import { StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
 
 async function getFeaturedProducts() {
   try {
@@ -33,20 +34,31 @@ export async function FeaturedProducts() {
         />
 
         {products.length > 0 && (
-          <div className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
+          <StaggerContainer
+            staggerDelay={0.08}
+            className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4"
+          >
             {products.map((product: any) => (
-              <ProductCard key={product._id} product={product} />
+              <StaggerItem key={product._id} className="h-full">
+                <ProductCard product={product} />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         )}
 
         <div className="mt-12 text-center">
           <TapScale asChild>
             <Link
               href="/products"
-              className="inline-block rounded-lg border-2 border-cp-crimson px-7 py-3 font-sans text-sm font-bold uppercase tracking-wide text-cp-crimson transition-all hover:bg-cp-crimson hover:text-white hover:shadow-lg"
+              className="btn-sheen group inline-flex items-center gap-2 rounded-lg border-2 border-cp-crimson px-7 py-3 font-sans text-sm font-bold uppercase tracking-wide text-cp-crimson transition-all hover:bg-cp-crimson hover:text-white hover:shadow-lg"
             >
-              View All 15+ Products →
+              <span>View All 15+ Products</span>
+              <span
+                className="transition-transform duration-300 group-hover:translate-x-1"
+                aria-hidden="true"
+              >
+                →
+              </span>
             </Link>
           </TapScale>
         </div>

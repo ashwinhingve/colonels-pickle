@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Badge } from "@/components/common/Badge";
 import { useCartStore } from "@/store/useCartStore";
 import { WishlistButton } from "@/components/account/WishlistButton";
+import { AnimatedPrice } from "@/components/shared/AnimatedPrice";
 import { BRAND } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import type { ProductTheme } from "@/lib/productTheme";
@@ -89,9 +90,9 @@ export function ProductPurchase({ product, theme }: ProductPurchaseProps) {
               aria-pressed={active}
               onClick={() => setSelected(i)}
               className={cn(
-                "rounded-lg border-[1.5px] px-4 py-2 font-sans text-sm font-semibold transition-colors",
+                "rounded-lg border-[1.5px] px-4 py-2 font-sans text-sm font-semibold transition-all active:scale-95",
                 active
-                  ? "border-cp-crimson bg-cp-crimson text-white"
+                  ? "border-cp-crimson bg-cp-crimson text-white shadow-sm"
                   : "border-cp-border bg-white text-cp-text hover:border-cp-crimson hover:text-cp-crimson"
               )}
             >
@@ -101,11 +102,11 @@ export function ProductPurchase({ product, theme }: ProductPurchaseProps) {
         })}
       </div>
 
-      <div className="mt-5">
+      <div className="mt-5 flex items-baseline gap-2">
         <span className="font-sans text-[28px] font-extrabold text-cp-crimson">
-          ₹{Number(current.price).toLocaleString("en-IN")}
+          <AnimatedPrice value={Number(current.price)} />
         </span>
-        <span className="ml-2 font-sans text-sm text-cp-text-muted">
+        <span className="font-sans text-sm text-cp-text-muted">
           per {current.name}
         </span>
       </div>
@@ -114,16 +115,24 @@ export function ProductPurchase({ product, theme }: ProductPurchaseProps) {
         <button
           type="button"
           onClick={handleAddToCart}
-          className="w-full rounded-lg bg-cp-crimson px-6 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-cp-crimson-dark"
+          className="btn-sheen w-full rounded-lg bg-cp-crimson px-6 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white transition-all hover:bg-cp-crimson-dark active:scale-[0.98]"
         >
           Add to Cart
         </button>
         <button
           type="button"
           onClick={handleBuyNow}
-          className="w-full rounded-lg bg-gradient-to-br from-cp-saffron to-cp-saffron-bright px-6 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white transition-transform hover:-translate-y-px"
+          className="btn-sheen group w-full rounded-lg bg-gradient-to-br from-cp-saffron to-cp-saffron-bright px-6 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98]"
         >
-          Buy Now
+          <span className="inline-flex items-center justify-center gap-2">
+            Buy Now
+            <span
+              className="transition-transform duration-300 group-hover:translate-x-1"
+              aria-hidden="true"
+            >
+              →
+            </span>
+          </span>
         </button>
         {product?._id ? (
           <WishlistButton

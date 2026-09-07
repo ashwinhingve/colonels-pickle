@@ -76,8 +76,9 @@ function ShopContent() {
           </div>
         </div>
 
-        {/* Filter row */}
-        <div className="mt-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        {/* Filter row — sticky under the header */}
+        <div className="sticky top-16 z-20 -mx-4 mt-10 border-b border-cp-border/60 bg-cp-cream/85 px-4 py-3 backdrop-blur-md">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
@@ -121,6 +122,7 @@ function ShopContent() {
             ))}
           </select>
         </div>
+        </div>
 
         <p className="mt-4 font-sans text-sm text-cp-text-muted">
           {loading
@@ -162,7 +164,7 @@ function ShopContent() {
             <StaggerContainer>
               <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
                 {products.map((p) => (
-                  <StaggerItem key={p._id}>
+                  <StaggerItem key={p._id} className="h-full">
                     <ProductCard product={p} />
                   </StaggerItem>
                 ))}

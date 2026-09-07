@@ -147,7 +147,9 @@ export function StaggeredHeroPanels({ pool }: { pool: HeroPoolItem[] }) {
                       loop
                       autoPlay
                       playsInline
-                      className="h-full w-full object-cover"
+                      className={`h-full w-full object-cover ${
+                        panel % 2 ? 'animate-kenburns-alt' : 'animate-kenburns'
+                      }`}
                     />
                   ) : (
                     <Image
@@ -155,7 +157,9 @@ export function StaggeredHeroPanels({ pool }: { pool: HeroPoolItem[] }) {
                       alt={item.altText || item.title || "Colonel's Pickle"}
                       fill
                       sizes={config.sizes}
-                      className="object-cover"
+                      className={`object-cover ${
+                        panel % 2 ? 'animate-kenburns-alt' : 'animate-kenburns'
+                      }`}
                       priority={panel === 0}
                     />
                   )}
