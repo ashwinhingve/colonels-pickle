@@ -140,7 +140,7 @@ export default function CartPage() {
     <div className="min-h-screen bg-cp-cream">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-cp-cream via-white to-cp-terracotta-light py-12 md:py-16 border-b">
-        <RajasthaniPattern variant="camo" opacity={0.06} color="#6B7F3A" />
+        <RajasthaniPattern variant="camo" opacity={0.03} color="#6B7F3A" />
         <div className="relative z-10 container mx-auto px-4">
           <AnimatedSection direction="up" className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">

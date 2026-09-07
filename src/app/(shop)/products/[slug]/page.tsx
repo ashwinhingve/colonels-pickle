@@ -294,7 +294,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
         {/* Trust & Certification Strip */}
         <div className="mt-16 relative rounded-2xl border border-cp-border bg-white p-8">
-          <RajasthaniPattern variant="camo" opacity={0.06} color="#6B7F3A" />
+          <RajasthaniPattern variant="camo" opacity={0.03} color="#6B7F3A" />
           <div className="relative z-10">
             <h3 className="font-display text-lg font-bold text-cp-text mb-6">
               Why You&apos;ll Love This

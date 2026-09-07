@@ -27,7 +27,7 @@ export async function FeaturedProducts() {
     <section className="bg-cp-cream py-14 md:py-20">
       <div className="mx-auto max-w-7xl px-4">
         <SectionHeader
-          eyebrow="⚔️ SOLDIER'S SELECTION"
+          eyebrow="OUR ACHAAR COLLECTION"
           title="Signature Homemade Pickles"
           subtitle="Crafted in small batches with a mother's recipe — 24 whole spices, cold-pressed mustard oil, and zero artificial preservatives."
         />
@@ -44,9 +44,9 @@ export async function FeaturedProducts() {
           <TapScale asChild>
             <Link
               href="/products"
-              className="inline-block rounded-lg border-2 border-cp-olive bg-cp-olive px-7 py-3 font-sans text-sm font-bold uppercase tracking-[0.08em] text-white transition-all hover:bg-cp-olive-dark hover:shadow-[0_8px_20px_rgba(212,160,23,0.3)]"
+              className="inline-block rounded-lg border-2 border-cp-crimson px-7 py-3 font-sans text-sm font-bold uppercase tracking-wide text-cp-crimson transition-all hover:bg-cp-crimson hover:text-white hover:shadow-lg"
             >
-              VIEW FULL ARSENAL ⚔️
+              View All 15+ Products →
             </Link>
           </TapScale>
         </div>

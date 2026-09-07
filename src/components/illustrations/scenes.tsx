@@ -358,39 +358,8 @@ export function SpiceScatter({ className, title, ...p }: SVGProps) {
   );
 }
 
-export interface WebbingStitchAccentProps extends SVGProps {
-  /** "webbing" (default — original double-stitch) or "rope" (thicker twisted-rope accent for higher-impact moments). */
-  variant?: "webbing" | "rope";
-}
-
-export function WebbingStitchAccent({ className, title, variant = "webbing", ...p }: WebbingStitchAccentProps) {
-  if (variant === "rope") {
-    // Thicker twisted-rope rendering (herringbone weave + end rivets) — reserved
-    // for the one or two section transitions that earn a heavier motif than the
-    // default webbing stitch below. Same viewBox so it drops in anywhere webbing does.
-    return (
-      <svg viewBox="0 0 200 14" className={className} {...base({ title })} {...p}>
-        {title ? <title>{title}</title> : null}
-        <g stroke="currentColor" fill="none">
-          <path d="M0 7 L200 7" strokeWidth="3" opacity="0.3" />
-          <g strokeWidth="1.6" opacity="0.6">
-            {Array.from({ length: 19 }).map((_, i) => {
-              const x = i * 10 + 2;
-              return i % 2 === 0 ? (
-                <path key={i} d={`M${x} 2 L${x + 8} 12`} />
-              ) : (
-                <path key={i} d={`M${x} 12 L${x + 8} 2`} />
-              );
-            })}
-          </g>
-          <circle cx="6" cy="7" r="3" fill="currentColor" opacity="0.8" />
-          <circle cx="194" cy="7" r="3" fill="currentColor" opacity="0.8" />
-        </g>
-      </svg>
-    );
-  }
-
-  // Canvas webbing double-stitch border accent (default). Pair of dashed parallel lines with cross-stitches.
+export function WebbingStitchAccent({ className, title, ...p }: SVGProps) {
+  // Canvas webbing double-stitch border accent. Pair of dashed parallel lines with cross-stitches.
   return (
     <svg viewBox="0 0 200 14" className={className} {...base({ title })} {...p}>
       {title ? <title>{title}</title> : null}

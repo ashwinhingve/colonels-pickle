@@ -7,7 +7,6 @@ import { useCartStore } from "@/store/useCartStore";
 import { WishlistButton } from "@/components/account/WishlistButton";
 import { BRAND } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { ChevronDivider } from "@/components/illustrations";
 import type { ProductTheme } from "@/lib/productTheme";
 
 interface ProductPurchaseProps {
@@ -60,13 +59,7 @@ export function ProductPurchase({ product, theme }: ProductPurchaseProps) {
         <Badge variant="no-preservatives">No Preservatives ✓</Badge>
       </div>
 
-      <ChevronDivider
-        direction="right"
-        color="#9C4420"
-        className="mt-4 h-3 w-5 opacity-70"
-        aria-hidden="true"
-      />
-      <h1 className="mt-1.5 font-display text-3xl font-extrabold leading-tight text-cp-text md:text-[36px]">
+      <h1 className="mt-4 font-display text-3xl font-extrabold leading-tight text-cp-text md:text-[36px]">
         {product?.name}
       </h1>
       {theme.nameHindi ? (

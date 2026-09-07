@@ -87,8 +87,8 @@ export async function HeroSection() {
           "linear-gradient(135deg, #3A4A1F 0%, #4B5D2A 55%, #2E3818 100%)",
       }}
     >
-      <RajasthaniPattern variant="camo" opacity={0.07} color="#F5EBDA" />
-      <RajasthaniPattern variant="blueprint" opacity={0.05} color="#D4A017" />
+      <RajasthaniPattern variant="camo" opacity={0.05} color="#F5EBDA" />
+      <RajasthaniPattern variant="blueprint" opacity={0.04} color="#D4A017" />
 
       {/* Tactical corner brackets — subtle HUD framing */}
       <CornerFlourish
@@ -203,7 +203,7 @@ export async function HeroSection() {
           <div className="mt-10 flex gap-10">
             {STATS.map((s) => (
               <div key={s.label}>
-                <div className="font-tactical-bold text-4xl text-cp-gold-light">
+                <div className="font-display text-4xl font-black text-cp-gold-light">
                   {s.value}
                 </div>
                 <div className="mt-1 font-hindi text-xs uppercase tracking-widest text-cp-beige/60">

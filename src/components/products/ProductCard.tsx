@@ -7,7 +7,6 @@ import { useMemo, useState } from "react";
 import { Badge } from "@/components/common/Badge";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { VariantSelector } from "@/components/common/VariantSelector";
-import { InkStampRound } from "@/components/illustrations";
 import { useCartStore } from "@/store/useCartStore";
 import { getProductTheme } from "@/lib/productTheme";
 import { cn } from "@/lib/utils";
@@ -144,21 +143,13 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
           <RajasthaniPattern variant="jali" opacity={0.07} color="#ffffff" />
 
           {badgeLabel ? (
-            <div className="absolute left-[10px] top-[10px] z-[2]">
-              <InkStampRound
-                label=""
-                color={theme.badgeColor || "#4B5D2A"}
-                className="pointer-events-none absolute -inset-2 opacity-25"
-                aria-hidden
-              />
-              <Badge
-                variant="product-badge"
-                className="relative"
-                style={{ backgroundColor: theme.badgeColor || "#4B5D2A" }}
-              >
-                {badgeLabel}
-              </Badge>
-            </div>
+            <Badge
+              variant="product-badge"
+              className="absolute left-[10px] top-[10px] z-[2]"
+              style={{ backgroundColor: theme.badgeColor || "#4B5D2A" }}
+            >
+              {badgeLabel}
+            </Badge>
           ) : null}
 
           {primaryImg ? (
@@ -217,7 +208,7 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
           <div className="mb-[14px] flex-1" />
         )}
 
-        <div className="mb-[7px] font-tactical text-[10px] uppercase text-cp-text-muted">
+        <div className="mb-[7px] font-sans text-[10px] font-bold uppercase tracking-[0.07em] text-cp-text-muted">
           Select Size
         </div>
         <VariantSelector

@@ -298,7 +298,7 @@ export default async function FAQPage() {
 
       {/* 1. Hero/Header Section */}
       <section className="relative overflow-hidden bg-gradient-to-b from-cp-cream via-white to-cp-cream py-16 md:py-20">
-        <RajasthaniPattern variant="camo" opacity={0.06} color="#6B7F3A" />
+        <RajasthaniPattern variant="camo" opacity={0.03} color="#6B7F3A" />
         <div className="relative z-10 mx-auto max-w-6xl px-4">
           <AnimatedSection direction="up" duration={0.65} className="text-center mb-8">
             <div className="flex justify-center mb-6">

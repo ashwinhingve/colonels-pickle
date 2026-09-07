@@ -47,33 +47,30 @@ export function ProcessSection() {
             {STEPS.map((step, index) => (
               <StaggerItem key={step.number}>
                 <div className="relative">
-                  {/* ── Dashed gold connecting line ── */}
+                  {/* Connecting line (desktop only) */}
                   {index < STEPS.length - 1 && (
-                    <div className="absolute top-[60px] left-[calc(100%+0px)] hidden w-[calc(100%-32px)] h-1 bg-gradient-to-r from-cp-gold via-cp-gold to-transparent lg:block" style={{borderTop: "2px dashed #E4B94B"}} />
+                    <div className="absolute top-[60px] left-[calc(100%+0px)] hidden w-[calc(100%-32px)] h-1 bg-gradient-to-r from-cp-crimson to-transparent lg:block" />
                   )}
 
+                  {/* Step card */}
                   <HoverLift lift={5}>
-                    <div className="flex flex-col h-full rounded-2xl bg-white p-8 transition-all duration-300 hover:shadow-lg border-2 border-cp-border hover:border-cp-gold/50 relative overflow-hidden">
-                      {/* ── Corner insignias ── */}
-                      <span className="absolute top-2 left-2 text-cp-gold/30 text-xs">★</span>
-                      <span className="absolute bottom-2 right-2 text-cp-gold/30 text-xs">⚔️</span>
-                      
-                      {/* ── Step circle ── */}
-                      <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-cp-olive to-cp-gold text-white font-display text-2xl font-extrabold">
+                    <div className="flex flex-col h-full rounded-2xl bg-white p-8 transition-all duration-300 hover:shadow-lg">
+                      {/* Step circle */}
+                      <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-cp-crimson text-white font-display text-2xl font-extrabold">
                         {step.number}
                       </div>
 
-                      {/* ── Icon ── */}
+                      {/* Icon */}
                       <div className="mb-4 text-cp-terracotta">
                         <step.Icon className="h-9 w-9" strokeWidth={1.75} />
                       </div>
 
-                      {/* ── Title ── */}
-                      <h3 className="mb-3 font-display text-lg font-bold text-cp-text uppercase">
+                      {/* Title */}
+                      <h3 className="mb-3 font-display text-lg font-bold text-cp-text">
                         {step.title}
                       </h3>
 
-                      {/* ── Description ── */}
+                      {/* Description */}
                       <p className="font-serif text-[14px] leading-relaxed text-cp-text-muted">
                         {step.description}
                       </p>

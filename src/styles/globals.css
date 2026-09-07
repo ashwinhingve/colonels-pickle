@@ -92,9 +92,6 @@
   --font-serif: 'Lora', Georgia, serif;
   --font-sans: 'Mukta', system-ui, sans-serif;
   --font-hindi: 'Mukta', 'Noto Sans Devanagari', sans-serif;
-  /* Tactical accent — condensed field-label face. Scoped to a fixed list of
-     small UI labels (badges, stat numbers, size tags) — never headlines or body. */
-  --font-tactical: 'Oswald', 'Mukta', system-ui, sans-serif;
 
   /* Animations */
   --animate-float: float 3.5s ease-in-out infinite;
@@ -188,20 +185,6 @@ body {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* Tactical accent utility — condensed field-label type (Oswald). Reserved for a
-   fixed set of small UI labels (stat numbers, size tags, stamp text, USP labels).
-   Never apply to headlines or body copy — Playfair/Lora stay the primary voice. */
-.font-tactical {
-  font-family: var(--font-tactical);
-  font-weight: 600;
-  letter-spacing: 0.06em;
-}
-.font-tactical-bold {
-  font-family: var(--font-tactical);
-  font-weight: 700;
-  letter-spacing: 0.07em;
 }
 
 /* Increase base text sizes */
