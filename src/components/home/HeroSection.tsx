@@ -124,12 +124,26 @@ export async function HeroSection() {
         <Link
           href="/products"
           aria-label="Shop Colonel's Pickle achaars"
-          className="group flex items-center justify-center overflow-hidden"
+          className="group relative flex h-[calc(100svh-81px)] w-full items-center justify-center overflow-hidden"
         >
-          {/* Constrain by viewport height (minus the 81px sticky header) so the
-              full banner — including its baked-in trust row + CTA — is visible on
-              load without scrolling. Width auto-letterboxes into the matching
-              beige section background when height is the limiting dimension. */}
+          {/* Immersive backdrop: the same banner blown up, blurred and dimmed,
+              fills the full viewport height so any side letterboxing reads as a
+              soft extension of the artwork instead of flat empty margin. */}
+          <Image
+            src="/hero/hero-banner-1.jpg"
+            alt=""
+            aria-hidden
+            fill
+            priority
+            sizes="100vw"
+            className="scale-125 object-cover blur-2xl brightness-[0.92] saturate-[1.15]"
+          />
+          <span
+            className="pointer-events-none absolute inset-0 bg-cp-beige/25"
+            aria-hidden="true"
+          />
+          {/* Sharp banner, maximised within the band with no crop and no scroll
+              (object-contain picks whichever of width/height is limiting). */}
           <Image
             src="/hero/hero-banner-1.jpg"
             alt="Colonel's Pickle homemade Indian achaar — maa ka pyaar, ghar ka achar. No vinegar, no artificial preservatives, natural ingredients, loved by families."
@@ -137,7 +151,7 @@ export async function HeroSection() {
             height={941}
             priority
             sizes="100vw"
-            className="mx-auto block h-auto max-h-[calc(100svh-81px)] w-auto max-w-full transition-transform duration-700 ease-out group-hover:scale-[1.015]"
+            className="relative z-10 h-full w-full object-contain drop-shadow-[0_18px_50px_rgba(0,0,0,0.35)] transition-transform duration-700 ease-out group-hover:scale-[1.01]"
           />
         </Link>
       </section>
@@ -256,16 +270,19 @@ export async function HeroSection() {
               aria-hidden="true"
             />
             <div className="hidden sm:block">
-              {/* Registered trademark wordmark (image), separate from the crest logo */}
-              <Image
-                src="/images/brand/colonels-pickle-wordmark.png"
-                alt="Colonel's Pickle® — homemade Indian pickles"
-                width={691}
-                height={382}
-                className="h-[44px] w-auto drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]"
-                priority
-              />
-              <p className="mt-1 font-hindi text-[11px] tracking-[0.2em] text-cp-gold-light">
+              {/* Registered trademark wordmark on a light plaque so the red
+                  lettering stays legible against the dark olive hero. */}
+              <span className="inline-flex w-fit items-center rounded-lg bg-cp-cream-muted/95 px-3 py-1.5 shadow-[0_4px_14px_rgba(0,0,0,0.35)] ring-1 ring-black/10">
+                <Image
+                  src="/images/brand/colonels-pickle-wordmark.png"
+                  alt="Colonel's Pickle® — homemade Indian pickles"
+                  width={662}
+                  height={358}
+                  className="h-[38px] w-auto"
+                  priority
+                />
+              </span>
+              <p className="mt-1.5 font-hindi text-[11px] tracking-[0.2em] text-cp-gold-light">
                 MAA KA PYAAR, GHAR KA ACHAR
               </p>
             </div>

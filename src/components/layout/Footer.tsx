@@ -82,15 +82,14 @@ export function Footer() {
                   className="h-[92%] w-[92%] object-contain"
                 />
               </Link>
-              {/* Registered trademark wordmark on a light plaque so its baked-in
-                  white sticker-outline reads intentionally against the dark bg
-                  instead of fringing/haloing. */}
+              {/* Registered trademark wordmark on a light plaque so the red
+                  lettering keeps strong contrast against the dark footer. */}
               <span className="mt-4 inline-flex w-fit items-center rounded-xl bg-cp-cream-muted/95 px-4 py-3 shadow-[0_4px_14px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
                 <Image
                   src="/images/brand/colonels-pickle-wordmark.png"
                   alt="Colonel's Pickle® — homemade Indian pickles"
-                  width={691}
-                  height={382}
+                  width={662}
+                  height={358}
                   className="h-auto w-[168px]"
                 />
               </span>

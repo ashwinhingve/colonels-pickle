@@ -158,13 +158,13 @@ export function Header() {
           {/* ── CENTER: Logo + brand text ── */}
           <Link
             href="/"
-            className="group flex items-center justify-self-center gap-3 leading-none"
+            className="group flex items-center justify-self-center gap-2.5 leading-none"
             aria-label="Colonel's Pickle — Home"
           >
             <span
               className={cn(
                 "hidden shrink-0 items-center justify-center overflow-hidden rounded-full border border-cp-gold/50 bg-white shadow-sm transition-transform duration-300 group-hover:scale-105 lg:flex",
-                scrolled ? "h-[52px] w-[52px]" : "h-[68px] w-[68px]"
+                scrolled ? "h-[46px] w-[46px]" : "h-[58px] w-[58px]"
               )}
             >
               <Image
@@ -191,28 +191,23 @@ export function Header() {
               <Image
                 src="/images/brand/colonels-pickle-wordmark.png"
                 alt="Colonel's Pickle® — homemade Indian pickles"
-                width={691}
-                height={382}
-                className="hidden h-[25px] w-auto min-[380px]:block"
+                width={662}
+                height={358}
+                className="hidden h-[24px] w-auto min-[380px]:block"
                 priority
               />
             </span>
-
-            <span
-              className="hidden h-10 w-px bg-gradient-to-b from-transparent via-cp-border to-transparent lg:block"
-              aria-hidden="true"
-            />
 
             <span className="hidden flex-col leading-tight lg:flex">
               {/* Registered trademark wordmark (image), shown separately from the crest logo */}
               <Image
                 src="/images/brand/colonels-pickle-wordmark.png"
                 alt="Colonel's Pickle® — homemade Indian pickles"
-                width={691}
-                height={382}
+                width={662}
+                height={358}
                 className={cn(
                   "w-auto transition-[height] duration-300",
-                  scrolled ? "h-[40px]" : "h-[46px]"
+                  scrolled ? "h-[34px]" : "h-[38px]"
                 )}
                 priority
               />
