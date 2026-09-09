@@ -187,33 +187,43 @@ export function Header() {
                   priority
                 />
               </span>
-              {/* Compact wordmark for phones with room; crest-only below 380px */}
-              <Image
-                src="/images/brand/colonels-pickle-wordmark.png"
-                alt="Colonel's Pickle® — homemade Indian pickles"
-                width={662}
-                height={358}
-                className="hidden h-[24px] w-auto min-[380px]:block"
-                priority
-              />
+              {/* Compact on-brand type for phones with room; crest-only below 380px */}
+              <span className="hidden flex-col leading-none min-[380px]:flex">
+                <span className="font-display text-[19px] font-black leading-none tracking-[-0.01em] text-[#B0201C]">
+                  Colonel&apos;s <span className="italic">Pickle</span>
+                  <sup className="ml-0.5 align-super font-sans text-[0.42em] font-bold text-cp-brown">
+                    &reg;
+                  </sup>
+                </span>
+                <span className="mt-1 font-hindi text-[8px] font-semibold tracking-[0.16em] text-cp-olive-dark">
+                  MAA KA PYAAR, GHAR KA ACHAR
+                </span>
+              </span>
             </span>
 
-            <span className="hidden flex-col leading-tight lg:flex">
-              {/* Registered trademark wordmark (image), shown separately from the crest logo */}
-              <Image
-                src="/images/brand/colonels-pickle-wordmark.png"
-                alt="Colonel's Pickle® — homemade Indian pickles"
-                width={662}
-                height={358}
+            {/* Slim gold divider ties the crest to the wordmark */}
+            <span
+              className="hidden h-9 w-px bg-gradient-to-b from-transparent via-cp-gold/45 to-transparent lg:block"
+              aria-hidden="true"
+            />
+
+            <span className="hidden flex-col leading-none lg:flex">
+              {/* Trademark set as crisp, on-brand serif type so it stays sharp at
+                  navbar size; the signature red script wordmark image still leads
+                  the hero and footer. */}
+              <span
                 className={cn(
-                  "w-auto transition-[height] duration-300",
-                  scrolled ? "h-[34px]" : "h-[38px]"
+                  "font-display font-black leading-none tracking-[-0.01em] text-[#B0201C] transition-[font-size] duration-300",
+                  scrolled ? "text-[23px]" : "text-[27px]"
                 )}
-                priority
-              />
-              {/* Tagline as one balanced line: a short gold tick + the words,
-                  tightly tied to the wordmark above (replaces the stray stitch). */}
-              <span className="mt-1 flex items-center gap-2">
+              >
+                Colonel&apos;s <span className="italic">Pickle</span>
+                <sup className="ml-0.5 align-super font-sans text-[0.42em] font-bold text-cp-brown">
+                  &reg;
+                </sup>
+              </span>
+              {/* Tagline: a short gold tick + the words */}
+              <span className="mt-2 flex items-center gap-2">
                 <span
                   className="h-px w-4 shrink-0 bg-gradient-to-r from-transparent to-cp-gold/70"
                   aria-hidden="true"

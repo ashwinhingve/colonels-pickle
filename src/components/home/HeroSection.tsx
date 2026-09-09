@@ -124,26 +124,10 @@ export async function HeroSection() {
         <Link
           href="/products"
           aria-label="Shop Colonel's Pickle achaars"
-          className="group relative flex h-[calc(100svh-81px)] w-full items-center justify-center overflow-hidden"
+          className="group relative block w-full overflow-hidden"
         >
-          {/* Immersive backdrop: the same banner blown up, blurred and dimmed,
-              fills the full viewport height so any side letterboxing reads as a
-              soft extension of the artwork instead of flat empty margin. */}
-          <Image
-            src="/hero/hero-banner-1.jpg"
-            alt=""
-            aria-hidden
-            fill
-            priority
-            sizes="100vw"
-            className="scale-125 object-cover blur-2xl brightness-[0.92] saturate-[1.15]"
-          />
-          <span
-            className="pointer-events-none absolute inset-0 bg-cp-beige/25"
-            aria-hidden="true"
-          />
-          {/* Sharp banner, maximised within the band with no crop and no scroll
-              (object-contain picks whichever of width/height is limiting). */}
+          {/* Full-bleed banner: edge to edge, full width, native aspect ratio —
+              nothing cropped, no letterbox margins. */}
           <Image
             src="/hero/hero-banner-1.jpg"
             alt="Colonel's Pickle homemade Indian achaar — maa ka pyaar, ghar ka achar. No vinegar, no artificial preservatives, natural ingredients, loved by families."
@@ -151,7 +135,12 @@ export async function HeroSection() {
             height={941}
             priority
             sizes="100vw"
-            className="relative z-10 h-full w-full object-contain drop-shadow-[0_18px_50px_rgba(0,0,0,0.35)] transition-transform duration-700 ease-out group-hover:scale-[1.01]"
+            className="block h-auto w-full transition-transform duration-[900ms] ease-out group-hover:scale-[1.02]"
+          />
+          {/* Soft fade into the next section for a premium seam */}
+          <span
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-cp-beige to-transparent"
+            aria-hidden="true"
           />
         </Link>
       </section>
