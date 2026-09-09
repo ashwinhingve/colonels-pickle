@@ -8,10 +8,46 @@ import { HoverLift } from "@/components/shared/HoverLift";
 import { WebbingStitchAccent } from "@/components/illustrations";
 import { OFFERS } from "@/lib/constants";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+
 export const metadata: Metadata = {
   title: "Wholesale & Retailer Program",
   description:
-    "Partner with Colonel's Pickle — 20% wholesale discount, monthly credit, free transportation, and bulk order discounts. Apply now.",
+    "Partner with Colonel's Pickle (Kernel Pickle) — 20% wholesale discount, monthly credit, free pan-India transportation and bulk discounts on homemade Indian pickles, oils & gulkand. Apply now.",
+  keywords: [
+    "pickle wholesale india",
+    "achaar wholesale",
+    "bulk pickle supplier",
+    "pickle distributor",
+    "retailer program",
+    "Colonel's Pickle wholesale",
+    "Ridhwika Agro Organics",
+  ],
+  alternates: { canonical: `${SITE_URL}/wholesale` },
+  openGraph: {
+    title: "Wholesale & Retailer Program | Colonel's Pickle",
+    description:
+      "20% wholesale discount, monthly credit, free transportation and bulk discounts on homemade Indian pickles. Become a Colonel's Pickle partner.",
+    url: `${SITE_URL}/wholesale`,
+    type: 'website',
+    siteName: "Colonel's Pickle",
+    locale: 'en_IN',
+    images: [
+      {
+        url: `${SITE_URL}/og-image.jpg`,
+        width: 1200,
+        height: 630,
+        alt: "Colonel's Pickle — wholesale & retailer program",
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Wholesale & Retailer Program | Colonel's Pickle",
+    description:
+      "20% wholesale discount, monthly credit & free transportation on homemade Indian pickles.",
+    images: [`${SITE_URL}/og-image.jpg`],
+  },
 };
 
 const BENEFITS = [

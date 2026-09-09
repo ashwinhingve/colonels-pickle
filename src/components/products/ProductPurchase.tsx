@@ -31,10 +31,12 @@ export function ProductPurchase({ product, theme }: ProductPurchaseProps) {
 
   const buildPayload = () => ({
     ...product,
-    variantId: current.name,
+    variantId: current.id,
     price: current.price,
     originalPrice: current.originalPrice,
   });
+
+  const soldOut = (current?.stock ?? product?.stock ?? 0) <= 0;
 
   const handleAddToCart = () => {
     addItem(buildPayload(), 1);
@@ -83,20 +85,25 @@ export function ProductPurchase({ product, theme }: ProductPurchaseProps) {
       <div className="flex flex-wrap gap-2">
         {list.map((v, i) => {
           const active = i === Math.min(selected, list.length - 1);
+          const variantOos = (v?.stock ?? 0) <= 0;
           return (
             <button
               key={v.name}
               type="button"
-              aria-pressed={active}
-              onClick={() => setSelected(i)}
+              disabled={variantOos}
+              aria-pressed={active && !variantOos}
+              onClick={() => !variantOos && setSelected(i)}
               className={cn(
                 "rounded-lg border-[1.5px] px-4 py-2 font-sans text-sm font-semibold transition-all active:scale-95",
-                active
-                  ? "border-cp-crimson bg-cp-crimson text-white shadow-sm"
-                  : "border-cp-border bg-white text-cp-text hover:border-cp-crimson hover:text-cp-crimson"
+                variantOos
+                  ? "cursor-not-allowed border-gray-300 bg-gray-100 text-gray-400"
+                  : active
+                    ? "border-cp-crimson bg-cp-crimson text-white shadow-sm"
+                    : "border-cp-border bg-white text-cp-text hover:border-cp-crimson hover:text-cp-crimson"
               )}
             >
               {v.name} — ₹{Number(v.price).toLocaleString("en-IN")}
+              {variantOos && " (OOS)"}
             </button>
           );
         })}
@@ -111,18 +118,36 @@ export function ProductPurchase({ product, theme }: ProductPurchaseProps) {
         </span>
       </div>
 
+      {soldOut && (
+        <div className="mt-4 rounded-lg bg-red-50 px-4 py-3 text-center font-sans text-sm font-semibold text-red-700">
+          Out of Stock
+        </div>
+      )}
+
       <div className="mt-6 space-y-3">
         <button
           type="button"
+          disabled={soldOut}
           onClick={handleAddToCart}
-          className="btn-sheen w-full rounded-lg bg-cp-crimson px-6 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white transition-all hover:bg-cp-crimson-dark active:scale-[0.98]"
+          className={cn(
+            "btn-sheen w-full rounded-lg px-6 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white transition-all active:scale-[0.98]",
+            soldOut
+              ? "cursor-not-allowed bg-gray-400"
+              : "bg-cp-crimson hover:bg-cp-crimson-dark"
+          )}
         >
           Add to Cart
         </button>
         <button
           type="button"
+          disabled={soldOut}
           onClick={handleBuyNow}
-          className="btn-sheen group w-full rounded-lg bg-gradient-to-br from-cp-saffron to-cp-saffron-bright px-6 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98]"
+          className={cn(
+            "btn-sheen group w-full rounded-lg px-6 py-3.5 font-sans text-sm font-bold uppercase tracking-wide text-white shadow-md transition-all active:scale-[0.98]",
+            soldOut
+              ? "cursor-not-allowed bg-gray-400"
+              : "bg-gradient-to-br from-cp-saffron to-cp-saffron-bright hover:-translate-y-0.5 hover:shadow-lg"
+          )}
         >
           <span className="inline-flex items-center justify-center gap-2">
             Buy Now

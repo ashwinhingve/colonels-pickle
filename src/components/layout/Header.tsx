@@ -82,14 +82,84 @@ export function Header() {
       >
         <div
           className={cn(
-            "container mx-auto flex items-center justify-between px-4 transition-[height] duration-300",
+            "container mx-auto grid grid-cols-[1fr_auto_1fr] items-center px-4 transition-[height] duration-300",
             scrolled ? "h-[64px]" : "h-[78px]"
           )}
         >
-          {/* ── LEFT: Logo + brand text ── */}
+          {/* ── LEFT: Menu trigger (mobile) / Nav (desktop) ── */}
+          <div className="flex items-center justify-self-start">
+            <button
+              type="button"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-cp-text transition-all duration-200 hover:scale-105 hover:bg-cp-crimson/[0.07] hover:text-cp-crimson lg:hidden"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMobileMenuOpen}
+            >
+              <Menu
+                className={cn(
+                  "h-6 w-6 transition-transform duration-300",
+                  isMobileMenuOpen && "rotate-90"
+                )}
+              />
+            </button>
+
+            <nav
+              className="hidden lg:flex lg:items-center"
+              aria-label="Main navigation"
+            >
+              <ul className="flex items-center gap-1">
+                {NAV_ITEMS.map((item, index) => {
+                  const isActive =
+                    item.href === "/"
+                      ? pathname === "/"
+                      : pathname.startsWith(item.href);
+                  return (
+                    <li
+                      key={item.href}
+                      className="animate-fade-up opacity-0"
+                      style={{ animationDelay: `${index * 70 + 120}ms` }}
+                    >
+                      <Link
+                        href={item.href}
+                        aria-current={isActive ? "page" : undefined}
+                        className={cn(
+                          "group relative block rounded-full px-4 py-2 font-hindi text-[14px] font-semibold transition-all duration-200",
+                          isActive
+                            ? "text-cp-crimson"
+                            : "text-cp-text hover:-translate-y-px hover:text-cp-crimson"
+                        )}
+                      >
+                        <span
+                          className={cn(
+                            "absolute inset-0 rounded-full bg-cp-crimson/[0.07] transition-opacity duration-200",
+                            isActive
+                              ? "opacity-100"
+                              : "opacity-0 group-hover:opacity-100"
+                          )}
+                          aria-hidden="true"
+                        />
+                        <span className="relative z-10">{item.label}</span>
+                        <span
+                          className={cn(
+                            "absolute -bottom-0.5 left-1/2 h-[2px] -translate-x-1/2 rounded-full bg-cp-crimson transition-all duration-300",
+                            isActive
+                              ? "w-6 opacity-100"
+                              : "w-0 opacity-0 group-hover:w-6 group-hover:opacity-100"
+                          )}
+                          aria-hidden="true"
+                        />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </div>
+
+          {/* ── CENTER: Logo + brand text ── */}
           <Link
             href="/"
-            className="group flex items-center gap-3 leading-none"
+            className="group flex items-center justify-self-center gap-3 leading-none"
             aria-label="Colonel's Pickle — Home"
           >
             <span
@@ -99,8 +169,8 @@ export function Header() {
               )}
             >
               <Image
-                src="/logo.png"
-                alt="Colonel's Pickle by Ridhwika Agro Organics"
+                src="/images/brand/ridhwika-crest.png"
+                alt="Colonel's Pickle crest — Ridhwika Agro Organics"
                 width={72}
                 height={72}
                 className="h-[92%] w-[92%] object-contain"
@@ -109,8 +179,8 @@ export function Header() {
             </span>
             <span className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-cp-gold/50 bg-white shadow-sm transition-transform duration-300 group-hover:scale-105 lg:hidden">
               <Image
-                src="/logo.png"
-                alt="Colonel's Pickle by Ridhwika Agro Organics"
+                src="/images/brand/ridhwika-crest.png"
+                alt="Colonel's Pickle crest — Ridhwika Agro Organics"
                 width={48}
                 height={48}
                 className="h-[92%] w-[92%] object-contain"
@@ -124,10 +194,19 @@ export function Header() {
             />
 
             <span className="hidden flex-col leading-tight lg:flex">
-              <span className="font-display text-lg font-bold tracking-tight text-cp-crimson transition-colors group-hover:text-cp-crimson-dark">
-                Colonel&apos;s Pickle
-              </span>
-              <span className="font-hindi text-[10px] tracking-[0.18em] text-cp-brown">
+              {/* Registered trademark wordmark (image), shown separately from the crest logo */}
+              <Image
+                src="/images/brand/colonels-pickle-wordmark.png"
+                alt="Colonel's Pickle® — homemade Indian pickles"
+                width={691}
+                height={382}
+                className={cn(
+                  "w-auto transition-[height] duration-300",
+                  scrolled ? "h-[40px]" : "h-[46px]"
+                )}
+                priority
+              />
+              <span className="mt-0.5 font-hindi text-[10px] tracking-[0.18em] text-cp-brown">
                 MAA KA PYAAR, GHAR KA ACHAR
               </span>
               <WebbingStitchAccent
@@ -137,61 +216,8 @@ export function Header() {
             </span>
           </Link>
 
-          {/* ── CENTER: Desktop nav ── */}
-          <nav
-            className="hidden lg:flex lg:items-center"
-            aria-label="Main navigation"
-          >
-            <ul className="flex items-center gap-1">
-              {NAV_ITEMS.map((item, index) => {
-                const isActive =
-                  item.href === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(item.href);
-                return (
-                  <li
-                    key={item.href}
-                    className="animate-fade-up opacity-0"
-                    style={{ animationDelay: `${index * 70 + 120}ms` }}
-                  >
-                    <Link
-                      href={item.href}
-                      aria-current={isActive ? "page" : undefined}
-                      className={cn(
-                        "group relative block rounded-full px-4 py-2 font-hindi text-[14px] font-semibold transition-all duration-200",
-                        isActive
-                          ? "text-cp-crimson"
-                          : "text-cp-text hover:-translate-y-px hover:text-cp-crimson"
-                      )}
-                    >
-                      <span
-                        className={cn(
-                          "absolute inset-0 rounded-full bg-cp-crimson/[0.07] transition-opacity duration-200",
-                          isActive
-                            ? "opacity-100"
-                            : "opacity-0 group-hover:opacity-100"
-                        )}
-                        aria-hidden="true"
-                      />
-                      <span className="relative z-10">{item.label}</span>
-                      <span
-                        className={cn(
-                          "absolute -bottom-0.5 left-1/2 h-[2px] -translate-x-1/2 rounded-full bg-cp-crimson transition-all duration-300",
-                          isActive
-                            ? "w-6 opacity-100"
-                            : "w-0 opacity-0 group-hover:w-6 group-hover:opacity-100"
-                        )}
-                        aria-hidden="true"
-                      />
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-
           {/* ── RIGHT: Actions ── */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-self-end gap-3">
             {/* User account */}
             {mounted && status === "authenticated" && session?.user ? (
               <div className="user-menu-container relative">
@@ -345,22 +371,6 @@ export function Header() {
                 </span>
               </Link>
             </TapScale>
-
-            {/* Mobile menu toggle */}
-            <button
-              type="button"
-              className="flex h-10 w-10 items-center justify-center rounded-full text-cp-text transition-all duration-200 hover:scale-105 hover:bg-cp-crimson/[0.07] hover:text-cp-crimson lg:hidden"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={isMobileMenuOpen}
-            >
-              <Menu
-                className={cn(
-                  "h-6 w-6 transition-transform duration-300",
-                  isMobileMenuOpen && "rotate-90"
-                )}
-              />
-            </button>
           </div>
         </div>
       </div>

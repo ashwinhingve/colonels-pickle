@@ -8,7 +8,7 @@ const collectionJsonLd = {
   '@type': 'CollectionPage',
   name: "Shop All Products | Colonel's Pickle",
   description:
-    'Authentic homemade pickles, masalas and cold-press oils — no artificial preservatives, 24 whole spices, FSSAI certified, pan-India delivery from Jaipur.',
+    'Authentic homemade pickles, masalas and cold-press oils — no artificial preservatives, 20 to 24 whole spices, FSSAI certified, pan-India delivery from Jaipur.',
   url: `${SITE_URL}/products`,
   mainEntity: {
     '@type': 'ItemList',
@@ -49,18 +49,25 @@ function safeJsonLd(data: object): string {
 }
 
 export const metadata: Metadata = {
-  title: "Shop All Products | Colonel's Pickle",
+  // Brand baked in: the (shop) route group's layout sets a plain-string title,
+  // which stops the root `%s | Colonel's Pickle` template from reaching here.
+  title: "Shop Homemade Indian Pickles, Oils & Gulkand | Colonel's Pickle",
   description:
-    'Browse authentic homemade pickles, traditional masalas and cold-press oils — made with 24 whole spices and zero artificial preservatives. FSSAI certified. Pan-India delivery from Jaipur.',
+    'Buy Colonel\'s Pickle (Kernel Pickle) online — authentic homemade Indian pickles (achaar), traditional masalas, gulkand and cold-press mustard oil. 20 to 24 whole spices, zero artificial preservatives, no vinegar. FSSAI certified, pan-India delivery from Jaipur.',
   keywords: [
-    'buy pickle online India',
+    'buy pickle online india',
+    'indian pickles online',
+    'kernel pickle',
     'homemade achar online',
+    'mango pickle online',
+    'green chilli pickle',
+    'garlic pickle',
     'preservative-free pickle',
     'cold press mustard oil online',
     'buy masala online',
+    'gulkand online',
     "Colonel's Pickle shop",
     'authentic Rajasthani achar',
-    'Ridhwika Agro Organics products',
     'traditional Indian pickle',
     'FSSAI certified pickle',
   ],
@@ -68,28 +75,28 @@ export const metadata: Metadata = {
     canonical: `${SITE_URL}/products`,
   },
   openGraph: {
-    title: "Shop All Products | Colonel's Pickle",
+    title: "Shop Homemade Indian Pickles, Oils & Gulkand | Colonel's Pickle",
     description:
-      'Authentic homemade pickles, masalas and cold-press oils. No artificial preservatives. FSSAI certified. Pan-India delivery from Jaipur.',
+      'Authentic homemade Indian pickles, masalas, gulkand and cold-press oils. No preservatives, no vinegar. FSSAI certified. Pan-India delivery from Jaipur.',
     url: `${SITE_URL}/products`,
     type: 'website',
     siteName: "Colonel's Pickle",
     locale: 'en_IN',
     images: [
       {
-        url: `${SITE_URL}/logo.png`,
+        url: `${SITE_URL}/og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: "Colonel's Pickle — Shop All Products",
+        alt: "Colonel's Pickle — shop homemade Indian pickles, oils & gulkand",
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Shop All Products | Colonel's Pickle",
+    title: "Shop Homemade Indian Pickles, Oils & Gulkand | Colonel's Pickle",
     description:
-      'Authentic homemade pickles, masalas and cold-press oils. No artificial preservatives.',
-    images: ['/logo.png'],
+      'Authentic homemade Indian pickles, masalas and cold-press oils. No preservatives, no vinegar.',
+    images: [`${SITE_URL}/og-image.jpg`],
   },
 };
 

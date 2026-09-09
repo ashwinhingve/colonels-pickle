@@ -15,7 +15,7 @@ const TRUST_ITEMS = [
   { Icon: NoChemicalIcon, title: "Cold Press Oils", sub: "Kachi ghani wooden press" },
   { Icon: ShieldCheckIcon, title: "FSSAI Certified", sub: "Safe & trusted" },
   { Icon: LeafIcon, title: "Rock & Black Salt", sub: "No table salt used" },
-  { Icon: LeafIcon, title: "24 Whole Spices", sub: "Sun-dried & freshly ground" },
+  { Icon: LeafIcon, title: "20–24 Whole Spices", sub: "Sun-dried & freshly ground" },
   { Icon: NoVinegarIcon, title: "No Vinegar", sub: "Premium ₹30,000/kg" },
 ];
 

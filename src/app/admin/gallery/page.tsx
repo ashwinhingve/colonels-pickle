@@ -33,6 +33,7 @@ interface MediaItem {
   isActive: boolean;
   showInHero: boolean;
   heroOrder: number;
+  showAsHeroPortrait?: boolean;
 }
 
 interface MediaForm {
@@ -48,6 +49,7 @@ interface MediaForm {
   category: string;
   isActive: boolean;
   showInHero: boolean;
+  showAsHeroPortrait: boolean;
 }
 
 const emptyForm: MediaForm = {
@@ -59,6 +61,7 @@ const emptyForm: MediaForm = {
   category: 'General',
   isActive: true,
   showInHero: false,
+  showAsHeroPortrait: false,
 };
 
 type Tab = 'all' | 'hero';
@@ -334,6 +337,7 @@ export default function GalleryAdminPage() {
       category: item.category || 'General',
       isActive: item.isActive,
       showInHero: item.showInHero,
+      showAsHeroPortrait: item.showAsHeroPortrait ?? false,
     });
     setShowAddForm(false);
   };
@@ -570,6 +574,19 @@ export default function GalleryAdminPage() {
                 />
                 <span className="text-sm text-gray-700">Show in Hero (homepage rotation)</span>
               </label>
+              <label className="flex items-center gap-2 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={form.showAsHeroPortrait}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, showAsHeroPortrait: e.target.checked }))
+                  }
+                  className="w-4 h-4 accent-amber-600"
+                />
+                <span className="text-sm text-gray-700">
+                  Use as Hero portrait (framed photo in the homepage arch)
+                </span>
+              </label>
             </div>
 
             {/* Actions */}
@@ -676,6 +693,11 @@ export default function GalleryAdminPage() {
                     <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-gray-100 text-gray-600">
                       {item.category}
                     </span>
+                    {item.showAsHeroPortrait && (
+                      <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-amber-100 text-amber-800">
+                        Hero portrait
+                      </span>
+                    )}
                     <h4 className="font-medium text-gray-900 truncate">{item.title}</h4>
                   </div>
                   <p className="text-sm text-gray-500 truncate mt-0.5">{item.caption}</p>

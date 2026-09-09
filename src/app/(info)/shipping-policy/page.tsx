@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     images: [
       {
-        url: `${SITE_URL}/logo.png`,
+        url: `${SITE_URL}/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: "Colonel's Pickle — Shipping Policy",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "Shipping Policy | Colonel's Pickle",
     description:
       "Learn about Colonel's Pickle shipping options, costs, and delivery timelines across India.",
-    images: [`${SITE_URL}/logo.png`],
+    images: [`${SITE_URL}/og-image.jpg`],
   },
 }
 

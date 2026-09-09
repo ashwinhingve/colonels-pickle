@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     images: [
       {
-        url: `${SITE_URL}/logo.png`,
+        url: `${SITE_URL}/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: "Colonel's Pickle — Terms & Conditions",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     title: "Terms & Conditions | Colonel's Pickle",
     description:
       "Read Colonel's Pickle Terms and Conditions before placing your order.",
-    images: [`${SITE_URL}/logo.png`],
+    images: [`${SITE_URL}/og-image.jpg`],
   },
 }
 

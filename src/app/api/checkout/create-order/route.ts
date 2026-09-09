@@ -80,7 +80,9 @@ export async function POST(req: NextRequest) {
       }
 
       if (item.variantId) {
-        const variant = product.variants.find((v: any) => v.id === item.variantId);
+        const variant = product.variants.find(
+          (v: any) => v.id === item.variantId || v.name === item.variantId || v.sku === item.variantId
+        );
         if (!variant) {
           return NextResponse.json(
             { error: `Variant not found for ${product.name}` },
@@ -93,6 +95,12 @@ export async function POST(req: NextRequest) {
             { status: 400 }
           );
         }
+        if (variant.stock <= 0) {
+          return NextResponse.json(
+            { error: `${product.name} - ${variant.name} is out of stock` },
+            { status: 400 }
+          );
+        }
         if (variant.stock < item.quantity) {
           return NextResponse.json(
             { error: `Insufficient stock for ${product.name} - ${variant.name}` },
@@ -100,6 +108,12 @@ export async function POST(req: NextRequest) {
           );
         }
       } else {
+        if (product.stock <= 0) {
+          return NextResponse.json(
+            { error: `${product.name} is out of stock` },
+            { status: 400 }
+          );
+        }
         if (product.stock < item.quantity) {
           return NextResponse.json(
             { error: `Insufficient stock for ${product.name}` },
@@ -128,7 +142,9 @@ export async function POST(req: NextRequest) {
       const resolvedGstRate: number = product.gstRate ?? 5;
 
       if (item.variantId) {
-        const variant = product.variants.find((v: any) => v.id === item.variantId);
+        const variant = product.variants.find(
+          (v: any) => v.id === item.variantId || v.name === item.variantId || v.sku === item.variantId
+        );
         if (variant) {
           resolvedPrice = variant.price;
           resolvedSku = variant.sku;

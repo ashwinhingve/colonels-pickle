@@ -128,7 +128,9 @@ export async function POST(req: NextRequest) {
           if (!product) continue;
 
           if (item.variantId) {
-            const variant = product.variants.find((v: any) => v.id === item.variantId);
+            const variant = product.variants.find(
+              (v: any) => v.id === item.variantId || v.name === item.variantId || v.sku === item.variantId
+            );
             if (!variant) {
               throw new HttpError(404, `Variant not found for ${product.name}`);
             }
@@ -154,7 +156,9 @@ export async function POST(req: NextRequest) {
           const resolvedGstRate: number = product.gstRate ?? 5;
 
           if (item.variantId) {
-            const variant = product.variants.find((v: any) => v.id === item.variantId);
+            const variant = product.variants.find(
+              (v: any) => v.id === item.variantId || v.name === item.variantId || v.sku === item.variantId
+            );
             if (variant) {
               resolvedPrice = variant.price;
               resolvedSku = variant.sku;

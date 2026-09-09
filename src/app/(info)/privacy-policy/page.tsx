@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     images: [
       {
-        url: `${SITE_URL}/logo.png`,
+        url: `${SITE_URL}/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: "Colonel's Pickle — Privacy Policy",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "Privacy Policy | Colonel's Pickle",
     description:
       "Learn how Colonel's Pickle protects your personal information and data privacy.",
-    images: [`${SITE_URL}/logo.png`],
+    images: [`${SITE_URL}/og-image.jpg`],
   },
 }
 

@@ -409,3 +409,159 @@ export function WebbingStitchAccent({ className, title, variant = "webbing", ...
     </svg>
   );
 }
+
+type HeritageEmblemProps = SVGProps & {
+  /** When provided, a real photo fills the arch (clipped to its shape) instead of
+   *  the illustrated mother+Colonel figures. Falls back to the illustration when omitted. */
+  imageUrl?: string;
+  /** Unique id for the arch clip-path. Only override if rendering more than one on a page. */
+  clipId?: string;
+};
+
+export function HeritageEmblemIllustration({
+  className,
+  title,
+  imageUrl,
+  clipId = "cp-heritage-arch-clip",
+  ...p
+}: HeritageEmblemProps) {
+  // Family heritage emblem — arched frame that holds EITHER a real mother+Colonel photo
+  // (imageUrl, clipped to the arch) OR the illustrated figures fallback.
+  // Composition: pointed arch (gold outline, beige fill); when illustrated: seated woman
+  // (mother) lower-left, standing Colonel with stove lower-right. Middle band left blank
+  // for the HTML tagline overlay applied by the parent.
+  const arch = "M 35 205 Q 35 100 100 25 Q 165 100 165 205 Z";
+  return (
+    <svg viewBox="0 0 200 220" className={className} {...base({ title })} {...p}>
+      {title ? <title>{title}</title> : null}
+
+      {/* Beige backing fill (shows through any transparent photo edges) */}
+      <path d={arch} fill="#F5EBDA" />
+
+      {/* Optional real photo, clipped to the arch shape */}
+      {imageUrl && (
+        <>
+          <defs>
+            <clipPath id={clipId}>
+              <path d={arch} />
+            </clipPath>
+          </defs>
+          <image
+            href={imageUrl}
+            x="30"
+            y="20"
+            width="140"
+            height="190"
+            preserveAspectRatio="xMidYMid slice"
+            clipPath={`url(#${clipId})`}
+          />
+          {/* Soft gradient scrim over the upper band so overlaid tagline text stays legible */}
+          <rect
+            x="30"
+            y="20"
+            width="140"
+            height="110"
+            fill="url(#cp-heritage-scrim)"
+            clipPath={`url(#${clipId})`}
+          />
+          <defs>
+            <linearGradient id="cp-heritage-scrim" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#2E3818" stopOpacity="0.55" />
+              <stop offset="1" stopColor="#2E3818" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+        </>
+      )}
+
+      {/* Arched frame outline — gold stroke on top of fill/photo */}
+      <path
+        d="M 35 205 Q 35 100 100 25 Q 165 100 165 205"
+        fill="none"
+        stroke="#D4A017"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+
+      {/* Inner arch accent — subtle darker outline */}
+      <path
+        d="M 40 200 Q 40 105 100 35 Q 160 105 160 200"
+        fill="none"
+        stroke="#D4A017"
+        strokeWidth="1"
+        opacity="0.4"
+      />
+
+      {/* ──────────────────────────────────────────────────────────────────
+          Empty horizontal band in the middle (y: ~55–110) — deliberately blank
+          for HTML text overlay. No shapes drawn here.
+          ────────────────────────────────────────────────────────────────── */}
+
+      {/* Illustrated figures — only when no real photo is supplied */}
+      {!imageUrl && (
+        <>
+      {/* Seated woman figure (mother) — lower-left inside the arch */}
+      {/* Head — terracotta circle */}
+      <circle cx="60" cy="145" r="13" fill="#C05621" />
+
+      {/* Saree drape — olive geometric shape (draped effect) */}
+      <path
+        d="M 50 160 L 44 205 Q 45 212 60 214 Q 75 212 76 205 L 70 160 Q 67 157 60 157 Q 53 157 50 160"
+        fill="#4B5D2A"
+        opacity="0.88"
+      />
+
+      {/* Saree bottom border accent — gold line */}
+      <path
+        d="M 44 205 Q 45 212 60 214 Q 75 212 76 205"
+        fill="none"
+        stroke="#D4A017"
+        strokeWidth="1.4"
+        opacity="0.5"
+      />
+
+      {/* Arms — terracotta strokes */}
+      <path d="M 50 170 L 38 182" stroke="#C05621" strokeWidth="2.6" strokeLinecap="round" />
+      <path d="M 70 170 L 82 182" stroke="#C05621" strokeWidth="2.6" strokeLinecap="round" />
+
+      {/* Small bowl / basket in front — brown */}
+      <ellipse cx="60" cy="198" rx="15" ry="7" fill="#8A5A2B" opacity="0.75" />
+      <path d="M 47 198 Q 60 204 73 198" stroke="#6E4520" strokeWidth="1.2" opacity="0.5" />
+
+      {/* Standing man figure (Colonel) — lower-right inside the arch */}
+      {/* Head — terracotta circle */}
+      <circle cx="140" cy="145" r="13" fill="#C05621" />
+
+      {/* Outfit — olive-green geometric shape */}
+      <path
+        d="M 130 160 L 124 205 Q 125 212 140 214 Q 155 212 156 205 L 150 160 Q 147 157 140 157 Q 133 157 130 160"
+        fill="#6B7F3A"
+        opacity="0.88"
+      />
+
+      {/* Arms — terracotta strokes */}
+      <path d="M 130 170 L 118 182" stroke="#C05621" strokeWidth="2.6" strokeLinecap="round" />
+      <path d="M 150 170 L 162 182" stroke="#C05621" strokeWidth="2.6" strokeLinecap="round" />
+
+      {/* Kadhai (round cooking pan) — gold, positioned in front */}
+      <ellipse cx="140" cy="198" rx="17" ry="8" fill="#E4B94B" opacity="0.88" />
+      <path d="M 123 198 Q 140 206 157 198" stroke="#C99B3E" strokeWidth="1.2" opacity="0.6" />
+
+      {/* Flame beneath kadhai — terracotta with orange highlight */}
+      {/* Main flame shape */}
+      <path
+        d="M 128 207 Q 128 218 140 221 Q 152 218 152 207"
+        fill="#C05621"
+        opacity="0.8"
+      />
+      {/* Bright center of flame — orange/gold */}
+      <path
+        d="M 133 210 Q 140 215 147 210"
+        fill="#DD7230"
+        opacity="0.9"
+      />
+        </>
+      )}
+    </svg>
+  );
+}

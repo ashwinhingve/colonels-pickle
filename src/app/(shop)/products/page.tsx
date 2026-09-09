@@ -65,6 +65,10 @@ function ShopContent() {
   return (
     <div className="bg-cp-cream py-16">
       <div className="mx-auto max-w-7xl px-4">
+        <h1 className="sr-only">
+          Shop Colonel&apos;s Pickle — Buy Homemade Indian Pickles, Achaar,
+          Cold-Press Oils &amp; Gulkand Online
+        </h1>
         <div className="relative mb-8">
           <RajasthaniPattern variant="camo" opacity={0.06} color="#6B7F3A" />
           <div className="relative z-10">

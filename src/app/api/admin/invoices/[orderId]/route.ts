@@ -193,7 +193,9 @@ export async function PATCH(
           const product = products.find((p) => p._id.toString() === item.productId);
           if (!product) continue;
           if (item.variantId) {
-            const variant = product.variants.find((v: any) => v.id === item.variantId);
+            const variant = product.variants.find(
+              (v: any) => v.id === item.variantId || v.name === item.variantId || v.sku === item.variantId
+            );
             if (!variant) throw new HttpError(404, `Variant not found for ${product.name}`);
             if (variant.stock < item.quantity) throw new HttpError(400, `Insufficient stock for ${product.name} - ${variant.name}`);
           } else if (product.stock < item.quantity) {
@@ -215,7 +217,9 @@ export async function PATCH(
           const resolvedGstRate: number = product.gstRate ?? 5;
 
           if (item.variantId) {
-            const variant = product.variants.find((v: any) => v.id === item.variantId);
+            const variant = product.variants.find(
+              (v: any) => v.id === item.variantId || v.name === item.variantId || v.sku === item.variantId
+            );
             if (variant) {
               resolvedPrice = variant.price;
               resolvedSku = variant.sku;

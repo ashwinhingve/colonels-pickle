@@ -21,9 +21,9 @@ const INGREDIENTS: {
 }[] = [
   {
     Illustration: HingIllustration,
-    title: "Afghani Hing",
-    sub: "Premium Asafoetida",
-    note: "~₹30,000/kg · World's finest",
+    title: "3 Rare Hing Varieties",
+    sub: "Afghani · Tajaki · Kiniar/Ujaini",
+    note: "The soul of every jar · ~₹30,000/kg",
     color: "#4B5D2A",
     tint: "#E8EBD9",
   },
@@ -37,7 +37,7 @@ const INGREDIENTS: {
   },
   {
     Illustration: SpiceBowlIllustration,
-    title: "24 Exotic Whole Spices",
+    title: "20–24 Exotic Whole Spices",
     sub: "Sun-dried, Roasted & Ground",
     note: "From across India & Central Asia",
     color: "#C05621",

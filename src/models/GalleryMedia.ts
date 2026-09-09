@@ -15,6 +15,7 @@ export interface IGalleryMedia extends Document {
   isActive: boolean;
   showInHero: boolean;
   heroOrder: number;
+  showAsHeroPortrait: boolean; // designates the framed mother+Colonel photo inside the homepage hero arch
   createdAt: Date;
   updatedAt: Date;
 }
@@ -77,6 +78,10 @@ const GalleryMediaSchema = new Schema<IGalleryMedia>(
     heroOrder: {
       type: Number,
       default: 0,
+    },
+    showAsHeroPortrait: {
+      type: Boolean,
+      default: false,
     },
   },
   {

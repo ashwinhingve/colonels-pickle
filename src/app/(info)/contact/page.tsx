@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     images: [
       {
-        url: `${SITE_URL}/logo.png`,
+        url: `${SITE_URL}/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: "Colonel's Pickle — Contact Us",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     title: "Contact Us | Colonel's Pickle",
     description:
       "Get in touch with Colonel's Pickle via phone, email, or WhatsApp. We're here to help!",
-    images: [`${SITE_URL}/logo.png`],
+    images: [`${SITE_URL}/og-image.jpg`],
   },
 };
 
@@ -78,8 +78,8 @@ export default function ContactPage() {
           <AnimatedSection direction="left" duration={0.65}>
             <div className="rounded-2xl border border-cp-border bg-white p-8">
           <Image
-            src="/logo.png"
-            alt="Colonel's Pickle by Ridhwika Agro Organics"
+            src="/images/brand/ridhwika-crest.png"
+            alt="Colonel's Pickle crest — Ridhwika Agro Organics"
             width={100}
             height={100}
             className="object-contain"

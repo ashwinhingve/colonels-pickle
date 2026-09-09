@@ -40,6 +40,8 @@ export async function POST(request: NextRequest) {
       altText,
       category,
       isActive,
+      showInHero,
+      showAsHeroPortrait,
     } = body;
 
     if (!type || !url || !title) {
@@ -65,6 +67,8 @@ export async function POST(request: NextRequest) {
       category: category || 'General',
       order,
       isActive: isActive !== false,
+      showInHero: showInHero === true,
+      showAsHeroPortrait: showAsHeroPortrait === true,
     });
 
     return NextResponse.json({ item }, { status: 201 });

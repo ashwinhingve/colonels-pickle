@@ -57,13 +57,15 @@ export function OurStory() {
           />
 
           <div className="text-center">
-            <Image
-              src="/logo.png"
-              width={100}
-              height={100}
-              className="mx-auto object-contain"
-              alt="Colonel's Pickle"
-            />
+            <span className="mx-auto flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border border-cp-gold/40 bg-white shadow-sm">
+              <Image
+                src="/images/brand/ridhwika-crest.png"
+                width={100}
+                height={100}
+                className="h-[90%] w-[90%] object-contain"
+                alt="Colonel's Pickle crest — Ridhwika Agro Organics"
+              />
+            </span>
             <div className="mx-auto my-3 h-[2px] w-16 bg-cp-terracotta" />
             <p className="font-display text-[18px] font-bold text-cp-gold-light">
               An Indian Army Colonel
@@ -120,17 +122,26 @@ export function OurStory() {
             his mother Urmila Devi — a resilient officer&apos;s mother from
             Haryana — turned to their kitchen garden and time-tested family
             recipes, sun-drying and hand-grinding{" "}
-            <Highlight tone="dark">22 to 24 whole spices</Highlight> into their
+            <Highlight tone="dark">20 to 24 whole spices</Highlight> into their
             signature &ldquo;<Highlight tone="dark">Colonel Special</Highlight>&rdquo;
             masala. The jars they gifted across the cantonment tasted, to every
             homesick officer, exactly like home.
           </p>
           <p className="mt-4 font-serif text-[15px] leading-relaxed text-cp-beige/75">
-            Named after the family&apos;s three daughters, Ridhwika Agro Organics
-            now carries that recipe pan-India — empowering local women and
-            staying 100% natural: no preservatives, no chemicals, no vinegar.
-            Ever.
+            Named after the family&apos;s two daughters — Riddhima + Adwika —
+            Ridhwika Agro Organics now carries that recipe pan-India —
+            empowering local women and staying 100% natural: no preservatives,
+            no chemicals, no vinegar. Ever.
           </p>
+
+          <div className="mt-6 rounded-xl border border-cp-gold/40 bg-cp-gold/5 px-6 py-4">
+            <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-gold-light mb-2">
+              The Name Behind the Brand
+            </p>
+            <p className="font-serif text-[15px] italic text-cp-beige/85">
+              &ldquo;<span className="font-display not-italic font-bold text-cp-gold-light">Colonel&apos;s Pickle</span>&rdquo; — named by his mother, signifying the rank of her son and the honour he has brought to the family.
+            </p>
+          </div>
 
           <StaggerContainer
             staggerDelay={0.08}

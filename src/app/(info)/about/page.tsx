@@ -9,6 +9,7 @@ import { HoverLift } from "@/components/shared/HoverLift";
 import { HearthIllustration, HingIllustration, MountainOriginIllustration, WebbingStitchAccent } from "@/components/illustrations";
 import { BRAND, CONTACT_EMAIL, PUBLIC_REGISTRATIONS } from "@/lib/constants";
 import { Highlight } from "@/components/common/Highlight";
+import { PurityPledge } from "@/components/common/PurityPledge";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
 
@@ -19,14 +20,15 @@ const organizationJsonLd = {
   name: "Colonel's Pickle",
   alternateName: "Colonel's Pickle® by Ridhwika Agro Organics",
   description:
-    'Authentic homemade pickles, gulkand and cold press oils — no preservatives, 22 to 24 whole spices, FSSAI certified, Jaipur.',
+    'Authentic homemade pickles, gulkand and cold press oils — no preservatives, 20 to 24 whole spices, FSSAI certified, Jaipur.',
   url: SITE_URL,
   logo: {
     '@type': 'ImageObject',
-    url: `${SITE_URL}/logo.png`,
+    url: `${SITE_URL}/images/brand/ridhwika-crest.png`,
     width: 512,
     height: 512,
   },
+  image: `${SITE_URL}/og-image.jpg`,
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'B-6/374, Vaishali Nagar',
@@ -74,7 +76,7 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     images: [
       {
-        url: `${SITE_URL}/logo.png`,
+        url: `${SITE_URL}/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: "Colonel's Pickle — Our Story",
@@ -86,7 +88,7 @@ export const metadata: Metadata = {
     title: "Our Story — Born from a Mother's Kitchen",
     description:
       "The story behind Colonel's Pickle — authentic homemade pickles from a mother's kitchen.",
-    images: [`${SITE_URL}/logo.png`],
+    images: [`${SITE_URL}/og-image.jpg`],
   },
 };
 
@@ -95,7 +97,7 @@ const PROMISES = [
   { icon: "🫙", title: "Kachi Ghani Oil", desc: "Cold-pressed wooden ghani mustard oil only.", color: "#7C4A1E" },
   { icon: "💎", title: "Afghani Hing", desc: "Premium asafoetida sourced from Central Asia at ₹30,000/kg.", color: "#9C4420" },
   { icon: "🧂", title: "Rock & Black Salt", desc: "No iodized table salt used in any product.", color: "#6B7F3A" },
-  { icon: "🌶️", title: "22–24 Whole Spices", desc: "Sun-dried, roasted and ground fresh at our facility.", color: "#C05621" },
+  { icon: "🌶️", title: "20–24 Whole Spices", desc: "Sun-dried, roasted and ground fresh at our facility.", color: "#C05621" },
   { icon: "🛡️", title: "FSSAI Licensed", desc: `Licensed by the Food Safety and Standards Authority of India (${BRAND.fssai}).`, color: "#4B5D2A" },
   { icon: "🍃", title: "100% Natural", desc: "Every ingredient hand-selected — no synthetic additives, no shortcuts.", color: "#8FA87E" },
 ];
@@ -150,6 +152,9 @@ export default function AboutPage() {
         </section>
       </Parallax>
 
+      {/* 1.5. Purity Pledge Band */}
+      <PurityPledge />
+
       {/* 2. Story narrative */}
       <section className="bg-cp-cream py-20">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2">
@@ -167,13 +172,15 @@ export default function AboutPage() {
                 style={{ borderColor: "#C05621" }}
               />
               <div className="text-center">
-                <Image
-                  src="/logo.png"
-                  width={100}
-                  height={100}
-                  className="mx-auto object-contain"
-                  alt="Colonel's Pickle"
-                />
+                <span className="mx-auto flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border border-cp-gold/40 bg-white shadow-sm">
+                  <Image
+                    src="/images/brand/ridhwika-crest.png"
+                    width={100}
+                    height={100}
+                    className="h-[90%] w-[90%] object-contain"
+                    alt="Colonel's Pickle crest — Ridhwika Agro Organics"
+                  />
+                </span>
                 <div className="mx-auto my-3 h-[2px] w-16 bg-cp-terracotta" />
                 <p className="font-display text-[18px] font-bold text-cp-gold-light">
                   An Indian Army Colonel
@@ -237,7 +244,7 @@ export default function AboutPage() {
                   sun-ripened green chillies, mother and son began experimenting with
                   time-tested family recipes, hand-selecting, sun-drying and freshly
                   grinding a proprietary mix of{" "}
-                  <Highlight>22 to 24 whole spices</Highlight> — crafting what would
+                  <Highlight>20 to 24 whole spices</Highlight> — crafting what would
                   become their signature &ldquo;<Highlight>Colonel Special</Highlight>&rdquo;
                   masala. The jars they gifted across the cantonment tasted, to every
                   homesick officer and neighbour, exactly like home.
@@ -256,9 +263,34 @@ export default function AboutPage() {
             <p className="mt-3 font-serif text-[15px] leading-relaxed text-cp-text-muted">
               What began as a gesture of warmth soon called for a name — one that
               reflected family, unity and hope. <Highlight>Ridhwika Agro Organics</Highlight>{" "}
-              is named after the three daughters of this patriotic family, a
-              synthesis of their names lovingly chosen by the Colonel himself.
+              is named by blending the names of two beloved daughters: <Highlight>RIDDHIMA</Highlight> and <Highlight>ADWIKA</Highlight>.
+              The beautiful fusion — <span className="font-semibold">RIDDHIMA + ADWIKA = RIDHWIKA</span> — reflects the Colonel&apos;s profound
+              love for his daughters and the hope they carry for this family&apos;s future.
             </p>
+          </AnimatedSection>
+
+          <AnimatedSection direction="up" duration={0.65} delay={0.3}>
+            <div
+              className="rounded-2xl border-2 p-8 text-center"
+              style={{
+                backgroundColor: '#FDF8F0',
+                borderColor: '#B91C1C',
+              }}
+            >
+              <p className="font-hindi text-xs font-bold uppercase tracking-widest text-cp-terracotta">
+                The Heart of Our Brand
+              </p>
+              <h3 className="mt-4 font-display text-2xl font-bold text-cp-olive">
+                &ldquo;Colonel&apos;s Pickle&rdquo;
+              </h3>
+              <p className="mt-4 font-serif text-[15px] leading-relaxed text-cp-text-muted max-w-2xl mx-auto">
+                The name itself carries profound meaning. <Highlight>Colonel&apos;s Pickle</Highlight> was{" "}
+                <Highlight>named by his mother, signifying the rank of her son</Highlight>. It stands
+                as a tribute to his service, his sacrifice, and the unbreakable bond of{" "}
+                <span className="font-hindi">Maa Ka Pyaar</span> — a mother&apos;s eternal love that
+                preserves not just pickles, but memories, values, and heritage.
+              </p>
+            </div>
           </AnimatedSection>
 
           <AnimatedSection direction="up" duration={0.65} delay={0.4}>
@@ -274,11 +306,11 @@ export default function AboutPage() {
                   stays true to its military roots — crafted from{" "}
                   <Highlight>100% natural</Highlight> ingredients using authentic,
                   traditional Bhartiya recipes: no artificial preservatives, no
-                  chemicals, and no vinegar. Pure Afghani, Tajikistani and Uzbeki hing
+                  chemicals, and no vinegar. Pure Afghani, Tajaki and Kiniar/Ujaini hing
                   valued at <Highlight>₹30,000/kg</Highlight>, wooden cold-pressed{" "}
                   <span className="font-hindi">kachi ghani</span> mustard oil, and the
                   secret &ldquo;<Highlight>Colonel Special</Highlight>&rdquo; blend of{" "}
-                  <Highlight>22 to 24 whole spices</Highlight>. From a hospital bed in Assam
+                  <Highlight>20 to 24 whole spices</Highlight>. From a hospital bed in Assam
                   to kitchens across India — pure tradition, unmatched heritage, and
                   the heartwarming taste of <Highlight>Maa Ka Pyaar</Highlight> in
                   every <Highlight>Colonel&apos;s Pickle</Highlight> jar,{" "}

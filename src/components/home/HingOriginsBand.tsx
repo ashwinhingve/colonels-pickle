@@ -10,11 +10,11 @@ const ORIGINS = [
     note: "The world's finest — prized for its deep, resinous aroma.",
   },
   {
-    name: "Tajikistani",
+    name: "Tajaki",
     note: "High-altitude harvest — clean, pungent and remarkably pure.",
   },
   {
-    name: "Uzbeki",
+    name: "Kiniar/Ujaini",
     note: "Rare and aromatic — for that unmistakable ghar-ka-tadka.",
   },
 ];

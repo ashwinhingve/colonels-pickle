@@ -12,7 +12,7 @@ import { SpiceBowlIllustration, SpiceScatter } from "@/components/illustrations"
  * Signature homepage moment — the "Colonel Special" masala. A central emblem
  * with the hand-ground spice bowl, flanked by a wrap of the whole spices that
  * cascade in and lift on hover. Wording deliberately mirrors the Our Story
- * section ("22 to 24 whole spices") — do not turn this into a bare "24" claim.
+ * section ("20 to 24 whole spices") — do not turn this into a bare "24" claim.
  */
 const SPICES: { en: string; hi: string }[] = [
   { en: "Mustard", hi: "राई" },
@@ -53,7 +53,7 @@ export function SignatureMasala() {
         <SectionHeader
           eyebrow="THE SECRET BLEND"
           title="The Colonel Special Masala"
-          subtitle="A blend of 22 to 24 whole spices — sun-dried, roasted and hand-ground to the family's own recipe. This is the soul of every jar."
+          subtitle="A blend of 20 to 24 whole spices — sun-dried, roasted and hand-ground to the family's own recipe. This is the soul of every jar."
         />
 
         <div className="mt-12 grid items-center gap-10 lg:grid-cols-[minmax(0,340px)_1fr]">
@@ -67,7 +67,7 @@ export function SignatureMasala() {
                 Colonel Special
               </p>
               <p className="mt-1 font-display text-2xl font-extrabold text-cp-beige">
-                22–24 Whole Spices
+                20–24 Whole Spices
               </p>
               <p className="mt-3 font-serif text-sm italic leading-relaxed text-cp-beige/75">
                 No two blends alike — ground fresh in small batches, never

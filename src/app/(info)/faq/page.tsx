@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     images: [
       {
-        url: `${SITE_URL}/logo.png`,
+        url: `${SITE_URL}/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: "Colonel's Pickle — FAQ",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: "FAQ — Frequently Asked Questions | Colonel's Pickle",
     description:
       "Find answers to all your questions about Colonel's Pickle products, shipping, and more.",
-    images: [`${SITE_URL}/logo.png`],
+    images: [`${SITE_URL}/og-image.jpg`],
   },
 };
 
@@ -51,7 +51,7 @@ const FAQ_PRODUCTS: FAQItem[] = [
   {
     question: "What makes Colonel's Pickle different from other brands?",
     answer:
-      "Colonel's Pickle stands apart through our unwavering commitment to purity and tradition. We use absolutely NO artificial preservatives, colours, flavours or vinegar—ever. Our recipes are based on time-honoured family traditions passed down through generations. Every jar contains 24 whole spices sourced carefully, Kachi Ghani (wooden cold-press) mustard oil, rock salt, black salt, and premium Afghani asafoetida (hing) sourced at ₹30,000/kg. Every batch is FSSAI licensed (License: 12226026000060) and prepared with the same love that goes into home cooking.",
+      "Colonel's Pickle stands apart through our unwavering commitment to purity and tradition. We use absolutely NO artificial preservatives, colours, flavours or vinegar—ever. Our recipes are based on time-honoured family traditions passed down through generations. Every jar contains 20 to 24 whole spices sourced carefully, Kachi Ghani (wooden cold-press) mustard oil, rock salt, black salt, and premium Afghani asafoetida (hing) sourced at ₹30,000/kg. Every batch is FSSAI licensed (License: 12226026000060) and prepared with the same love that goes into home cooking.",
   },
   {
     question: "Are the pickles completely free of artificial preservatives?",
@@ -71,7 +71,7 @@ const FAQ_PRODUCTS: FAQItem[] = [
   {
     question: "What spices are used in the pickles?",
     answer:
-      "Each Colonel's Pickle variety is crafted with 24 carefully selected whole spices, sun-dried, roasted, and ground fresh at our Jaipur facility. These include traditional Indian spices like fenugreek, cumin, coriander, mustard seeds, fenugreek seeds, asafoetida (hing), turmeric, and many others. All spices are sourced for premium quality and authenticity.",
+      "Each Colonel's Pickle variety is crafted with 20 to 24 carefully selected whole spices, sun-dried, roasted, and ground fresh at our Jaipur facility. These include traditional Indian spices like fenugreek, cumin, coriander, mustard seeds, fenugreek seeds, asafoetida (hing), turmeric, and many others. All spices are sourced for premium quality and authenticity.",
   },
   {
     question: "Is the mustard oil cold-pressed (Kachi Ghani)?",
@@ -300,6 +300,10 @@ export default async function FAQPage() {
       <section className="relative overflow-hidden bg-gradient-to-b from-cp-cream via-white to-cp-cream py-16 md:py-20">
         <RajasthaniPattern variant="camo" opacity={0.06} color="#6B7F3A" />
         <div className="relative z-10 mx-auto max-w-6xl px-4">
+          <h1 className="sr-only">
+            Colonel&apos;s Pickle FAQ — Homemade Indian Pickles, Ingredients,
+            Shipping &amp; Orders
+          </h1>
           <AnimatedSection direction="up" duration={0.65} className="text-center mb-8">
             <div className="flex justify-center mb-6">
               <FAQIllustration className="w-40 h-40 text-cp-olive opacity-80" />

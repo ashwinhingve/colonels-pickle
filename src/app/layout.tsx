@@ -17,28 +17,56 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in'
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Colonel's Pickle® — Maa Ka Pyaar, Ghar Ka Achar | Homemade Pickles Jaipur",
+    default:
+      "Colonel's Pickle® — Homemade Indian Pickles Online (Kernel Pickle)",
     template: "%s | Colonel's Pickle",
   },
-  description: "Authentic homemade pickles by the mother of an Indian Army Colonel. No preservatives, no vinegar, 24 whole spices, cold press mustard oil. FSSAI licensed. Pan India delivery from Jaipur.",
-  keywords: ["colonels pickle", "homemade pickle", "achaar", "ghar ka achar", "organic gulkand", "cold press mustard oil", "kachi ghani oil", "Rajasthani pickle", "no preservatives pickle", "FSSAI pickle", "Jaipur pickle", "Ridhwika Agro Organics", "buy pickle online India"],
+  description:
+    "Buy Colonel's Pickle — authentic homemade Indian pickles (achaar), gulkand & cold-press mustard oil made by the mother of an Indian Army Colonel. No preservatives, no vinegar, 20–24 whole spices. FSSAI licensed, with pan-India delivery from Jaipur.",
+  keywords: [
+    "colonels pickle",
+    "colonel's pickle",
+    "kernel pickle",
+    "colonel pickle",
+    "indian pickle",
+    "indian pickles online",
+    "buy pickle online india",
+    "homemade pickle",
+    "homemade achaar",
+    "achaar online",
+    "ghar ka achar",
+    "mango pickle",
+    "aam ka achar",
+    "green chilli pickle",
+    "hari mirch ka achar",
+    "garlic pickle",
+    "lehsun ka achar",
+    "mixed pickle",
+    "organic gulkand",
+    "cold press mustard oil",
+    "kachi ghani oil",
+    "Rajasthani pickle",
+    "no preservatives pickle",
+    "no vinegar pickle",
+    "FSSAI pickle",
+    "Jaipur pickle",
+    "Ridhwika Agro Organics",
+  ],
   alternates: {
     canonical: SITE_URL,
   },
-  icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
-  },
+  // Favicon + apple-touch icon come from src/app/icon.png & src/app/apple-icon.png
+  // (Ridhwika crest), auto-emitted by Next.js — no explicit icons config needed.
   openGraph: {
-    title: "Colonel's Pickle® — Maa Ka Pyaar, Ghar Ka Achar",
-    description: "Authentic homemade pickles, gulkand & cold press oils. No preservatives, 24 whole spices, mother's recipe. FSSAI certified. Pan India delivery from Jaipur.",
+    title: "Colonel's Pickle® (Kernel Pickle) — Homemade Indian Pickles Online",
+    description:
+      "Authentic homemade Indian pickles (achaar), gulkand & cold-press mustard oil. No preservatives, no vinegar, 20–24 whole spices, a mother's recipe. FSSAI certified, pan-India delivery from Jaipur.",
     images: [
       {
-        url: "/logo.png",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Colonel's Pickle — Maa Ka Pyaar, Ghar Ka Achar",
+        alt: "Colonel's Pickle® — homemade Indian pickles · Maa Ka Pyaar, Ghar Ka Achar",
       },
     ],
     siteName: "Colonel's Pickle by Ridhwika Agro Organics",
@@ -48,9 +76,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Colonel's Pickle® — Maa Ka Pyaar, Ghar Ka Achar",
-    description: "Authentic homemade pickles, gulkand & cold press oils. No preservatives, 24 whole spices, FSSAI certified. Pan India delivery from Jaipur.",
-    images: ["/logo.png"],
+    title: "Colonel's Pickle® (Kernel Pickle) — Homemade Indian Pickles Online",
+    description:
+      "Authentic homemade Indian pickles, gulkand & cold-press oils. No preservatives, no vinegar, 20–24 whole spices, FSSAI certified. Pan-India delivery from Jaipur.",
+    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,
@@ -74,11 +103,12 @@ const orgJsonLd = {
   "url": SITE_URL,
   "logo": {
     "@type": "ImageObject",
-    "url": `${SITE_URL}/logo.png`,
+    "url": `${SITE_URL}/images/brand/ridhwika-crest.png`,
     "width": 512,
     "height": 512,
   },
-  "description": "Authentic homemade pickles, gulkand and cold press oils — no preservatives, 24 whole spices, cold press mustard oil. FSSAI certified, Jaipur.",
+  "image": `${SITE_URL}/og-image.jpg`,
+  "description": "Colonel's Pickle (Kernel Pickle) — authentic homemade Indian pickles (achaar), gulkand and cold-press mustard oil. No preservatives, no vinegar, 20 to 24 whole spices. FSSAI certified, Jaipur.",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "B-6/374, Vaishali Nagar",

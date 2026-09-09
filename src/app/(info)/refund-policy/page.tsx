@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     images: [
       {
-        url: `${SITE_URL}/logo.png`,
+        url: `${SITE_URL}/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: "Colonel's Pickle — Refund & Return Policy",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "Refund & Return Policy | Colonel's Pickle",
     description:
       "Understand Colonel's Pickle refund and return policy for damaged, incorrect, or defective products.",
-    images: [`${SITE_URL}/logo.png`],
+    images: [`${SITE_URL}/og-image.jpg`],
   },
 }
 

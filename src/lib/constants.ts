@@ -31,7 +31,7 @@ export const BRAND = {
   usp: [
     "No Artificial Preservatives",
     "No Artificial Colours or Flavours",
-    "24 Exotic Whole Spices",
+    "20–24 Exotic Whole Spices",
     "Kachi Ghani Cold Press Mustard Oil",
     "Rock Salt & Black Salt Only",
     "Afghani Hing (₹30,000/kg)",
@@ -163,7 +163,7 @@ export const ANNOUNCEMENTS = [
   "🫙 15+ Authentic Varieties",
   "🚚 Free Delivery on Orders ₹999+ · Pan India",
   "📞 +91 9350406289",
-  "🌶️ Afghani · Tajikistani · Uzbeki Hing",
+  "🌶️ Afghani · Tajaki · Kiniar/Ujaini Hing",
   "📦 Min Order: 6×100g or 2×250g Jars",
   "🎖️ Made with pride by the mother of an Indian Army Colonel",
 ] as const;

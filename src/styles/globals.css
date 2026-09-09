@@ -537,6 +537,15 @@ body {
     0 12px 32px -12px rgba(42, 36, 23, 0.18);
 }
 
+/* Soft gold halo for the registered-trademark brandmark. Combine with
+   .animate-soft-pulse for a gentle breathing glow (already respects
+   prefers-reduced-motion via the shared neutralising block above). */
+.brandmark-glow {
+  filter:
+    drop-shadow(0 0 10px rgba(228, 185, 75, 0.55))
+    drop-shadow(0 0 22px rgba(212, 160, 23, 0.35));
+}
+
 /* Reveal helper for the drawn process line (scaleX from left). */
 @keyframes growLine {
   from { transform: scaleX(0); }

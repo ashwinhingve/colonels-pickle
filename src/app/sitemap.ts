@@ -33,7 +33,13 @@ const staticPages: MetadataRoute.Sitemap = [
     priority: 0.6,
   },
   {
-    url: `${SITE_URL}/story`,
+    url: `${SITE_URL}/gallery`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.5,
+  },
+  {
+    url: `${SITE_URL}/wholesale`,
     lastModified: new Date(),
     changeFrequency: 'monthly',
     priority: 0.6,

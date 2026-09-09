@@ -55,15 +55,22 @@ export async function generateMetadata({
 
   if (!product) return { title: "Product Not Found" };
 
-  const title = product.seo?.metaTitle || `${product.name} | Colonel's Pickle`;
-  const description = product.seo?.metaDescription || product.description;
+  // The (shop) group's layout sets a plain-string title, which stops the root
+  // title template from reaching product pages — so bake the brand in here.
+  const baseTitle = product.seo?.metaTitle || `${product.name} — Buy Online`;
+  const title = /colonel/i.test(baseTitle)
+    ? baseTitle
+    : `${baseTitle} | Colonel's Pickle`;
+  const description =
+    product.seo?.metaDescription ||
+    `${product.description} Buy ${product.name} online from Colonel's Pickle (Kernel Pickle) — no artificial preservatives, no vinegar, FSSAI certified. Pan-India delivery from Jaipur.`;
   const canonicalUrl = `${SITE_URL}/products/${product.slug}`;
 
-  // Determine OG image: prefer seo.ogImage, fallback to first product image, then logo
+  // OG image: prefer seo.ogImage, then the first product image, then the brand share banner
   const ogImageUrl =
     product.seo?.ogImage ||
     product.images?.[0]?.url ||
-    `${SITE_URL}/logo.png`;
+    `${SITE_URL}/og-image.jpg`;
 
   return {
     title,
@@ -142,7 +149,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     name: product.name,
     description: product.description,
     sku: product.sku,
-    image: product.images?.[0]?.url || `${SITE_URL}/logo.png`,
+    image: product.images?.[0]?.url || `${SITE_URL}/og-image.jpg`,
     brand: { "@type": "Brand", name: "Colonel's Pickle" },
     offers: {
       "@type": "Offer",

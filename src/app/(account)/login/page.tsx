@@ -235,8 +235,8 @@ export default function LoginPage() {
                   transition={{ duration: 0.5 }}
                 >
                   <Image
-                    src="/logo.png"
-                    alt="Colonel's Pickle by Ridhwika Agro Organics"
+                    src="/images/brand/ridhwika-crest.png"
+                    alt="Colonel's Pickle crest — Ridhwika Agro Organics"
                     width={80}
                     height={80}
                     className="object-contain mx-auto md:mx-0 mb-3"

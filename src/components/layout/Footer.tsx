@@ -75,19 +75,21 @@ export function Footer() {
                 className="inline-flex h-[90px] w-[90px] items-center justify-center overflow-hidden rounded-full border border-cp-gold/40 bg-white shadow-sm transition-transform duration-300 hover:scale-105"
               >
                 <Image
-                  src="/logo.png"
-                  alt="Colonel's Pickle by Ridhwika Agro Organics"
+                  src="/images/brand/ridhwika-crest.png"
+                  alt="Colonel's Pickle crest — Ridhwika Agro Organics"
                   width={90}
                   height={90}
                   className="h-[92%] w-[92%] object-contain"
                 />
               </Link>
-              <p
-                className="font-display mt-4 text-xl font-bold"
-                style={{ color: "#E4B94B" }}
-              >
-                Colonel&apos;s Pickle&reg;
-              </p>
+              {/* Registered trademark wordmark (image), separate from the crest logo */}
+              <Image
+                src="/images/brand/colonels-pickle-wordmark.png"
+                alt="Colonel's Pickle® — homemade Indian pickles"
+                width={691}
+                height={382}
+                className="mt-4 h-auto w-[188px] drop-shadow-[0_1px_3px_rgba(0,0,0,0.45)]"
+              />
               <p className="font-hindi mt-1 text-sm text-white/60">
                 माँ का प्यार, घर का अचार
               </p>

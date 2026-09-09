@@ -4,7 +4,8 @@ import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { Parallax } from "@/components/shared/Parallax";
 import { TapScale } from "@/components/shared/TapScale";
 import { CountUpStat } from "@/components/shared/CountUpStat";
-import { StaggeredHeroPanels, type HeroPoolItem } from "@/components/home/StaggeredHeroPanels";
+import type { HeroPoolItem } from "@/components/home/StaggeredHeroPanels";
+import { HeroJarVisual } from "@/components/home/HeroJarVisual";
 import { connectDB } from "@/lib/mongodb";
 import GalleryMedia from "@/models/GalleryMedia";
 import {
@@ -65,6 +66,29 @@ async function getHeroPool(): Promise<HeroPoolItem[]> {
   }
 }
 
+// The framed mother+Colonel photo shown inside the hero arch. Admins flag one
+// image with "Use as Hero portrait" in the Gallery admin. Until then this returns
+// null and the arch shows the illustrated figures fallback.
+async function getHeroPortrait(): Promise<{ url: string; alt?: string } | null> {
+  try {
+    await connectDB();
+    const item = await GalleryMedia.findOne({
+      isActive: true,
+      showAsHeroPortrait: true,
+      type: "image",
+    })
+      .sort({ heroOrder: 1, order: 1 })
+      .select("url title altText")
+      .lean();
+
+    if (!item) return null;
+    const doc = item as any;
+    return { url: doc.url, alt: doc.altText || doc.title };
+  } catch {
+    return null;
+  }
+}
+
 const STATS = [
   { end: 15, suffix: "+", label: "Pickle Varieties" },
   { end: 100, suffix: "%", label: "Natural" },
@@ -78,16 +102,89 @@ const BENEFITS = [
 ];
 
 export async function HeroSection() {
-  const heroPool = await getHeroPool();
+  const [heroPool, heroPortrait] = await Promise.all([
+    getHeroPool(),
+    getHeroPortrait(),
+  ]);
 
   return (
-    <section
-      className="relative flex min-h-[90vh] items-center overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(135deg, #3A4A1F 0%, #4B5D2A 55%, #2E3818 100%)",
-      }}
-    >
+    <>
+      {/* Single crawlable H1 for SEO — the desktop banner bakes its headline into
+          the image, so the semantic H1 lives here (visually hidden, one per page). */}
+      <h1 className="sr-only">
+        Colonel&apos;s Pickle (Kernel Pickle) — Buy Homemade Indian Pickles
+        Online · No Preservatives, No Vinegar
+      </h1>
+
+      {/* ── DESKTOP / TABLET: the client's designed hero banner ── */}
+      <section
+        aria-label="Colonel's Pickle — homemade Indian achaar"
+        className="relative hidden w-full bg-cp-beige md:block"
+      >
+        <Link
+          href="/products"
+          aria-label="Shop Colonel's Pickle achaars"
+          className="group block overflow-hidden"
+        >
+          <Image
+            src="/hero/hero-banner-1.jpg"
+            alt="Colonel's Pickle homemade Indian achaar — maa ka pyaar, ghar ka achar. No vinegar, no artificial preservatives, natural ingredients, loved by families."
+            width={1671}
+            height={941}
+            priority
+            sizes="100vw"
+            className="mx-auto block h-auto w-full max-w-[1671px] transition-transform duration-700 ease-out group-hover:scale-[1.015]"
+          />
+        </Link>
+      </section>
+
+      {/* ── MOBILE: responsive live hero (keeps text crisp on phones) ── */}
+      <section
+        className="relative flex min-h-[88vh] items-center overflow-hidden md:hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, #3A4A1F 0%, #4B5D2A 52%, #232B14 100%)",
+        }}
+      >
+      {/* ── Layered premium background ── */}
+      {/* Warm gold key-light glow, upper-right */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-[10%] -top-[15%] h-[70vh] w-[70vh] rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(212,160,23,0.28) 0%, rgba(212,160,23,0.10) 40%, transparent 70%)",
+        }}
+      />
+      {/* Cool terracotta counter-glow, lower-left, for depth */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-[20%] -left-[12%] h-[60vh] w-[60vh] rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(192,86,33,0.20) 0%, transparent 68%)",
+        }}
+      />
+      {/* Edge vignette to focus the centre and add richness */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(20,26,10,0.55) 100%)",
+        }}
+      />
+      {/* Fine film grain for a matte, premium finish (self-contained SVG noise) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-soft-light"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+          backgroundSize: "160px 160px",
+        }}
+      />
+
       {/* One subtle field texture — warm, not heavy combat */}
       <RajasthaniPattern variant="camo" opacity={0.05} color="#F5EBDA" />
 
@@ -134,15 +231,15 @@ export async function HeroSection() {
         {/* LEFT — messaging */}
         <div className="animate-fade-up">
           <div className="mb-6 flex items-center gap-4">
-            <div className="relative flex-shrink-0">
+            <div className="brandmark-glow animate-soft-pulse relative flex-shrink-0">
               <span
                 className="absolute inset-0 -m-[3px] rounded-full border border-cp-gold/60"
                 aria-hidden="true"
               />
               <span className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 border-cp-gold bg-white shadow-[0_4px_20px_rgba(0,0,0,0.35)] sm:h-[88px] sm:w-[88px]">
                 <Image
-                  src="/logo.png"
-                  alt="Colonel's Pickle emblem"
+                  src="/images/brand/ridhwika-crest.png"
+                  alt="Colonel's Pickle crest — Ridhwika Agro Organics"
                   width={88}
                   height={88}
                   className="h-[92%] w-[92%] object-contain"
@@ -155,10 +252,16 @@ export async function HeroSection() {
               aria-hidden="true"
             />
             <div className="hidden sm:block">
-              <p className="font-display text-xl font-extrabold tracking-tight text-cp-beige">
-                Colonel&apos;s Pickle
-              </p>
-              <p className="mt-0.5 font-hindi text-[11px] tracking-[0.2em] text-cp-gold-light">
+              {/* Registered trademark wordmark (image), separate from the crest logo */}
+              <Image
+                src="/images/brand/colonels-pickle-wordmark.png"
+                alt="Colonel's Pickle® — homemade Indian pickles"
+                width={691}
+                height={382}
+                className="h-[44px] w-auto drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]"
+                priority
+              />
+              <p className="mt-1 font-hindi text-[11px] tracking-[0.2em] text-cp-gold-light">
                 MAA KA PYAAR, GHAR KA ACHAR
               </p>
             </div>
@@ -169,11 +272,11 @@ export async function HeroSection() {
             Made with pride by the mother of an Indian Army Colonel
           </span>
 
-          <h1 className="mt-6 font-hindi text-[2.85rem] font-bold leading-tight text-cp-beige drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-[4rem]">
+          <p className="mt-6 font-hindi text-[2.85rem] font-bold leading-tight text-cp-beige drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-[4rem]">
             माँ का प्यार,
             <br />
             <span className="text-cp-gold-light">घर का अचार</span>
-          </h1>
+          </p>
 
           <p className="mt-3 font-display text-[1.2rem] italic text-cp-beige/80">
             Maa Ka Pyaar, Ghar Ka Achar
@@ -235,9 +338,13 @@ export async function HeroSection() {
           </div>
         </div>
 
-        {/* RIGHT — floating artisan collage, CMS-driven from the Gallery's Hero Pool */}
+        {/* RIGHT — hero jar visual with floating photo chips and heritage emblem */}
         <Parallax offset={30} direction="up">
-          <StaggeredHeroPanels pool={heroPool} />
+          <HeroJarVisual
+            pool={heroPool}
+            portraitUrl={heroPortrait?.url}
+            portraitAlt={heroPortrait?.alt}
+          />
         </Parallax>
       </div>
 
@@ -263,7 +370,8 @@ export async function HeroSection() {
       >
         <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#F5EBDA" />
       </svg>
-    </section>
+      </section>
+    </>
   );
 }
 

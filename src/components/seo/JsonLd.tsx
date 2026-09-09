@@ -105,15 +105,15 @@ export function buildOrganizationSchema(
     name: "Colonel's Pickle",
     alternateName: "Colonel's Pickle® by Ridhwika Agro Organics",
     description:
-      'Authentic homemade pickles, gulkand and cold press oils — no preservatives, 24 whole spices, FSSAI certified, Jaipur.',
+      "Colonel's Pickle (Kernel Pickle) — authentic homemade Indian pickles (achaar), gulkand and cold-press mustard oil. No preservatives, no vinegar, 20 to 24 whole spices. FSSAI certified, Jaipur.",
     url: siteUrl,
     logo: {
       '@type': 'ImageObject',
-      url: `${siteUrl}/logo.png`,
+      url: `${siteUrl}/images/brand/ridhwika-crest.png`,
       width: 512,
       height: 512,
     },
-    image: `${siteUrl}/logo.png`,
+    image: `${siteUrl}/og-image.jpg`,
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'B-6/374, Vaishali Nagar',

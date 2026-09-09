@@ -30,7 +30,7 @@ export async function FeaturedProducts() {
         <SectionHeader
           eyebrow="OUR ACHAAR COLLECTION"
           title="Signature Homemade Pickles"
-          subtitle="Crafted in small batches with a mother's recipe — 24 whole spices, cold-pressed mustard oil, and zero artificial preservatives."
+          subtitle="Crafted in small batches with a mother's recipe — 20 to 24 whole spices, cold-pressed mustard oil, and zero artificial preservatives."
         />
 
         {products.length > 0 && (

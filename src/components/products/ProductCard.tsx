@@ -25,6 +25,8 @@ interface CardVariant {
   label: string;
   price: number;
   originalPrice?: number;
+  id?: string;
+  stock?: number;
 }
 
 /** Parse a weight/volume label (e.g. "500g", "1kg", "250ml", "1L") into a base quantity. */
@@ -62,6 +64,8 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
         label: v.name,
         price: v.price,
         originalPrice: v.originalPrice,
+        id: v.id,
+        stock: v.stock,
       }));
     }
     const weight = product?.weight
@@ -72,6 +76,8 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
         label: weight,
         price: product?.price ?? 0,
         originalPrice: product?.originalPrice,
+        id: undefined,
+        stock: product?.stock,
       },
     ];
   }, [product]);
@@ -117,7 +123,7 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
   const handleAdd = () => {
     const payload = {
       ...product,
-      variantId: current.label,
+      variantId: current.id,
       price: current.price,
       originalPrice: current.originalPrice,
     };
@@ -129,6 +135,8 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
     setAdded(true);
     setTimeout(() => setAdded(false), 1600);
   };
+
+  const soldOut = (current?.stock ?? product?.stock ?? 0) <= 0;
 
   const href = `/products/${product?.slug ?? ""}`;
   const subtitle = product?.shortDescription || product?.subtitle || "";
@@ -195,12 +203,18 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
             </span>
           ) : null}
 
-          <Badge
-            variant="no-preservatives"
-            className="absolute bottom-[9px] right-[9px] z-[2]"
-          >
-            No Preservatives ✓
-          </Badge>
+          {soldOut ? (
+            <span className="absolute left-[10px] bottom-[9px] z-[2] rounded-full bg-red-600 px-2.5 py-1 font-sans text-[10px] font-bold uppercase tracking-wide text-white shadow-md">
+              Out of Stock
+            </span>
+          ) : (
+            <Badge
+              variant="no-preservatives"
+              className="absolute bottom-[9px] right-[9px] z-[2]"
+            >
+              No Preservatives ✓
+            </Badge>
+          )}
         </div>
       </Link>
 
@@ -250,22 +264,25 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
           <button
             type="button"
             onClick={handleAdd}
+            disabled={soldOut}
             aria-label={`Add ${product?.name ?? "product"} to cart`}
             className={cn(
               "whitespace-nowrap rounded-lg border-2 px-[17px] py-[9px] font-sans text-[13px] font-bold leading-none text-white transition-[background-color,border-color,transform] duration-200 active:scale-95",
-              added
-                ? "border-cp-green bg-cp-green"
-                : "border-cp-crimson bg-cp-crimson hover:-translate-y-px hover:border-cp-crimson-dark hover:bg-cp-crimson-dark"
+              soldOut
+                ? "cursor-not-allowed border-gray-400 bg-gray-400"
+                : added
+                  ? "border-cp-green bg-cp-green"
+                  : "border-cp-crimson bg-cp-crimson hover:-translate-y-px hover:border-cp-crimson-dark hover:bg-cp-crimson-dark"
             )}
           >
             <span className="inline-flex items-center gap-1">
-              {added ? (
-                <>
-                  <span className="animate-soft-pulse">✓</span> Added
-                </>
-              ) : (
-                "+ Cart"
-              )}
+              {soldOut
+                ? "Out of Stock"
+                : added
+                  ? <>
+                      <span className="animate-soft-pulse">✓</span> Added
+                    </>
+                  : "+ Cart"}
             </span>
           </button>
         </div>
