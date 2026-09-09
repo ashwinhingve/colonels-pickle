@@ -189,7 +189,7 @@ export function Header() {
               </span>
               {/* Official trademark on a light plaque for phones with room;
                   crest-only below 380px */}
-              <span className="relative hidden items-start rounded-md bg-cp-cream-muted/90 px-2 py-1 shadow-[0_2px_6px_rgba(0,0,0,0.06)] ring-1 ring-cp-gold/25 min-[380px]:inline-flex">
+              <span className="relative hidden items-start rounded-md bg-white px-2 py-1 shadow-[0_2px_6px_rgba(0,0,0,0.06)] ring-1 ring-cp-gold/30 min-[380px]:inline-flex">
                 <Image
                   src="/images/brand/colonels-pickle-wordmark.png"
                   alt="Colonel's Pickle® — homemade Indian pickles"
@@ -215,7 +215,7 @@ export function Header() {
                   sticker-outline reads intentionally against the cream bar. */}
               <span
                 className={cn(
-                  "relative inline-flex items-start rounded-lg bg-cp-cream-muted/90 shadow-[0_2px_8px_rgba(0,0,0,0.07)] ring-1 ring-cp-gold/25 transition-all duration-300 group-hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)]",
+                  "relative inline-flex items-start rounded-lg bg-white shadow-[0_2px_8px_rgba(0,0,0,0.07)] ring-1 ring-cp-gold/30 transition-all duration-300 group-hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)]",
                   scrolled ? "px-2.5 py-1" : "px-3 py-1.5"
                 )}
               >
