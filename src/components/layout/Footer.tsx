@@ -82,15 +82,19 @@ export function Footer() {
                   className="h-[92%] w-[92%] object-contain"
                 />
               </Link>
-              {/* Registered trademark wordmark (image), separate from the crest logo */}
-              <Image
-                src="/images/brand/colonels-pickle-wordmark.png"
-                alt="Colonel's Pickle® — homemade Indian pickles"
-                width={691}
-                height={382}
-                className="mt-4 h-auto w-[188px] drop-shadow-[0_1px_3px_rgba(0,0,0,0.45)]"
-              />
-              <p className="font-hindi mt-1 text-sm text-white/60">
+              {/* Registered trademark wordmark on a light plaque so its baked-in
+                  white sticker-outline reads intentionally against the dark bg
+                  instead of fringing/haloing. */}
+              <span className="mt-4 inline-flex w-fit items-center rounded-xl bg-cp-cream-muted/95 px-4 py-3 shadow-[0_4px_14px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
+                <Image
+                  src="/images/brand/colonels-pickle-wordmark.png"
+                  alt="Colonel's Pickle® — homemade Indian pickles"
+                  width={691}
+                  height={382}
+                  className="h-auto w-[168px]"
+                />
+              </span>
+              <p className="font-hindi mt-3 text-sm text-white/60">
                 माँ का प्यार, घर का अचार
               </p>
               <p className="mt-3 max-w-xs font-serif text-sm leading-relaxed text-white/60">

@@ -163,7 +163,7 @@ export const ANNOUNCEMENTS = [
   "🫙 15+ Authentic Varieties",
   "🚚 Free Delivery on Orders ₹999+ · Pan India",
   "📞 +91 9350406289",
-  "🌶️ Afghani · Tajaki · Kiniar/Ujaini Hing",
+  "🌶️ Afghani · Tajiki · Uzbeki Hing",
   "📦 Min Order: 6×100g or 2×250g Jars",
   "🎖️ Made with pride by the mother of an Indian Army Colonel",
 ] as const;

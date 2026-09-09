@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ComponentType, SVGProps } from "react";
 import Image from "next/image";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { SectionHeader } from "@/components/common/SectionHeader";
@@ -6,7 +7,16 @@ import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/sha
 import { Parallax } from "@/components/shared/Parallax";
 import { CertificationBadge } from "@/components/shared/CertificationBadge";
 import { HoverLift } from "@/components/shared/HoverLift";
-import { HearthIllustration, HingIllustration, MountainOriginIllustration, WebbingStitchAccent } from "@/components/illustrations";
+import {
+  HingIllustration,
+  WebbingStitchAccent,
+  NoPreservativeIcon,
+  MustardOilIllustration,
+  SaltIcon,
+  ChilliIllustration,
+  ShieldCheckIcon,
+  LeafIcon,
+} from "@/components/illustrations";
 import { BRAND, CONTACT_EMAIL, PUBLIC_REGISTRATIONS } from "@/lib/constants";
 import { Highlight } from "@/components/common/Highlight";
 import { PurityPledge } from "@/components/common/PurityPledge";
@@ -92,14 +102,20 @@ export const metadata: Metadata = {
   },
 };
 
-const PROMISES = [
-  { icon: "🌿", title: "No Preservatives", desc: "No vinegar. No artificial preservatives. No artificial colours, flavours or other artificial ingredients — ever.", color: "#166534" },
-  { icon: "🫙", title: "Kachi Ghani Oil", desc: "Cold-pressed wooden ghani mustard oil only.", color: "#7C4A1E" },
-  { icon: "💎", title: "Afghani Hing", desc: "Premium asafoetida sourced from Central Asia at ₹30,000/kg.", color: "#9C4420" },
-  { icon: "🧂", title: "Rock & Black Salt", desc: "No iodized table salt used in any product.", color: "#6B7F3A" },
-  { icon: "🌶️", title: "20–24 Whole Spices", desc: "Sun-dried, roasted and ground fresh at our facility.", color: "#C05621" },
-  { icon: "🛡️", title: "FSSAI Licensed", desc: `Licensed by the Food Safety and Standards Authority of India (${BRAND.fssai}).`, color: "#4B5D2A" },
-  { icon: "🍃", title: "100% Natural", desc: "Every ingredient hand-selected — no synthetic additives, no shortcuts.", color: "#8FA87E" },
+const PROMISES: {
+  Icon: ComponentType<SVGProps<SVGSVGElement>>;
+  title: string;
+  desc: string;
+  color: string;
+  image: string;
+}[] = [
+  { Icon: NoPreservativeIcon, title: "No Preservatives", desc: "No vinegar. No artificial preservatives. No artificial colours, flavours or other artificial ingredients — ever.", color: "#166534", image: "https://images.pexels.com/photos/7812134/pexels-photo-7812134.jpeg" },
+  { Icon: MustardOilIllustration, title: "Kachi Ghani Oil", desc: "Cold-pressed wooden ghani mustard oil only.", color: "#7C4A1E", image: "https://images.pexels.com/photos/18346906/pexels-photo-18346906.jpeg" },
+  { Icon: HingIllustration, title: "Rare Regional Hing", desc: "Afghani, Tajiki & Uzbeki asafoetida — sourced at ₹30,000/kg.", color: "#9C4420", image: "https://images.pexels.com/photos/20590330/pexels-photo-20590330.jpeg" },
+  { Icon: SaltIcon, title: "Rock & Black Salt", desc: "No iodized table salt used in any product.", color: "#6B7F3A", image: "https://images.pexels.com/photos/6690838/pexels-photo-6690838.jpeg" },
+  { Icon: ChilliIllustration, title: "20–24 Whole Spices", desc: "Sun-dried, roasted and ground fresh at our facility.", color: "#C05621", image: "https://images.pexels.com/photos/672046/pexels-photo-672046.jpeg" },
+  { Icon: ShieldCheckIcon, title: "FSSAI Licensed", desc: `Licensed by the Food Safety and Standards Authority of India (${BRAND.fssai}).`, color: "#4B5D2A", image: "https://images.pexels.com/photos/36500351/pexels-photo-36500351.jpeg" },
+  { Icon: LeafIcon, title: "100% Natural", desc: "Every ingredient hand-selected — no synthetic additives, no shortcuts.", color: "#8FA87E", image: "https://images.pexels.com/photos/8250269/pexels-photo-8250269.jpeg" },
 ];
 
 
@@ -183,7 +199,7 @@ export default function AboutPage() {
                 </span>
                 <div className="mx-auto my-3 h-[2px] w-16 bg-cp-terracotta" />
                 <p className="font-display text-[18px] font-bold text-cp-gold-light">
-                  An Indian Army Colonel
+                  An Indian Army Major (Colonel)
                 </p>
                 <p className="mt-1 font-hindi text-[12px] text-cp-beige/60">
                   Battle Casualty · War-Wounded Soldier
@@ -212,13 +228,13 @@ export default function AboutPage() {
                 <Highlight>Ridhwika Agro Organics</Highlight>. The family&apos;s
                 proud military legacy was built by the father, a retired Indian
                 Army Officer — and today three family members continue to wear
-                the uniform: an <Highlight>Indian Army Colonel</Highlight>, his
+                the uniform: an <Highlight>Indian Army Major (Colonel)</Highlight>, his
                 wife (a serving Army Officer), and his younger brother (also a
                 serving Army Officer).
               </p>
               <p className="mt-4 font-serif text-[15px] leading-relaxed text-cp-text-muted">
                 During a high-risk ammunition-disposal operation in Assam, the
-                Colonel was severely injured, becoming a Battle Casualty and
+                Major was severely injured, becoming a Battle Casualty and
                 War-Wounded Soldier. Through a gruelling three-month hospital
                 recovery on bland food, he realised a profound truth: true healing
                 doesn&apos;t come from medicine alone — it comes from the
@@ -238,7 +254,7 @@ export default function AboutPage() {
                 </h3>
                 <p className="mt-3 font-serif text-[15px] leading-relaxed text-cp-text-muted">
                   Years later, posted at a military cantonment during the COVID-19
-                  lockdown, the Colonel and his mother — <Highlight>Urmila Devi</Highlight>,
+                  lockdown, the Major and his mother — <Highlight>Urmila Devi</Highlight>,
                   a resilient officer&apos;s mother from Haryana — found comfort in
                   their Army bungalow&apos;s kitchen garden. Surrounded by fresh,
                   sun-ripened green chillies, mother and son began experimenting with
@@ -251,7 +267,15 @@ export default function AboutPage() {
                 </p>
               </div>
               <div className="flex items-center justify-center">
-                <HearthIllustration className="w-32 h-32 text-cp-terracotta opacity-80" />
+                <div className="relative h-40 w-40 overflow-hidden rounded-2xl shadow-lg ring-2 ring-cp-gold/30">
+                  <Image
+                    src="https://images.pexels.com/photos/36500351/pexels-photo-36500351.jpeg"
+                    alt="Traditional Indian kitchen — hand-ground spices, mother's recipe"
+                    fill
+                    className="object-cover"
+                    sizes="160px"
+                  />
+                </div>
               </div>
             </div>
           </AnimatedSection>
@@ -264,7 +288,7 @@ export default function AboutPage() {
               What began as a gesture of warmth soon called for a name — one that
               reflected family, unity and hope. <Highlight>Ridhwika Agro Organics</Highlight>{" "}
               is named by blending the names of two beloved daughters: <Highlight>RIDDHIMA</Highlight> and <Highlight>ADWIKA</Highlight>.
-              The beautiful fusion — <span className="font-semibold">RIDDHIMA + ADWIKA = RIDHWIKA</span> — reflects the Colonel&apos;s profound
+              The beautiful fusion — <span className="font-semibold">RIDDHIMA + ADWIKA = RIDHWIKA</span> — reflects the Major&apos;s profound
               love for his daughters and the hope they carry for this family&apos;s future.
             </p>
           </AnimatedSection>
@@ -306,7 +330,7 @@ export default function AboutPage() {
                   stays true to its military roots — crafted from{" "}
                   <Highlight>100% natural</Highlight> ingredients using authentic,
                   traditional Bhartiya recipes: no artificial preservatives, no
-                  chemicals, and no vinegar. Pure Afghani, Tajaki and Kiniar/Ujaini hing
+                  chemicals, and no vinegar. Pure Afghani, Tajiki and Uzbeki hing
                   valued at <Highlight>₹30,000/kg</Highlight>, wooden cold-pressed{" "}
                   <span className="font-hindi">kachi ghani</span> mustard oil, and the
                   secret &ldquo;<Highlight>Colonel Special</Highlight>&rdquo; blend of{" "}
@@ -318,9 +342,26 @@ export default function AboutPage() {
                 </p>
               </div>
               <div className="flex items-center justify-center">
-                <HingIllustration className="w-32 h-32 text-cp-terracotta opacity-80" />
+                <div className="relative h-40 w-40 overflow-hidden rounded-2xl shadow-lg ring-2 ring-cp-gold/30">
+                  <Image
+                    src="https://images.pexels.com/photos/20590330/pexels-photo-20590330.jpeg"
+                    alt="Rare regional hing — Afghani, Tajiki and Uzbeki asafoetida"
+                    fill
+                    className="object-cover"
+                    sizes="160px"
+                  />
+                </div>
               </div>
             </div>
+          </AnimatedSection>
+
+          <AnimatedSection direction="up" duration={0.65} delay={0.5} className="text-center">
+            <p className="mx-auto max-w-xl font-serif text-sm italic text-cp-text-muted">
+              That&apos;s why our name —
+            </p>
+            <p className="sec-title-underline mt-2 font-hindi text-2xl font-bold text-cp-olive sm:text-3xl">
+              Maa Ka Pyaar, Ghar Ka Achar
+            </p>
           </AnimatedSection>
         </div>
       </section>
@@ -340,19 +381,47 @@ export default function AboutPage() {
           </div>
           <StaggerContainer staggerDelay={0.15} className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {PROMISES.map((p) => (
-              <StaggerItem key={p.title}>
-                <HoverLift lift={4}>
+              <StaggerItem key={p.title} className="h-full">
+                <HoverLift lift={4} className="h-full">
                   <div
-                    className="rounded-2xl border border-cp-border bg-cp-cream p-6 transition-all duration-300"
+                    className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-cp-border bg-white shadow-sm transition-all duration-300 hover:shadow-xl"
                     style={{ borderBottom: `3px solid ${p.color}` }}
                   >
-                    <span className="text-4xl">{p.icon}</span>
-                    <h3 className="mt-3 font-display text-lg font-bold text-cp-text">
-                      {p.title}
-                    </h3>
-                    <p className="mt-1 font-serif text-sm leading-relaxed text-cp-text-muted">
-                      {p.desc}
-                    </p>
+                    {/* Name-matching image banner + scrim (own clip for the zoom) */}
+                    <div className="relative h-28 w-full overflow-hidden sm:h-32">
+                      <Image
+                        src={p.image}
+                        alt=""
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                      <span
+                        className="pointer-events-none absolute inset-0"
+                        style={{
+                          background: `linear-gradient(to top, ${p.color}CC 0%, ${p.color}33 45%, transparent 100%)`,
+                        }}
+                        aria-hidden="true"
+                      />
+                    </div>
+
+                    {/* Icon badge overlapping the seam — sibling of the banner so
+                        its lower half isn't clipped by the zoom container */}
+                    <span
+                      className="absolute left-6 top-[88px] flex h-12 w-12 items-center justify-center rounded-xl border border-cp-border bg-white shadow-md transition-transform duration-300 group-hover:scale-110 sm:top-[104px]"
+                      aria-hidden="true"
+                    >
+                      <p.Icon className="h-6 w-6" style={{ color: p.color }} />
+                    </span>
+
+                    <div className="flex flex-1 flex-col px-6 pb-6 pt-8">
+                      <h3 className="font-display text-lg font-bold text-cp-text">
+                        {p.title}
+                      </h3>
+                      <p className="mt-1 font-serif text-sm leading-relaxed text-cp-text-muted">
+                        {p.desc}
+                      </p>
+                    </div>
                   </div>
                 </HoverLift>
               </StaggerItem>

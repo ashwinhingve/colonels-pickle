@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import {
   AnimatedSection,
@@ -59,17 +60,24 @@ export function SignatureMasala() {
         <div className="mt-12 grid items-center gap-10 lg:grid-cols-[minmax(0,340px)_1fr]">
           {/* Emblem */}
           <AnimatedSection direction="up">
-            <div className="relative mx-auto flex max-w-[340px] flex-col items-center rounded-3xl bg-gradient-to-br from-cp-olive to-cp-olive-deep p-8 text-center shadow-xl">
-              <div className="flex h-28 w-28 items-center justify-center rounded-full bg-cp-cream/95 ring-4 ring-cp-gold/50">
+            <div className="relative mx-auto flex max-w-[340px] flex-col items-center overflow-hidden rounded-3xl bg-gradient-to-br from-cp-olive to-cp-olive-deep p-8 text-center shadow-xl">
+              <Image
+                src="https://images.pexels.com/photos/672046/pexels-photo-672046.jpeg"
+                alt=""
+                fill
+                className="object-cover opacity-[0.16]"
+                sizes="340px"
+              />
+              <div className="relative z-10 flex h-28 w-28 items-center justify-center rounded-full bg-cp-cream/95 ring-4 ring-cp-gold/50">
                 <SpiceBowlIllustration className="h-16 w-16" aria-hidden />
               </div>
-              <p className="mt-5 font-hindi text-[11px] font-bold uppercase tracking-[0.25em] text-cp-gold-light">
+              <p className="relative z-10 mt-5 font-hindi text-[11px] font-bold uppercase tracking-[0.25em] text-cp-gold-light">
                 Colonel Special
               </p>
-              <p className="mt-1 font-display text-2xl font-extrabold text-cp-beige">
+              <p className="relative z-10 mt-1 font-display text-2xl font-extrabold text-cp-beige">
                 20–24 Whole Spices
               </p>
-              <p className="mt-3 font-serif text-sm italic leading-relaxed text-cp-beige/75">
+              <p className="relative z-10 mt-3 font-serif text-sm italic leading-relaxed text-cp-beige/75">
                 No two blends alike — ground fresh in small batches, never
                 store-bought powder.
               </p>

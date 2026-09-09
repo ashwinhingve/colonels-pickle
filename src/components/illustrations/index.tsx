@@ -135,6 +135,61 @@ export function ShieldCheckIcon({ className, title, ...p }: SVGProps) {
   );
 }
 
+export function SaltIcon({ className, title, ...p }: SVGProps) {
+  // A small mound of rock-salt crystals.
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base({ title })} {...p}>
+      {title ? <title>{title}</title> : null}
+      <path
+        d="M4 18c0-3.5 2.8-7 5-7 .6-2 2-3.4 3.6-3.4S15.4 9 16 11c2.2 0 4 3.5 4 7H4Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.5 18l1-3.5M12.5 18l.8-4.4M16 18l-.8-3"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        opacity="0.7"
+      />
+      <path d="M4 18h16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function HelpingHandsIcon({ className, title, ...p }: SVGProps) {
+  // A heart cradled by two hands — women empowerment / community care.
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base({ title })} {...p}>
+      {title ? <title>{title}</title> : null}
+      <path
+        d="M12 8.5c-1-1.6-3.3-1.9-4.4-.5-1 1.3-.7 3 .6 4.2L12 15.5l3.8-3.3c1.3-1.2 1.6-2.9.6-4.2-1.1-1.4-3.4-1.1-4.4.5Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M3 15c1.6 1 2.8 1 4-.2M21 15c-1.6 1-2.8 1-4-.2"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M4 13.5c-1.3 1.6-1.6 3.6-.8 5.3M20 13.5c1.3 1.6 1.6 3.6.8 5.3"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        opacity="0.7"
+      />
+    </svg>
+  );
+}
+
 /* ───────────────────────── Ingredient illustrations (64×64, filled) ───────────────────────── */
 
 export function ChilliIllustration({ className, title, ...p }: SVGProps) {

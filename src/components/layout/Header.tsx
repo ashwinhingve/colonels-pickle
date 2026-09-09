@@ -16,7 +16,6 @@ import {
   LayoutDashboard,
 } from "lucide-react";
 import { TapScale } from "@/components/shared/TapScale";
-import { WebbingStitchAccent } from "@/components/illustrations";
 
 const emptySubscribe = () => () => {};
 
@@ -177,13 +176,24 @@ export function Header() {
                 priority
               />
             </span>
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-cp-gold/50 bg-white shadow-sm transition-transform duration-300 group-hover:scale-105 lg:hidden">
+            <span className="flex items-center gap-2 lg:hidden">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-cp-gold/50 bg-white shadow-sm transition-transform duration-300 group-hover:scale-105">
+                <Image
+                  src="/images/brand/ridhwika-crest.png"
+                  alt="Colonel's Pickle crest — Ridhwika Agro Organics"
+                  width={48}
+                  height={48}
+                  className="h-[92%] w-[92%] object-contain"
+                  priority
+                />
+              </span>
+              {/* Compact wordmark for phones with room; crest-only below 380px */}
               <Image
-                src="/images/brand/ridhwika-crest.png"
-                alt="Colonel's Pickle crest — Ridhwika Agro Organics"
-                width={48}
-                height={48}
-                className="h-[92%] w-[92%] object-contain"
+                src="/images/brand/colonels-pickle-wordmark.png"
+                alt="Colonel's Pickle® — homemade Indian pickles"
+                width={691}
+                height={382}
+                className="hidden h-[25px] w-auto min-[380px]:block"
                 priority
               />
             </span>
@@ -206,13 +216,17 @@ export function Header() {
                 )}
                 priority
               />
-              <span className="mt-0.5 font-hindi text-[10px] tracking-[0.18em] text-cp-brown">
-                MAA KA PYAAR, GHAR KA ACHAR
+              {/* Tagline as one balanced line: a short gold tick + the words,
+                  tightly tied to the wordmark above (replaces the stray stitch). */}
+              <span className="mt-1 flex items-center gap-2">
+                <span
+                  className="h-px w-4 shrink-0 bg-gradient-to-r from-transparent to-cp-gold/70"
+                  aria-hidden="true"
+                />
+                <span className="font-hindi text-[10px] font-semibold tracking-[0.18em] text-cp-olive-dark">
+                  MAA KA PYAAR, GHAR KA ACHAR
+                </span>
               </span>
-              <WebbingStitchAccent
-                className="mt-1 h-2 w-20 text-cp-olive/40"
-                aria-hidden="true"
-              />
             </span>
           </Link>
 

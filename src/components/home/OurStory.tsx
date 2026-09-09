@@ -1,9 +1,17 @@
 "use client";
 
+import type { ComponentType, SVGProps as ReactSVGProps } from "react";
 import Image from "next/image";
+import { MapPin } from "lucide-react";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { Highlight } from "@/components/common/Highlight";
-import { SpiceScatter, CornerFlourish } from "@/components/illustrations";
+import {
+  SpiceScatter,
+  CornerFlourish,
+  ShieldCheckIcon,
+  NoVinegarIcon,
+  HelpingHandsIcon,
+} from "@/components/illustrations";
 import {
   AnimatedSection,
   StaggerContainer,
@@ -11,11 +19,15 @@ import {
 } from "@/components/shared/AnimatedSection";
 import { HoverLift } from "@/components/shared/HoverLift";
 
-const FACT_TILES = [
-  { icon: "👩‍🍳", label: "Women Empowerment", sub: "Creating local employment" },
-  { icon: "🛡️", label: "FSSAI Licensed", sub: "License: 12226026000060" },
-  { icon: "🌿", label: "No Preservatives, No Vinegar", sub: "100% natural, always" },
-  { icon: "📍", label: "Jaipur & Bahadurgarh", sub: "Our two family hubs" },
+const FACT_TILES: {
+  Icon: ComponentType<ReactSVGProps<SVGSVGElement>>;
+  label: string;
+  sub: string;
+}[] = [
+  { Icon: HelpingHandsIcon, label: "Women Empowerment", sub: "Creating local employment" },
+  { Icon: ShieldCheckIcon, label: "FSSAI Licensed", sub: "License: 12226026000060" },
+  { Icon: NoVinegarIcon, label: "No Preservatives, No Vinegar", sub: "100% natural, always" },
+  { Icon: MapPin, label: "Jaipur & Bahadurgarh", sub: "Our two family hubs" },
 ];
 
 export function OurStory() {
@@ -68,7 +80,7 @@ export function OurStory() {
             </span>
             <div className="mx-auto my-3 h-[2px] w-16 bg-cp-terracotta" />
             <p className="font-display text-[18px] font-bold text-cp-gold-light">
-              An Indian Army Colonel
+              An Indian Army Major (Colonel)
             </p>
             <p className="mt-1 font-hindi text-[12px] text-cp-beige/60">
               Battle Casualty · War-Wounded Soldier
@@ -112,14 +124,14 @@ export function OurStory() {
 
           <p className="mt-5 font-serif text-[15px] leading-relaxed text-cp-beige/75">
             After a high-risk ammunition-disposal operation in Assam left him a
-            war-wounded soldier, an Indian Army Colonel spent three months
-            recovering on bland hospital food — and understood a simple truth:
-            true healing comes from the comforting, soul-nourishing flavours of
-            home.
+            war-wounded soldier, an Indian Army Major (Colonel) spent three
+            months recovering on bland hospital food — and understood a simple
+            truth: true healing comes from the comforting, soul-nourishing
+            flavours of home.
           </p>
           <p className="mt-4 font-serif text-[15px] leading-relaxed text-cp-beige/75">
-            During the COVID lockdown, posted at a military cantonment, he and
-            his mother Urmila Devi — a resilient officer&apos;s mother from
+            During the COVID lockdown, posted at a military cantonment, the
+            Major and his mother Urmila Devi — a resilient officer&apos;s mother from
             Haryana — turned to their kitchen garden and time-tested family
             recipes, sun-drying and hand-grinding{" "}
             <Highlight tone="dark">20 to 24 whole spices</Highlight> into their
@@ -151,7 +163,7 @@ export function OurStory() {
               <StaggerItem key={tile.label} className="h-full">
                 <HoverLift lift={3} className="h-full">
                   <div className="flex h-full items-start gap-3 rounded-xl border border-white/12 bg-white/[0.06] px-4 py-3 transition-colors duration-300 hover:border-cp-gold/40 hover:bg-white/[0.1]">
-                    <span className="text-xl">{tile.icon}</span>
+                    <tile.Icon className="h-5 w-5 shrink-0 text-cp-gold-light" aria-hidden />
                     <div>
                       <p className="font-sans text-sm font-semibold text-cp-beige/90">
                         {tile.label}
@@ -167,6 +179,15 @@ export function OurStory() {
           </StaggerContainer>
         </AnimatedSection>
       </div>
+
+      <AnimatedSection direction="up" className="relative z-10 mt-14 px-4 text-center">
+        <p className="mx-auto max-w-xl font-serif text-sm italic text-cp-beige/60">
+          That&apos;s why our name —
+        </p>
+        <p className="sec-title-underline mt-2 font-hindi text-2xl font-bold text-cp-gold-light sm:text-3xl">
+          Maa Ka Pyaar, Ghar Ka Achar
+        </p>
+      </AnimatedSection>
     </section>
   );
 }

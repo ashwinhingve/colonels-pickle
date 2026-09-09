@@ -1,18 +1,12 @@
 "use client";
 
-import type { ComponentType, SVGProps } from "react";
+import Image from "next/image";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
 import { HoverLift } from "@/components/shared/HoverLift";
-import {
-  HingIllustration,
-  MustardOilIllustration,
-  SpiceBowlIllustration,
-} from "@/components/illustrations";
 
 const INGREDIENTS: {
-  Illustration?: ComponentType<SVGProps<SVGSVGElement>>;
-  icon?: string;
+  image: string;
   title: string;
   sub: string;
   note: string;
@@ -20,15 +14,15 @@ const INGREDIENTS: {
   tint: string;
 }[] = [
   {
-    Illustration: HingIllustration,
-    title: "3 Rare Hing Varieties",
-    sub: "Afghani · Tajaki · Kiniar/Ujaini",
+    image: "https://images.pexels.com/photos/20590330/pexels-photo-20590330.jpeg",
+    title: "3 Rare Hing Origins",
+    sub: "Afghani · Tajiki · Uzbeki",
     note: "The soul of every jar · ~₹30,000/kg",
     color: "#4B5D2A",
     tint: "#E8EBD9",
   },
   {
-    Illustration: MustardOilIllustration,
+    image: "https://images.pexels.com/photos/18346906/pexels-photo-18346906.jpeg",
     title: "Kachi Ghani Mustard Oil",
     sub: "Cold Pressed Wooden Press",
     note: "~₹300/litre · Pure & unrefined",
@@ -36,7 +30,7 @@ const INGREDIENTS: {
     tint: "#F3E6CE",
   },
   {
-    Illustration: SpiceBowlIllustration,
+    image: "https://images.pexels.com/photos/672046/pexels-photo-672046.jpeg",
     title: "20–24 Exotic Whole Spices",
     sub: "Sun-dried, Roasted & Ground",
     note: "From across India & Central Asia",
@@ -44,7 +38,7 @@ const INGREDIENTS: {
     tint: "#FBE5D6",
   },
   {
-    icon: "🧂",
+    image: "https://images.pexels.com/photos/6690838/pexels-photo-6690838.jpeg",
     title: "Rock Salt & Black Salt",
     sub: "Sendha & Kala Namak",
     note: "No iodized table salt, ever",
@@ -79,14 +73,16 @@ export function PremiumIngredients() {
                     className="group rounded-2xl border-2 border-[color:var(--ing-soft)] p-6 transition-[border-color] duration-300 hover:border-[color:var(--ing)]"
                   >
                     <div
-                      className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110"
+                      className="relative mx-auto mb-4 h-16 w-16 overflow-hidden rounded-2xl transition-transform duration-300 group-hover:scale-110"
                       style={{ backgroundColor: item.tint }}
                     >
-                      {item.Illustration ? (
-                        <item.Illustration className="h-10 w-10" aria-hidden />
-                      ) : (
-                        <span className="text-4xl">{item.icon}</span>
-                      )}
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className="object-cover"
+                        sizes="64px"
+                      />
                     </div>
                     <h3 className="font-display text-base font-bold text-cp-text">
                       {item.title}

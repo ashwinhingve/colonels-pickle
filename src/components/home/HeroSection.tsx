@@ -124,8 +124,12 @@ export async function HeroSection() {
         <Link
           href="/products"
           aria-label="Shop Colonel's Pickle achaars"
-          className="group block overflow-hidden"
+          className="group flex items-center justify-center overflow-hidden"
         >
+          {/* Constrain by viewport height (minus the 81px sticky header) so the
+              full banner — including its baked-in trust row + CTA — is visible on
+              load without scrolling. Width auto-letterboxes into the matching
+              beige section background when height is the limiting dimension. */}
           <Image
             src="/hero/hero-banner-1.jpg"
             alt="Colonel's Pickle homemade Indian achaar — maa ka pyaar, ghar ka achar. No vinegar, no artificial preservatives, natural ingredients, loved by families."
@@ -133,7 +137,7 @@ export async function HeroSection() {
             height={941}
             priority
             sizes="100vw"
-            className="mx-auto block h-auto w-full max-w-[1671px] transition-transform duration-700 ease-out group-hover:scale-[1.015]"
+            className="mx-auto block h-auto max-h-[calc(100svh-81px)] w-auto max-w-full transition-transform duration-700 ease-out group-hover:scale-[1.015]"
           />
         </Link>
       </section>

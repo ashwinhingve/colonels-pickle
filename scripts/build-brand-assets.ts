@@ -123,9 +123,20 @@ async function buildOgImage(): Promise<string> {
 }
 
 async function buildFavicons(): Promise<string[]> {
+  // Both favicons sit the crest on a solid WHITE square so the browser tab /
+  // PWA install icon reads as a finished mark, not a logo floating on whatever
+  // background the OS or tab strip happens to apply.
+  const WHITE = '#FFFFFF';
+
+  const crest440 = await sharp(P('public/images/brand/ridhwika-crest.png'))
+    .resize(440, 440, { fit: 'contain', background: TRANSPARENT })
+    .png()
+    .toBuffer();
   const icon = P('src/app/icon.png');
-  await sharp(P('public/images/brand/ridhwika-crest.png'))
-    .resize(512, 512, { fit: 'contain', background: TRANSPARENT })
+  await sharp({
+    create: { width: 512, height: 512, channels: 4, background: WHITE },
+  })
+    .composite([{ input: crest440, gravity: 'center' }])
     .png()
     .toFile(icon);
 
@@ -135,7 +146,7 @@ async function buildFavicons(): Promise<string[]> {
     .toBuffer();
   const apple = P('src/app/apple-icon.png');
   await sharp({
-    create: { width: 180, height: 180, channels: 4, background: '#FDF8F0' },
+    create: { width: 180, height: 180, channels: 4, background: WHITE },
   })
     .composite([{ input: crest150, gravity: 'center' }])
     .png()

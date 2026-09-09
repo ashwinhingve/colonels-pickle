@@ -12,7 +12,7 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: '#4B5D2A',
     icons: [
       {
-        src: '/images/brand/ridhwika-crest.png',
+        src: '/icon.png',
         sizes: '512x512',
         type: 'image/png',
         purpose: 'any',
