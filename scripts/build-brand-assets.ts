@@ -40,31 +40,6 @@ async function whiteToTransparent(
   return sharp(out, { raw: { width, height, channels } }).png().toBuffer();
 }
 
-/**
- * Knock out every light / low-saturation pixel to transparent — removes the
- * white background, the white sticker-outline AND the grey drop-shadow smudge
- * baked into the wordmark artwork, leaving only the saturated red lettering.
- * A pixel is dropped when its darkest channel is bright (min(R,G,B) >= floor),
- * which is true for white and every shade of grey but never for the red glyphs
- * (their green/blue channels stay low). This is what kills the "dirty halo".
- */
-async function lightAndGreyToTransparent(
-  input: string | Buffer,
-  floor = 168
-): Promise<Buffer> {
-  const { data, info } = await sharp(input)
-    .ensureAlpha()
-    .raw()
-    .toBuffer({ resolveWithObject: true });
-  const { width, height, channels } = info;
-  const out = Buffer.from(data);
-  for (let i = 0; i < out.length; i += channels) {
-    const min = Math.min(out[i], out[i + 1], out[i + 2]);
-    if (min >= floor) out[i + 3] = 0;
-  }
-  return sharp(out, { raw: { width, height, channels } }).png().toBuffer();
-}
-
 const TRANSPARENT = { r: 0, g: 0, b: 0, alpha: 0 };
 
 async function buildCrest(): Promise<string> {
@@ -86,18 +61,13 @@ async function buildCrest(): Promise<string> {
 }
 
 async function buildWordmark(): Promise<string> {
-  // colonels-pickle-logo-plain.jpeg is the red "Colonel's Home Made Pickle"
-  // wordmark on white, with a white sticker-outline and a grey drop-shadow baked
-  // in. Drop every light/grey pixel (not just pure white) so neither the outline
-  // nor the shadow survives as a halo — leaving only the clean red lettering.
-  const keyed = await lightAndGreyToTransparent(
-    P('public/images/brand/colonels-pickle-logo-plain.jpeg'),
-    168
-  );
+  // Client-supplied official trademark artwork (transparent AVIF, 691×382) —
+  // the registered red "Colonel's Home Made Pickle" script with its white
+  // sticker-outline. This is the canonical mark; we only transcode it to PNG
+  // (no re-keying) so the exact artwork is preserved. It sits on a light plaque
+  // wherever it appears on a dark/flat surface (navbar, footer, hero badge).
   const out = P('public/images/brand/colonels-pickle-wordmark.png');
-  await sharp(keyed)
-    .trim({ threshold: 12 })
-    .resize({ width: 900, withoutEnlargement: true })
+  await sharp(P('public/images/brand/colonels-pickle-wordmark-source.avif'))
     .png()
     .toFile(out);
   return out;

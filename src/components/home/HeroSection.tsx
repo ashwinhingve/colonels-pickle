@@ -265,8 +265,8 @@ export async function HeroSection() {
                 <Image
                   src="/images/brand/colonels-pickle-wordmark.png"
                   alt="Colonel's Pickle® — homemade Indian pickles"
-                  width={662}
-                  height={358}
+                  width={691}
+                  height={382}
                   className="h-[38px] w-auto"
                   priority
                 />

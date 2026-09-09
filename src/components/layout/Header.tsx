@@ -187,17 +187,20 @@ export function Header() {
                   priority
                 />
               </span>
-              {/* Compact on-brand type for phones with room; crest-only below 380px */}
-              <span className="hidden flex-col leading-none min-[380px]:flex">
-                <span className="font-display text-[19px] font-black leading-none tracking-[-0.01em] text-[#B0201C]">
-                  Colonel&apos;s <span className="italic">Pickle</span>
-                  <sup className="ml-0.5 align-super font-sans text-[0.42em] font-bold text-cp-brown">
-                    &reg;
-                  </sup>
-                </span>
-                <span className="mt-1 font-hindi text-[8px] font-semibold tracking-[0.16em] text-cp-olive-dark">
-                  MAA KA PYAAR, GHAR KA ACHAR
-                </span>
+              {/* Official trademark on a light plaque for phones with room;
+                  crest-only below 380px */}
+              <span className="relative hidden items-start rounded-md bg-cp-cream-muted/90 px-2 py-1 shadow-[0_2px_6px_rgba(0,0,0,0.06)] ring-1 ring-cp-gold/25 min-[380px]:inline-flex">
+                <Image
+                  src="/images/brand/colonels-pickle-wordmark.png"
+                  alt="Colonel's Pickle® — homemade Indian pickles"
+                  width={691}
+                  height={382}
+                  className="h-[22px] w-auto"
+                  priority
+                />
+                <sup className="ml-0.5 font-sans text-[8px] font-bold text-cp-brown">
+                  &reg;
+                </sup>
               </span>
             </span>
 
@@ -207,23 +210,32 @@ export function Header() {
               aria-hidden="true"
             />
 
-            <span className="hidden flex-col leading-none lg:flex">
-              {/* Trademark set as crisp, on-brand serif type so it stays sharp at
-                  navbar size; the signature red script wordmark image still leads
-                  the hero and footer. */}
+            <span className="hidden flex-col items-start gap-1.5 lg:flex">
+              {/* Official trademark artwork on a light plaque so its white
+                  sticker-outline reads intentionally against the cream bar. */}
               <span
                 className={cn(
-                  "font-display font-black leading-none tracking-[-0.01em] text-[#B0201C] transition-[font-size] duration-300",
-                  scrolled ? "text-[23px]" : "text-[27px]"
+                  "relative inline-flex items-start rounded-lg bg-cp-cream-muted/90 shadow-[0_2px_8px_rgba(0,0,0,0.07)] ring-1 ring-cp-gold/25 transition-all duration-300 group-hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)]",
+                  scrolled ? "px-2.5 py-1" : "px-3 py-1.5"
                 )}
               >
-                Colonel&apos;s <span className="italic">Pickle</span>
-                <sup className="ml-0.5 align-super font-sans text-[0.42em] font-bold text-cp-brown">
+                <Image
+                  src="/images/brand/colonels-pickle-wordmark.png"
+                  alt="Colonel's Pickle® — homemade Indian pickles"
+                  width={691}
+                  height={382}
+                  className={cn(
+                    "w-auto transition-[height] duration-300",
+                    scrolled ? "h-[30px]" : "h-[34px]"
+                  )}
+                  priority
+                />
+                <sup className="ml-0.5 mt-0.5 font-sans text-[10px] font-bold text-cp-brown">
                   &reg;
                 </sup>
               </span>
               {/* Tagline: a short gold tick + the words */}
-              <span className="mt-2 flex items-center gap-2">
+              <span className="flex items-center gap-2 pl-1">
                 <span
                   className="h-px w-4 shrink-0 bg-gradient-to-r from-transparent to-cp-gold/70"
                   aria-hidden="true"
