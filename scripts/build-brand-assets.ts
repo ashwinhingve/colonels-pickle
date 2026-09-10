@@ -18,6 +18,7 @@ const P = (...s: string[]) => join(ROOT, ...s);
  *   public/images/brand/colonels-pickle-wordmark.png — red trademark wordmark (transparent)
  *   public/og-image.jpg                            — 1200x630 social share banner
  *   src/app/icon.png / src/app/apple-icon.png      — favicon (crest)
+ *   src/app/favicon.ico                            — classic /favicon.ico (crest, 16/32/48)
  *   public/hero/hero-banner-1.jpg                  — optimized homepage hero banner
  */
 
@@ -103,7 +104,7 @@ async function buildOgImage(): Promise<string> {
       <circle cx="285" cy="300" r="185" fill="#FDF8F0"/>
       <circle cx="285" cy="300" r="185" fill="none" stroke="#D4A017" stroke-width="4"/>
       <rect x="470" y="452" width="600" height="3" rx="1.5" fill="#D4A017"/>
-      <text x="472" y="512" font-family="Georgia,'Times New Roman',serif" font-size="34" font-style="italic" fill="#F5EBDA">Maa Ka Pyaar, Ghar Ka Achar</text>
+      <text x="472" y="512" font-family="Georgia,'Times New Roman',serif" font-size="34" font-style="italic" fill="#F5EBDA">Maa Ka Pyaar, Ghar Ka Achaar</text>
       <text x="474" y="556" font-family="Georgia,serif" font-size="21" letter-spacing="1" fill="#E9C86A">No Preservatives · No Vinegar · FSSAI Licensed · Jaipur</text>
     </svg>`
   );
@@ -151,6 +152,59 @@ async function buildFavicons(): Promise<string[]> {
   return [icon, apple];
 }
 
+/**
+ * Emit a classic multi-size /favicon.ico (16/32/48, PNG-encoded entries). Google
+ * fetches /favicon.ico first when choosing the icon it shows beside a search
+ * result, so having a real .ico here — not only icon.png — is what lets the crest
+ * replace the default globe. PNG-in-ICO is valid for Googlebot + all modern browsers.
+ */
+async function buildFaviconIco(): Promise<string> {
+  const WHITE = '#FFFFFF';
+  const sizes = [16, 32, 48];
+  const pngs: Buffer[] = [];
+  for (const s of sizes) {
+    const inner = Math.round(s * 0.86);
+    const crest = await sharp(P('public/images/brand/ridhwika-crest.png'))
+      .resize(inner, inner, { fit: 'contain', background: TRANSPARENT })
+      .png()
+      .toBuffer();
+    const png = await sharp({
+      create: { width: s, height: s, channels: 4, background: WHITE },
+    })
+      .composite([{ input: crest, gravity: 'center' }])
+      .png()
+      .toBuffer();
+    pngs.push(png);
+  }
+
+  const count = sizes.length;
+  const header = Buffer.alloc(6);
+  header.writeUInt16LE(0, 0); // reserved
+  header.writeUInt16LE(1, 2); // type: 1 = icon
+  header.writeUInt16LE(count, 4);
+
+  const entries = Buffer.alloc(16 * count);
+  let offset = 6 + 16 * count;
+  for (let i = 0; i < count; i++) {
+    const s = sizes[i];
+    const png = pngs[i];
+    const e = i * 16;
+    entries.writeUInt8(s >= 256 ? 0 : s, e + 0); // width (0 = 256)
+    entries.writeUInt8(s >= 256 ? 0 : s, e + 1); // height
+    entries.writeUInt8(0, e + 2); // palette colors
+    entries.writeUInt8(0, e + 3); // reserved
+    entries.writeUInt16LE(1, e + 4); // color planes
+    entries.writeUInt16LE(32, e + 6); // bits per pixel
+    entries.writeUInt32LE(png.length, e + 8); // bytes in resource
+    entries.writeUInt32LE(offset, e + 12); // offset from file start
+    offset += png.length;
+  }
+
+  const out = P('src/app/favicon.ico');
+  fs.writeFileSync(out, Buffer.concat([header, entries, ...pngs]));
+  return out;
+}
+
 async function buildHeroBanner(): Promise<string | null> {
   const src = 'C:/Users/ashwi/Downloads/hero section 1.png';
   if (!fs.existsSync(src)) {
@@ -168,6 +222,7 @@ async function main() {
   console.log('  wordmark   →', await buildWordmark());
   console.log('  og-image   →', await buildOgImage());
   console.log('  favicons   →', (await buildFavicons()).join(', '));
+  console.log('  favicon.ico→', await buildFaviconIco());
   const hero = await buildHeroBanner();
   if (hero) console.log('  hero       →', hero);
   console.log('Done.');

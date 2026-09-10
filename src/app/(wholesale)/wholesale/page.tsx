@@ -8,7 +8,7 @@ import { HoverLift } from "@/components/shared/HoverLift";
 import { WebbingStitchAccent } from "@/components/illustrations";
 import { OFFERS } from "@/lib/constants";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.colonelspicklebyridhwika.com';
 
 export const metadata: Metadata = {
   title: "Wholesale & Retailer Program",

@@ -8,7 +8,7 @@ import PageContent from "@/models/PageContent"
 
 export const dynamic = "force-dynamic"
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.colonelspicklebyridhwika.com';
 
 export const metadata: Metadata = {
   title: "Refund & Return Policy | Colonel's Pickle",
@@ -128,7 +128,7 @@ function DefaultContent() {
                     </p>
                     <div className="space-y-2 text-cp-text-muted mb-4">
                       <p>📞 Helpline: +91 9350406289</p>
-                      <p>📧 Email: ridhwika.agro.organics@gmail.com</p>
+                      <p>📧 Email: colonelspickle.ridhwika@gmail.com</p>
                     </div>
 
                     <div className="bg-cp-beige rounded-lg p-6 border-l-4 border-cp-terracotta">
@@ -229,9 +229,9 @@ function DefaultContent() {
                     <div className="space-y-2 text-cp-text-muted">
                       <p><strong>Colonel&apos;s Pickle by Ridhwika Agro Organics</strong></p>
                       <p>📍 B-6/374, Vaishali Nagar, Jaipur, Rajasthan - 302020</p>
-                      <p>📧 Email: ridhwika.agro.organics@gmail.com</p>
+                      <p>📧 Email: colonelspickle.ridhwika@gmail.com</p>
                       <p>📞 Phone: +91 9717243306, +91 9416845689, +91 9350406289</p>
-                      <p>🌐 Website: colonelspickle.in</p>
+                      <p>🌐 Website: colonelspicklebyridhwika.com</p>
                     </div>
                   </div>
                 </div>

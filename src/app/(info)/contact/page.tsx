@@ -8,7 +8,7 @@ import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { MapPin, Phone, Mail, Instagram, Clock } from "lucide-react";
 import { BRAND, CONTACT_EMAIL } from "@/lib/constants";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.colonelspicklebyridhwika.com';
 
 export const metadata: Metadata = {
   title: "Contact Us | Colonel's Pickle",

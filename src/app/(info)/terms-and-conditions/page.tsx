@@ -9,7 +9,7 @@ import { REGISTRATIONS } from "@/lib/constants"
 
 export const dynamic = "force-dynamic"
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.colonelspicklebyridhwika.com';
 
 export const metadata: Metadata = {
   title: "Terms & Conditions | Colonel's Pickle",
@@ -80,7 +80,7 @@ function DefaultContent() {
             <AnimatedSection direction="up" duration={0.65} delay={0.1}>
               <div className="bg-gradient-to-br from-cp-beige to-white rounded-2xl p-8 shadow-sm border border-cp-border">
                 <p className="text-cp-text-muted leading-relaxed">
-                  By accessing or using <strong>colonelspickle.in</strong>, you agree to the following terms and conditions. Please read them carefully before placing an order.
+                  By accessing or using <strong>colonelspicklebyridhwika.com</strong>, you agree to the following terms and conditions. Please read them carefully before placing an order.
                 </p>
               </div>
             </AnimatedSection>
@@ -238,9 +238,9 @@ function DefaultContent() {
                     <div className="space-y-2 text-cp-text-muted">
                       <p><strong>Colonel&apos;s Pickle by Ridhwika Agro Organics</strong></p>
                       <p>📍 B-6/374, Vaishali Nagar, Jaipur, Rajasthan - 302020</p>
-                      <p>📧 Email: ridhwika.agro.organics@gmail.com</p>
+                      <p>📧 Email: colonelspickle.ridhwika@gmail.com</p>
                       <p>📞 Phone: +91 9717243306, +91 9416845689, +91 9350406289</p>
-                      <p>🌐 Website: colonelspickle.in</p>
+                      <p>🌐 Website: colonelspicklebyridhwika.com</p>
                     </div>
                   </div>
                 </div>

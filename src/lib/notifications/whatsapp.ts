@@ -79,7 +79,7 @@ class WhatsAppService {
     paymentMethod: string;
   }): Promise<void> {
     const method = order.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Online Payment';
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://colonelspickle.in';
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.colonelspicklebyridhwika.com';
 
     const message =
       `<b>New Order Received!</b>\n\n` +

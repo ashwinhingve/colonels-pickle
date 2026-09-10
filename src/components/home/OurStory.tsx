@@ -80,7 +80,7 @@ export function OurStory() {
             </span>
             <div className="mx-auto my-3 h-[2px] w-16 bg-cp-terracotta" />
             <p className="font-display text-[18px] font-bold text-cp-gold-light">
-              An Indian Army Major (Colonel)
+              An Indian Army Colonel
             </p>
             <p className="mt-1 font-hindi text-[12px] text-cp-beige/60">
               Battle Casualty · War-Wounded Soldier
@@ -124,14 +124,14 @@ export function OurStory() {
 
           <p className="mt-5 font-serif text-[15px] leading-relaxed text-cp-beige/75">
             After a high-risk ammunition-disposal operation in Assam left him a
-            war-wounded soldier, an Indian Army Major (Colonel) spent three
-            months recovering on bland hospital food — and understood a simple
-            truth: true healing comes from the comforting, soul-nourishing
+            war-wounded soldier, the officer — then a Major, today a Colonel —
+            spent three months recovering on bland hospital food and understood a
+            simple truth: true healing comes from the comforting, soul-nourishing
             flavours of home.
           </p>
           <p className="mt-4 font-serif text-[15px] leading-relaxed text-cp-beige/75">
             During the COVID lockdown, posted at a military cantonment, the
-            Major and his mother Urmila Devi — a resilient officer&apos;s mother from
+            Colonel and his mother Urmila Devi — a resilient officer&apos;s mother from
             Haryana — turned to their kitchen garden and time-tested family
             recipes, sun-drying and hand-grinding{" "}
             <Highlight tone="dark">20 to 24 whole spices</Highlight> into their
@@ -185,7 +185,7 @@ export function OurStory() {
           That&apos;s why our name —
         </p>
         <p className="sec-title-underline mt-2 font-hindi text-2xl font-bold text-cp-gold-light sm:text-3xl">
-          Maa Ka Pyaar, Ghar Ka Achar
+          Maa Ka Pyaar, Ghar Ka Achaar
         </p>
       </AnimatedSection>
     </section>

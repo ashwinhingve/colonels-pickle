@@ -14,7 +14,7 @@ import { ShieldCheckIcon, NoPreservativeIcon, WebbingStitchAccent } from "@/comp
 import { getProductTheme } from "@/lib/productTheme";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://colonelspickle.in";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.colonelspicklebyridhwika.com";
 
 const CATEGORY_LABELS: Record<string, string> = {
   achaar: "Achaar Collection",

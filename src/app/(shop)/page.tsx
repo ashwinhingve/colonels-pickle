@@ -19,7 +19,7 @@ import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { SectionDivider } from "@/components/shared/SectionDivider";
 import { WebbingStitchAccent } from "@/components/illustrations";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.colonelspicklebyridhwika.com';
 
 export const metadata: Metadata = {
   title: {
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
         url: `${SITE_URL}/og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: "Colonel's Pickle® — homemade Indian pickles · Maa Ka Pyaar, Ghar Ka Achar",
+        alt: "Colonel's Pickle® — homemade Indian pickles · Maa Ka Pyaar, Ghar Ka Achaar",
       },
     ],
   },

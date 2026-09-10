@@ -1,13 +1,13 @@
 // Application Constants
 
 export const SITE_NAME = "Colonel's Pickle";
-export const SITE_DESCRIPTION = "Maa Ka Pyaar, Ghar Ka Achar — authentic homemade pickles, cold press oils & natural products.";
+export const SITE_DESCRIPTION = "Maa Ka Pyaar, Ghar Ka Achaar — authentic homemade pickles, cold press oils & natural products.";
 
 // Brand
 export const BRAND = {
   name: "Colonel's Pickle",
   nameFull: "Colonel's Pickle® by Ridhwika Agro Organics",
-  tagline: "Maa Ka Pyaar, Ghar Ka Achar",
+  tagline: "Maa Ka Pyaar, Ghar Ka Achaar",
   taglineHindi: "माँ का प्यार, घर का अचार",
   fssai: "12226026000060",
   address: {
@@ -18,7 +18,7 @@ export const BRAND = {
     pin: "302020",
   },
   phones: ["9717243306", "9416845689", "9350406289"],
-  email: "colonelspickle@proton.me",
+  email: "colonelspickle.ridhwika@gmail.com",
   instagram: {
     handle: "@colonels.pickle",
     url: "https://instagram.com/colonels.pickle",
@@ -148,12 +148,12 @@ export const SOCIAL_LINKS = {
 };
 
 // Contact Info
-export const CONTACT_EMAIL = "colonelspickle@proton.me";
+export const CONTACT_EMAIL = "colonelspickle.ridhwika@gmail.com";
 export const CONTACT_PHONE = "+91-9717243306";
 
 // Admin & storage — env-driven (first address in ADMIN_EMAIL); business email as safe fallback
 export const ADMIN_EMAIL =
-  process.env.ADMIN_EMAIL?.split(",")[0]?.trim() || "ridhwika.agro.organics@gmail.com";
+  process.env.ADMIN_EMAIL?.split(",")[0]?.trim() || "colonelspickle.ridhwika@gmail.com";
 export const CART_STORAGE_KEY = "cp-cart-storage";
 
 // Announcement bar (marquee) items

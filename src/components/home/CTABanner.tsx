@@ -34,7 +34,7 @@ export function CTABanner() {
         </span>
 
         <h2 className="mt-5 font-display text-3xl font-extrabold text-white md:text-4xl">
-          Order Authentic Ghar Ka Achar Today
+          Order Authentic Ghar Ka Achaar Today
         </h2>
         <p className="mt-4 font-serif text-[15px] text-white/80">
           Pan India shipping · FSSAI licensed · Made with a mother&apos;s love

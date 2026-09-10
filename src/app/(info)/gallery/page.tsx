@@ -4,12 +4,12 @@ import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
 import { GalleryClient } from "@/components/gallery/GalleryClient";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.colonelspicklebyridhwika.com';
 
 export const metadata: Metadata = {
   title: "Photo & Video Gallery",
   description:
-    "Real photos and videos from the Colonel's Pickle kitchen — hand-sorted chillies, traditional spice blending and the family behind these homemade Indian pickles (Maa Ka Pyaar, Ghar Ka Achar).",
+    "Real photos and videos from the Colonel's Pickle kitchen — hand-sorted chillies, traditional spice blending and the family behind these homemade Indian pickles (Maa Ka Pyaar, Ghar Ka Achaar).",
   keywords: [
     "colonels pickle gallery",
     "homemade pickle photos",

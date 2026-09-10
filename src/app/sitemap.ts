@@ -5,7 +5,7 @@ import Product from '@/models/Product';
 export const revalidate = 86400; // refresh sitemap every 24 hours
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://www.colonelspicklebyridhwika.com';
 
 const staticPages: MetadataRoute.Sitemap = [
   {

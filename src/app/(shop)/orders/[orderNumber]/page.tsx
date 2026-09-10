@@ -422,11 +422,11 @@ export default async function UserOrderDetailsPage({ params }: PageProps) {
                 </p>
                 <div className="space-y-2">
                   <a
-                    href="mailto:support@colonelspickle.in"
+                    href="mailto:colonelspickle.ridhwika@gmail.com"
                     className="inline-flex items-center gap-2 text-sm font-medium text-cp-terracotta hover:text-cp-terracotta-deep"
                   >
                     <Mail className="h-4 w-4" />
-                    support@colonelspickle.in
+                    colonelspickle.ridhwika@gmail.com
                   </a>
                   <a
                     href="tel:+919329216544"

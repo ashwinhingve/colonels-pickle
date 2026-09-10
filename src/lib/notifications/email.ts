@@ -39,7 +39,7 @@ class EmailService {
           user: process.env.SMTP_USER,
           pass: smtpPassword,
         },
-        from: process.env.EMAIL_FROM || process.env.SMTP_FROM || 'Colonel\'s Pickle <noreply@colonelspickle.in>',
+        from: process.env.EMAIL_FROM || process.env.SMTP_FROM || 'Colonel\'s Pickle <colonelspickle.ridhwika@gmail.com>',
       };
 
       this.transporter = nodemailer.createTransport({
@@ -333,9 +333,9 @@ class EmailService {
     paymentMethod: string;
     shippingAddress?: any;
   }): Promise<void> {
-    const adminEmail = process.env.ADMIN_EMAIL || 'ridhwika.agro.organics@gmail.com';
+    const adminEmail = process.env.ADMIN_EMAIL || 'colonelspickle.ridhwika@gmail.com';
     const method = order.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Online Payment';
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://colonelspickle.in';
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.colonelspicklebyridhwika.com';
 
     const subject = `New Order: ${order.orderNumber} — Rs.${order.totalAmount.toFixed(2)}`;
     const html = `
@@ -396,8 +396,8 @@ class EmailService {
   }
 
   async notifyAdminPaymentFailed(order: { orderNumber: string; customerName: string; customerEmail: string; totalAmount: number }): Promise<void> {
-    const adminEmail = process.env.ADMIN_EMAIL || 'ridhwika.agro.organics@gmail.com';
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://colonelspickle.in';
+    const adminEmail = process.env.ADMIN_EMAIL || 'colonelspickle.ridhwika@gmail.com';
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.colonelspicklebyridhwika.com';
     const subject = `Payment Failed: ${order.orderNumber} — Rs.${order.totalAmount.toFixed(2)}`;
     const html = `
       <!DOCTYPE html><html><head><style>
@@ -430,8 +430,8 @@ class EmailService {
   }
 
   async notifyAdminShipmentCreated(order: { orderNumber: string; customerName: string; customerEmail: string }, shipment: { waybill?: string; provider?: string; trackingUrl?: string }): Promise<void> {
-    const adminEmail = process.env.ADMIN_EMAIL || 'ridhwika.agro.organics@gmail.com';
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://colonelspickle.in';
+    const adminEmail = process.env.ADMIN_EMAIL || 'colonelspickle.ridhwika@gmail.com';
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.colonelspicklebyridhwika.com';
     const subject = `Order Shipped: ${order.orderNumber}`;
     const html = `
       <!DOCTYPE html><html><head><style>
@@ -466,8 +466,8 @@ class EmailService {
   }
 
   async notifyAdminOrderDelivered(order: { orderNumber: string; customerName: string; customerEmail: string }): Promise<void> {
-    const adminEmail = process.env.ADMIN_EMAIL || 'ridhwika.agro.organics@gmail.com';
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://colonelspickle.in';
+    const adminEmail = process.env.ADMIN_EMAIL || 'colonelspickle.ridhwika@gmail.com';
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.colonelspicklebyridhwika.com';
     const subject = `Order Delivered: ${order.orderNumber}`;
     const html = `
       <!DOCTYPE html><html><head><style>
@@ -499,8 +499,8 @@ class EmailService {
   }
 
   async notifyAdminOrderCancelled(order: { orderNumber: string; customerName: string; customerEmail: string; totalAmount: number; refundAmount?: number }): Promise<void> {
-    const adminEmail = process.env.ADMIN_EMAIL || 'ridhwika.agro.organics@gmail.com';
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://colonelspickle.in';
+    const adminEmail = process.env.ADMIN_EMAIL || 'colonelspickle.ridhwika@gmail.com';
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.colonelspicklebyridhwika.com';
     const subject = `Order Cancelled: ${order.orderNumber}`;
     const html = `
       <!DOCTYPE html><html><head><style>
@@ -590,7 +590,7 @@ class EmailService {
       return;
     }
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://colonelspickle.in';
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.colonelspicklebyridhwika.com';
     const reviewUrl = `${appUrl}/orders/${order._id}#reviews`;
     const subject = `Thank you for your order ${order.orderNumber} - Share your experience!`;
     const html = `
@@ -641,8 +641,8 @@ class EmailService {
    * Notify admin when a return request is submitted
    */
   async notifyAdminReturnRequest(order: any, returnRequest: any) {
-    const adminEmail = process.env.ADMIN_EMAIL || 'ridhwika.agro.organics@gmail.com';
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://colonelspickle.in';
+    const adminEmail = process.env.ADMIN_EMAIL || 'colonelspickle.ridhwika@gmail.com';
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.colonelspicklebyridhwika.com';
 
     const subject = `Return Request: Order ${order.orderNumber}`;
     const html = `
@@ -783,7 +783,7 @@ class EmailService {
       // DB lookup failed — send email without promo code
     }
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://colonelspickle.in';
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://www.colonelspicklebyridhwika.com';
     const greeting = name ? `Hi ${name},` : 'Hello,';
 
     const subject = 'Welcome to Colonel\'s Pickle by Ridhwika Agro Organics!';

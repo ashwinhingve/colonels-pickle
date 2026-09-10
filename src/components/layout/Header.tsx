@@ -187,18 +187,18 @@ export function Header() {
                   priority
                 />
               </span>
-              {/* Official trademark on a light plaque for phones with room;
-                  crest-only below 380px */}
-              <span className="relative hidden items-start rounded-md bg-white px-2 py-1 shadow-[0_2px_6px_rgba(0,0,0,0.06)] ring-1 ring-cp-gold/30 min-[380px]:inline-flex">
+              {/* Official trademark on a white tile matching the crest circle
+                  for phones with room; crest-only below 380px */}
+              <span className="relative hidden items-start rounded-lg border border-cp-gold/40 bg-white px-2.5 py-1.5 shadow-sm min-[380px]:inline-flex">
                 <Image
                   src="/images/brand/colonels-pickle-wordmark.png"
                   alt="Colonel's Pickle® — homemade Indian pickles"
                   width={691}
                   height={382}
-                  className="h-[22px] w-auto"
+                  className="h-[26px] w-auto"
                   priority
                 />
-                <sup className="ml-0.5 font-sans text-[8px] font-bold text-cp-brown">
+                <sup className="ml-0.5 mt-0.5 font-sans text-[9px] font-bold leading-none text-cp-brown">
                   &reg;
                 </sup>
               </span>
@@ -206,17 +206,18 @@ export function Header() {
 
             {/* Slim gold divider ties the crest to the wordmark */}
             <span
-              className="hidden h-9 w-px bg-gradient-to-b from-transparent via-cp-gold/45 to-transparent lg:block"
+              className="hidden h-10 w-px bg-gradient-to-b from-transparent via-cp-gold/45 to-transparent lg:block"
               aria-hidden="true"
             />
 
-            <span className="hidden flex-col items-start gap-1.5 lg:flex">
-              {/* Official trademark artwork on a light plaque so its white
-                  sticker-outline reads intentionally against the cream bar. */}
+            <span className="hidden flex-col items-start gap-1 lg:flex">
+              {/* Official trademark artwork on a white tile that matches the crest
+                  circle — the same border/shadow reads them as a paired set and
+                  hides the PNG's white sticker-outline against the cream bar. */}
               <span
                 className={cn(
-                  "relative inline-flex items-start rounded-lg bg-white shadow-[0_2px_8px_rgba(0,0,0,0.07)] ring-1 ring-cp-gold/30 transition-all duration-300 group-hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)]",
-                  scrolled ? "px-2.5 py-1" : "px-3 py-1.5"
+                  "relative inline-flex items-start rounded-xl border border-cp-gold/40 bg-white shadow-sm transition-all duration-300 group-hover:shadow-md",
+                  scrolled ? "px-3 py-1" : "px-3.5 py-1.5"
                 )}
               >
                 <Image
@@ -226,22 +227,22 @@ export function Header() {
                   height={382}
                   className={cn(
                     "w-auto transition-[height] duration-300",
-                    scrolled ? "h-[30px]" : "h-[34px]"
+                    scrolled ? "h-[32px]" : "h-[40px]"
                   )}
                   priority
                 />
-                <sup className="ml-0.5 mt-0.5 font-sans text-[10px] font-bold text-cp-brown">
+                <sup className="ml-0.5 mt-0.5 font-sans text-[11px] font-bold leading-none text-cp-brown">
                   &reg;
                 </sup>
               </span>
               {/* Tagline: a short gold tick + the words */}
-              <span className="flex items-center gap-2 pl-1">
+              <span className="flex items-center gap-2 pl-0.5">
                 <span
-                  className="h-px w-4 shrink-0 bg-gradient-to-r from-transparent to-cp-gold/70"
+                  className="h-px w-5 shrink-0 bg-gradient-to-r from-transparent to-cp-gold/70"
                   aria-hidden="true"
                 />
-                <span className="font-hindi text-[10px] font-semibold tracking-[0.18em] text-cp-olive-dark">
-                  MAA KA PYAAR, GHAR KA ACHAR
+                <span className="font-hindi text-[10px] font-bold uppercase leading-none tracking-[0.14em] text-cp-olive-dark">
+                  Maa Ka Pyaar, Ghar Ka Achaar
                 </span>
               </span>
             </span>

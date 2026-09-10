@@ -8,7 +8,7 @@ import PageContent from "@/models/PageContent"
 
 export const dynamic = "force-dynamic"
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.colonelspicklebyridhwika.com';
 
 export const metadata: Metadata = {
   title: "Shipping Policy | Colonel's Pickle",
@@ -221,9 +221,9 @@ function DefaultContent() {
                   Our customer support team is happy to help with any shipping-related queries.
                 </p>
                 <div className="flex flex-wrap gap-6">
-                  <a href="mailto:ridhwika.agro.organics@gmail.com" className="flex items-center gap-2 text-white hover:text-cp-gold-light transition">
+                  <a href="mailto:colonelspickle.ridhwika@gmail.com" className="flex items-center gap-2 text-white hover:text-cp-gold-light transition">
                     <Mail className="w-5 h-5" />
-                    ridhwika.agro.organics@gmail.com
+                    colonelspickle.ridhwika@gmail.com
                   </a>
                   <a href="tel:+919350406289" className="flex items-center gap-2 text-white hover:text-cp-gold-light transition">
                     <Phone className="w-5 h-5" />

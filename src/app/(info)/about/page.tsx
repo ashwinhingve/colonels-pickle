@@ -21,7 +21,7 @@ import { BRAND, CONTACT_EMAIL, PUBLIC_REGISTRATIONS } from "@/lib/constants";
 import { Highlight } from "@/components/common/Highlight";
 import { PurityPledge } from "@/components/common/PurityPledge";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.colonelspicklebyridhwika.com';
 
 const organizationJsonLd = {
   '@context': 'https://schema.org',
@@ -47,7 +47,7 @@ const organizationJsonLd = {
     postalCode: '302020',
     addressCountry: 'IN',
   },
-  email: 'colonelspickle@proton.me',
+  email: 'colonelspickle.ridhwika@gmail.com',
   telephone: '+91-9717243306',
   priceRange: '₹250-₹1500',
   hasCredential: {
@@ -199,7 +199,7 @@ export default function AboutPage() {
                 </span>
                 <div className="mx-auto my-3 h-[2px] w-16 bg-cp-terracotta" />
                 <p className="font-display text-[18px] font-bold text-cp-gold-light">
-                  An Indian Army Major (Colonel)
+                  An Indian Army Colonel
                 </p>
                 <p className="mt-1 font-hindi text-[12px] text-cp-beige/60">
                   Battle Casualty · War-Wounded Soldier
@@ -228,14 +228,14 @@ export default function AboutPage() {
                 <Highlight>Ridhwika Agro Organics</Highlight>. The family&apos;s
                 proud military legacy was built by the father, a retired Indian
                 Army Officer — and today three family members continue to wear
-                the uniform: an <Highlight>Indian Army Major (Colonel)</Highlight>, his
+                the uniform: an <Highlight>Indian Army Colonel</Highlight>, his
                 wife (a serving Army Officer), and his younger brother (also a
                 serving Army Officer).
               </p>
               <p className="mt-4 font-serif text-[15px] leading-relaxed text-cp-text-muted">
                 During a high-risk ammunition-disposal operation in Assam, the
-                Major was severely injured, becoming a Battle Casualty and
-                War-Wounded Soldier. Through a gruelling three-month hospital
+                officer — then a Major — was severely injured, becoming a Battle
+                Casualty and War-Wounded Soldier. Through a gruelling three-month hospital
                 recovery on bland food, he realised a profound truth: true healing
                 doesn&apos;t come from medicine alone — it comes from the
                 comforting, soul-nourishing flavours of home.
@@ -254,7 +254,7 @@ export default function AboutPage() {
                 </h3>
                 <p className="mt-3 font-serif text-[15px] leading-relaxed text-cp-text-muted">
                   Years later, posted at a military cantonment during the COVID-19
-                  lockdown, the Major and his mother — <Highlight>Urmila Devi</Highlight>,
+                  lockdown, the Colonel and his mother — <Highlight>Urmila Devi</Highlight>,
                   a resilient officer&apos;s mother from Haryana — found comfort in
                   their Army bungalow&apos;s kitchen garden. Surrounded by fresh,
                   sun-ripened green chillies, mother and son began experimenting with
@@ -288,7 +288,7 @@ export default function AboutPage() {
               What began as a gesture of warmth soon called for a name — one that
               reflected family, unity and hope. <Highlight>Ridhwika Agro Organics</Highlight>{" "}
               is named by blending the names of two beloved daughters: <Highlight>RIDDHIMA</Highlight> and <Highlight>ADWIKA</Highlight>.
-              The beautiful fusion — <span className="font-semibold">RIDDHIMA + ADWIKA = RIDHWIKA</span> — reflects the Major&apos;s profound
+              The beautiful fusion — <span className="font-semibold">RIDDHIMA + ADWIKA = RIDHWIKA</span> — reflects the Colonel&apos;s profound
               love for his daughters and the hope they carry for this family&apos;s future.
             </p>
           </AnimatedSection>
@@ -360,7 +360,7 @@ export default function AboutPage() {
               That&apos;s why our name —
             </p>
             <p className="sec-title-underline mt-2 font-hindi text-2xl font-bold text-cp-olive sm:text-3xl">
-              Maa Ka Pyaar, Ghar Ka Achar
+              Maa Ka Pyaar, Ghar Ka Achaar
             </p>
           </AnimatedSection>
         </div>

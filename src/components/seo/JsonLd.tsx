@@ -36,7 +36,7 @@ export function buildProductSchema({
   images,
   averageRating = 0,
   totalReviews = 0,
-  siteUrl = 'https://colonelspickle.in',
+  siteUrl = 'https://www.colonelspicklebyridhwika.com',
 }: {
   name: string;
   description: string;
@@ -96,7 +96,7 @@ export function buildProductSchema({
  * Build an Organization/LocalBusiness schema for Colonel's Pickle
  */
 export function buildOrganizationSchema(
-  siteUrl = 'https://colonelspickle.in'
+  siteUrl = 'https://www.colonelspicklebyridhwika.com'
 ): Record<string, any> {
   return {
     '@context': 'https://schema.org',
@@ -122,7 +122,7 @@ export function buildOrganizationSchema(
       postalCode: '302020',
       addressCountry: 'IN',
     },
-    email: 'colonelspickle@proton.me',
+    email: 'colonelspickle.ridhwika@gmail.com',
     telephone: '+91-9717243306',
     priceRange: '₹250-₹1500',
     hasCredential: {
@@ -143,7 +143,7 @@ export function buildOrganizationSchema(
  */
 export function buildBreadcrumbSchema(
   items: Array<{ name: string; url: string }>,
-  siteUrl = 'https://colonelspickle.in'
+  siteUrl = 'https://www.colonelspicklebyridhwika.com'
 ): Record<string, any> {
   return {
     '@context': 'https://schema.org',

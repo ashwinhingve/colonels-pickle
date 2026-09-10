@@ -225,7 +225,7 @@ async function renderInvoicePDF(
     .fontSize(9)
     .font('Helvetica-Oblique')
     .fillColor(COLORS.textMuted)
-    .text('HOME MADE – Maa Ka Pyaar, Ghar Ka Achar', 104, 78);
+    .text('HOME MADE – Maa Ka Pyaar, Ghar Ka Achaar', 104, 78);
 
   const addressX = 400;
   const addressWidth = PAGE_RIGHT - addressX;

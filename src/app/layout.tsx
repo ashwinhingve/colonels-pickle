@@ -12,7 +12,7 @@ import { ScrollProgress } from "@/components/shared/ScrollProgress";
 import { connectDB } from "@/lib/mongodb";
 import MarketingSettings from "@/models/MarketingSettings";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.colonelspicklebyridhwika.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -27,7 +27,10 @@ export const metadata: Metadata = {
     "colonels pickle",
     "colonel's pickle",
     "kernel pickle",
+    "kernal pickle",
     "colonel pickle",
+    "colonel ka achar",
+    "colonel's pickle jaipur",
     "indian pickle",
     "indian pickles online",
     "buy pickle online india",
@@ -66,7 +69,7 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Colonel's Pickle® — homemade Indian pickles · Maa Ka Pyaar, Ghar Ka Achar",
+        alt: "Colonel's Pickle® — homemade Indian pickles · Maa Ka Pyaar, Ghar Ka Achaar",
       },
     ],
     siteName: "Colonel's Pickle by Ridhwika Agro Organics",
@@ -99,7 +102,15 @@ const orgJsonLd = {
   "@type": "Organization",
   "@id": `${SITE_URL}/#organization`,
   "name": "Colonel's Pickle",
-  "alternateName": "Colonel's Pickle by Ridhwika Agro Organics",
+  // "Colonel" is pronounced "kernel" — list the spellings people actually search
+  // so Google resolves all of them to this one brand entity.
+  "alternateName": [
+    "Colonel's Pickle by Ridhwika Agro Organics",
+    "Kernel Pickle",
+    "Colonels Pickle",
+    "Colonel Pickle",
+    "Ridhwika Agro Organics",
+  ],
   "url": SITE_URL,
   "logo": {
     "@type": "ImageObject",
@@ -123,6 +134,18 @@ const orgJsonLd = {
     "credentialCategory": "Food Safety License",
     "identifier": "12226026000060",
   },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+91-9717243306",
+    "email": "colonelspickle.ridhwika@gmail.com",
+    "contactType": "customer service",
+    "areaServed": "IN",
+    "availableLanguage": ["en", "hi"],
+  },
+  "sameAs": [
+    "https://instagram.com/colonels.pickle",
+    "https://beacons.ai/colonelspickle",
+  ],
 };
 
 const websiteJsonLd = {
@@ -131,7 +154,7 @@ const websiteJsonLd = {
   "@id": `${SITE_URL}/#website`,
   "url": SITE_URL,
   "name": "Colonel's Pickle",
-  "description": "Authentic homemade pickles, gulkand & cold press oils — Maa Ka Pyaar, Ghar Ka Achar",
+  "description": "Authentic homemade pickles, gulkand & cold press oils — Maa Ka Pyaar, Ghar Ka Achaar",
   "publisher": {
     "@id": `${SITE_URL}/#organization`,
   },

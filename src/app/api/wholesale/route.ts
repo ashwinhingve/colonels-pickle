@@ -28,8 +28,8 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    // Email to admin - ALWAYS send to info@colonelspickle.in
-    const adminEmail = process.env.ADMIN_EMAIL || "info@colonelspickle.in"
+    // Email to admin - ALWAYS send to colonelspickle.ridhwika@gmail.com
+    const adminEmail = process.env.ADMIN_EMAIL || "colonelspickle.ridhwika@gmail.com"
     const adminMailOptions = {
       from: process.env.SMTP_FROM || process.env.SMTP_USER,
       to: adminEmail,
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
     // Send emails (only if SMTP is configured)
     if (process.env.SMTP_USER && process.env.SMTP_PASS) {
       try {
-        // Always send to admin (info@colonelspickle.in)
+        // Always send to admin (colonelspickle.ridhwika@gmail.com)
         console.log(`Sending wholesale inquiry to: ${adminEmail}`)
         await transporter.sendMail(adminMailOptions)
         console.log(`✓ Wholesale inquiry sent successfully to ${adminEmail}`)
@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
                   <li>Delivery schedules</li>
                   <li>Payment terms</li>
                 </ul>
-                <p>If you have any urgent questions, please don't hesitate to contact us at info@colonelspickle.in.</p>
+                <p>If you have any urgent questions, please don't hesitate to contact us at colonelspickle.ridhwika@gmail.com.</p>
                 <p>Best regards,<br>The COLONEL'S PICKLE Wholesale Team</p>
               </div>
             `,

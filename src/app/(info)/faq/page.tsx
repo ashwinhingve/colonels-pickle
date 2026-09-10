@@ -10,7 +10,7 @@ import Faq from "@/models/Faq";
 
 export const dynamic = "force-dynamic";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://colonelspickle.in';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.colonelspicklebyridhwika.com';
 
 export const metadata: Metadata = {
   title: "FAQ — Frequently Asked Questions | Colonel's Pickle",
@@ -109,7 +109,7 @@ const FAQ_ORDERS: FAQItem[] = [
   {
     question: "Can I cancel my order?",
     answer:
-      "Orders can only be cancelled before they are packed and shipped. Once packed, cancellation may not be possible. If you need to cancel, please contact us immediately via WhatsApp (+91 9350406289) or email (colonelspickle@proton.me). We'll do our best to help.",
+      "Orders can only be cancelled before they are packed and shipped. Once packed, cancellation may not be possible. If you need to cancel, please contact us immediately via WhatsApp (+91 9350406289) or email (colonelspickle.ridhwika@gmail.com). We'll do our best to help.",
   },
 ];
 
@@ -131,7 +131,7 @@ const FAQ_SHIPPING: FAQItem[] = [
   {
     question: "What if my order arrives damaged or leaking?",
     answer:
-      "Food safety is our top priority. If your order arrives damaged, leaking, or tampered with, please report it within 48 hours with photos/video evidence. Contact us via WhatsApp (+91 9350406289) or email (colonelspickle@proton.me). We will immediately send you a replacement at no extra cost.",
+      "Food safety is our top priority. If your order arrives damaged, leaking, or tampered with, please report it within 48 hours with photos/video evidence. Contact us via WhatsApp (+91 9350406289) or email (colonelspickle.ridhwika@gmail.com). We will immediately send you a replacement at no extra cost.",
   },
   {
     question: "Do you ship internationally?",
@@ -188,12 +188,17 @@ const FAQ_WHOLESALE: FAQItem[] = [
 
 const FAQ_OTHER: FAQItem[] = [
   {
+    question: "Is 'Kernel Pickle' the same as Colonel's Pickle?",
+    answer:
+      "Yes — it's the same brand. The word “Colonel” is pronounced “kernel,” so many people search for us as “Kernel Pickle,” “Colonels Pickle” or “Colonel Pickle.” However you spell it, you've found the right place: Colonel's Pickle by Ridhwika Agro Organics — homemade Indian achaar (pickle), gulkand and cold-press mustard oil, lovingly made by the family of an Indian Army Colonel in Jaipur.",
+  },
+  {
     question: "Why is Colonel's Pickle FSSAI certified?",
     answer: `FSSAI (Food Safety and Standards Authority of India) certification (License: ${BRAND.fssai}) proves that every batch of Colonel's Pickle meets India's strictest food safety and quality standards. No artificial preservatives, no contaminants, no compromises. This is the gold standard for packaged foods in India.`,
   },
   {
     question: "How do I contact Colonel's Pickle?",
-    answer: `You can reach us via: WhatsApp: +91 9350406289, Email: colonelspickle@proton.me, Phone: +91 9717243306 / 9416845689 / 9350406289, Address: B-6/374, Vaishali Nagar, Jaipur, Rajasthan – 302020. Visit us during business hours: Mon–Sat 9 AM–7 PM, Sunday 10 AM–5 PM (IST).`,
+    answer: `You can reach us via: WhatsApp: +91 9350406289, Email: colonelspickle.ridhwika@gmail.com, Phone: +91 9717243306 / 9416845689 / 9350406289, Address: B-6/374, Vaishali Nagar, Jaipur, Rajasthan – 302020. Visit us during business hours: Mon–Sat 9 AM–7 PM, Sunday 10 AM–5 PM (IST).`,
   },
   {
     question: "Do you have a physical store in Jaipur?",
