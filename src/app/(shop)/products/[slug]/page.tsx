@@ -63,7 +63,7 @@ export async function generateMetadata({
     : `${baseTitle} | Colonel's Pickle`;
   const description =
     product.seo?.metaDescription ||
-    `${product.description} Buy ${product.name} online from Colonel's Pickle (Kernel Pickle) — no artificial preservatives, no vinegar, FSSAI certified. Pan-India delivery from Jaipur.`;
+    `${product.description} Buy ${product.name} online from Colonel's Pickle — no artificial preservatives, no vinegar, FSSAI certified. Pan-India delivery from Jaipur.`;
   const canonicalUrl = `${SITE_URL}/products/${product.slug}`;
 
   // OG image: prefer seo.ogImage, then the first product image, then the brand share banner

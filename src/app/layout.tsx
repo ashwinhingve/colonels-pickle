@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default:
-      "Colonel's Pickle® — Homemade Indian Pickles Online (Kernel Pickle)",
+      "Colonel's Pickle® — Homemade Indian Pickles Online",
     template: "%s | Colonel's Pickle",
   },
   description:
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
   // Favicon + apple-touch icon come from src/app/icon.png & src/app/apple-icon.png
   // (Ridhwika crest), auto-emitted by Next.js — no explicit icons config needed.
   openGraph: {
-    title: "Colonel's Pickle® (Kernel Pickle) — Homemade Indian Pickles Online",
+    title: "Colonel's Pickle® — Homemade Indian Pickles Online",
     description:
       "Authentic homemade Indian pickles (achaar), gulkand & cold-press mustard oil. No preservatives, no vinegar, 20–24 whole spices, a mother's recipe. FSSAI certified, pan-India delivery from Jaipur.",
     images: [
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Colonel's Pickle® (Kernel Pickle) — Homemade Indian Pickles Online",
+    title: "Colonel's Pickle® — Homemade Indian Pickles Online",
     description:
       "Authentic homemade Indian pickles, gulkand & cold-press oils. No preservatives, no vinegar, 20–24 whole spices, FSSAI certified. Pan-India delivery from Jaipur.",
     images: ["/og-image.jpg"],
@@ -119,7 +119,7 @@ const orgJsonLd = {
     "height": 512,
   },
   "image": `${SITE_URL}/og-image.jpg`,
-  "description": "Colonel's Pickle (Kernel Pickle) — authentic homemade Indian pickles (achaar), gulkand and cold-press mustard oil. No preservatives, no vinegar, 20 to 24 whole spices. FSSAI certified, Jaipur.",
+  "description": "Colonel's Pickle — authentic homemade Indian pickles (achaar), gulkand and cold-press mustard oil. No preservatives, no vinegar, 20 to 24 whole spices. FSSAI certified, Jaipur.",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "B-6/374, Vaishali Nagar",

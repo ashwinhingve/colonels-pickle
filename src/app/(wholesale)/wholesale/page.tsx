@@ -13,7 +13,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.colonelspickle
 export const metadata: Metadata = {
   title: "Wholesale & Retailer Program",
   description:
-    "Partner with Colonel's Pickle (Kernel Pickle) — 20% wholesale discount, monthly credit, free pan-India transportation and bulk discounts on homemade Indian pickles, oils & gulkand. Apply now.",
+    "Partner with Colonel's Pickle — 20% wholesale discount, monthly credit, free pan-India transportation and bulk discounts on homemade Indian pickles, oils & gulkand. Apply now.",
   keywords: [
     "pickle wholesale india",
     "achaar wholesale",

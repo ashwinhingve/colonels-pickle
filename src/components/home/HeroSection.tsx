@@ -7,8 +7,8 @@ export function HeroSection() {
       {/* Single crawlable H1 for SEO — both banners bake their headline into the
           image, so the semantic H1 lives here (visually hidden, one per page). */}
       <h1 className="sr-only">
-        Colonel&apos;s Pickle (Kernel Pickle) — Buy Homemade Indian Pickles
-        Online · No Preservatives, No Vinegar
+        Colonel&apos;s Pickle — Buy Homemade Indian Pickles Online · No
+        Preservatives, No Vinegar
       </h1>
 
       {/* ── DESKTOP / TABLET: the client's designed landscape hero banner ── */}

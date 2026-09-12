@@ -90,22 +90,22 @@ async function buildOgImage(): Promise<string> {
   const wmMeta = await sharp(wordmark).metadata();
   const wmH = wmMeta.height ?? 300;
 
-  // Olive gradient + gold rule + tagline (Latin text → Georgia, no Devanagari font risk).
+  // Cream gradient + gold rule + tagline (Latin text → Georgia, no Devanagari font risk).
   const bg = Buffer.from(
     `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#3A4A1F"/>
-          <stop offset="0.55" stop-color="#4B5D2A"/>
-          <stop offset="1" stop-color="#232B14"/>
+          <stop offset="0" stop-color="#FDF8F0"/>
+          <stop offset="0.55" stop-color="#FAF1E1"/>
+          <stop offset="1" stop-color="#F5ECD8"/>
         </linearGradient>
       </defs>
       <rect width="100%" height="100%" fill="url(#g)"/>
-      <circle cx="285" cy="300" r="185" fill="#FDF8F0"/>
+      <circle cx="285" cy="300" r="185" fill="#FFFFFF"/>
       <circle cx="285" cy="300" r="185" fill="none" stroke="#D4A017" stroke-width="4"/>
       <rect x="470" y="452" width="600" height="3" rx="1.5" fill="#D4A017"/>
-      <text x="472" y="512" font-family="Georgia,'Times New Roman',serif" font-size="34" font-style="italic" fill="#F5EBDA">Maa Ka Pyaar, Ghar Ka Achaar</text>
-      <text x="474" y="556" font-family="Georgia,serif" font-size="21" letter-spacing="1" fill="#E9C86A">No Preservatives · No Vinegar · FSSAI Licensed · Jaipur</text>
+      <text x="472" y="512" font-family="Georgia,'Times New Roman',serif" font-size="34" font-style="italic" fill="#7F1D1D">Maa Ka Pyaar, Ghar Ka Achaar</text>
+      <text x="474" y="556" font-family="Georgia,serif" font-size="21" letter-spacing="1" fill="#78350F">No Preservatives · No Vinegar · FSSAI Licensed · Jaipur</text>
     </svg>`
   );
 

@@ -24,7 +24,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.colonelspickle
 export const metadata: Metadata = {
   title: {
     absolute:
-      "Colonel's Pickle® (Kernel Pickle) — Buy Homemade Indian Pickles Online",
+      "Colonel's Pickle® — Buy Homemade Indian Pickles Online",
   },
   description:
     "Colonel's Pickle — authentic homemade Indian pickles (achaar), gulkand & cold-press mustard oil, made by the mother of an Indian Army Colonel. No preservatives, no vinegar, 20–24 whole spices. FSSAI licensed. Order online with pan-India delivery from Jaipur.",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     title:
-      "Colonel's Pickle® (Kernel Pickle) — Buy Homemade Indian Pickles Online",
+      "Colonel's Pickle® — Buy Homemade Indian Pickles Online",
     description:
       "Authentic homemade Indian pickles, gulkand & cold-press oils. No preservatives, no vinegar, 20–24 whole spices, a mother's recipe. FSSAI certified. Pan-India delivery from Jaipur.",
     url: SITE_URL,
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title:
-      "Colonel's Pickle® (Kernel Pickle) — Buy Homemade Indian Pickles Online",
+      "Colonel's Pickle® — Buy Homemade Indian Pickles Online",
     description:
       "Authentic homemade Indian pickles & cold-press oils. No preservatives, no vinegar. FSSAI certified. Pan-India delivery from Jaipur.",
     images: [`${SITE_URL}/og-image.jpg`],

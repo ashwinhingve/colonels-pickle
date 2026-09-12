@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   // which stops the root `%s | Colonel's Pickle` template from reaching here.
   title: "Shop Homemade Indian Pickles, Oils & Gulkand | Colonel's Pickle",
   description:
-    'Buy Colonel\'s Pickle (Kernel Pickle) online — authentic homemade Indian pickles (achaar), traditional masalas, gulkand and cold-press mustard oil. 20 to 24 whole spices, zero artificial preservatives, no vinegar. FSSAI certified, pan-India delivery from Jaipur.',
+    'Buy Colonel\'s Pickle online — authentic homemade Indian pickles (achaar), traditional masalas, gulkand and cold-press mustard oil. 20 to 24 whole spices, zero artificial preservatives, no vinegar. FSSAI certified, pan-India delivery from Jaipur.',
   keywords: [
     'buy pickle online india',
     'indian pickles online',
