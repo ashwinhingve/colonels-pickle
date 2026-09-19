@@ -14,7 +14,7 @@ const INGREDIENTS: {
   tint: string;
 }[] = [
   {
-    image: "https://images.pexels.com/photos/20590330/pexels-photo-20590330.jpeg",
+    image: "/ingredients/hing.jpg",
     title: "3 Rare Hing Origins",
     sub: "Afghani · Tajiki · Uzbeki",
     note: "The soul of every jar · ~₹30,000/kg",

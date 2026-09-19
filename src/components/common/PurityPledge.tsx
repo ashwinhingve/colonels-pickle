@@ -17,23 +17,26 @@ const PURITY_CLAIMS = [
     title: "No Artificial Preservatives",
     description: "Pure, natural ingredients only",
     // achaar jar — the pure product itself
-    image: "https://images.pexels.com/photos/7812134/pexels-photo-7812134.jpeg",
+    image: "https://images.pexels.com/photos/9164642/pexels-photo-9164642.jpeg",
+    alt: "Jar of homemade Indian mango achaar in oil — naturally preserved, no artificial preservatives",
     color: "#4B5D2A",
   },
   {
     Icon: NoChemicalIcon,
     title: "No Chemicals",
     description: "Not a single synthetic compound",
-    // sun-dried whole spices
-    image: "https://images.pexels.com/photos/672046/pexels-photo-672046.jpeg",
+    // whole spices in a traditional masala dabba
+    image: "https://images.pexels.com/photos/8649386/pexels-photo-8649386.jpeg",
+    alt: "Traditional Indian masala dabba filled with natural whole spices — no chemicals or synthetic additives",
     color: "#C05621",
   },
   {
     Icon: NoVinegarIcon,
     title: "No Vinegar",
     description: "Premium ₹30,000/kg Afghani Hing instead",
-    // rare regional hing
-    image: "https://images.pexels.com/photos/20590330/pexels-photo-20590330.jpeg",
+    // rare regional hing (asafoetida) — resin lumps + golden powder
+    image: "/ingredients/hing.jpg",
+    alt: "Premium Afghani hing (asafoetida) — golden powder and resin lumps used instead of vinegar",
     color: "#7C4A1E",
   },
 ];
@@ -66,7 +69,7 @@ export function PurityPledge({ className }: { className?: string }) {
                     <div className="relative h-32 w-full overflow-hidden sm:h-40">
                       <Image
                         src={claim.image}
-                        alt=""
+                        alt={claim.alt}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
                         sizes="(max-width: 640px) 100vw, 33vw"

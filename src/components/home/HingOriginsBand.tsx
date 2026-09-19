@@ -9,20 +9,23 @@ const ORIGINS = [
   {
     name: "Afghani",
     note: "The world's finest — prized for its deep, resinous aroma.",
-    image: "https://images.pexels.com/photos/20590330/pexels-photo-20590330.jpeg",
+    // hing resin lumps — the deep, resinous form
+    image: "/ingredients/hing-resin.jpg",
     filter: undefined,
   },
   {
     name: "Tajiki",
     note: "High-altitude harvest — clean, pungent and remarkably pure.",
-    image: "https://images.pexels.com/photos/8250269/pexels-photo-8250269.jpeg",
+    // clean, finely-ground hing powder
+    image: "/ingredients/hing-powder.jpg",
     filter: undefined,
   },
   {
     name: "Uzbeki",
     note: "Rare and aromatic — for that unmistakable ghar-ka-tadka.",
-    image: "https://images.pexels.com/photos/20590330/pexels-photo-20590330.jpeg",
-    filter: "hue-rotate(15deg) saturate(1.15)",
+    // bowl of aromatic hing powder
+    image: "/ingredients/hing-mortar.jpg",
+    filter: undefined,
   },
 ];
 
@@ -32,7 +35,7 @@ export function HingOriginsBand() {
       {/* Warm origin-terrain backdrop */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.07]">
         <Image
-          src="https://images.pexels.com/photos/8250269/pexels-photo-8250269.jpeg"
+          src="/ingredients/hing.jpg"
           alt=""
           fill
           className="object-cover"
