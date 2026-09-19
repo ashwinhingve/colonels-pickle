@@ -34,9 +34,9 @@ const PURITY_CLAIMS = [
     Icon: NoVinegarIcon,
     title: "No Vinegar",
     description: "Premium ₹30,000/kg Afghani Hing instead",
-    // rare regional hing (asafoetida) — resin lumps + golden powder
-    image: "/ingredients/hing.jpg",
-    alt: "Premium Afghani hing (asafoetida) — golden powder and resin lumps used instead of vinegar",
+    // a clear glass bottle of vinegar — the shortcut we never use
+    image: "https://images.pexels.com/photos/18206010/pexels-photo-18206010.jpeg",
+    alt: "A clear glass bottle of vinegar — the industry shortcut Colonel's Pickle never uses; premium Afghani hing is used instead",
     color: "#7C4A1E",
   },
 ];
