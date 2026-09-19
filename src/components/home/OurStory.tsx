@@ -140,7 +140,7 @@ export function OurStory() {
             homesick officer, exactly like home.
           </p>
           <p className="mt-4 font-serif text-[15px] leading-relaxed text-cp-beige/75">
-            Named after the family&apos;s two daughters — Riddhima + Adwika —
+            Named after the family&apos;s three daughters — Riddhima + Adwika =  Ridhwika.
             Ridhwika Agro Organics now carries that recipe pan-India —
             empowering local women and staying 100% natural: no preservatives,
             no chemicals, no vinegar. Ever.
@@ -151,7 +151,7 @@ export function OurStory() {
               The Name Behind the Brand
             </p>
             <p className="font-serif text-[15px] italic text-cp-beige/85">
-              &ldquo;<span className="font-display not-italic font-bold text-cp-gold-light">Colonel&apos;s Pickle</span>&rdquo; — named by his mother, signifying the rank of her son and the honour he has brought to the family.
+              &ldquo;<span className="font-display not-italic font-bold text-cp-gold-light">Colonel&apos;s Pickle</span>&rdquo; — named by his mother, signifying the rank of her son and the honour that the family carries.
             </p>
           </div>
 

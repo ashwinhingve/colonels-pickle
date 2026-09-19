@@ -10,7 +10,7 @@ import { TapScale } from "@/components/shared/TapScale";
 const BENEFITS = [
   {
     Icon: BadgePercent,
-    title: "20% Bulk Discount",
+    title: "20-25 % Bulk Discount",
     description: "Competitive wholesale rates on every product",
   },
   {
