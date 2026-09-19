@@ -124,7 +124,7 @@ export function OurStory() {
 
           <p className="mt-5 font-serif text-[15px] leading-relaxed text-cp-beige/75">
             After a high-risk ammunition-disposal operation in Assam left him a
-            war-wounded soldier, the officer — then a Major, today a Colonel —
+            war-wounded soldier, the officer (now a Colonel),
             spent three months recovering on bland hospital food and understood a
             simple truth: true healing comes from the comforting, soul-nourishing
             flavours of home.
