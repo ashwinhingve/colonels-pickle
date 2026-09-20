@@ -10,21 +10,21 @@ const ORIGINS = [
     name: "Afghani",
     note: "The world's finest — prized for its deep, resinous aroma.",
     // hing resin lumps — the deep, resinous form
-    image: "/ingredients/hing-resin.jpg",
+    image: "/home/hing/afghani-hing.webp",
     filter: undefined,
   },
   {
     name: "Tajiki",
     note: "High-altitude harvest — clean, pungent and remarkably pure.",
-    // clean, finely-ground hing powder
-    image: "/ingredients/hing-powder.jpg",
+    // pale, crystalline hing granules
+    image: "/home/hing/tajiki-hing.webp",
     filter: undefined,
   },
   {
     name: "Uzbeki",
     note: "Rare and aromatic — for that unmistakable ghar-ka-tadka.",
-    // bowl of aromatic hing powder
-    image: "/ingredients/hing-mortar.jpg",
+    // loose aromatic hing granules
+    image: "/home/hing/uzbeki-hing.jpeg",
     filter: undefined,
   },
 ];

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Badge } from "@/components/common/Badge";
 import { RajasthaniPattern } from "@/components/common/RajasthaniPattern";
@@ -46,14 +46,40 @@ function parseUnitQty(label: string): { qty: number; unit: "g" | "ml" } | null {
 export function ProductCard({ product, addToCart }: ProductCardProps) {
   const [selectedVariant, setSelectedVariant] = useState(0);
   const [added, setAdded] = useState(false);
+  const [imgIndex, setImgIndex] = useState(0);
   const addItem = useCartStore((state) => state.addItem);
 
   const theme = getProductTheme(product?.slug);
 
-  const primaryImg =
-    Array.isArray(product?.images) && product.images.length > 0
-      ? product.images[0]
-      : null;
+  // Card imagery: alternate between the first two images for a livelier grid.
+  const images: any[] = Array.isArray(product?.images) ? product.images : [];
+  const firstImg = images[0] ?? null;
+  const secondImg = images[1] ?? null;
+  const canRotate = Boolean(firstImg && secondImg);
+
+  // Auto-swap first ⇄ second image every 3s. Skips single-image cards and
+  // honours prefers-reduced-motion. A small random start phase keeps a grid of
+  // cards from flipping all at once.
+  useEffect(() => {
+    if (!canRotate) return;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+    let interval: ReturnType<typeof setInterval> | undefined;
+    const startDelay = Math.floor(Math.random() * 3000);
+    const timeout = setTimeout(() => {
+      interval = setInterval(() => {
+        setImgIndex((i) => (i === 0 ? 1 : 0));
+      }, 3000);
+    }, startDelay);
+    return () => {
+      clearTimeout(timeout);
+      if (interval) clearInterval(interval);
+    };
+  }, [canRotate]);
 
   const variants: CardVariant[] = useMemo(() => {
     const active = Array.isArray(product?.variants)
@@ -170,15 +196,31 @@ export function ProductCard({ product, addToCart }: ProductCardProps) {
             </div>
           ) : null}
 
-          {primaryImg ? (
+          {firstImg ? (
             <>
               <Image
-                src={primaryImg.url}
+                src={firstImg.url}
                 alt={`${product?.name ?? "Product"} - Colonel's Pickle`}
                 fill
-                className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                className={cn(
+                  "object-cover transition-[opacity,transform] duration-700 ease-out group-hover:scale-110",
+                  canRotate && imgIndex === 1 ? "opacity-0" : "opacity-100"
+                )}
                 sizes="(max-width: 768px) 50vw, 25vw"
               />
+              {canRotate ? (
+                <Image
+                  src={secondImg.url}
+                  alt=""
+                  aria-hidden="true"
+                  fill
+                  className={cn(
+                    "object-cover transition-[opacity,transform] duration-700 ease-out group-hover:scale-110",
+                    imgIndex === 1 ? "opacity-100" : "opacity-0"
+                  )}
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+              ) : null}
               <div className="absolute inset-x-0 bottom-0 z-[1] h-16 bg-gradient-to-t from-black/40 to-transparent" />
             </>
           ) : (

@@ -16,27 +16,27 @@ const PURITY_CLAIMS = [
     Icon: NoPreservativeIcon,
     title: "No Artificial Preservatives",
     description: "Pure, natural ingredients only",
-    // achaar jar — the pure product itself
-    image: "https://images.pexels.com/photos/9164642/pexels-photo-9164642.jpeg",
-    alt: "Jar of homemade Indian mango achaar in oil — naturally preserved, no artificial preservatives",
+    // jars of naturally preserved homemade food — the pure way we preserve
+    image: "/home/purity/no-preservatives.png",
+    alt: "Jars of naturally preserved homemade food — Colonel's Pickle uses no artificial preservatives",
     color: "#4B5D2A",
   },
   {
     Icon: NoChemicalIcon,
     title: "No Chemicals",
     description: "Not a single synthetic compound",
-    // whole spices in a traditional masala dabba
-    image: "https://images.pexels.com/photos/8649386/pexels-photo-8649386.jpeg",
-    alt: "Traditional Indian masala dabba filled with natural whole spices — no chemicals or synthetic additives",
+    // a spread of processed, packaged foods — the chemical additives we never use
+    image: "/home/purity/no-chemicals.webp",
+    alt: "A spread of processed, packaged foods laden with additives — the synthetic chemicals Colonel's Pickle never uses",
     color: "#C05621",
   },
   {
     Icon: NoVinegarIcon,
     title: "No Vinegar",
     description: "Premium ₹30,000/kg Afghani Hing instead",
-    // a clear glass bottle of vinegar — the shortcut we never use
-    image: "https://images.pexels.com/photos/18206010/pexels-photo-18206010.jpeg",
-    alt: "A clear glass bottle of vinegar — the industry shortcut Colonel's Pickle never uses; premium Afghani hing is used instead",
+    // bottles of vinegar — the shortcut we never use
+    image: "/home/purity/no-vinegar.jpg",
+    alt: "Bottles of vinegar on a rustic shelf — the industry shortcut Colonel's Pickle never uses; premium Afghani hing is used instead",
     color: "#7C4A1E",
   },
 ];

@@ -34,6 +34,7 @@ interface SeedProduct {
   noPreservatives: boolean;
   variants: SeedVariant[];
   ingredients: string;
+  isActive?: boolean; // defaults to true; set false for hidden drafts
 }
 
 const categoriesData = [
@@ -56,6 +57,15 @@ const POUCH_V = (a: number, b: number, c: number): SeedVariant[] => [
   { weight: '500g', price: c },
 ];
 
+// 2026 five-tier jar lineup (client's authoritative price list).
+const JAR5_V = (a: number, b: number, c: number, d: number, e: number): SeedVariant[] => [
+  { weight: '100g', price: a },
+  { weight: '150g', price: b },
+  { weight: '250g', price: c },
+  { weight: '375g', price: d },
+  { weight: '500g', price: e },
+];
+
 const seedData: SeedProduct[] = [
   // ── ACHAAR (jars) ──
   {
@@ -66,7 +76,7 @@ const seedData: SeedProduct[] = [
   },
   {
     name: 'Chhuhara Adrak', slug: 'chhuhara-adrak', subtitle: 'Dry Ginger & Date Pickle',
-    category: 'achaar', isFeatured: true, noPreservatives: true, variants: JAR_V(199, 449, 879, 1729),
+    category: 'achaar', isFeatured: true, noPreservatives: true, variants: JAR5_V(199, 289, 449, 669, 889),
     ingredients:
       'Fresh Ginger (Adrak), Dry Dates (Chhuhara), Fresh Lime Juice processed with Fennel (Saunf), Black Pepper Powder, Black Salt, Asafoetida (Afghani Hing), Rock Salt, Jaggery Mix',
   },
@@ -78,49 +88,55 @@ const seedData: SeedProduct[] = [
   },
   {
     name: 'Nimbu Chatpata', slug: 'nimbu-chatpata', subtitle: 'Tangy Lemon Pickle',
-    category: 'achaar', isFeatured: true, noPreservatives: true, variants: JAR_V(109, 249, 459, 899),
+    category: 'achaar', isFeatured: true, noPreservatives: true, variants: JAR5_V(109, 159, 249, 359, 459),
     ingredients:
       "Fresh Lemon (Nimbu) processed with 10-12 spices: Cumin, Dry Ginger, Celery, Nigella Seeds, Fennel, Hot Spices, Red Pepper Powder, Black Pepper Powder, Black Salt, Asafoetida (Afghani Hing), Rock Salt, Colonel's Spl-Spices, Jaggery Mix",
   },
   {
+    name: 'Nimbu Mirchi', slug: 'nimbu-mirchi', subtitle: 'Lemon & Green Chilli Pickle',
+    category: 'achaar', isFeatured: false, noPreservatives: true, variants: JAR5_V(109, 159, 249, 359, 459),
+    ingredients:
+      'Fresh Lemon (Nimbu) and Fresh Green Chilly processed with traditional spices: Cumin, Fennel, Nigella Seeds, Fenugreek Seeds, Yellow Mustard Seeds, Asafoetida (Hing), Rock Salt, Red Chilli Powder. Provisional recipe — final details to follow.',
+  },
+  {
     name: 'Khatta Meetha Nimbu', slug: 'khatta-meetha-nimbu', subtitle: 'Sweet & Sour Lemon Pickle',
-    category: 'achaar', isFeatured: false, noPreservatives: true, variants: JAR_V(109, 249, 459, 899),
+    category: 'achaar', isFeatured: false, noPreservatives: true, variants: JAR5_V(109, 159, 249, 359, 459),
     ingredients:
       "Fresh Lemon processed with 10-12 spices: Cumin, Dry Ginger, Celery, Nigella Seeds, Fennel, Hot Spices, Red Pepper Powder, Black Pepper Powder, Black Salt, Asafoetida, Rock Salt, Colonel's Spl. Spices, Jaggery Mix",
   },
   {
     name: 'Bharwa Lal Mirch', slug: 'bharwa-lal-mirch', subtitle: 'Stuffed Red Chilli Pickle',
-    category: 'achaar', isFeatured: true, noPreservatives: true, variants: JAR_V(109, 249, 459, 899),
+    category: 'achaar', isFeatured: true, noPreservatives: true, variants: JAR5_V(109, 159, 249, 359, 459),
     ingredients:
       "Fresh Coarse Red Chilly processed with 15-17 spices: Fenugreek Seeds, Mustard Seeds, Red Mustard Seeds, Fennel, Cumin, Coriander Seeds, Nigella Seeds, Celery, Asafoetida, Turmeric, Rock Salt, Mango Powder, Colonel's Spl Spices, Yellow Mustard Seeds",
   },
   {
     name: 'Aam Ka Achar', slug: 'aam-ka-achar', subtitle: 'Raw Mango Pickle',
-    category: 'achaar', isFeatured: true, noPreservatives: true, variants: JAR_V(109, 249, 459, 899),
+    category: 'achaar', isFeatured: true, noPreservatives: true, variants: JAR5_V(109, 159, 249, 359, 459),
     ingredients:
       "Fresh Unripe Mango (Kacchi Ambi) processed with 15-17 spices: Fenugreek Seeds, Mustard Seeds, Red Mustard Seeds, Celery, Fennel, Cumin, Nigella Seeds, Asafoetida, Turmeric, Rock Salt, Colonel's Spl & Spices, Red Chilli Powder, Yellow Mustard Seeds",
   },
   {
     name: 'Dry Masala Aam', slug: 'dry-masala-aam', subtitle: 'Dry Mango Pickle',
-    category: 'achaar', isFeatured: true, noPreservatives: true, variants: JAR_V(109, 249, 459, 899),
+    category: 'achaar', isFeatured: true, noPreservatives: true, variants: JAR5_V(109, 159, 249, 359, 459),
     ingredients:
       "Fresh Unripe Mango processed with 15-17 spices: Fenugreek Seeds, Mustard Seeds, Red Mustard Seeds, Fennel, Cumin, Nigella Seeds, Asafoetida, Turmeric, Diggi Mirch, Rock Salt, Colonel's Spl. Spices, Red Chilli Powder, Yellow Mustard Seeds",
   },
   {
     name: 'Amla Ka Achar', slug: 'amla-ka-achar', subtitle: 'Indian Gooseberry Pickle',
-    category: 'achaar', isFeatured: true, noPreservatives: true, variants: JAR_V(109, 249, 459, 899),
+    category: 'achaar', isFeatured: true, noPreservatives: true, variants: JAR5_V(109, 159, 249, 359, 459),
     ingredients:
       "Amla (Indian Gooseberry), Fresh Ginger, Fresh Raw Turmeric processed with 15-17 spices: Cumin, Celery, Fennel, Fenugreek Seeds, Yellow Mustard Seeds, Rock Salt, Nigella Seeds, Diggi Mirch, Asafoetida, Colonel's Spl. Spices, Red Chilli Powder",
   },
   {
     name: 'Mixed Chatpata', slug: 'mixed-chatpata', subtitle: 'Mixed Tangy Pickle',
-    category: 'achaar', isFeatured: false, noPreservatives: true, variants: JAR_V(109, 249, 459, 899),
+    category: 'achaar', isFeatured: false, noPreservatives: true, variants: JAR5_V(99, 149, 229, 339, 439),
     ingredients:
       "Fresh Carrot, Fresh Raddish, Fresh Cauliflower, Fresh Green Chilly, Fresh Ginger, Fresh Raw Turmeric, Lotus Stem, Fresh Lemon processed with 15-17 spices: Cumin, Celery, Fennel, Fenugreek Seeds, Asafoetida, Yellow Mustard Seeds, Rock Salt, Colonel's Spl. Spices, Red Chilli Powder",
   },
   {
     name: 'Kathal Ka Achar', slug: 'kathal-ka-achar', subtitle: 'Jackfruit Pickle',
-    category: 'achaar', isFeatured: false, noPreservatives: true, variants: JAR_V(119, 289, 559, 1099),
+    category: 'achaar', isFeatured: false, noPreservatives: true, variants: JAR5_V(119, 175, 289, 439, 559),
     ingredients:
       "Fresh Unriped Jack Fruit processed with 15-17 spices: Cumin, Rock Salt, Coriander Seeds, Black Pepper, Red Chilli Powder, Diggi Mirch, Colonel's Spl-Spices, Turmeric, Asafoetida, Mango Powder, Red Mustard Seeds, Yellow Mustard Seeds",
   },
@@ -132,19 +148,19 @@ const seedData: SeedProduct[] = [
   },
   {
     name: 'Tikhi Hari Mirchi', slug: 'tikhi-mirchi', subtitle: 'Spicy Green Chilli Pickle',
-    category: 'achaar', isFeatured: false, noPreservatives: true, variants: JAR_V(109, 249, 459, 899),
+    category: 'achaar', isFeatured: false, noPreservatives: true, variants: JAR5_V(99, 149, 229, 339, 439),
     ingredients:
       "Fresh Green Chilly processed with 15-17 spices: Fenugreek Seeds, Mustard Seeds, Red Mustard Seeds, Fennel, Cumin, Coriander Seeds, Rock Salt, Asafoetida, Nigella Seeds, Celery, Colonel's Spl Spices, Yellow Mustard Seeds",
   },
   {
     name: 'Lehsun Ka Achar', slug: 'lehsun-ka-achar', subtitle: 'Garlic Pickle',
-    category: 'achaar', isFeatured: true, noPreservatives: true, variants: JAR_V(119, 289, 559, 1099),
+    category: 'achaar', isFeatured: true, noPreservatives: true, variants: JAR5_V(119, 175, 289, 439, 559),
     ingredients:
       "Fresh Garlic with Large Cloves processed with 15-17 spices: Cumin, Rock Salt, Coriander Seeds, Black Pepper, Red Chilli Powder, Diggi Mirch, Colonel's Spl-Spices, Turmeric, Asafoetida, Mango Powder, Red Mustard Seeds, Yellow Mustard Seeds",
   },
   {
     name: 'Bharwa Bhajiya', slug: 'bharwa-bhajiya', subtitle: 'Stuffed Banana Pepper Pickle',
-    category: 'achaar', isFeatured: false, noPreservatives: true, variants: JAR_V(109, 249, 459, 899),
+    category: 'achaar', isFeatured: false, noPreservatives: true, variants: JAR5_V(109, 159, 249, 359, 459),
     ingredients:
       "Fresh Banana Pepper (Moti Hari Mirch) processed with 15-17 spices: Fenugreek Seeds, Mustard Seeds, Red Mustard Seeds, Fennel, Yellow Mustard Seeds, Cumin, Coriander Seeds, Nigella Seeds, Celery, Asafoetida, Turmeric, Rock Salt, Mango Powder, Colonel's Spl. Spices",
   },
@@ -153,6 +169,13 @@ const seedData: SeedProduct[] = [
     category: 'achaar', isFeatured: true, noPreservatives: true, variants: JAR_V(109, 249, 459, 899),
     ingredients:
       "Fresh Ginger, Fresh Raw Turmeric, Fresh Lemon, Fresh Green Chilly processed with 15-17 spices: Cumin, Nigella Seeds, Celery, Fennel, Fenugreek Seeds, Yellow Mustard Seeds, Red Chilli Powder, Asafoetida (Afghani Hing), Rock Salt, Colonel's Spl. Spices",
+  },
+  {
+    name: 'Kair Ka Achar', slug: 'kair-ka-achar', subtitle: 'Rajasthani Desert Berry Pickle',
+    category: 'achaar', isFeatured: false, noPreservatives: true, isActive: false,
+    variants: JAR5_V(199, 289, 449, 669, 889),
+    ingredients:
+      'Kair (Rajasthani Desert Berries) processed with traditional spices and cold-press mustard oil. Draft — hidden until ingredients and product photos are confirmed.',
   },
 
   // ── MASALA (pouches) ──
@@ -201,11 +224,7 @@ const seedData: SeedProduct[] = [
   // ── ORGANIC & MORE ──
   {
     name: 'Organic Gulkand', slug: 'organic-gulkand', subtitle: 'Homemade Rose Petal Preserve',
-    category: 'organic', isFeatured: true, noPreservatives: true,
-    variants: [
-      { weight: '250g', price: 199 },
-      { weight: '500g', price: 379 },
-    ],
+    category: 'organic', isFeatured: true, noPreservatives: true, variants: JAR5_V(199, 289, 449, 669, 889),
     ingredients:
       "Fresh Rose Petals (Gulab Pankhuri), Organic Sugar / Mishri, Honey, Cardamom (Elaichi). Sun-cooked the traditional way, no artificial colours or preservatives.",
   },
@@ -261,7 +280,7 @@ function toProductDoc(p: SeedProduct) {
     specifications,
     variants,
     hasVariants: true,
-    isActive: true,
+    isActive: p.isActive ?? true,
     isFeatured: p.isFeatured,
     seo: {
       metaTitle: p.name,

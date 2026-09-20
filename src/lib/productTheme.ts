@@ -23,6 +23,7 @@ export const PRODUCT_THEME_MAP: Record<string, ProductTheme> = {
   "chhuhara-adrak": { themeColor: "#7C2D12", nameHindi: "छुहारा अदरक", icon: "🫙", badge: "Bestseller", badgeColor: "#B45309" },
   "mixed-khatta-meetha": { themeColor: "#365314", nameHindi: "मिक्स खट्टा मीठा", icon: "🥗" },
   "nimbu-chatpata": { themeColor: "#713F12", nameHindi: "नींबू चटपटा", icon: "🍋" },
+  "nimbu-mirchi": { themeColor: "#166534", nameHindi: "नींबू मिर्ची", icon: "🍋", badge: "🌶 Spicy", badgeColor: "#C05621" },
   "khatta-meetha-nimbu": { themeColor: "#78350F", nameHindi: "खट्टा मीठा नींबू", icon: "🍋" },
   "bharwa-lal-mirch": { themeColor: "#7F1D1D", nameHindi: "भरवां लाल मिर्च", icon: "🌶️", badge: "🌶 Spicy", badgeColor: "#C05621" },
   "aam-ka-achar": { themeColor: "#14532D", nameHindi: "आम का अचार", icon: "🥭", badge: "Summer Special", badgeColor: "#166534" },
@@ -35,6 +36,7 @@ export const PRODUCT_THEME_MAP: Record<string, ProductTheme> = {
   "lehsun-ka-achar": { themeColor: "#9C4420", nameHindi: "लहसुन का अचार", icon: "🧄" },
   "bharwa-bhajiya": { themeColor: "#365314", nameHindi: "भरवां भजिया", icon: "🫛" },
   "adrak-haldi-nimbu": { themeColor: "#713F12", nameHindi: "अदरक हल्दी नींबू", icon: "🌿", badge: "New", badgeColor: "#166534" },
+  "kair-ka-achar": { themeColor: "#7C2D12", nameHindi: "कैर का अचार", icon: "🫙" },
 
   // ── Organic & More ──
   "organic-gulkand": { themeColor: "#9D174D", nameHindi: "गुलकंद", icon: "🌹", badge: "Organic", badgeColor: "#166534" },
