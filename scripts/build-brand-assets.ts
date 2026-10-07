@@ -17,6 +17,8 @@ const P = (...s: string[]) => join(ROOT, ...s);
  *   public/images/brand/ridhwika-crest.png        — crest emblem, NO text (the logo)
  *   public/images/brand/colonels-pickle-wordmark.png — red trademark wordmark (transparent)
  *   public/og-image.jpg                            — 1200x630 social share banner
+ *                                                    (illustrated "Homemade Tradition"
+ *                                                    artwork from og-source.png)
  *   src/app/icon.png / src/app/apple-icon.png      — favicon (crest)
  *   src/app/favicon.ico                            — classic /favicon.ico (crest, 16/32/48)
  *   public/hero/hero-banner-1.jpg                  — optimized homepage hero banner
@@ -75,46 +77,18 @@ async function buildWordmark(): Promise<string> {
 }
 
 async function buildOgImage(): Promise<string> {
+  // Client-supplied illustrated "Homemade Tradition" banner (og-source.png,
+  // 1672×941 ≈ 16:9) is the social-share card shown in WhatsApp/Facebook/etc.
+  // Source is slightly taller than the 1.905:1 OG spec, so `cover`/center scales
+  // to width and trims ~22px top+bottom — the figures, ® and ground elements all
+  // sit with margin, so nothing important is clipped and there is no letterbox
+  // seam against the cream background.
   const W = 1200;
   const H = 630;
 
-  const crest = await sharp(P('public/images/brand/ridhwika-crest.png'))
-    .resize(300, 300, { fit: 'contain', background: TRANSPARENT })
-    .png()
-    .toBuffer();
-
-  const wordmark = await sharp(P('public/images/brand/colonels-pickle-wordmark.png'))
-    .resize({ width: 620, withoutEnlargement: false })
-    .png()
-    .toBuffer();
-  const wmMeta = await sharp(wordmark).metadata();
-  const wmH = wmMeta.height ?? 300;
-
-  // Cream gradient + gold rule + tagline (Latin text → Georgia, no Devanagari font risk).
-  const bg = Buffer.from(
-    `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#FDF8F0"/>
-          <stop offset="0.55" stop-color="#FAF1E1"/>
-          <stop offset="1" stop-color="#F5ECD8"/>
-        </linearGradient>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#g)"/>
-      <circle cx="285" cy="300" r="185" fill="#FFFFFF"/>
-      <circle cx="285" cy="300" r="185" fill="none" stroke="#D4A017" stroke-width="4"/>
-      <rect x="470" y="452" width="600" height="3" rx="1.5" fill="#D4A017"/>
-      <text x="472" y="512" font-family="Georgia,'Times New Roman',serif" font-size="34" font-style="italic" fill="#7F1D1D">Maa Ka Pyaar, Ghar Ka Achaar</text>
-      <text x="474" y="556" font-family="Georgia,serif" font-size="21" letter-spacing="1" fill="#78350F">No Preservatives · No Vinegar · FSSAI Licensed · Jaipur</text>
-    </svg>`
-  );
-
   const out = P('public/og-image.jpg');
-  await sharp(bg)
-    .composite([
-      { input: crest, left: 285 - 150, top: 300 - 150 },
-      { input: wordmark, left: 472, top: Math.round(300 - wmH / 2 - 60) },
-    ])
+  await sharp(P('public/images/brand/og-source.png'))
+    .resize(W, H, { fit: 'cover', position: 'center', background: '#FDF8F0' })
     .jpeg({ quality: 90, mozjpeg: true })
     .toFile(out);
   return out;
