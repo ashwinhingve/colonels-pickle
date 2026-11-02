@@ -1,0 +1,120 @@
+{
+  "lehsun-ka-achar": {
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/djjioxnsk/image/upload/q_auto,f_auto/colonels-pickle/products/lehsun-ka-achar-1",
+        "publicId": "colonels-pickle/products/lehsun-ka-achar-1",
+        "order": 0,
+        "_id": "6aae5098e799bb47e8ef638e"
+      }
+    ],
+    "isActive": true
+  },
+  "bharwa-bhajiya": {
+    "images": [],
+    "isActive": true
+  },
+  "bharwa-lal-mirch": {
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/djjioxnsk/image/upload/q_auto,f_auto/colonels-pickle/products/bharwa-lal-mirch-1",
+        "publicId": "colonels-pickle/products/bharwa-lal-mirch-1",
+        "order": 0
+      },
+      {
+        "url": "https://res.cloudinary.com/djjioxnsk/image/upload/q_auto,f_auto/colonels-pickle/products/bharwa-lal-mirch-2",
+        "publicId": "colonels-pickle/products/bharwa-lal-mirch-2",
+        "order": 1
+      }
+    ],
+    "isActive": true
+  },
+  "chhuhara-adrak": {
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/djjioxnsk/image/upload/q_auto,f_auto/colonels-pickle/products/chhuhara-adrak-1",
+        "publicId": "colonels-pickle/products/chhuhara-adrak-1",
+        "order": 0
+      },
+      {
+        "url": "https://res.cloudinary.com/djjioxnsk/image/upload/q_auto,f_auto/colonels-pickle/products/chhuhara-adrak-2",
+        "publicId": "colonels-pickle/products/chhuhara-adrak-2",
+        "order": 1
+      },
+      {
+        "url": "https://res.cloudinary.com/djjioxnsk/image/upload/q_auto,f_auto/colonels-pickle/products/chhuhara-adrak-3",
+        "publicId": "colonels-pickle/products/chhuhara-adrak-3",
+        "order": 2
+      }
+    ],
+    "isActive": true
+  },
+  "nimbu-chatpata": {
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/djjioxnsk/image/upload/q_auto,f_auto/colonels-pickle/products/nimbu-chatpata-1",
+        "publicId": "colonels-pickle/products/nimbu-chatpata-1",
+        "order": 0
+      }
+    ],
+    "isActive": true
+  },
+  "dry-masala-aam": {
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/djjioxnsk/image/upload/q_auto,f_auto/colonels-pickle/products/dry-masala-aam-1",
+        "publicId": "colonels-pickle/products/dry-masala-aam-1",
+        "order": 0
+      }
+    ],
+    "isActive": true
+  },
+  "organic-gulkand": {
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/djjioxnsk/image/upload/q_auto,f_auto/colonels-pickle/products/organic-gulkand-1",
+        "publicId": "colonels-pickle/products/organic-gulkand-1",
+        "order": 0
+      },
+      {
+        "url": "https://res.cloudinary.com/djjioxnsk/image/upload/q_auto,f_auto/colonels-pickle/products/organic-gulkand-2",
+        "publicId": "colonels-pickle/products/organic-gulkand-2",
+        "order": 1
+      },
+      {
+        "url": "https://res.cloudinary.com/djjioxnsk/image/upload/q_auto,f_auto/colonels-pickle/products/organic-gulkand-3",
+        "publicId": "colonels-pickle/products/organic-gulkand-3",
+        "order": 2
+      }
+    ],
+    "isActive": true
+  },
+  "tikhi-mirchi": {
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/djjioxnsk/image/upload/q_auto,f_auto/colonels-pickle/products/tikhi-mirchi-1",
+        "publicId": "colonels-pickle/products/tikhi-mirchi-1",
+        "order": 0
+      }
+    ],
+    "isActive": true
+  },
+  "kair-ka-achar": {
+    "images": [],
+    "isActive": false
+  },
+  "khatta-meetha-nimbu": {
+    "images": [],
+    "isActive": true
+  },
+  "mixed-chatpata": {
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/djjioxnsk/image/upload/q_auto,f_auto/colonels-pickle/products/mixed-chatpata-1",
+        "publicId": "colonels-pickle/products/mixed-chatpata-1",
+        "order": 0
+      }
+    ],
+    "isActive": true
+  }
+}

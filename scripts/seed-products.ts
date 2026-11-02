@@ -66,6 +66,82 @@ const JAR5_V = (a: number, b: number, c: number, d: number, e: number): SeedVari
   { weight: '500g', price: e },
 ];
 
+// Product imagery — mirror of the live DB set applied by
+// `scripts/add-new-product-images.ts`. Keyed by slug → ordered Cloudinary
+// public_ids, NEW 2026 jar shots first so they lead the card/gallery, original
+// shots kept after. Only the 11 photographed products are listed; everything
+// else has no images yet. URLs are derived deterministically below so this stays
+// in sync with what the prepend script wrote (`q_auto,f_auto` delivery).
+const CLOUDINARY_BASE = `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`;
+
+const PRODUCT_IMAGES: Record<string, string[]> = {
+  'lehsun-ka-achar': [
+    'colonels-pickle/products/lehsun-ka-achar-2026-1',
+    'colonels-pickle/products/lehsun-ka-achar-2026-2',
+    'colonels-pickle/products/lehsun-ka-achar-1',
+  ],
+  'bharwa-bhajiya': [
+    'colonels-pickle/products/bharwa-bhajiya-2026-1',
+    'colonels-pickle/products/bharwa-bhajiya-2026-2',
+  ],
+  'bharwa-lal-mirch': [
+    'colonels-pickle/products/bharwa-lal-mirch-2026-1',
+    'colonels-pickle/products/bharwa-lal-mirch-2026-2',
+    'colonels-pickle/products/bharwa-lal-mirch-1',
+    'colonels-pickle/products/bharwa-lal-mirch-2',
+  ],
+  'chhuhara-adrak': [
+    'colonels-pickle/products/chhuhara-adrak-2026-1',
+    'colonels-pickle/products/chhuhara-adrak-2026-2',
+    'colonels-pickle/products/chhuhara-adrak-1',
+    'colonels-pickle/products/chhuhara-adrak-2',
+    'colonels-pickle/products/chhuhara-adrak-3',
+  ],
+  'nimbu-chatpata': [
+    'colonels-pickle/products/nimbu-chatpata-2026-1',
+    'colonels-pickle/products/nimbu-chatpata-2026-2',
+    'colonels-pickle/products/nimbu-chatpata-1',
+  ],
+  'dry-masala-aam': [
+    'colonels-pickle/products/dry-masala-aam-2026-1',
+    'colonels-pickle/products/dry-masala-aam-2026-2',
+    'colonels-pickle/products/dry-masala-aam-1',
+  ],
+  'organic-gulkand': [
+    'colonels-pickle/products/organic-gulkand-2026-1',
+    'colonels-pickle/products/organic-gulkand-2026-2',
+    'colonels-pickle/products/organic-gulkand-2026-3',
+    'colonels-pickle/products/organic-gulkand-1',
+    'colonels-pickle/products/organic-gulkand-2',
+    'colonels-pickle/products/organic-gulkand-3',
+  ],
+  'tikhi-mirchi': [
+    'colonels-pickle/products/tikhi-mirchi-2026-1',
+    'colonels-pickle/products/tikhi-mirchi-2026-2',
+    'colonels-pickle/products/tikhi-mirchi-1',
+  ],
+  'kair-ka-achar': [
+    'colonels-pickle/products/kair-ka-achar-2026-1',
+    'colonels-pickle/products/kair-ka-achar-2026-2',
+  ],
+  'khatta-meetha-nimbu': [
+    'colonels-pickle/products/khatta-meetha-nimbu-2026-1',
+    'colonels-pickle/products/khatta-meetha-nimbu-2026-2',
+  ],
+  'mixed-chatpata': [
+    'colonels-pickle/products/mixed-chatpata-2026-1',
+    'colonels-pickle/products/mixed-chatpata-2026-2',
+    'colonels-pickle/products/mixed-chatpata-1',
+  ],
+};
+
+const buildImages = (slug: string) =>
+  (PRODUCT_IMAGES[slug] ?? []).map((publicId, order) => ({
+    url: `${CLOUDINARY_BASE}/q_auto,f_auto/${publicId}`,
+    publicId,
+    order,
+  }));
+
 const seedData: SeedProduct[] = [
   // ── ACHAAR (jars) ──
   {
@@ -172,10 +248,10 @@ const seedData: SeedProduct[] = [
   },
   {
     name: 'Kair Ka Achar', slug: 'kair-ka-achar', subtitle: 'Rajasthani Desert Berry Pickle',
-    category: 'achaar', isFeatured: false, noPreservatives: true, isActive: false,
+    category: 'achaar', isFeatured: false, noPreservatives: true, isActive: true,
     variants: JAR5_V(199, 289, 449, 669, 889),
     ingredients:
-      'Kair (Rajasthani Desert Berries) processed with traditional spices and cold-press mustard oil. Draft — hidden until ingredients and product photos are confirmed.',
+      'Kair (Rajasthani Desert Berries) processed with traditional spices and cold-press mustard oil.',
   },
 
   // ── MASALA (pouches) ──
@@ -275,7 +351,7 @@ function toProductDoc(p: SeedProduct) {
     category: p.category,
     price: p.variants[0].price,
     stock: 100,
-    images: [],
+    images: buildImages(p.slug),
     tags: [p.category, ...p.name.toLowerCase().split(' ')],
     specifications,
     variants,
