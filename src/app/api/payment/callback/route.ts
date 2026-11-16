@@ -8,8 +8,6 @@ import Product, { IProduct } from '@/models/Product';
 import { cashfreeService } from '@/lib/payment/cashfree';
 import { emailService } from '@/lib/notifications/email';
 import { smsService } from '@/lib/notifications/sms';
-import { whatsappService } from '@/lib/notifications/whatsapp';
-import { callMeBotService } from '@/lib/notifications/whatsapp-callmebot';
 import { adminOrderNotifier } from '@/lib/notifications/adminOrderNotifier';
 import { createShipmentForOrder } from '@/lib/shipping/createShipmentForOrder';
 import Discount from '@/models/Discount';
@@ -329,7 +327,7 @@ export async function GET(request: NextRequest) {
             const orderItems = await OrderItem.find({ orderId });
             const itemCount = orderItems.reduce((sum: number, i: any) => sum + i.quantity, 0);
 
-            // Dispatcher dedupes (GET vs webhook) + fans out to WhatsApp/Telegram/email/SMS.
+            // Dispatcher dedupes (GET vs webhook) + fans out to WhatsApp/email/SMS.
             await adminOrderNotifier.notifyNewOrder({
               orderId,
               orderNumber,
@@ -386,21 +384,6 @@ export async function GET(request: NextRequest) {
 
         const customerName = (populatedOrder.userId as any)?.name || 'Customer';
         const customerEmail = (populatedOrder.userId as any)?.email || '';
-        callMeBotService.notifyPaymentFailed({
-          orderNumber,
-          customerName,
-          totalAmount: order.totalAmount,
-        }).catch((error) => {
-          console.error('Error sending payment failed WhatsApp (CallMeBot) notification:', error);
-        });
-        whatsappService.notifyPaymentFailed({
-          orderNumber,
-          customerName,
-          totalAmount: order.totalAmount,
-        }).catch((error) => {
-          console.error('Error sending payment failed admin notification:', error);
-        });
-
         emailService.notifyAdminPaymentFailed({
           orderNumber,
           customerName,

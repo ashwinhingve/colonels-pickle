@@ -1,27 +1,8 @@
-/**
- * Admin order-notification dispatcher.
- *
- * Centralizes the "a new order was confirmed" admin alert that previously lived
- * inline (and duplicated) across the payment callback (GET + webhook) and the
- * COD confirmation route. It does two things:
- *
- *   1. DEDUPE — claims an atomic flag on the Order (`adminNotifiedAt`) so that
- *      when both the browser GET callback and the Cashfree server webhook fire
- *      for the same online order, only ONE set of admin alerts is sent.
- *
- *   2. FAN OUT — sends on every configured free channel (CallMeBot WhatsApp,
- *      Telegram, admin email, admin SMS). Each channel is independently
- *      error-isolated so one failing provider never blocks the others, and none
- *      can ever throw into the order-processing path.
- *
- * Customer-facing notifications are intentionally NOT handled here — those are
- * sent directly by the routes and are unaffected.
- */
+/** Admin alerts: durable Meta WhatsApp job plus existing email/SMS dispatch. */
 
 import type { Types } from 'mongoose';
 import Order from '@/models/Order';
-import { callMeBotService } from '@/lib/notifications/whatsapp-callmebot';
-import { whatsappService } from '@/lib/notifications/whatsapp'; // Telegram (free fallback)
+import { enqueueWhatsAppOrder, processWhatsAppJobs } from './whatsappJobs';
 import { emailService } from '@/lib/notifications/email';
 import { smsService } from '@/lib/notifications/sms';
 
@@ -73,21 +54,15 @@ class AdminOrderNotifier {
       shippingAddress,
     } = params;
 
-    const isFirst = await this.claim(orderId);
-    if (!isFirst) {
-      console.log(`adminOrderNotifier: order ${orderNumber} already notified, skipping`);
-      return;
+    // Independent of the legacy email/SMS flag. Persist before attempting delivery.
+    try {
+      await enqueueWhatsAppOrder(String(orderId), { orderNumber, customerName, totalAmount, itemCount, paymentMethod });
+      await processWhatsAppJobs(String(orderId));
+    } catch {
+      console.error('Admin WhatsApp enqueue failed; scheduled reconciliation will recover eligible orders');
     }
 
-    // WhatsApp via CallMeBot (primary, real WhatsApp to the business number).
-    callMeBotService
-      .notifyNewOrder({ orderNumber, customerName, totalAmount, itemCount, paymentMethod })
-      .catch((err) => console.error('Admin WhatsApp (CallMeBot) notification error:', err));
-
-    // Telegram (free parallel fallback).
-    whatsappService
-      .notifyNewOrder({ orderNumber, customerName, totalAmount, itemCount, paymentMethod })
-      .catch((err) => console.error('Admin Telegram notification error:', err));
+    if (!await this.claim(orderId)) return;
 
     // Admin email.
     emailService

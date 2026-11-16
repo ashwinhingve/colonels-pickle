@@ -31,7 +31,7 @@ Colonel's Pickle sells authentic, small-batch pickles and cold-press oils with *
 | Payments | Cashfree PG |
 | Images | Cloudinary (`next-cloudinary`) |
 | Shipping | Delhivery + Shiprocket |
-| Notifications | Nodemailer (email) + Twilio (SMS/WhatsApp) |
+| Notifications | Nodemailer (email) + Fast2SMS (SMS) + Meta Cloud API (admin WhatsApp) |
 | State | Zustand |
 | Content | TipTap rich-text editor (admin CMS) |
 | Validation | Zod + React Hook Form |
@@ -48,7 +48,7 @@ Colonel's Pickle sells authentic, small-batch pickles and cold-press oils with *
 - **Admin dashboard** — product/inventory CMS, review moderation, order operations (role-gated)
 - **Trust & compliance** — verified FSSAI / Udyam / Trademark / GST registrations surfaced in-store
 - **Sitewide motion & illustration system** — Framer Motion primitives + inline-SVG artwork
-- **Notifications** — transactional email (Nodemailer) + SMS/WhatsApp (Twilio)
+- **Notifications** — transactional email (Nodemailer), SMS (Fast2SMS), and admin WhatsApp alerts (Meta Cloud API)
 
 ---
 
@@ -189,3 +189,7 @@ Copyright © Ridhwika Agro Organics. All rights reserved. This is a private, pro
 ---
 
 **Built with ❤️ in Jaipur — Next.js · TypeScript · Tailwind CSS · MongoDB**
+
+## WhatsApp order alerts
+
+Official Meta Cloud API alerts for confirmed orders: follow [the account, template, hosting and testing guide](documents/WHATSAPP_META_SETUP.md).

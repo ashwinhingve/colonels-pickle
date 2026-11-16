@@ -2,6 +2,7 @@ import { requireAdmin } from '@/lib/auth-helpers';
 import { connectDB } from '@/lib/mongodb';
 import Order from '@/models/Order';
 import Transaction from '@/models/Transaction';
+import WhatsAppNotification from '@/models/WhatsAppNotification';
 import Shipment from '@/models/Shipment';
 import { notFound } from 'next/navigation';
 import OrderStatusManager from '@/components/admin/OrderStatusManager';
@@ -40,6 +41,8 @@ export default async function AdminOrderDetailsPage({ params }: PageProps) {
   if (!order) {
     notFound();
   }
+
+  const whatsappAlert = await WhatsAppNotification.findOne({ orderId: order._id, kind: 'new_order' }).lean() as { status?: string; attempts?: number; errorCode?: string } | null;
 
   // Fetch related transaction
   const transaction = await Transaction.findOne({ orderNumber: order.orderNumber }).lean() as any;
@@ -297,6 +300,14 @@ export default async function AdminOrderDetailsPage({ params }: PageProps) {
               provider={orderData.provider || 'delhivery'}
             />
           )}
+
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">WhatsApp order alert</h3>
+            <p className="text-sm text-gray-700">Status: {whatsappAlert?.status || 'Not queued'}</p>
+            {whatsappAlert && <p className="text-sm text-gray-600">Attempts: {whatsappAlert.attempts || 0}</p>}
+            {whatsappAlert?.errorCode && <p className="text-sm text-red-700">Error: {whatsappAlert.errorCode}</p>}
+            <p className="text-xs text-gray-500 mt-2">Accepted means Meta received the request. Delivered confirms arrival on WhatsApp.</p>
+          </div>
 
           {/* Payment Information */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">

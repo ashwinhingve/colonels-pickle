@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "test:whatsapp": "tsx --test scripts/whatsapp.test.ts",
     "seed:inventory": "tsx scripts/seed-inventory.ts"
   },
   "dependencies": {

@@ -86,10 +86,11 @@ All variables must be set in **Vercel Project Settings > Environment Variables**
 - [ ] **NODE_ENV** — `production`
 - [ ] **LOG_LEVEL** — `INFO` or `WARN` (not `DEBUG`)
 
-### Optional: Telegram Alerts
+### Meta WhatsApp order alerts
 
-- [ ] **TELEGRAM_BOT_TOKEN** — (Optional) For real-time order alerts
-- [ ] **TELEGRAM_CHAT_ID** — (Optional) Your Telegram chat ID
+- [ ] Follow [the setup guide](../documents/WHATSAPP_META_SETUP.md).
+- [ ] Configure Meta credentials, approve the order template, and schedule retries.
+- [ ] Confirm real COD and online-paid order alerts arrive on the owner's phone.
 
 ---
 

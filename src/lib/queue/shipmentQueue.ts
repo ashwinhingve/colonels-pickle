@@ -2,8 +2,6 @@ import { connectDB } from '@/lib/mongodb';
 import Order from '@/models/Order';
 import { createLogger, LogMessages } from '@/lib/utils/logger';
 import { emailService } from '@/lib/notifications/email';
-import { whatsappService } from '@/lib/notifications/whatsapp';
-import { callMeBotService } from '@/lib/notifications/whatsapp-callmebot';
 
 /**
  * Queued shipment item
@@ -263,16 +261,6 @@ export class ShipmentQueue {
       const order = await Order.findById(orderId).populate('userId').populate('shippingAddressId');
       if (order) {
         const customerName = (order.userId as any)?.name || 'Unknown';
-        callMeBotService.notifyPaymentFailed({
-          orderNumber: order.orderNumber,
-          customerName,
-          totalAmount: order.totalAmount,
-        }).catch(() => {});
-        whatsappService.notifyPaymentFailed({
-          orderNumber: order.orderNumber,
-          customerName,
-          totalAmount: order.totalAmount,
-        }).catch(() => {});
         emailService.notifyAdminNewOrder({
           orderNumber: order.orderNumber,
           customerName,

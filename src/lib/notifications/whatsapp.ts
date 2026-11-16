@@ -1,115 +1,64 @@
-/**
- * Admin Order Notification Service — Telegram Bot (100% Free)
- *
- * No WhatsApp Business, no Twilio, no cost ever.
- *
- * ONE-TIME SETUP:
- *   1. Open Telegram, search for @BotFather and send /newbot
- *   2. Follow prompts — give it a name like "Colonel's Pickle Orders"
- *   3. BotFather sends you a bot token like: 123456789:AAFxxx...
- *   4. Search for your new bot in Telegram and press Start
- *   5. Open: https://api.telegram.org/bot<TOKEN>/getUpdates
- *      Look for "chat":{"id": 123456789} — that's your chat ID
- *   6. Add to .env.local:
- *        TELEGRAM_BOT_TOKEN=123456789:AAFxxx...
- *        TELEGRAM_CHAT_ID=123456789
- */
+/** Server-side Meta Cloud API transport. No customer address or phone is sent. */
+export interface WhatsAppOrder {
+  orderNumber: string;
+  customerName: string;
+  totalAmount: number;
+  itemCount: number;
+  paymentMethod: string;
+}
 
-class WhatsAppService {
-  // Env vars are read per-call (not at module init) so serverless cold-starts
-  // never permanently disable the service if vars are injected after first load.
-  private get botToken(): string {
-    return process.env.TELEGRAM_BOT_TOKEN || '';
-  }
-
-  private get chatId(): string {
-    return process.env.TELEGRAM_CHAT_ID || '';
-  }
-
-  private get enabled(): boolean {
-    return !!(this.botToken && this.chatId);
-  }
-
-  private async send(message: string): Promise<void> {
-    if (!this.enabled) {
-      console.warn('Telegram notifications not configured — set TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID');
-      return;
-    }
-
-    const url = `https://api.telegram.org/bot${this.botToken}/sendMessage`;
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 8000);
-
-    try {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: this.chatId,
-          text: message,
-          parse_mode: 'HTML',
-        }),
-        signal: controller.signal,
-      });
-      const body = await res.json();
-      if (!res.ok || !body.ok) {
-        console.error('Telegram error:', body);
-      } else {
-        console.log('Telegram notification sent to admin');
-      }
-    } catch (err: any) {
-      if (err?.name === 'AbortError') {
-        console.error('Telegram send timed out');
-      } else {
-        console.error('Telegram send failed:', err?.message || err);
-      }
-    } finally {
-      clearTimeout(timeout);
-    }
-  }
-
-  /**
-   * Notify admin when a new order is confirmed (online or COD).
-   */
-  async notifyNewOrder(order: {
-    orderNumber: string;
-    customerName: string;
-    totalAmount: number;
-    itemCount: number;
-    paymentMethod: string;
-  }): Promise<void> {
-    const method = order.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Online Payment';
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.colonelspicklebyridhwika.com';
-
-    const message =
-      `<b>New Order Received!</b>\n\n` +
-      `Order: <code>${order.orderNumber}</code>\n` +
-      `Customer: ${order.customerName}\n` +
-      `Amount: Rs.${order.totalAmount.toFixed(2)}\n` +
-      `Items: ${order.itemCount} item${order.itemCount !== 1 ? 's' : ''}\n` +
-      `Payment: ${method}\n\n` +
-      `<a href="${appUrl}/admin/orders">View Orders</a>`;
-
-    await this.send(message);
-  }
-
-  /**
-   * Notify admin when a payment fails.
-   */
-  async notifyPaymentFailed(order: {
-    orderNumber: string;
-    customerName: string;
-    totalAmount: number;
-  }): Promise<void> {
-    const message =
-      `<b>Payment Failed!</b>\n\n` +
-      `Order: <code>${order.orderNumber}</code>\n` +
-      `Customer: ${order.customerName}\n` +
-      `Amount: Rs.${order.totalAmount.toFixed(2)}\n\n` +
-      `Customer may need help retrying.`;
-
-    await this.send(message);
+export class WhatsAppError extends Error {
+  constructor(public readonly code: string, public readonly retryable: boolean) {
+    super(code);
   }
 }
 
-export const whatsappService = new WhatsAppService();
+export function whatsappConfig() {
+  const config = {
+    token: process.env.WHATSAPP_ACCESS_TOKEN || '',
+    phoneId: process.env.WHATSAPP_PHONE_NUMBER_ID || '',
+    recipient: process.env.WHATSAPP_ADMIN_PHONE || '',
+    version: process.env.WHATSAPP_API_VERSION || 'v23.0',
+    template: process.env.WHATSAPP_ORDER_TEMPLATE || 'colonels_pickle_admin_new_order',
+    language: process.env.WHATSAPP_TEMPLATE_LANGUAGE || 'en_US',
+    appUrl: process.env.NEXT_PUBLIC_APP_URL || '',
+  };
+  if (!config.token || !/^\d+$/.test(config.phoneId) || !/^[1-9]\d{7,14}$/.test(config.recipient) ||
+      !/^v\d+\.\d+$/.test(config.version) || !/^[a-z0-9_]+$/.test(config.template) ||
+      !/^https:\/\//.test(config.appUrl)) {
+    throw new WhatsAppError('configuration_missing_or_invalid', false);
+  }
+  return config;
+}
+
+export function templatePayload(order: WhatsAppOrder) {
+  const c = whatsappConfig();
+  const values = [order.orderNumber, order.customerName.trim().split(/\s+/)[0] || 'Customer',
+    order.totalAmount.toFixed(2), String(order.itemCount),
+    order.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Online Payment',
+    `${c.appUrl.replace(/\/$/, '')}/admin/orders`];
+  return { messaging_product: 'whatsapp', to: c.recipient, type: 'template',
+    template: { name: c.template, language: { code: c.language },
+      components: [{ type: 'body', parameters: values.map(text => ({ type: 'text', text })) }] } };
+}
+
+export async function sendWhatsAppOrder(order: WhatsAppOrder, correlationId?: string): Promise<string> {
+  const c = whatsappConfig();
+  try {
+    const response = await fetch(`https://graph.facebook.com/${c.version}/${c.phoneId}/messages`, {
+      method: 'POST', headers: { Authorization: `Bearer ${c.token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...templatePayload(order), ...(correlationId ? { biz_opaque_callback_data: correlationId } : {}) }), signal: AbortSignal.timeout(8000),
+    });
+    const body = await response.json().catch(() => ({}));
+    if (response.ok && !body.messages?.[0]?.id) throw new WhatsAppError('invalid_response_delivery_uncertain', true);
+    if (!response.ok) {
+      const code = Number(body.error?.code || 0);
+      throw new WhatsAppError(`meta_${response.status}_${code}`, response.status === 429 || response.status >= 500 || [130429, 131000, 131016, 131048, 131056].includes(code));
+    }
+    return String(body.messages[0].id);
+  } catch (error) {
+    if (error instanceof WhatsAppError) throw error;
+    // A network timeout can mean Meta accepted the message. A retry may duplicate it.
+    throw new WhatsAppError('network_or_timeout_delivery_uncertain', true);
+  }
+}

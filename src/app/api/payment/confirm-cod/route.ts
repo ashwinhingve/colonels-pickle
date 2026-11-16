@@ -119,7 +119,7 @@ export async function POST(req: NextRequest) {
         const customerEmail = (populatedOrder.userId as any)?.email || '';
         const shippingAddress = (populatedOrder.shippingAddressId as any) || {};
 
-        // Single dispatcher: dedupes + fans out to WhatsApp (CallMeBot)/Telegram/email/SMS.
+        // Single dispatcher: dedupes + fans out to WhatsApp/email/SMS.
         await adminOrderNotifier.notifyNewOrder({
           orderId: order._id,
           orderNumber: order.orderNumber,
