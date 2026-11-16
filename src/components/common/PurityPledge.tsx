@@ -52,7 +52,7 @@ export function PurityPledge({ className }: { className?: string }) {
       <div className="relative z-10 mx-auto max-w-7xl px-4">
         <SectionHeader
           eyebrow="OUR PURE PROMISE"
-          title="Pure Purity, Nothing Else"
+          title="Just Purity, Nothing Else"
           subtitle="Every jar is a promise — only what nature intended, and never a single shortcut the industry quietly relies on."
         />
 

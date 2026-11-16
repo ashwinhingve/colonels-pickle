@@ -42,6 +42,7 @@ export interface IOrder extends Document {
   actualDeliveryDate?: Date;
   shipmentCreatedAt?: Date;
   lastStatusUpdate?: Date;
+  adminNotifiedAt?: Date;
   cancelledAt?: Date;
   refundedAt?: Date;
   refundAmount?: number;
@@ -182,6 +183,11 @@ const OrderSchema = new Schema<IOrder>(
       type: Date,
     },
     lastStatusUpdate: {
+      type: Date,
+    },
+    // Set atomically the first time admin "new order" alerts are dispatched, so
+    // the online GET callback and the Cashfree webhook cannot both notify.
+    adminNotifiedAt: {
       type: Date,
     },
     cancelledAt: {

@@ -8,7 +8,7 @@ import Product, { IProduct } from '@/models/Product';
 import Discount from '@/models/Discount';
 import { emailService } from '@/lib/notifications/email';
 import { smsService } from '@/lib/notifications/sms';
-import { whatsappService } from '@/lib/notifications/whatsapp';
+import { adminOrderNotifier } from '@/lib/notifications/adminOrderNotifier';
 import { logStockMovement } from '@/lib/inventory/logStockMovement';
 
 /**
@@ -119,17 +119,9 @@ export async function POST(req: NextRequest) {
         const customerEmail = (populatedOrder.userId as any)?.email || '';
         const shippingAddress = (populatedOrder.shippingAddressId as any) || {};
 
-        whatsappService.notifyNewOrder({
-          orderNumber: order.orderNumber,
-          customerName,
-          totalAmount: order.totalAmount,
-          itemCount,
-          paymentMethod: 'cod',
-        }).catch((err) => {
-          console.error('COD Telegram notification error:', err);
-        });
-
-        emailService.notifyAdminNewOrder({
+        // Single dispatcher: dedupes + fans out to WhatsApp (CallMeBot)/Telegram/email/SMS.
+        await adminOrderNotifier.notifyNewOrder({
+          orderId: order._id,
           orderNumber: order.orderNumber,
           customerName,
           customerEmail,
@@ -137,12 +129,6 @@ export async function POST(req: NextRequest) {
           itemCount,
           paymentMethod: 'cod',
           shippingAddress,
-        }).catch((err) => {
-          console.error('COD admin email notification error:', err);
-        });
-
-        smsService.notifyAdminOrderConfirmed(order.orderNumber, customerName, order.totalAmount, 'cod').catch((err) => {
-          console.error('COD admin order confirmed SMS error:', err);
         });
       }
     } catch (err) {

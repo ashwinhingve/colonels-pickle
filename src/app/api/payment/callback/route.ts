@@ -9,6 +9,8 @@ import { cashfreeService } from '@/lib/payment/cashfree';
 import { emailService } from '@/lib/notifications/email';
 import { smsService } from '@/lib/notifications/sms';
 import { whatsappService } from '@/lib/notifications/whatsapp';
+import { callMeBotService } from '@/lib/notifications/whatsapp-callmebot';
+import { adminOrderNotifier } from '@/lib/notifications/adminOrderNotifier';
 import { createShipmentForOrder } from '@/lib/shipping/createShipmentForOrder';
 import Discount from '@/models/Discount';
 import { applyRateLimit, RateLimitPresets } from '@/lib/middleware/rateLimit';
@@ -327,17 +329,9 @@ export async function GET(request: NextRequest) {
             const orderItems = await OrderItem.find({ orderId });
             const itemCount = orderItems.reduce((sum: number, i: any) => sum + i.quantity, 0);
 
-            whatsappService.notifyNewOrder({
-              orderNumber,
-              customerName,
-              totalAmount,
-              itemCount,
-              paymentMethod,
-            }).catch((error) => {
-              console.error('Error sending Telegram order notification:', error);
-            });
-
-            emailService.notifyAdminNewOrder({
+            // Dispatcher dedupes (GET vs webhook) + fans out to WhatsApp/Telegram/email/SMS.
+            await adminOrderNotifier.notifyNewOrder({
+              orderId,
               orderNumber,
               customerName,
               customerEmail,
@@ -345,12 +339,6 @@ export async function GET(request: NextRequest) {
               itemCount,
               paymentMethod,
               shippingAddress,
-            }).catch((error) => {
-              console.error('Error sending admin email notification:', error);
-            });
-
-            smsService.notifyAdminOrderConfirmed(orderNumber, customerName, totalAmount, paymentMethod).catch((error) => {
-              console.error('Error sending admin order confirmed SMS:', error);
             });
           } catch (err) {
             console.error('Error sending admin notifications:', err);
@@ -398,6 +386,13 @@ export async function GET(request: NextRequest) {
 
         const customerName = (populatedOrder.userId as any)?.name || 'Customer';
         const customerEmail = (populatedOrder.userId as any)?.email || '';
+        callMeBotService.notifyPaymentFailed({
+          orderNumber,
+          customerName,
+          totalAmount: order.totalAmount,
+        }).catch((error) => {
+          console.error('Error sending payment failed WhatsApp (CallMeBot) notification:', error);
+        });
         whatsappService.notifyPaymentFailed({
           orderNumber,
           customerName,
@@ -599,17 +594,9 @@ export async function POST(request: NextRequest) {
               const customerEmail = (populatedOrder.userId as any)?.email || '';
               const shippingAddress = (populatedOrder.shippingAddressId as any) || {};
 
-              whatsappService.notifyNewOrder({
-                orderNumber,
-                customerName,
-                totalAmount: order.totalAmount,
-                itemCount,
-                paymentMethod: order.paymentMethod,
-              }).catch((err) => {
-                console.error('Webhook: Telegram notification error:', err);
-              });
-
-              emailService.notifyAdminNewOrder({
+              // Dispatcher dedupes against the GET callback + fans out to all channels.
+              await adminOrderNotifier.notifyNewOrder({
+                orderId: order._id,
                 orderNumber,
                 customerName,
                 customerEmail,
@@ -617,12 +604,6 @@ export async function POST(request: NextRequest) {
                 itemCount,
                 paymentMethod: order.paymentMethod,
                 shippingAddress,
-              }).catch((err) => {
-                console.error('Webhook: admin email error:', err);
-              });
-
-              smsService.notifyAdminOrderConfirmed(orderNumber, customerName, order.totalAmount, order.paymentMethod).catch((err) => {
-                console.error('Webhook: admin order confirmed SMS error:', err);
               });
             } catch (err) {
               console.error('Webhook: error sending notifications:', err);
